@@ -1,0 +1,18 @@
+{
+	"env": {
+		"node": true,
+		"es6": true
+	},
+	"rules": {
+		"indent": ["error", "tab", {
+			"SwitchCase": 1
+		}],
+		"max-len": ["error", 135],
+		"no-tabs": [
+			"error",
+			{
+				"allowIndentationTabs": true
+			}
+		]
+	}
+}
