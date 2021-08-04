@@ -4,8 +4,9 @@
   "description": "Website for MASK",
   "main": "./src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "node ./node_modules/eslint/bin/eslint.js . --config .eslintrc.json --ext .js"
+    "test": "npm run lint && npm run mocha && echo \"Passing all tests.\" && exit 0",
+    "lint": "node ./node_modules/eslint/bin/eslint.js . --config .eslintrc.json --ext .js",
+    "mocha": "echo \"Mocha has not been configured yet.\" && exit 0"
   },
   "repository": {
     "type": "git",
