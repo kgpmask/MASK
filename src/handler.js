@@ -25,7 +25,10 @@ const handler = {
 			}
 			default: {
 				const isAsset = /\.(?:js|ico)$/.test(args[args.length - 1]);
-				const filepath = path.join(__dirname, isAsset ? '../assets' : '../views', path.join(...args) + (isAsset ? '' : '.html'));
+				const filepath = path.join(
+					__dirname,
+					isAsset ? '../assets' : '../views', path.join(...args) + (isAsset ? '' : '.html')
+				);
 				fs.access(filepath).then(err => {
 					if (err) notFound(res);
 					else res.sendFile(filepath);
