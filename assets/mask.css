@@ -1,15 +1,29 @@
-
-#store {
-	red        : #ff0000;
-	dark-gray  : #474747;
-	gray       : #696969;
-	light-gray : #a9a9a9;
-	light-pink : #f1adad;
-	white      : #ffffff;
+:root {
+	--red        : #ff0000;
+	--dark-gray  : #373737;
+	--gray       : #696969;
+	--light-gray : #a9a9a9;
+	--light-pink : #f1adad;
+	--white      : #ffffff;
 }
 
 
 
-span {
-	color: #ff0000;
+body {
+	background-color: var(--dark-gray);
+	text-align: center;
+}
+
+h1 {
+	color: var(--white);
+	padding: 10px;
+}
+
+.text {
+	color: var(--light-gray);
+	margin-left: 10%;
+	margin-right: 10%;
+	background-color: rgba(255, 255, 255, 0.07);
+	padding: 30px;
+	border-radius: 20px;
 }

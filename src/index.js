@@ -1,11 +1,24 @@
 const express = require('express');
+const fs = require('fs').promises;
 const nunjucks = require('nunjucks');
 const path = require('path');
+const webpush = require('web-push');
 
 const { PORT } = require('./config.js');
 const appHandler = require('./handler.js');
 
 global.app = express();
+
+let vapid;
+
+try {
+	vapid = require('./vapid.json');
+} catch (e) {
+	console.log('Unable to find VAPID keys. Generating a new pair...');
+	vapid = webpush.generateVAPIDKeys();
+	console.log(`Generated VAPID keys [${Object.values(vapid).join(', ')}]`);
+	fs.writeFile('./src/vapid.json', JSON.stringify(vapid)).then(() => console.log('Stored new VAPID keys.'));
+}
 
 app.get(/.*/, (req, res) => appHandler.get(req, res));
 app.post(/.*/, (req, res) => appHandler.post(req, res));

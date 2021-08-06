@@ -4,9 +4,10 @@
   "description": "Website for MASK",
   "main": "./src/index.js",
   "scripts": {
-    "test": "npm run lint && npm run mocha && echo \"Passing all tests.\" && exit 0",
     "lint": "node ./node_modules/eslint/bin/eslint.js . --config .eslintrc.json --ext .js",
-    "mocha": "echo \"Mocha has not been configured yet.\" && exit 0"
+    "mocha": "echo \"Mocha has not been configured yet.\" && exit 0",
+    "start": "node src/index.js",
+    "test": "npm run lint && npm run mocha && echo \"Passing all tests.\" && exit 0"
   },
   "repository": {
     "type": "git",
@@ -22,7 +23,8 @@
   },
   "homepage": "https://github.com/mask-tech/MASK#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "web-push": "^3.4.5"
   },
   "devDependencies": {
     "eslint": "^7.32.0",
