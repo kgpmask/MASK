@@ -24,10 +24,10 @@
   "homepage": "https://github.com/mask-tech/MASK#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "nunjucks": "^3.2.3",
     "web-push": "^3.4.5"
   },
   "devDependencies": {
-    "eslint": "^7.32.0",
-    "nunjucks": "^3.2.3"
+    "eslint": "^7.32.0"
   }
 }
