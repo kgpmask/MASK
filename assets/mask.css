@@ -1,17 +1,34 @@
 :root {
-	--red        : #ff0000;
-	--dark-gray  : #373737;
-	--gray       : #696969;
-	--light-gray : #a9a9a9;
-	--light-pink : #f1adad;
-	--white      : #ffffff;
+	--red         : #bd0a0a;
+	--dark-red    : #8b0000;
+	--abyss       : #060606;
+	--shadow-gray : #1F1F1F;
+	--darker-gray : #252525;
+	--dark-gray   : #373737;
+	--gray        : #696969;
+	--light-gray  : #a9a9a9;
+	--light-pink  : #f1adad;
+	--white       : #ffffff;
 }
 
-
+* {
+	margin: 0px;
+	padding: 0px;
+}
 
 body {
 	background-color: var(--dark-gray);
 	text-align: center;
+}
+
+div#page-container {
+	position: relative;
+	top: 0px;
+	min-height: 100vh;
+}
+
+div#content-wrap {
+	padding-bottom: 70px;
 }
 
 h1 {
@@ -21,9 +38,121 @@ h1 {
 
 .text {
 	color: var(--light-gray);
-	margin-left: 10%;
-	margin-right: 10%;
 	background-color: rgba(255, 255, 255, 0.07);
 	padding: 30px;
 	border-radius: 20px;
+	margin:  20px 10%;
+}
+
+footer {
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	background-color: var(--shadow-gray);
+	height: 70px;
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+}
+
+img.social-icon {
+	margin: 15px;
+	vertical-align: middle;
+	border-radius: 10px;
+	width: 40px;
+	filter: grayscale(40%);
+	transition: transform .2s;
+	display: inline-flex;
+}
+
+img.social-icon:hover {
+	transform: scale(1.2);
+}
+
+img#gmail {
+	margin-top: 20px;
+	border-radius: 0px;
+	margin-right: 30px;
+}
+
+div#contact-us {
+	text-align: center;
+	color: var(--light-gray);
+	height: 70px;
+	display: inline-flex;
+	align-items: center;
+	margin-right: 40px;
+}
+
+span.float-middle {
+	vertical-align: middle;
+	display: inline-flex;
+}
+
+.navbar {
+	margin-bottom: 30px;
+}
+
+.navbar ul {
+	list-style-type: none;
+	background-color: var(--shadow-gray);
+	overflow: hidden;
+	padding-left: 10px;
+}
+
+.navbar li {
+	float: left;
+}
+
+.navbar li a, .dropbtn {
+	display: block;
+	padding: 14px 16px;
+	text-align: center;
+	color: var(--white);
+	text-decoration: none;
+}
+
+.navbar li a:hover:not(.active), .dropdown:hover .dropbtn {
+	background-color: var(--abyss);
+}
+
+.navbar li .dropdown {
+	display: inline-block;
+}
+
+.dropdown-content {
+	display: none;
+	position: absolute;
+	right: 0px;
+	background-color: var(--darker-gray);
+	min-width: 160px;
+	box-shadow: 0px 8px 16px 0px;
+	z-index: 1;
+}
+
+.dropdown-content a {
+	color: var(--white);
+	padding: 12px 16px;
+	text-decoration: none;
+	display: block;
+	text-align: left;
+}
+
+.dropdown-content a:hover {
+	background-color: var(--abyss);
+}
+
+.dropdown:hover .dropdown-content {
+	display: block;
+}
+
+.active {
+	background-color: var(--dark-red);
+}
+
+img.navbar-logo {
+	margin-top: 3px;
+	height: 40px;
+	vertical-align: middle;
+	border-radius: 40%;
 }
