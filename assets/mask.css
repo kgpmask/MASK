@@ -132,7 +132,7 @@ span.float-middle {
 	font-weight: 500;
 }
 
-.navbar li a:hover:not(.active), #dropdown:hover .dropbtn {
+.navbar li a:hover:not(.active, .nohover), #dropdown:hover .dropbtn {
 	background-color: var(--abyss);
 }
 
@@ -176,6 +176,11 @@ img#navbar-logo {
 	width: 40px;
 	vertical-align: middle;
 	border-radius: 40%;
+	transition: all 0.2s linear;
+}
+
+img#navbar-logo:hover {
+	opacity: 0.7;
 }
 
 span.navbar-line {

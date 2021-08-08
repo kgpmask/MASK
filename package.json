@@ -1,12 +1,12 @@
 {
   "name": "mask",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Website for MASK",
   "main": "./src/index.js",
   "scripts": {
     "lint": "node ./node_modules/eslint/bin/eslint.js . --config .eslintrc.json --ext .js",
     "mocha": "echo \"Mocha has not been configured yet.\" && exit 0",
-    "start": "node src/index.js",
+    "start": "node src/mask.js",
     "test": "npm run lint && npm run mocha && echo \"Passing all tests.\" && exit 0"
   },
   "repository": {
