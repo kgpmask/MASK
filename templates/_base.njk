@@ -1,9 +1,3 @@
-{% macro scripttag(paths) %}
-	{% for path in paths %}
-		<script src="{{ path }}"></script>
-	{% endfor %}
-{% endmacro %}
-
 {% set navlinks = [{
 	href: 'art',
 	name: 'Art'
@@ -57,11 +51,13 @@
 			</style>
 		{% endif %}
 		{% if customjs %}
-			<style>
+			<script>
 				{{  customjs }}
-			</style>
+			</script>
 		{% endif %}
-		{% block scripts %}{% endblock %}
+		{% for script in scripts %}
+			<script src="{{ script }}"></script>
+		{% endfor %}
 	</head>
 	<body>
 		<div id="page-container">
