@@ -146,7 +146,7 @@ span.float-middle {
 	right: 0px;
 	background-color: var(--darker-gray);
 	min-width: 160px;
-	box-shadow: 0px 8px 16px 0px;
+	box-shadow: 0px 8px 16px 0px var(--abyss);
 	z-index: 1;
 }
 
