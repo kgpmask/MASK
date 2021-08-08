@@ -51,6 +51,16 @@
 		<meta name="description" content="The MASK website">
 		<link rel="stylesheet" type="text/css" href="assets/mask.css"/>
 		<link rel="shortcut icon" href="assets/favicon.ico"/>
+		{% if customcss %}
+			<style>
+				{{  customcss }}
+			</style>
+		{% endif %}
+		{% if customjs %}
+			<style>
+				{{  customjs }}
+			</style>
+		{% endif %}
 		{% block scripts %}{% endblock %}
 	</head>
 	<body>
