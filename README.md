@@ -27,6 +27,7 @@ Pages are located as .njk files in /templates. The following variables may be se
 
 * `pagetitle`: Title of the page (default MASK)
 * `pagecontent`: HTML contents of the page (default 'This is an empty page')
+* `pagedesc`: Description of the page (default 'MASK website')
 * `thispage`: URL of intended position of current page, used to select active page in NAVBAR (default none)
 
 * `scripts`: Array of script links to be loaded (default none)
