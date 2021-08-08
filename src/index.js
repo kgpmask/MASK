@@ -20,8 +20,11 @@ try {
 	fs.writeFile('./src/vapid.json', JSON.stringify(vapid)).then(() => console.log('Stored new VAPID keys.'));
 }
 
-app.get(/.*/, (req, res) => appHandler.get(req, res));
-app.post(/.*/, (req, res) => appHandler.post(req, res));
+const env = nunjucks.configure('templates', {
+	express: app
+});
+
+appHandler(app, env, vapid);
 
 const server = app.listen(PORT, () => {
 	console.log(`The MASK server's up at http://localhost:${PORT}/`);
