@@ -26,11 +26,42 @@ Serving is done via express.
 Pages are located as .njk files in /templates. The following variables may be set:
 
 * `pagetitle`: Title of the page (default MASK)
-* `pagecontent`: HTML contents of the page (default 'This is an empty page')
 * `pagedesc`: Description of the page (default 'MASK website')
 * `thispage`: URL of intended position of current page, used to select active page in NAVBAR (default none)
-
 * `scripts`: Array of script links to be loaded (default none)
+
+
+Additionally, the following blocks may be set:
+
+* `pagecontent`: HTML contents of the page (default 'This is an empty page')
 * `customcss`: Custom CSS (remember to enclose in \<style>) (default none)
 * `customjs`: Custom JS (remember to enclose in \<script>) (default none)
 * `navbar`: Sets the navbar (default NAVBAR)
+
+
+The default page template is:
+
+```nunjucks
+{% extends "_base.njk" %}
+
+{% set thispage = 'navref' %}
+{% set pagetitle = 'TITLEHERE' %}
+
+{% block pagecontent %}
+	Page content
+{% endblock %}
+
+```
+
+The default newsletter template is:
+
+```nunjucks
+{% extends "_newsletter.njk" %}
+
+{% set pagetitle = 'Month - Issue num' %}
+
+{% block article %}
+	Article goes here
+{% endblock %}
+
+```
