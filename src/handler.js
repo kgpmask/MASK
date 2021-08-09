@@ -5,7 +5,7 @@ function notFound (res) {
 	res.status(404).render(path.join(__dirname, '../templates', '404.njk'));
 }
 
-const handler = function (app, env, vapid) {
+function handler (app, env, vapid) {
 	function get (req, res) {
 		const args = req.url.split('/');
 		args.shift();
@@ -27,6 +27,33 @@ const handler = function (app, env, vapid) {
 				env.loaders.forEach(loader => loader.cache = {});
 				res.render(path.join(__dirname, '../templates', 'rebuild.njk'));
 				break;
+			}
+			case 'newsletters': {
+				const months = [
+					'-', 'January', 'February', 'March', 'April', 'May', 'June',
+					'July', 'August', 'September', 'October', 'November', 'December'
+				];
+				if (!args[1]) {
+					fs.readdir('./templates/newsletters').then(letters => {
+						const years = {};
+						letters.sort();
+						letters.forEach(letter => {
+							const [year, month, num] = letter.slice(0, -4).split('-');
+							if (!years[year]) years[year] = { title: year, months: {} };
+							if (!years[year].months[month]) years[year].months[month] = { title: months[~~month], issues: [] };
+							years[year].months[month].issues.push({
+								title: ['-', 'First', 'Second', 'Special'][~~num],
+								href: letter.slice(0, -4)
+							});
+						});
+						const renderYears = Object.values(years);
+						renderYears.forEach(year => year.months = Object.values(year.months));
+						res.render(path.join(__dirname, '../templates', 'newsletters.njk'), {
+							years: renderYears.reverse()
+						});
+					});
+					break;
+				}
 			}
 			default: {
 				while (!args[args.length - 1]) args.pop();

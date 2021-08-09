@@ -31,6 +31,6 @@ Pages are located as .njk files in /templates. The following variables may be se
 * `thispage`: URL of intended position of current page, used to select active page in NAVBAR (default none)
 
 * `scripts`: Array of script links to be loaded (default none)
-* `customcss`: Custom CSS; style tags are already applied (default none)
-* `customjs`: Custom JS; script tags are already applied (default none)
+* `customcss`: Custom CSS (remember to enclose in \<style>) (default none)
+* `customjs`: Custom JS (remember to enclose in \<script>) (default none)
 * `navbar`: Sets the navbar (default NAVBAR)

@@ -1,14 +1,19 @@
 :root {
-	--red         : #bd0a0a;
-	--dark-red    : #8b0000;
 	--abyss       : #060606;
 	--shadow-gray : #1f1f1f;
 	--darker-gray : #252525;
 	--dark-gray   : #373737;
-	--gray        : #696969;
+	--medium-gray : #555555;
+	--middle-gray : #606060;
+	--gray        : #6d6d6d;
+	--ghost-gray  : #777777;
 	--light-gray  : #a9a9a9;
-	--light-pink  : #f1adad;
+	--off-white   : #c0c0c0;
 	--white       : #ffffff;
+
+	--dark-red    : #8b0000;
+	--red         : #bd0a0a;
+	--light-pink  : #f1adad;
 }
 
 * {
@@ -38,12 +43,8 @@ h1 {
 	margin: 30px;
 }
 
-.text {
-	color: var(--light-gray);
-	background-color: rgba(255, 255, 255, 0.07);
-	padding: 30px;
-	border-radius: 20px;
-	margin: 20px 10%;
+hr {
+	border-top: 1px var(--off-white);
 }
 
 footer {
@@ -132,7 +133,7 @@ span.float-middle {
 	font-weight: 500;
 }
 
-.navbar li a:hover:not(.active, .nohover), #dropdown:hover .dropbtn {
+.navbar li a:hover:not(.active-page, .nohover), #dropdown:hover .dropbtn {
 	background-color: var(--abyss);
 }
 
@@ -159,7 +160,7 @@ span.float-middle {
 	font-weight: 500;
 }
 
-.dropdown-content a:hover:not(.active) {
+.dropdown-content a:hover:not(.active-page) {
 	background-color: var(--abyss);
 }
 
@@ -167,7 +168,7 @@ span.float-middle {
 	display: block;
 }
 
-.active {
+.active-page {
 	background-color: var(--dark-red);
 }
 
@@ -189,4 +190,20 @@ span.navbar-line {
 	display: block;
 	float: left;
 	margin: 0px 10px;
+}
+
+.text {
+	color: var(--light-gray);
+	background-color: rgba(255, 255, 255, 0.07);
+	padding: 30px;
+	border-radius: 20px;
+	margin: 20px 10%;
+}
+
+.faded {
+	color: var(--gray);
+	background-color: rgba(255, 255, 255, 0.07);
+	padding: 30px;
+	border-radius: 20px;
+	margin: 20px 10%;
 }

@@ -1,0 +1,15 @@
+{% extends "_base.njk" %}
+
+{% set thispage = 'newsletters' %}
+
+{% macro nextprev() %}
+	PREV | NEXT
+{% endmacro %}
+
+{% block pagecontent %}
+	{{ nextprev() }}
+	{% block article %}
+		This article hasn't been published yet - stay tuned!
+	{% endblock %}
+	{{ nextprev() }}
+{% endblock %}

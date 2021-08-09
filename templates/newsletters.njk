@@ -1,0 +1,126 @@
+{% extends "_base.njk" %}
+
+{% set thispage = 'newsletters' %}
+{% set pagetitle = 'Newsletters' %}
+
+{% block pagecontent %}
+	<div id="accordion-container">
+	{% for year in years %}
+		<button class="accordion">&nbsp;&nbsp;&nbsp;{{ year.title }}</button>
+		<div class="accordion-panel"><div class="accordion-content">
+			{% for month in year.months %}
+				<div class="month">
+					<h3 style="color:var(--off-white)">{{ month.title }}</h3>
+					<div class="monthposts">
+						{% for issue in month.issues %}
+							<div class="flex-link"><a class="issue-link" href="/newsletters/{{ issue.href }}">{{ issue.title }} Issue</a></div>
+						{% endfor %}
+					</div>
+				</div>
+				{% if not loop.last %} <hr/> {% endif %}
+			{% endfor %}
+		</div></div>
+	{% endfor %}
+	</div>
+{% endblock %}
+
+{% block customcss %}
+	<style>
+		#accordion-container {
+			width: 60%;
+			margin: auto;
+			padding: 40px;
+		}
+
+		.accordion {
+			background-color: var(--middle-gray);
+			color: var(--off-white);
+			cursor: pointer;
+			padding: 18px;
+			width: 100%;
+			border: none;
+			text-align: center;
+			outline: none;
+			transition: 0.4s;
+			font-weight: bold;
+			font-size: 1.6em;
+		}
+
+		.active-accordion, .accordion:hover {
+			background-color: var(--gray);
+			color: var(--white);
+		}
+
+		.accordion:after {
+			content: '\002B';
+			color: var(--off-white);
+			font-weight: bold;
+			float: right;
+			margin-left: 5px;
+		}
+
+		.active-accordion:after {
+			content: '\2212';
+		}
+
+		.accordion-panel {
+			padding: 0px;
+			background-color: var(--medium-gray);
+			max-height: 0;
+			overflow: hidden;
+			transition: max-height 0.2s ease-out;
+		}
+
+		.accordion-panel hr {
+			margin: 20px 10%;
+		}
+
+		.accordion-content {
+			padding: 18px;
+		}
+
+		.monthposts {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 100%;
+		}
+
+		.flex-link {
+			display: inline-flex;
+		}
+
+		div h3 {
+			padding-bottom: 25px;
+		}
+
+		a.issue-link, a.issue-link:visited {
+			text-decoration: none;
+			font-weight: bold;
+			color: var(--white);
+			border: 1px solid var(--light-gray);
+			padding: 8px;
+			margin: 10px;
+			background-color: var(--gray);
+			font-size: 0.7em;
+			border-radius: 10px;
+		}
+	</style>
+{% endblock %}
+
+{% block customjs %}
+	<script>
+		window.onload = () => {
+			const accs = document.getElementsByClassName('accordion');
+			for (const acc of accs) {
+				acc.addEventListener('click', function () {
+					this.classList.toggle('active-accordion');
+					const panel = this.nextElementSibling;
+					if (panel.style.maxHeight) panel.style.maxHeight = null;
+					else panel.style.maxHeight = panel.scrollHeight + 'px';
+				});
+			}
+			accs[0].click();
+		}
+	</script>
+{% endblock %}

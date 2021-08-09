@@ -24,16 +24,8 @@
 		<meta name="description" content="{% if pagedesc %} {{ pagedesc }} {% else %} The MASK website {% endif %}">
 		<link rel="stylesheet" type="text/css" href="/assets/mask.css"/>
 		<link rel="shortcut icon" href="/assets/favicon.ico"/>
-		{% if customcss %}
-			<style>
-				{{  customcss }}
-			</style>
-		{% endif %}
-		{% if customjs %}
-			<script>
-				{{  customjs }}
-			</script>
-		{% endif %}
+		{% block customcss %}{% endblock %}
+		{% block customjs %}{% endblock %}
 		{% for script in scripts %}
 			<script src="/{{ script }}"></script>
 		{% endfor %}
@@ -48,14 +40,14 @@
 							<span class="navbar-line">&nbsp;</span>
 							<div class="navbar-container">
 								{% for link in navlinks %}
-									<li><a href="/{{ link.href }}" {% if link.href === thispage %} class="active" {% endif %}>{{ link.name }}</a></li>
+									<li><a href="/{{ link.href }}" {% if link.href === thispage %} class="active-page" {% endif %}>{{ link.name }}</a></li>
 								{% endfor %}
 							</div>
 							<div style="float:right;" id="dropdown">
 								<a href="/about" class="dropbtn">About</a>
 								<div class="dropdown-content">
-									<a href="/about" {% if 'about' === thispage %} class="active" {% endif %}>Our Society</a>
-									<a href="/members" {% if 'members' === thispage %} class="active" {% endif %}>Our Members</a>
+									<a href="/about" {% if 'about' === thispage %} class="active-page" {% endif %}>Our Society</a>
+									<a href="/members" {% if 'members' === thispage %} class="active-page" {% endif %}>Our Members</a>
 								</div>
 							</div>
 						</ul>
