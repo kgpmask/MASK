@@ -29,6 +29,7 @@ const handler = function (app, env, vapid) {
 				break;
 			}
 			default: {
+				while (!args[args.length - 1]) args.pop();
 				const isAsset = /\.(?:js|ico)$/.test(args[args.length - 1]);
 				const filepath = path.join(
 					__dirname,
