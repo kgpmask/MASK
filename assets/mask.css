@@ -25,6 +25,7 @@ body {
 	background-color: var(--dark-gray);
 	text-align: center;
 	color: var(--light-gray);
+	font-family: ubuntu;
 }
 
 div#page-container {
@@ -127,7 +128,7 @@ span.float-middle {
 	display: block;
 	padding: 14px 16px;
 	text-align: center;
-	color: var(--white);
+	color: var(--off-white);
 	text-decoration: none;
 	vertical-align: middle;
 	font-weight: 500;
