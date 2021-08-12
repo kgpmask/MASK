@@ -45,6 +45,18 @@
 		button.rel {
 			width: 100px;
 			height: 30px;
+			background-color: var(--medium-gray);
+			color: var(--off-white);
+			border: 2px solid var(--ghost-gray);
+			border-radius: 5px;
+			cursor: pointer;
+		}
+
+		button.rel:disabled {
+			background-color: var(--tinted-gray);
+			border: 1px solid var(--gray);
+			color: var(--ghost-gray);
+			cursor: default;
 		}
 
 		@media (max-width: 500px) {
