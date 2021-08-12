@@ -1,12 +1,21 @@
 const fs = require('fs').promises;
 const path = require('path');
-
-function notFound (res) {
-	res.status(404).render(path.join(__dirname, '../templates', '404.njk'));
-}
+const tools = require('./tools.js');
 
 function handler (app, env, vapid) {
 	function get (req, res) {
+		function notFound (custom404, ctx) {
+			res.status(404).render(path.join(__dirname, '../templates', custom404 || '404.njk'), ctx);
+		}
+		function tryFile (path, asset, ctx) {
+			fs.access(path).then(err => {
+				if (err) notFound(false, ctx);
+				else res[asset ? 'sendFile' : 'render'](path, ctx);
+			}).catch(() => {
+				notFound(false, ctx);
+			});
+			
+		}
 		const args = req.url.split('/');
 		args.shift();
 		switch (args[0]) {
@@ -18,9 +27,9 @@ function handler (app, env, vapid) {
 				args.shift();
 				const filepath = path.join(__dirname, '../assets', ...args);
 				fs.access(filepath).then(err => {
-					if (err) notFound(res);
+					if (err) notFound();
 					else res.sendFile(filepath);
-				}).catch(() => notFound(res));
+				}).catch(() => notFound());
 				break;
 			}
 			case 'rebuild': {
@@ -33,27 +42,34 @@ function handler (app, env, vapid) {
 					'-', 'January', 'February', 'March', 'April', 'May', 'June',
 					'July', 'August', 'September', 'October', 'November', 'December'
 				];
-				if (!args[1]) {
-					fs.readdir('./templates/newsletters').then(letters => {
-						const years = {};
-						letters.sort();
-						letters.forEach(letter => {
-							const [year, month, num] = letter.slice(0, -4).split('-');
-							if (!years[year]) years[year] = { title: year, months: {} };
-							if (!years[year].months[month]) years[year].months[month] = { title: months[~~month], issues: [] };
-							years[year].months[month].issues.push({
-								title: ['-', 'First', 'Second', 'Special'][~~num],
-								href: letter.slice(0, -4)
-							});
-						});
-						const renderYears = Object.values(years);
-						renderYears.forEach(year => year.months = Object.values(year.months));
-						res.render(path.join(__dirname, '../templates', 'newsletters.njk'), {
-							years: renderYears.reverse()
+				fs.readdir('./templates/newsletters').then(letters => {
+					const years = {};
+					letters.sort(); // Windows isn't automatically sorted
+					letters.forEach(letter => {
+						const [year, month, num] = letter.slice(0, -4).split('-');
+						if (!years[year]) years[year] = { title: year, months: {} };
+						if (!years[year].months[month]) years[year].months[month] = { title: months[~~month], issues: [] };
+						years[year].months[month].issues.push({
+							title: ['-', 'First', 'Second', 'Special'][~~num],
+							href: letter.slice(0, -4)
 						});
 					});
-					break;
-				}
+					const renderYears = Object.values(years);
+					renderYears.forEach(year => year.months = Object.values(year.months));
+					if (!args[1]) return res.render(path.join(__dirname, '../templates', 'newsletters.njk'), {
+						years: renderYears.reverse()
+					});
+					if (args[1] === 'random') {
+						const randLetter = letters.filter(letter => letter.slice(0, -4) !== args[2]).random().slice(0, -4);
+						return res.redirect(`/newsletters/${randLetter}`);
+					}
+					const index = letters.indexOf(args[1] + '.njk');
+					if (index === -1) return notFound('newsletters_404.njk', { years: renderYears.reverse() });
+					const filepath = path.join(__dirname, '../templates', 'newsletters', letters[index]);
+					const adjs = [letters[index - 1]?.slice(0, -4), letters[index + 1]?.slice(0, -4), letters[index].slice(0, -4)];
+					return res.render(filepath, { adjs });
+				}).catch(err => console.log(err) || notFound());
+				break;
 			}
 			default: {
 				while (!args[args.length - 1]) args.pop();
@@ -62,10 +78,7 @@ function handler (app, env, vapid) {
 					__dirname,
 					isAsset ? '../assets' : '../templates', path.join(...args) + (isAsset ? '' : '.njk')
 				);
-				fs.access(filepath).then(err => {
-					if (err) notFound(res);
-					else res[isAsset ? 'sendFile' : 'render'](filepath);
-				}).catch(() => notFound(res));
+				tryFile(filepath, isAsset);
 				
 			}
 		}

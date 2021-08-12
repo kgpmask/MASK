@@ -102,11 +102,11 @@ span.float-middle {
 	display: inline-flex;
 }
 
-.navbar {
+.navbar-full {
 	margin-bottom: 30px;
 }
 
-.navbar ul {
+.navbar-full ul {
 	list-style-type: none;
 	background-color: var(--shadow-gray);
 	overflow: hidden;
@@ -115,16 +115,16 @@ span.float-middle {
 	align-items: center;
 }
 
-.navbar .navbar-container {
+.navbar-full .navbar-container {
 	display: inline-flex;
 	flex: 1;
 }
 
-.navbar li {
+.navbar-full li {
 	float: left;
 }
 
-.navbar li a, .dropbtn {
+.navbar-full li a, .dropbtn {
 	display: block;
 	padding: 14px 16px;
 	text-align: center;
@@ -134,11 +134,11 @@ span.float-middle {
 	font-weight: 500;
 }
 
-.navbar li a:hover:not(.active-page, .nohover), #dropdown:hover .dropbtn {
+.navbar-full li a:hover:not(.active-page, .nohover), #dropdown:hover .dropbtn {
 	background-color: var(--abyss);
 }
 
-.navbar li #dropdown {
+.navbar-full li #dropdown {
 	display: inline-block;
 }
 
@@ -191,6 +191,20 @@ span.navbar-line {
 	display: block;
 	float: left;
 	margin: 0px 10px;
+}
+
+.navbar-hamburger {
+	display: none;
+}
+
+
+@media (max-width: 600px) {
+	.navbar-full {
+		display: none;
+	}
+	.navbar-hamburger {
+		display: block;
+	}
 }
 
 .text {

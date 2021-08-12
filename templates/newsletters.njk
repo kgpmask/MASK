@@ -4,6 +4,7 @@
 {% set pagetitle = 'Newsletters' %}
 
 {% block pagecontent %}
+	{% block extrainfo %}{% endblock %}
 	<div id="accordion-container">
 	{% for year in years %}
 		<button class="accordion">&nbsp;&nbsp;&nbsp;{{ year.title }}</button>

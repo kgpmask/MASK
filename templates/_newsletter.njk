@@ -3,7 +3,11 @@
 {% set thispage = 'newsletters' %}
 
 {% macro nextprev() %}
-	PREV | NEXT
+	<div class="controls">
+		<a href="/newsletters/{{ adjs[0] if adjs[0] else '' }}" class="rel"><button class="rel" {{ 'disabled' if not adjs[0] }}><span class="buttonicon" id="flipped">&#x279C;</span><span class="buttontext">Previous</span></button></a>
+		<a href="/newsletters/{{ ('random/' + adjs[2]) if (adjs[0] or adjs[1]) else '' }}" class="rel"><button class="rel" {{ 'disabled' if not (adjs[0] or adjs[1]) }}><span class="buttonicon" id="random"><i class="fas fa-random"></i></span><span class="buttontext">Random</span></button></a>
+		<a href="/newsletters/{{ adjs[1] if adjs[1] else '' }}"><button class="rel" {{ 'disabled' if not adjs[1] }}><span class="buttonicon">&#x279C;</span><span class="buttontext">Next</span></button></a>
+	</div>
 {% endmacro %}
 
 {% block pagecontent %}
@@ -12,4 +16,57 @@
 		This article hasn't been published yet - stay tuned!
 	{% endblock %}
 	{{ nextprev() }}
+{% endblock %}
+
+{% block customcss %}
+	<style>
+		div.controls {
+			padding: 20px;
+			display: flex;
+			width: 400px;
+			margin: 0px auto;
+			justify-content: space-between;
+		}
+
+		span.buttontext {
+			display: block;
+		}
+
+		.buttonicon {
+			display: none;
+		}
+
+		span#flipped {
+			transform: scale(-1);
+			filter: flipH;
+			-ms-filter: flipH;
+		}
+
+		button.rel {
+			width: 100px;
+			height: 30px;
+		}
+
+		@media (max-width: 500px) {
+			div.controls {
+				width: 200px;
+			}
+
+			span.buttontext {
+				display: none;
+			}
+
+			.buttonicon {
+				display: block;
+			}
+
+			button.rel {
+				width: 50px;
+			}
+		}
+	</style>
+{% endblock %}
+
+{% block customjs %}
+	<script src="https://kit.fontawesome.com/dbc840a846.js" crossorigin="anonymous"></script>
 {% endblock %}
