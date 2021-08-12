@@ -30,3 +30,5 @@ appHandler(app, env, vapid);
 const server = app.listen(PORT, () => {
 	console.log(`The MASK server's up at http://localhost:${PORT}/`);
 });
+
+if (process.argv[2] === 'workflow') process.exit();
