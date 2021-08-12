@@ -17,7 +17,10 @@ try {
 	console.log('Unable to find VAPID keys. Generating a new pair...');
 	vapid = webpush.generateVAPIDKeys();
 	console.log(`Generated VAPID keys [${Object.values(vapid).join(', ')}]`);
-	fs.writeFile('./src/vapid.json', JSON.stringify(vapid)).then(() => console.log('Stored new VAPID keys.'));
+	fs.writeFile('./src/vapid.json', JSON.stringify(vapid)).then(() => {
+		console.log('Stored new VAPID keys.');
+		if (process.argv[2] === 'workflow') process.exit();
+	});
 }
 
 const env = nunjucks.configure('templates', {
@@ -30,5 +33,3 @@ appHandler(app, env, vapid);
 const server = app.listen(PORT, () => {
 	console.log(`The MASK server's up at http://localhost:${PORT}/`);
 });
-
-if (process.argv[2] === 'workflow') process.exit();
