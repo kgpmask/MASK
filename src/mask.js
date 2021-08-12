@@ -4,7 +4,7 @@ const nunjucks = require('nunjucks');
 const path = require('path');
 const webpush = require('web-push');
 
-const { PORT } = require('./config.js');
+const { PORT, DEBUG } = require('./config.js');
 const appHandler = require('./handler.js');
 
 global.app = express();
@@ -21,7 +21,8 @@ try {
 }
 
 const env = nunjucks.configure('templates', {
-	express: app
+	express: app,
+	noCache: DEBUG
 });
 
 appHandler(app, env, vapid);
