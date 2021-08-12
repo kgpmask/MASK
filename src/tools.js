@@ -37,7 +37,7 @@ Array.prototype.shuffle = function () {
 };
 
 /*
-* Note;
+* Note:
 * 
 * Adding Array prototypes (or any prototypes for that matter)
 * is something that should only be done if you're absolutely
