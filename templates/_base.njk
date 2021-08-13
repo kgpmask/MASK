@@ -19,9 +19,10 @@
 		<title>
 			{% if pagetitle %} {{ pagetitle }} {% else %} MASK {% endif %}
 		</title>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="description" content="{% if pagedesc %} {{ pagedesc }} {% else %} The MASK website {% endif %}">
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<meta name="description" content="{% block pagedesc %} The MASK website {% endblock %}"/>
+		<meta name="keywords" content="Manga, Anime, MASK, Kharagpur, IIT KGP, Otakus"/>
 		<link rel="stylesheet" type="text/css" href="/assets/mask.css"/>
 		<link rel="shortcut icon" href="/assets/favicon.ico"/>
 		{% block customcss %}{% endblock %}
