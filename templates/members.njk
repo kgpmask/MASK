@@ -4,18 +4,23 @@
 {% set pagetitle = 'Our Members' %}
 
 {% block pagecontent %}
-	<h2>Our members</h2>
+	<h1>Our members</h1>
 	{% for year, list in members %}
 		{% if list | length %}
 			<div class="yearbox">
-				<h3>{{ year }} {% if not (year == 'Governors' or year == 'Alumni' or year == 'Former Governors') %} Years {% endif %}</h3>
+				<h2>{{ year }} {% if not (year == 'Governors' or year == 'Alumni' or year == 'Former Governors') %} Years {% endif %}</h2>
 				<br/><hr class="div-line"/>
 				<div class="list">
 					{% for person in list %}
 						<div class="member">
 							<img src="/assets/members/{{ person.href }}" class="member-icon" height="80px" widht="80px"/>
 							<div class="div-line">&nbsp;</div>
-							<div class="member-desc">{{ person.name }}<br/>{{ person.roll }}</div>
+							<div class="member-desc">{{ person.name }}<!--br/>{{ person.roll }}--><br/></div>
+							<div class="teamlist">
+								{% for team in person.teams %}
+									<i class="{{ team.icon }}" title="{{ team.name }}"></i>
+								{% endfor %}
+							</div>
 						</div>
 					{% endfor %}
 				</div>
@@ -55,7 +60,7 @@
 			border-radius: 10px;
 			background-color: var(--medium-gray);
 			width: 80px;
-			display: inline-block;
+			display: grid;
 			text-align: center;
 			margin: 20px;
 			margin-bottom: 0px;
@@ -63,6 +68,7 @@
 		}
 		.member-icon {
 			border-radius: 15px;
+			margin-bottom: 10px;
 		}
 		.member-desc {
 			margin-top: 10px;
@@ -72,5 +78,13 @@
 			word-wrap: break-word;
 			hyphens: auto;
 		}
+		.teamlist {
+			margin-top: 10px;
+			align-self: flex-end;
+		}
 	</style>
+{% endblock %}
+
+{% block customjs %}
+	<script src="https://kit.fontawesome.com/dbc840a846.js" crossorigin="anonymous"></script>
 {% endblock %}

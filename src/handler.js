@@ -48,7 +48,23 @@ function handler (app, env, vapid) {
 					ctx[member.gov || member.year].push({
 						name: member.name,
 						roll: member.roll,
-						href: `${member.name.toLowerCase().replace(/[\.-]/g, '').replace(/ /g, '_')}.png`
+						href: `${member.name.toLowerCase().replace(/[\.-]/g, '').replace(/ /g, '_')}.png`,
+						teams: [{
+							name: 'AMV',
+							icon: 'fas fa-film'
+						}, {
+							name: 'Design n Arts',
+							icon: 'fas fa-paint-brush'
+						}, {
+							name: 'Music',
+							icon: 'fas fa-music'
+						}, {
+							name: 'Quiz',
+							icon: 'fas fa-pencil-alt'
+						}, {
+							name: 'WebDev',
+							icon: 'fas fa-laptop-code'
+						}].filter((_, index) => member.teams[index])
 					});
 				});
 				Object.values(ctx).forEach(set => set.sort());
