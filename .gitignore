@@ -2,4 +2,4 @@
 /src/vapid.json
 
 # testing template, test changes here
-/templates/test.njk
+/templates/test*.njk
