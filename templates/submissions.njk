@@ -1,0 +1,68 @@
+
+{% set thispage = 'submissions' %}
+{% set pagetitle = 'Submit!' %}
+{% extends "_base.njk" %}
+
+{% block pagecontent %}
+	<h1>Submit your content here!</h1>
+	<script src="http://googleformrestyler.apixml.net/GoogleFormStyler.js"
+		form="https://docs.google.com/forms/d/e/1FAIpQLSfwnkz0L_oTyHPgzCtWg9xusAmiQbG4AjMA2zCRjsRu0959cw/viewform?embedded=true">
+	</script>
+	<div class="faded" style="max-width:560px;display:flex;margin:20px auto;justify-self:center;">
+		This content is neither created by nor endorsed by Google.<br/><br/>
+	</div>
+	<style>
+		/* post-form CSS overwrites */
+		body {
+			background-color: var(--dark-gray) !important;
+		}
+		.freebirdFormviewerViewCenteredContent {
+			text-align: left;
+		}
+		.freebirdFormviewerViewHeaderHeader.exportHeader {
+			background-color: var(--medium-gray);
+		}
+		.freebirdFormviewerViewHeaderTitle.exportFormTitle.freebirdCustomFont, .freebirdFormviewerViewHeaderDescription {
+			color: var(--white);
+		}
+		.freebirdFormviewerComponentsQuestionBaseRoot {
+			background-color: var(--medium-gray) !important;
+			border: 2px solid var(--off-white) !important;
+		}
+		.freebirdCustomFont {
+			color: var(--white);
+		}
+		.quantumWizTextinputPaperinputPlaceholder.exportLabel {
+			color: var(--light-gray) !important;
+		}
+		.freebirdFormviewerComponentsQuestionBaseValidationError, .freebirdFormviewerComponentsQuestionBaseRequiredAsterisk, .freebirdFormviewerViewHeaderRequiredLegend {
+			color: var(--error-red) !important;
+		}
+		input {
+			color: var(--white) !important;
+		}
+		.quantumWizTextinputPaperinputUnderline.exportUnderline, .quantumWizTextinputSimpleinputUnderline {
+			background-color: var(--light-gray);
+		}
+		.appsMaterialWizToggleRadiogroupOffRadio.exportOuterCircle {
+			background-color: var(--ghost-gray);
+			border-color: var(--light-gray);
+		}
+		.freebirdThemedRadio .isChecked:not(.isDisabled) .exportOuterCircle, .freebirdThemedRadio.isChecked:not(.isDisabled) .exportOuterCircle, .freebirdThemedRadio .exportInnerCircle {
+			border-color: var(--white);
+		}
+		.quantumWizTextinputPaperinputFocusUnderline.exportFocusUnderline.animationInitialized, .freebirdThemedInput .exportFocusUnderline {
+			background-color: var(--error-red);
+		}
+		span {
+			color: var(--white) !important;
+		}
+		.freebirdFormviewerViewFooterEmbeddedBackground, .freebirdFormviewerViewNavigationPasswordWarning {
+			display: none;
+		}
+		.freebirdFormviewerComponentsQuestionBaseErrorIcon path {
+			/*opacity: 0.5;*/
+			fill: var(--error-red);
+		}
+	</style>
+{% endblock %}

@@ -14,6 +14,7 @@
 
 	--dark-red    : #8b0000;
 	--red         : #bd0a0a;
+	--error-red   : #e84e4f;
 	--light-pink  : #f1adad;
 }
 
@@ -26,7 +27,7 @@ body {
 	background-color: var(--dark-gray);
 	text-align: center;
 	color: var(--light-gray);
-	font-family: ubuntu;
+	font-family: ubuntu, roboto, open sans;
 }
 
 div#page-container {
