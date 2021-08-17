@@ -4,11 +4,11 @@
 {% extends "_base.njk" %}
 
 {% block pagecontent %}
-	<h1>Submit your content here!</h1>
+	<h1 id="formpre">Submit your content here!</h1>
 	<script src="http://googleformrestyler.apixml.net/GoogleFormStyler.js"
 		form="https://docs.google.com/forms/d/e/1FAIpQLSfwnkz0L_oTyHPgzCtWg9xusAmiQbG4AjMA2zCRjsRu0959cw/viewform?embedded=true&lang=en">
 	</script>
-	<div class="faded" style="max-width:560px;display:flex;margin:20px auto;justify-self:center;">
+	<div class="faded" style="max-width:560px;display:flex;margin:20px auto;justify-self:center;" id="disclaimer">
 		This content is neither created by nor endorsed by Google.<br/><br/>
 	</div>
 	<style>
@@ -62,17 +62,37 @@
 		}
 	</style>
 	<script>
-		fixFavicon();
-	</script>
-{% endblock %}
-
-{% block customjs %}
-	<script>
 		function fixFavicon () {
 			link = document.createElement('link');
 			link.rel = 'shortcut icon';
 			link.href = '/assets/favicon.ico';
 			document.getElementsByTagName('head')[0].appendChild(link);
 		}
+		let firstLoad = false;
+		const ifrm = document.createElement("iframe");
+		ifrm.setAttribute("name", "swallow");
+		ifrm.setAttribute("id", "swallow");
+		document.body.appendChild(ifrm);
+		ifrm.style.display = 'none';
+		document.forms[0].target = "swallow";
+		document.getElementById('swallow').onload = () => {
+			if (firstLoad === false) return firstLoad = true;
+			const form = document.getElementsByClassName('freebirdFormviewerViewFormContentWrapper')[0];
+			const parent = form.parentNode;
+			form.remove();
+			document.getElementById('formpre').remove();
+			document.getElementById('disclaimer').remove();
+			const submitted = document.createElement('div');
+			submitted.setAttribute('class', 'text');
+			submitted.innerHTML = '<h1>Thank you for submitting! We\'ll get back to you soon.</h1>';
+			parent.appendChild(submitted);
+		}
+		fixFavicon();
+	</script>
+{% endblock %}
+
+{% block customjs %}
+	<script>
+
 	</script>
 {% endblock %}
