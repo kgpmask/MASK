@@ -4,16 +4,16 @@
 
 {% macro nextprev() %}
 	<div class="controls">
-		<a href="/newsletters/{{ adjs[0] if adjs[0] else '' }}" class="rel"><button class="rel" {{ 'disabled' if not adjs[0] }}><span class="buttonicon" id="flipped">&#x279C;</span><span class="buttontext">Previous</span></button></a>
-		<a href="/newsletters/{{ ('random/' + adjs[2]) if (adjs[0] or adjs[1]) else '' }}" class="rel"><button class="rel" {{ 'disabled' if not (adjs[0] or adjs[1]) }}><span class="buttonicon" id="random"><i class="fas fa-random"></i></span><span class="buttontext">Random</span></button></a>
-		<a href="/newsletters/{{ adjs[1] if adjs[1] else '' }}"><button class="rel" {{ 'disabled' if not adjs[1] }}><span class="buttonicon">&#x279C;</span><span class="buttontext">Next</span></button></a>
+		<a{% if adjs[0] %} href="/newsletters/{{ adjs[0] }}"{% endif %}><button class="rel" {{ 'disabled' if not adjs[0] }}><span class="buttonicon" id="flipped">&#x279C;</span><span class="buttontext">Previous</span></button></a>
+		<a href="/newsletters/{{ 'random' if (adjs[0] or adjs[1]) else '' }}"><button class="rel" {{ 'disabled' if not (adjs[0] or adjs[1]) }}><span class="buttonicon" id="random"><i class="fas fa-random"></i></span><span class="buttontext">Random</span></button></a>
+		<a{% if adjs[1] %} href="/newsletters/{{ adjs[1] }}"{% endif %}><button class="rel" {{ 'disabled' if not adjs[1] }}><span class="buttonicon">&#x279C;</span><span class="buttontext">Next</span></button></a>
 	</div>
 {% endmacro %}
 
 {% block pagecontent %}
 	{{ nextprev() }}
 	{% block article %}
-		This article hasn't been published yet - stay tuned!
+		<div class="faded">This article hasn't been published yet - stay tuned!</div>
 	{% endblock %}
 	{{ nextprev() }}
 {% endblock %}

@@ -60,7 +60,8 @@ function handler (app, env, vapid) {
 						years: renderYears.reverse()
 					});
 					if (args[1] === 'random') {
-						const randLetter = letters.filter(letter => letter.slice(0, -4) !== args[2]).random().slice(0, -4);
+						const referer = req.headers.referer?.split('/').pop();
+						const randLetter = letters.filter(letter => letter.slice(0, -4) !== referer).random().slice(0, -4);
 						return res.redirect(`/newsletters/${randLetter}`);
 					}
 					const index = letters.indexOf(args[1] + '.njk');
