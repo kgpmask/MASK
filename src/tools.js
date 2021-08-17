@@ -13,9 +13,9 @@ exports.toID = function (string) {
 };
 
 
-/*
-* Prototypes
-*/
+/*************
+* Prototypes *
+*************/
 
 Array.prototype.random = function (amount) {
 	if (!amount || typeof amount !== 'number') return this[Math.floor(Math.random() * this.length)];
