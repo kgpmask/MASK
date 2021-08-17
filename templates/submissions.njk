@@ -60,9 +60,19 @@
 		.freebirdFormviewerViewFooterEmbeddedBackground, .freebirdFormviewerViewNavigationPasswordWarning {
 			display: none;
 		}
-		.freebirdFormviewerComponentsQuestionBaseErrorIcon path {
-			/*opacity: 0.5;*/
-			fill: var(--error-red);
-		}
 	</style>
+	<script>
+		fixFavicon();
+	</script>
+{% endblock %}
+
+{% block customjs %}
+	<script>
+		function fixFavicon () {
+			link = document.createElement('link');
+			link.rel = 'shortcut icon';
+			link.href = '/assets/favicon.ico';
+			document.getElementsByTagName('head')[0].appendChild(link);
+		}
+	</script>
 {% endblock %}
