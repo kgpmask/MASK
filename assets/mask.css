@@ -46,7 +46,7 @@ h1 {
 	margin: 30px;
 }
 
-hr {
+hr.in-navbar {
 	border-top: 1px var(--off-white);
 }
 

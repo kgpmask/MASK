@@ -4,5 +4,73 @@
 {% set pagetitle = 'Our Members' %}
 
 {% block pagecontent %}
-	<h2>I'll fill this later</h2>
+	<h2>Our members</h2>
+	{% for year, list in members %}
+		{% if list | length %}
+			<div class="yearbox">
+				<h3>{{ year }} {% if not (year == 'Governors' or year == 'Alumni' or year == 'Former Governors') %} Years {% endif %}</h3>
+				<br/><hr class="div-line"/>
+				<div class="list">
+					{% for person in list %}
+						<div class="member">
+							<img src="/assets/members/{{ person.href }}" class="member-icon" height="80px" widht="80px"/>
+							<div class="div-line">&nbsp;</div>
+							<div class="member-desc">{{ person.name }}<br/>{{ person.roll }}</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		{% endif %}
+	{% endfor %}
+{% endblock %}
+
+{% block customcss %}
+	<style>
+		.yearbox {
+			color: var(--off-white);
+			padding: 20px;
+			border-radius: 10px;
+			background-color: var(--tinted-gray);
+			margin: 20px auto;
+			width: 80%;
+		}
+		h3 {
+			margin: auto;
+		}
+		.div-line {
+			width: 70%;
+			margin: 5px auto;
+			display: block;
+			height: 0px;
+			border: 1px solid var(--ghost-gray);
+		}
+		.list {
+			display: flex;
+			align-items: stretch;
+			flex-wrap: wrap;
+			list-style: none;
+			justify-content: center;
+		}
+		.member {
+			border-radius: 10px;
+			background-color: var(--medium-gray);
+			width: 80px;
+			display: inline-block;
+			text-align: center;
+			margin: 20px;
+			margin-bottom: 0px;
+			padding: 10px;
+		}
+		.member-icon {
+			border-radius: 15px;
+		}
+		.member-desc {
+			margin-top: 10px;
+			display: block;
+			font-size: 0.8em;
+			overflow: wrap;
+			word-wrap: break-word;
+			hyphens: auto;
+		}
+	</style>
 {% endblock %}

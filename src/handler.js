@@ -32,9 +32,27 @@ function handler (app, env, vapid) {
 				}).catch(() => notFound());
 				break;
 			}
-			case 'rebuild': {
-				env.loaders.forEach(loader => loader.cache = {});
-				res.render(path.join(__dirname, '../templates', 'rebuild.njk'));
+			case 'members': {
+				const members = require('./members.json');
+				const ctx = {
+					'Governors': [],
+					'5th': [],
+					'4th': [],
+					'3rd': [],
+					'2nd': [],
+					'1st': [],
+					'Former Governors': [],
+					'Alumni': []
+				};
+				members.forEach(member => {
+					ctx[member.gov || member.year].push({
+						name: member.name,
+						roll: member.roll,
+						href: `${member.name.toLowerCase().replace(/[\.-]/g, '').replace(/ /g, '_')}.png`
+					});
+				});
+				Object.values(ctx).forEach(set => set.sort());
+				tryFile(path.join(__dirname, '../templates', 'members.njk'), false, { members: ctx });
 				break;
 			}
 			case 'newsletters': {
@@ -70,6 +88,11 @@ function handler (app, env, vapid) {
 					const adjs = [letters[index - 1]?.slice(0, -4), letters[index + 1]?.slice(0, -4), letters[index].slice(0, -4)];
 					return res.render(filepath, { adjs });
 				}).catch(err => console.log(err) || notFound());
+				break;
+			}
+			case 'rebuild': {
+				env.loaders.forEach(loader => loader.cache = {});
+				res.render(path.join(__dirname, '../templates', 'rebuild.njk'));
 				break;
 			}
 			default: {
