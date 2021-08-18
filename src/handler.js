@@ -53,14 +53,14 @@ function handler (app, env, vapid) {
 							name: 'AMV',
 							icon: 'fas fa-film'
 						}, {
-							name: 'Design n Arts',
+							name: 'Design & Arts',
 							icon: 'fas fa-paint-brush'
 						}, {
 							name: 'Music',
 							icon: 'fas fa-music'
 						}, {
 							name: 'Quiz',
-							icon: 'fas fa-pencil-alt'
+							icon: 'fas fa-feather-alt'
 						}, {
 							name: 'WebDev',
 							icon: 'fas fa-laptop-code'
