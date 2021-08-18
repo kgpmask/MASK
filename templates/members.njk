@@ -4,29 +4,34 @@
 {% set pagetitle = 'Our Members' %}
 
 {% block pagecontent %}
-	<h1>Our members</h1>
-	{% for year, list in members %}
-		{% if list | length %}
-			<div class="yearbox">
-				<h2>{{ year }} {% if not (year == 'Governors' or year == 'Alumni' or year == 'Former Governors') %} Years {% endif %}</h2>
-				<br/><hr class="div-line"/>
-				<div class="list">
-					{% for person in list %}
-						<div class="member">
-							<img src="/assets/members/{{ person.href }}" class="member-icon" height="80px" widht="80px"/>
-							<div class="div-line">&nbsp;</div>
-							<div class="member-desc">{{ person.name }}<!--br/>{{ person.roll }}--><br/></div>
-							<div class="teamlist">
-								{% for team in person.teams %}
-									<i class="{{ team.icon }}" title="{{ team.name }}"></i>
-								{% endfor %}
+	<div id="loaded" style="display:none">
+		<h1>Our members</h1>
+		{% for year, list in members %}
+			{% if list | length %}
+				<div class="yearbox">
+					<h2>{{ year }} {% if not (year == 'Governors' or year == 'Alumni' or year == 'Former Governors') %} Years {% endif %}</h2>
+					<br/><hr class="div-line"/>
+					<div class="list">
+						{% for person in list %}
+							<div class="member">
+								<img src="/assets/members/{{ person.href }}" class="member-icon" height="80px" widht="80px"/>
+								<div class="div-line">&nbsp;</div>
+								<div class="member-desc">{{ person.name }}<!--br/>{{ person.roll }}--><br/></div>
+								<div class="teamlist">
+									{% for team in person.teams %}
+										<i class="{{ team.icon }}" title="{{ team.name }}"></i>
+									{% endfor %}
+								</div>
 							</div>
-						</div>
-					{% endfor %}
+						{% endfor %}
+					</div>
 				</div>
-			</div>
-		{% endif %}
-	{% endfor %}
+			{% endif %}
+		{% endfor %}
+	</div>
+	<div id="unloaded">
+		Loading! ^-^
+	</div>
 {% endblock %}
 
 {% block customcss %}
@@ -87,4 +92,10 @@
 
 {% block customjs %}
 	<script src="https://kit.fontawesome.com/dbc840a846.js" crossorigin="anonymous"></script>
+	<script>
+		window.onload = () => {
+			document.getElementById('loaded').style.display = 'initial';
+			document.getElementById('unloaded').style.display = 'none';
+		}
+	</script>
 {% endblock %}
