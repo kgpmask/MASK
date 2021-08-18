@@ -24,8 +24,10 @@
 		<meta name="description" content="{% block pagedesc %} The MASK website {% endblock %}"/>
 		<meta name="keywords" content="Manga, Anime, MASK, Kharagpur, IIT KGP, Otakus"/>
 		<link rel="stylesheet" type="text/css" href="/assets/mask.css"/>
-		<link rel="shortcut icon" href="/assets/favicon.ico"/>
+		<link rel="shortcut icon" href="/assets/favicon.ico"/>		
 		{% block customcss %}{% endblock %}
+
+		<script src="https://kit.fontawesome.com/dbc840a846.js" crossorigin="anonymous"></script>
 		{% block customjs %}{% endblock %}
 		{% for script in scripts %}
 			<script src="{{ script }}"></script>
@@ -54,7 +56,17 @@
 						</ul>
 					</div>
 					<div class="navbar-hamburger">
-						<!--TODO-->
+						<a href="#" class="nohover" style="color:#fff;float:left;text-decoration:none;margin:5px 0 0 15px;font-size:1.6em;" id="navar-hamburger-btn"><i class="fas fa-bars"></i></a>
+						<a href="/" style="padding:0px 16px;vertical-align:middle;" class="nohover" target="_self"><img src="/assets/logo.jpeg" alt="Logo" width="100%" height="100%" id="navbar-logo"/></a>
+						<div class="links" id="navbar-hamburger-links" style="display:none;">
+							<ul>
+								{% for link in navlinks %}
+									<li><a href="/{{ link.href }}" {% if link.href === thispage %} class="active-page" {% endif %} target="_self">{{ link.name }}</a></li>
+								{% endfor %}
+								<li><a href="/about" {% if 'about' === thispage %} class="active-page" {% endif %} target="_self">Our Society</a></li>
+								<li><a href="/members" {% if 'members' === thispage %} class="active-page" {% endif %} target="_self">Our Members</a></li>
+							</ul>
+						</div>
 					</div>
 				{% endblock %}
 				{% block pagecontent %}
@@ -69,5 +81,15 @@
 				<a href="mailto:maskiitkgp@gmail.com" target="_blank" target="_self"><img class="social-icon" id="gmail" src="/assets/gmail.png"/></a>
 			</footer>
 		</div>
+
+		<script>
+			const navHamburgerBtn = document.getElementById("navar-hamburger-btn");
+			const navMobileLinksDiv = document.getElementById("navbar-hamburger-links");
+			navHamburgerBtn.addEventListener('click', () => {
+				if (navMobileLinksDiv.style.display === "none")
+					navMobileLinksDiv.style.display = "block";
+				else navMobileLinksDiv.style.display = "none";
+			});
+		</script>
 	</body>
 </html>

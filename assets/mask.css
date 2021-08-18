@@ -197,6 +197,26 @@ span.navbar-line {
 
 .navbar-hamburger {
 	display: none;
+	margin-top: 1em;
+}
+
+.navbar-hamburger .links {
+	background-color: #060606;
+	text-align: left;
+	margin-top: 10px;
+}
+
+.navbar-hamburger .links ul {
+	padding: 10px;
+}
+
+.navbar-hamburger .links ul li {
+	padding: 5px;
+}
+
+.navbar-hamburger .links ul li a {
+	color: #fff;
+	text-decoration: none;
 }
 
 
