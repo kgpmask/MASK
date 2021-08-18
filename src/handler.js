@@ -45,7 +45,7 @@ function handler (app, env, vapid) {
 					'Alumni': []
 				};
 				members.forEach(member => {
-					ctx[member.gov || member.year].push({
+					ctx[member.gov || ['0th', '1st', '2nd', '3rd', '4th', '5th'][member.year]].push({
 						name: member.name,
 						roll: member.roll,
 						href: `${member.name.toLowerCase().replace(/[\.-]/g, '').replace(/ /g, '_')}.webp`,
