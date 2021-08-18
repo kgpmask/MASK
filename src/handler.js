@@ -67,7 +67,6 @@ function handler (app, env, vapid) {
 						}].filter((_, index) => member.teams[index])
 					});
 				});
-				Object.values(ctx).forEach(set => set.sort());
 				tryFile(path.join(__dirname, '../templates', 'members.njk'), false, { members: ctx });
 				break;
 			}
