@@ -48,7 +48,7 @@ function handler (app, env, vapid) {
 					ctx[member.gov || member.year].push({
 						name: member.name,
 						roll: member.roll,
-						href: `${member.name.toLowerCase().replace(/[\.-]/g, '').replace(/ /g, '_')}.png`,
+						href: `${member.name.toLowerCase().replace(/[\.-]/g, '').replace(/ /g, '_')}.webp`,
 						teams: [{
 							name: 'AMV',
 							icon: 'fas fa-film'
