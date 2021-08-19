@@ -1,7 +1,149 @@
 {% set thispage = 'home' %}
 {% extends "_base.njk" %}
 
+{% set posts = [
+	'<a href="https://www.instagram.com/tv/CSuMxP8g8YT" target="_blank">AMV - Zombie</a>'
+] %}
+
 {% block pagecontent %}
-	<h1>Welcome to the MASK website!</h1>
-	<div class="text">Content coming soon.</div>
+	<div class="mask-banner">
+		<img class="mask-banner-image" src="/assets/logo.jpeg"/>
+	</div>
+	<div class="flex-container">
+		<div class="notices"><div class="noticebox">
+			<div class="notices-header">Updates!</div>
+			<div class="notices-list">
+				{% for post in posts %}
+					<div class="notice-post">{{ post | safe }}</div>{% if not loop.last %}<hr class="notice-break"/>{% endif %}
+				{% endfor %}
+			</div>
+		</div></div>
+		<div class="about-stuff">
+			<h1>Welcome to the MASK website!</h1>
+			<div class="text">
+				The Manga & Anime Society, Kharagpur is a society established by students at IIT Kharagpur dedicated to promoting East-Asian animation and comics. You could call us weebs and otakus - but we're proud of it!
+			</div>
+		</div>
+	</div>
+	<hr class="flex-break"/>
+	<div class="flex-container" id="bottom-container">
+		<div class="slideshow"></div>
+		<div class="submit-stuff"><a href="/submissions"><button class="submit-button">Submit your content!</button></a></div>
+	</div>
+{% endblock %}
+
+{% block customcss %}
+	<style>
+		.mask-banner {
+			width: 80%;
+			background: var(--red);
+			text-align: center;
+			margin: 20px auto;
+			border-radius: 30px;
+		}
+		.mask-banner-image {
+			width: 120px;
+			height: 120px;
+		}
+		.flex-container {
+			display: inline-flex;
+			justify-content: center;
+			padding: 30px 0px;
+		}
+		#bottom-container {
+			width: 100%;
+			justify-content: space-evenly;
+			flex-direction: column;
+		}
+		.notices {
+			display: flex;
+			padding: 0px 40px;
+			margin: 30px;
+		}
+		.noticebox {
+			margin-top: 20px;
+			border-radius: 5px;
+			border: 1px solid var(--ghost-gray);
+			align-self: center;
+			width: 180px;
+		}
+		.notices-header {
+			background-color: var(--medium-gray);
+			padding: 5px;
+			color: var(--white);
+		}
+		.notices-list {
+			max-height: 100px;
+			overflow-y: auto;
+		}
+		.notice-post {
+			transition: 0.4s;
+			padding: 4px;
+		}
+		.notice-post:hover {
+			background-color: var(--tinted-gray);
+			color: var(--white);
+		}
+		.notice-post a {
+			text-decoration: none;
+			color: inherit;
+		}
+		.notice-break {
+			width: 60%;
+			color: var(--medium-gray);
+			margin: 0px auto;
+		}
+		h1 {
+			font-size: 2.5em;
+		}
+		.text {
+			text-justify: justify;
+		}
+		.flex-break {
+			width: 60%;
+			margin: 30px auto;
+			color: var(--medium-gray);
+		}
+		.slideshow {
+			height: 600px;
+			width: 1000px;
+			border: 1px solid var(--off-white);
+			border-radius: 5px;
+			margin: 50px auto;
+			width: 90vw;
+			height: 50.625vw;
+			background-color: var(--medium-gray);
+			max-height: 90vh;
+			max-width: 160vh;
+			margin: auto;
+		}
+		.submit-stuff {
+			margin: 30px auto;
+			display: flex;
+			align-items: center;
+		}
+		.submit-button {
+			border: 2px solid var(--off-white);
+			border-radius: 9px;
+			background: var(--tinted-gray);
+			padding: 20px;
+			color: var(--white);
+			transition: 0.4s;
+			cursor: pointer;
+			width: 180px;
+			height: 80px;
+			font-size: 1.1em;
+		}
+		.submit-button:hover {
+			background-color: var(--middle-gray);
+		}
+		@media (max-width: 800px) {
+			.flex-container {
+				flex-direction: column;
+			}
+			.notices, .submit-stuff, .slideshow {
+				margin: 30px auto;
+			}
+		}
+	</style>
 {% endblock %}
