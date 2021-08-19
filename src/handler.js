@@ -19,8 +19,15 @@ function handler (app, env, vapid) {
 		const args = req.url.split('/');
 		args.shift();
 		switch (args[0]) {
-			case '': {
-				res.render(path.join(__dirname, '../templates', 'home.njk'));
+			case '': case 'home': {
+				const posts = require('./posts.json').slice(0, 5);
+				const vids = require('./posts.json').filter(post => post.type === 'video' && post.link.includes('www.youtube.com')).slice(0, 5);
+				const art = require('./posts.json').filter(post => post.type === 'art').slice(0, 5);
+				res.render(path.join(__dirname, '../templates', 'home.njk'), { posts, vids, art });
+				break;
+			}
+			case 'art': {
+				const posts = require('./posts.json').filter(post => post.type === 'art');
 				break;
 			}
 			case 'assets': {
@@ -107,6 +114,7 @@ function handler (app, env, vapid) {
 			}
 			case 'rebuild': {
 				env.loaders.forEach(loader => loader.cache = {});
+				['./members.json', './posts.json'].forEach(cache => delete require.cache[require.resolve(cache)]);
 				res.render(path.join(__dirname, '../templates', 'rebuild.njk'));
 				break;
 			}

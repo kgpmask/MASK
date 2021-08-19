@@ -1,10 +1,6 @@
 {% set thispage = 'home' %}
 {% extends "_base.njk" %}
 
-{% set posts = [
-	'<a href="https://www.instagram.com/tv/CSuMxP8g8YT" target="_blank">AMV - Zombie</a>'
-] %}
-
 {% block pagecontent %}
 	<div class="mask-banner">
 		<img class="mask-banner-image" src="/assets/logo.jpeg"/>
@@ -14,7 +10,7 @@
 			<div class="notices-header">Updates!</div>
 			<div class="notices-list">
 				{% for post in posts %}
-					<div class="notice-post">{{ post | safe }}</div>{% if not loop.last %}<hr class="notice-break"/>{% endif %}
+					<a href="{{ post.link }}" target="{{ post.page }}" class="notice-link" title="{{ post.date }}"><div class="notice-post">{{ post.name }}</div></a>{% if not loop.last %}<hr class="notice-break"/>{% endif %}
 				{% endfor %}
 			</div>
 		</div></div>
@@ -65,7 +61,7 @@
 			border-radius: 5px;
 			border: 1px solid var(--ghost-gray);
 			align-self: center;
-			width: 180px;
+			width: 200px;
 		}
 		.notices-header {
 			background-color: var(--medium-gray);
@@ -84,7 +80,7 @@
 			background-color: var(--tinted-gray);
 			color: var(--white);
 		}
-		.notice-post a {
+		.notice-link, .notice-post {
 			text-decoration: none;
 			color: inherit;
 		}
@@ -118,7 +114,7 @@
 			margin: auto;
 		}
 		.submit-stuff {
-			margin: 30px auto;
+			margin: 50px auto;
 			display: flex;
 			align-items: center;
 		}
