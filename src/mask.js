@@ -18,7 +18,7 @@ try {
 	console.log('Unable to find VAPID keys. Generating a new pair...');
 	vapid = webpush.generateVAPIDKeys();
 	console.log(`Generated VAPID keys [${Object.values(vapid).join(', ')}]`);
-	fs.writeFile(path.join(__dirname, 'src/vapid.json'), JSON.stringify(vapid)).then(() => {
+	fs.writeFile(path.join(__dirname, 'vapid.json'), JSON.stringify(vapid)).then(() => {
 		console.log('Stored new VAPID keys.');
 		if (process.argv[2] === 'workflow') process.exit();
 	});
