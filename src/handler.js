@@ -30,7 +30,7 @@ function handler (app, env, vapid) {
 			}
 			case 'art': {
 				const posts = require('./posts.json').filter(post => post.type === 'art');
-				return res.render(path.join(__dirname, '../templates', 'art.njk'));
+				res.render(path.join(__dirname, '../templates', 'art.njk'));
 				break;
 			}
 			case 'assets': {
@@ -119,6 +119,13 @@ function handler (app, env, vapid) {
 				env.loaders.forEach(loader => loader.cache = {});
 				['./members.json', './posts.json'].forEach(cache => delete require.cache[require.resolve(cache)]);
 				res.render(path.join(__dirname, '../templates', 'rebuild.njk'));
+				break;
+			}
+			case 'videos': {
+				const vids = require('./posts.json');
+				const youtubeVids = vids.filter(vid => vid.link.includes('www.youtube.com'));
+				const instaVids = vids.filter(vid => vid.link.includes('www.instagram.com'));
+				res.render(path.join(__dirname, '../templates', 'videos.njk'), { youtubeVids, instaVids });
 				break;
 			}
 			default: {
