@@ -21,13 +21,16 @@ function handler (app, env, vapid) {
 		switch (args[0]) {
 			case '': case 'home': {
 				const posts = require('./posts.json').slice(0, 5);
-				const vids = require('./posts.json').filter(post => post.type === 'video' && post.link.includes('www.youtube.com')).slice(0, 5);
+				const vids = require('./posts.json').filter(post => {
+					return post.type === 'video' && post.link.includes('www.youtube.com');
+				}).slice(0, 5);
 				const art = require('./posts.json').filter(post => post.type === 'art').slice(0, 5);
 				res.render(path.join(__dirname, '../templates', 'home.njk'), { posts, vids, art });
 				break;
 			}
 			case 'art': {
 				const posts = require('./posts.json').filter(post => post.type === 'art');
+				return res.render(path.join(__dirname, '../templates', 'art.njk'));
 				break;
 			}
 			case 'assets': {

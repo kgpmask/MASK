@@ -23,7 +23,9 @@ try {
 	});
 }
 
-const env = nunjucks.configure('templates', {
+console.log(path.join(__dirname, '../templates'));
+
+const env = nunjucks.configure(path.join(__dirname, '../templates'), {
 	express: app,
 	noCache: DEBUG
 });
