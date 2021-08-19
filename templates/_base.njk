@@ -53,9 +53,25 @@
 							</div>
 						</ul>
 					</div>
-					<div class="navbar-hamburger">
-						<!--TODO-->
+					<div class="plate"><a href="/"><div class="burger-home"><img src="/assets/logo.jpeg" id="burger-logo"/></div></a><div class="burger"><div class="patty"></div></div></div>
+					<div class="hamburger-menu">
+						<div style="height:80px;"></div>
+						<hr id="top-line"/>
+						{% for link in navlinks %}
+							<a href="/{{ link.href }}" target="_self"><div class="lettuce{% if link.href == thispage %} active-page {% endif %}" >{{ link.name }}</div></a>
+							{% if not loop.last %}<hr class="minor"/>{% endif %}
+						{% endfor %}
+						<a href="/about" target="_self"><div class="lettuce{% if 'about' == thispage %} active-page {% endif %}" id="most-bottom">Our Society</div></a>
+						<hr class="minor" id="lower-border"/>
+						<a href="/members" target="_self"><div class="lettuce{% if 'members' == thispage %}active-page{% endif %}" id="almost-bottom">Our Members</div></a>
+						<hr class="border-bottom"/>
 					</div>
+					<script>
+						document.querySelector('.burger').addEventListener('click', function () {
+							this.classList.toggle('open');
+							document.querySelector('.hamburger-menu').classList.toggle('slide');
+						});
+					</script>
 				{% endblock %}
 				{% block pagecontent %}
 					Huh, this is an empty page.
