@@ -13,6 +13,7 @@ let vapid;
 
 try {
 	vapid = require('./vapid.json');
+	if (process.argv[2] === 'workflow') process.exit();
 } catch (e) {
 	console.log('Unable to find VAPID keys. Generating a new pair...');
 	vapid = webpush.generateVAPIDKeys();
