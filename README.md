@@ -20,6 +20,8 @@ NGINX has been used for server-side traffic direction and pointing.
 
 Serving is done via express.
 
+Mocha is used for testing, and ESLint for linting JS.
+
 
 ## Templates
 
