@@ -54,6 +54,15 @@
 						</ul>
 					</div>
 					<div class="navbar-hamburger">
+						<div class="default-bar"></div>
+						<ul>
+							<li>Home</li>
+							{% for link in navlinks %}
+								<li><a href="/{{ link.href }}" {% if link.href === thispage %} class="active-page" {% endif %} target="_self">{{ link.name }}</a></li>
+							{% endfor %}
+							<li class="bottom{% if link.href === thispage %} active-page{% endif %}">Our Society</li>
+							<li class="bottom{% if link.href === thispage %} active-page{% endif %}">Our Members</li>
+						</ul>
 						<!--TODO-->
 					</div>
 				{% endblock %}
