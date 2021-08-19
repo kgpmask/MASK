@@ -3,7 +3,7 @@ const axios = require('axios');
 const server = require('../src/mask.js');
 const config = require('../src/config.js');
 
-const pages = ['', 'home', 'art', 'videos', 'events', 'about', 'members', 'submissions'];
+const pages = ['', 'home', 'art', 'videos', 'events', 'about', 'members', 'submissions', '404'];
 
 describe('server', () => {
 	pages.forEach(page => {
