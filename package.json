@@ -1,6 +1,6 @@
 {
   "name": "mask",
-  "version": "0.17.0",
+  "version": "0.17.1",
   "description": "Website for MASK",
   "main": "./src/index.js",
   "scripts": {
@@ -28,6 +28,7 @@
     "web-push": "^3.4.5"
   },
   "devDependencies": {
+    "axios": "^0.21.1",
     "eslint": "^7.32.0",
     "mocha": "^9.0.3"
   }

@@ -75,7 +75,7 @@ function handler (app, env, vapid) {
 					'-', 'January', 'February', 'March', 'April', 'May', 'June',
 					'July', 'August', 'September', 'October', 'November', 'December'
 				];
-				fs.readdir('./templates/newsletters').then(letters => {
+				fs.readdir(path.join(__dirname, '../templates/newsletters')).then(letters => {
 					const years = {};
 					letters.sort(); // Windows isn't automatically sorted
 					letters.forEach(letter => {
