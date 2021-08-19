@@ -360,7 +360,7 @@ span.navbar-line {
 }
 
 .hamburger-menu hr.minor {
-	color: var(--medium-gray);
+	/*color: var(--tinted-gray);*/
 	margin-left: 7%;
 	margin-right: 10%;
 }
