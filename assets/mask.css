@@ -233,7 +233,12 @@ span.navbar-line {
 	height: 80px;
 	width: 100%;
 	background-color: var(--darker-gray);
-	border-bottom: 1px solid var(--light-gray);
+}
+
+.plate-bar {
+	color: var(--light-gray);
+	height: 1px;
+	width: 100%;
 	margin-bottom: 40px;
 }
 
@@ -380,10 +385,10 @@ span.navbar-line {
 
 .border-bottom {
 	position: absolute;
-	bottom: 70px;
-	margin-left: 5%;
-	margin-right: 7%;
-	width: 88%;
+	bottom: 71px;
+	height: 1px;
+	width: 100%;
+	color: var(--gray);
 }
 
 #lower-border {

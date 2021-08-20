@@ -29,11 +29,11 @@
 					{% block pagecontentimg %}
 						<div id="imagei">
 							<div class="blur">
-							<img id="imgi" src=" " height=" " width=" " />
-							<div class="btns">
-							<div id="prevbtn">&#10094;</div>
-							<div id="nextbtn">&#10095;</div>
-							</div>
+								<img id="imgi" src=" " height=" " width=" " />
+								<div class="btns">
+									<div id="prevbtn">&#10094;</div>
+									<div id="nextbtn">&#10095;</div>
+								</div>
 							</div>
 						</div>
 					{% endblock%}
@@ -162,20 +162,20 @@
 									img.onload = () => {
 										height = img.naturalHeight;
 										width = img.naturalWidth;
-										if (window.outerWidth < 1280 && window.outerHeight < 1376) {
+										if (window.innerWidth < 1280 && window.innerHeight < 1376) {
 											document.getElementById("imagei").style.width = 70 + "vw";
-											document.getElementById("imagei").style.height = 40 + "vw";
+											document.getElementById("imagei").style.height = 30 + "vw";
 											document.getElementsByClassName("btns")[0].style.width = 70 + "vw";
-											document.getElementsByClassName("btns")[0].style.height = 0.05 * window.outerHeight + "px";
+											document.getElementsByClassName("btns")[0].style.height = 0.05 * window.innerHeight + "px";
 											scaleWidth = 0.7;
-											scaleHeight = 0.4;
+											scaleHeight = 0.3;
 										} else {
 											document.getElementById("imagei").style.width = 45 + "vw";
-											document.getElementById("imagei").style.height = 40 + "vw";
+											document.getElementById("imagei").style.height = 30 + "vw";
 											document.getElementsByClassName("btns")[0].style.width = 45 + "vw";
-											document.getElementsByClassName("btns")[0].style.height = 0.05 * window.outerHeight + "px";
+											document.getElementsByClassName("btns")[0].style.height = 0.05 * window.innerHeight + "px";
 											scaleWidth = 0.45;
-											scaleHeight = 0.4;
+											scaleHeight = 0.3;
 										}
 										resolve();
 									};
@@ -223,15 +223,15 @@
 										"linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7))," +
 										`url(${images[indexIMG]})`;
 									let aspectRatioDiv =
-										(scaleWidth * window.outerWidth) /
-										(scaleHeight * window.outerWidth);
+										(scaleWidth * window.innerWidth) /
+										(scaleHeight * window.innerWidth);
 									let aspectRatioImage = width / height;
 									aspectRatioImage > aspectRatioDiv ? (widthw = 1) : (heightw = 1);
 									if (widthw) {
-										width = scaleWidth * window.outerWidth;
+										width = scaleWidth * window.innerWidth;
 										height = width / aspectRatioImage;
 									} else {
-										height = scaleHeight * window.outerWidth;
+										height = scaleHeight * window.innerWidth;
 										width = height * aspectRatioImage;
 									}
 									document.getElementById("imgi").height = height;
@@ -374,7 +374,7 @@
 
 						function setImageDimensions (indexv) {
 							var promise = new Promise((resolve, reject) => {
-								if (window.outerWidth < 430 && window.outerHeight < 950) {
+								if (window.innerWidth < 430 && window.innerHeight < 950) {
 									document.getElementById("containerv").style.width = 69 + "vw";
 									document.getElementById("containerv").style.height = 34 + "vw";
 									document.getElementsByClassName("btnsv")[0].style.width = 70 + "vw";
