@@ -1,4 +1,12 @@
 [{
+	"name": "AMV - Beggin'",
+	"link": "https://www.youtube.com/watch?v=tH8zQdBkkBk",
+	"type": "video",
+	"attr": ["Abhibhu Prakash"],
+	"date": "20th Aug, 2021",
+	"show": "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/tH8zQdBkkBk\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>",
+	"page": "_blank"
+}, {
 	"name": "AMV - Zombie",
 	"link": "https://www.instagram.com/tv/CSuMxP8g8YT",
 	"type": "video",
