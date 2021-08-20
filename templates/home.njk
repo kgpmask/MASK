@@ -25,11 +25,532 @@
 	<div class="flex-container" id="bottom-container">
 		<div class="top-container">
 			<div class="imgshow-container">
-				<div class="imgshow"></div>
+				<div class="imgshow">
+				  {% block pagecontentimg %}
+					<div id="imagei">
+						<div class="blur">
+						<img id="imgi" src=" " height=" " width=" " />
+						<div class="btns">
+						<div id="prevbtn">&#10094;</div>
+						<div  id="nextbtn">&#10095;</div>
+						</div>
+						</div>
+					</div>
+
+				  {% endblock%}
+
+				  {% block customcssimg %}
+
+					<style>
+						
+						
+					#imagei {
+					display: flex;
+					justify-content: space-evenly;
+					align-items: center;
+					margin: 0% auto;
+					background-size: cover;
+					}
+					.btns{
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+					position:absolute;
+					z-index:20;
+					
+					}
+					#nextbtn,
+					#prevbtn {
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					color: white;
+					width: 30px;
+				    height: 100%;
+					font-size: 1.5rem;
+					z-index: 20;
+					padding-left:0.6rem;
+					background-color: rgba(0, 0, 0, 0.6);
+
+					}
+                    #nextbtn{
+					padding-left:0;
+					padding-right:0.6rem;
+					}
+					#nextbtn:hover,
+					#prevbtn:hover {
+					background-color: red;
+					cursor: pointer;
+
+					}
+
+					.blur {
+					backdrop-filter: blur(20px);
+					width: 100%;
+					height: 100%;
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+					}
+					#imgi {
+					margin: auto;
+					z-index: 10;
+					}
+
+					.slideLeft {
+					animation-name: slideLeft;
+					animation-duration: 0.8s;
+					transition: ease-in-out;
+					}
+					.slideRight {
+					animation-name: slideRight;
+					animation-duration: 0.8s;
+					transition: ease-in-out;
+					}
+
+					@keyframes slideLeft {
+					0% {
+						opacity: 0;
+						transform: translateX(15rem);
+						transition: 3s ease-in;
+					}
+
+					100% {
+						opacity: 1;
+						transform: translateX(0);
+						transition: 0.01s ease-in;
+					}
+					}
+					@keyframes slideRight {
+					0% {
+						opacity: 0;
+						transform: translateX(-15rem);
+						transition: 0.01s ease-in;
+					}
+
+					100% {
+						opacity: 1;
+						transform: translateX(0);
+						transition: 0.01s ease-in;
+					}
+					}
+
+					</style>
+					{% endblock %}
+
+					{% block customjsimg %}
+					<script>
+						
+						window.presentSlide = -1;
+						let height = 0;
+						let width = 0;
+						let scaleWidth=0;
+						let scaleHeight = 0;
+						let next=0;
+						document.getElementById ("prevbtn").addEventListener ("click", prevImg);
+						document.getElementById ("nextbtn").addEventListener ("click", nextImg);
+						document.getElementById ("imgi").addEventListener ("mouseout", auto);
+						document.getElementById ("imgi").addEventListener ("mouseenter", pause);
+
+
+						function prevImg(){
+							next=1;
+							slideShow(--presentSlide);
+						}
+						function nextImg(){
+							console.log("next");
+							next=0;
+							slideShow(++presentSlide);
+						}
+						function pause(){
+							next=2
+							document.getElementById("imgi").style.cursor="grabbing";
+							console.log( document.getElementById("imgi").style.cursor);
+							slideShow(presentSlide);
+						}
+						function auto(){
+							console.log("auto");
+							next=0;
+						}
+						
+						function setImageDimensions() {
+							
+							var promise = new Promise((resolve, reject) => {
+							
+							let img = document.getElementById("imgi");
+							img.onload = () => {
+
+								height = img.naturalHeight;
+								width = img.naturalWidth;
+								if (window.outerWidth < 1280 && window.outerHeight < 1376) {
+								document.getElementById("imagei").style.width = 70+"vw";
+								document.getElementById("imagei").style.height = 40+"vw";
+								document.getElementsByClassName("btns")[0].style.width=70+"vw";
+								document.getElementsByClassName("btns")[0].style.height=0.05 * window.outerHeight+"px";
+								scaleWidth = 0.7;
+								scaleHeight = 0.4;
+								
+								} else{
+								document.getElementById("imagei").style.width =45+"vw";
+								document.getElementById("imagei").style.height = 40+"vw";
+								document.getElementsByClassName("btns")[0].style.width= 45+"vw";
+								document.getElementsByClassName("btns")[0].style.height=0.05 * window.outerHeight+"px";
+
+								scaleWidth = 0.45;
+								scaleHeight = 0.4;
+								
+								}
+								resolve();
+							};
+							});
+							return promise;
+						}
+
+						const images = [
+							"https://th.bing.com/th/id/OIP.AFynZQOGeeMUst9gbrHg3QHaNK?w=187&h=333&c=7&o=5&dpr=1.56&pid=1.7",
+							"https://th.bing.com/th/id/OIP.PBTX6v18k3qmWr0u4QOduQHaEK?w=310&h=180&c=7&o=5&dpr=1.56&pid=1.7",
+							"https://th.bing.com/th/id/OIP.1TQuwXOEwDvfWPA3_lsDpgHaEK?w=279&h=180&c=7&o=5&dpr=1.56&pid=1.7",
+						];
+						document.getElementById("imgi").src = images[0];
+						function slideShow(index) {
+							console.log(index);
+							let widthw = 0;
+							let heightw = 0;
+							index<0 ? (index = -(index % images.length)):(index = (index % images.length));
+							if (next===1) {
+							let element2 = document.getElementById("imgi");
+								if (element2.classList.contains("slideRight")) {
+								element2.classList.remove("slideRight");
+								element2.offsetWidth = element2.offsetWidth;
+								element2.classList.add("slideRight");
+								
+								} else {
+								
+								element2.classList.remove("slideLeft");
+								element2.offsetWidth = element2.offsetWidth;
+								element2.classList.add("slideRight");
+								}
+							
+							}if(next===0){
+							
+							let element2 = document.getElementById("imgi");
+								if (element2.classList.contains("slideRight")) {
+								element2.classList.remove("slideRight");
+								element2.offsetWidth = element2.offsetWidth;
+								element2.classList.add("slideLeft");
+								
+								} else {
+								element2.classList.remove("slideLeft");
+								element2.offsetWidth = element2.offsetWidth;
+								element2.classList.add("slideLeft");
+								}
+							
+							}
+							document.getElementById("imgi").src = images[index];
+							
+
+							setImageDimensions()
+							.then((res) => {
+								document.getElementById("imagei").style.backgroundImage =
+								"linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7))," +
+								`url(${images[index]})`;
+								let aspectRatioDiv =
+								(scaleWidth * window.outerWidth) /
+								(scaleHeight * window.outerWidth);
+								
+								let aspectRatioImage = width / height;
+								aspectRatioImage > aspectRatioDiv ? (widthw = 1) : (heightw = 1);
+								if (widthw) {
+								width = scaleWidth * window.outerWidth;
+								height = width / aspectRatioImage;
+								} else {
+								height = scaleHeight * window.outerWidth;
+								width = height * aspectRatioImage;
+								}
+							
+								document.getElementById("imgi").height = height;
+								document.getElementById("imgi").width = width;
+								
+							})
+							.catch((err) => console.log(err));
+						};
+						
+						slideShow(++presentSlide);
+						setInterval(() => {
+							document.getElementById ("imgi").addEventListener ("mouseenter", pause);
+							
+							if(next!=2){
+								slideShow(++presentSlide);   
+							}}, 5000);
+						
+						
+						
+					</script>
+					{% endblock %}
+
+				</div>
 			</div>
 			<div class="submit-stuff"><a href="/submissions"><button class="submit-button">Submit your content!</button></a></div>
 		</div>
-		<div class="vidshow"></div>
+		<div class="vidshow">
+		{% block pagecontentv %}
+			<div id="containerv">
+					<div class="btnsv">
+					<div id="prevvbtn">&#10094;</div>
+					<div  id="nextvbtn">&#10095;</div>
+					</div>
+			</div>
+
+			{% endblock %}
+
+			{% block customcssv %}
+
+			<style>
+					
+					
+			#containerv {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				width:70vw;
+				height:35vw;
+				margin: 0% auto;
+				background-size: cover;
+			}
+
+			.div{
+				display:none;
+				width:100%;
+				height:100%;
+				margin:auto;
+				z-index: 10;
+			}
+			.btnsv{
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				width:70vw;
+				height:10vh;
+				position:absolute;
+				z-index:30;
+			}
+			#nextvbtn,
+			#prevvbtn {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				color: rgb(247, 239, 239);
+				width: 40px;
+				height: 100%;
+				font-size: 2.5rem;
+				z-index: 40;
+				background-color: rgba(0, 0, 0, 0.6);
+				border-radius:0.3rem;
+			
+			}
+			#nextvbtn:hover,
+			#prevvbtn:hover {
+				background-color: red;
+				cursor: pointer;
+				border-radius:0.5rem;
+
+			}
+
+			.slideLeftv {
+				animation-name: slideLeftv;
+				animation-duration: 0.8s;
+				transition: ease-in-out;
+			}
+			.slideRightv {
+				animation-name: slideRightv;
+				animation-duration: 0.8s;
+				transition: ease-in-out;
+			}
+
+			@keyframes slideLeftv {
+				0% {
+				opacity: 0;
+				transform: translateX(15rem);
+				transition: 3s ease-in;
+				}
+
+				100% {
+				opacity: 1;
+				transform: translateX(0);
+				transition: 0.01s ease-in;
+				}
+			}
+			@keyframes slideRightv {
+				0% {
+				opacity: 0;
+				transform: translateX(-15rem);
+				transition: 0.01s ease-in;
+				}
+
+				100% {
+				opacity: 1;
+				transform: translateX(0);
+				transition: 0.01s ease-in;
+				}
+			}
+
+			</style>
+			{% endblock %}
+
+			{% block customjsv %}
+				<script>
+					window.onload = () => {
+					window.presentSlidev = -1;
+					let heightv = 0;
+					let widthv = 0;
+					let scaleWidthv=0;
+					let scaleHeightv = 0;
+					let nextv=0;
+					let autoScroll=1;
+					
+					document.getElementById ("prevvbtn").addEventListener ("click", prevvVideo);
+					document.getElementById ("nextvbtn").addEventListener ("click", nextvVideo);
+			
+					function prevvVideo(){
+					nextv=0;
+					slideShow(--presentSlidev);
+					
+					}
+					function nextvVideo(){
+					nextv=1;
+					slideShow(++presentSlidev);
+					
+					}
+			
+					function pause(){
+					
+					autoScroll=0;
+					document.getElementById("containerv").style.cursor="pointer";
+					}
+					function auto(){
+					autoScroll=1;
+					}
+
+				
+					
+					function setImageDimensions(indexv) {
+					
+					var promise = new Promise((resolve, reject) => {
+						
+						if (window.outerWidth < 430 && window.outerHeight < 950) {
+							document.getElementById("containerv").style.width = 69+"vw";
+							document.getElementById("containerv").style.height =34+"vw";
+							document.getElementsByClassName("btnsv")[0].style.width=70+"vw";
+							document.getElementsByClassName("div")[indexv].style.width =70+"vw";
+							document.getElementsByClassName("div")[indexv].style.height =35+"vw";
+
+
+							scaleWidthv = 1;
+							scaleHeightv = 0.6;
+						} 
+						resolve();
+					
+					});
+					return promise;
+					}
+					
+				const videos = ['<iframe src="https://www.youtube.com/embed/qOngOlxEcnY" height="100%" width="100%"  title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>','<iframe src="https://www.youtube.com/embed/mz3l63l-uEs" height="100%" width="100%"  title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>','<iframe src="https://www.youtube.com/embed/K1qJQu6qboY" height="100%" width="100%"  title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+					];
+
+				for(let i=0;i<videos.length;i++){
+					
+					let div = document.createElement("div");
+					div.className="div";
+					div.innerHTML=videos[i];
+					document.getElementById("containerv").appendChild(div);
+					
+				
+				}
+				
+				
+					function slideShow(indexv) {
+					indexv<0 ? (indexv = -(indexv % videos.length)):(indexv = (indexv % videos.length));
+					
+					setImageDimensions(indexv)
+						.then(res=>{
+								let slides = document.getElementsByClassName("div");
+								for (i = 0; i < slides.length; i++) {
+									slides[i].style.display = "none";
+									
+								}
+								slides[indexv].style.display="block";
+								if (nextv===0) {
+									
+									if (slides[indexv].classList.contains("slideRightv")) {
+										slides[indexv].classList.remove("slideRightv");
+										slides[indexv].offsetWidth = slides[indexv].offsetWidth;
+										slides[indexv].classList.add("slideRightv");
+									
+									} else {
+									
+										slides[indexv].classList.remove("slideLeftv");
+										slides[indexv].offsetWidth = slides[indexv].offsetWidth;
+										slides[indexv].classList.add("slideRightv");
+									}
+								
+								}else{
+									
+									
+									if (slides[indexv].classList.contains("slideRightv")) {
+										slides[indexv].classList.remove("slideRightv");
+										slides[indexv].offsetWidth = slides[indexv].offsetWidth;
+										slides[indexv].classList.add("slideLeftv");
+									
+									} else {
+										slides[indexv].classList.remove("slideLeftv");
+										slides[indexv].offsetWidth = slides[indexv].offsetWidth;
+										slides[indexv].classList.add("slideLeftv");
+									}
+									
+								}
+								
+
+
+								document.getElementsByClassName ("div")[indexv].addEventListener ("mouseenter", pause);
+								document.getElementById("prevvbtn").addEventListener ("mouseenter", pause);
+								document.getElementById("nextvbtn").addEventListener ("mouseenter", pause);
+								document.getElementById("prevvbtn").addEventListener ("mouseout", auto);
+								document.getElementById("nextvbtn").addEventListener ("mouseout", auto);
+								document.getElementsByClassName ("div")[indexv].addEventListener ("mouseout", auto);
+								
+						
+								}
+						)
+						.catch((err) => console.log(err));
+					
+					};
+					
+					slideShow(++presentSlidev);
+					setInterval(() => {
+					let slides = document.getElementsByClassName("div");
+						for (i = 0; i < slides.length; i++) {
+							if(slides[i].style.display==="block"){
+							//document.getElementsByClassName ("div")[i].addEventListener ("mouseout", auto);
+							document.getElementsByClassName ("div")[i].addEventListener ("mouseenter", pause);
+							document.getElementById("prevvbtn").addEventListener ("mouseenter", pause);
+							document.getElementById("nextvbtn").addEventListener ("mouseenter", pause);
+							document.getElementById("prevvbtn").addEventListener ("mouseout", auto);
+							document.getElementById("nextvbtn").addEventListener ("mouseout", auto);
+							document.getElementsByClassName ("div")[i].addEventListener ("mouseout", auto);
+							}
+							
+						}
+					if(autoScroll){
+						slideShow(++presentSlidev); 
+					
+					}}, 5000);
+					
+				 
+					};		
+			</script>
+			{% endblock %}
+
+		</div>
 	</div>
 {% endblock %}
 
@@ -126,27 +647,26 @@
 			padding-bottom: 40px;
 			flex-wrap: wrap;
 			justify-content: center;
+			width:70vw;
+			margin: 0 auto;
 		}
 		.imgshow {
+		    width:fit-content;
+			height:fit-content;
 			border: 1px solid var(--off-white);
 			border-radius: 5px;
 			margin: 20px;
-			width: 60vw;
-			height: 40vw;
 			background-color: var(--medium-gray);
-			max-height: 90vh;
-			max-width: 80vh;
+			
 		}
 		.vidshow {
-			height: 400px;
+			
 			border: 1px solid var(--off-white);
 			border-radius: 5px;
 			margin: 40px auto;
-			width: 60vw;
-			height: 32vw;
+			width: 70vw;
+			height: 35vw;
 			background-color: var(--medium-gray);
-			max-height: 90vh;
-			max-width: 160vh;
 			margin: auto;
 			margin-bottom: 50px;
 		}
