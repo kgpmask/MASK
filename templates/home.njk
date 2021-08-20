@@ -10,7 +10,7 @@
 			<div class="notices-header">Updates!</div>
 			<div class="notices-list">
 				{% for post in posts %}
-					<a href="{{ post.link }}" target="{{ post.page }}" class="notice-link" title="{{ post.date }}"><div class="notice-post">{{ post.name }}</div></a>{% if not loop.last %}<hr class="notice-break"/>{% endif %}
+					<a href="{{ post.link }}" target="{{ post.page }}" class="notice-link" title="{{ post.date }}"><div class="notice-post">{{ post.name }}{{ ('<sup>NEW</sup>' | safe) if post.recent }}</div></a>{% if not loop.last %}<hr class="notice-break"/>{% endif %}
 				{% endfor %}
 			</div>
 		</div></div>
@@ -24,7 +24,9 @@
 	<hr class="flex-break"/>
 	<div class="flex-container" id="bottom-container">
 		<div class="top-container">
-			<div class="imgshow"></div>
+			<div class="imgshow-container">
+				<div class="imgshow"></div>
+			</div>
 			<div class="submit-stuff"><a href="/submissions"><button class="submit-button">Submit your content!</button></a></div>
 		</div>
 		<div class="vidshow"></div>
@@ -57,7 +59,7 @@
 		}
 		.notices {
 			display: flex;
-			padding: 0px 40px;
+			padding: 0 40px 0 0;
 			margin: 30px;
 		}
 		.noticebox {
@@ -66,6 +68,7 @@
 			border: 1px solid var(--ghost-gray);
 			align-self: center;
 			width: 200px;
+			overflow: hidden;
 		}
 		.notices-header {
 			background-color: var(--red);
@@ -77,6 +80,7 @@
 		.notices-list {
 			max-height: 150px;
 			overflow-y: auto;
+			margin-right: -8px;
 		}
 		.notice-post {
 			transition: 0.4s;
@@ -88,6 +92,12 @@
 			background-color: var(--medium-gray);
 			color: var(--white);
 		}
+		.notice-link sup {
+			font-size: 0.6em;
+			margin-left: 5px;
+			font-weight: bold;
+			color: var(--error-red);
+		}
 		.notice-link {
 			text-decoration: none;
 			color: inherit;
@@ -97,6 +107,9 @@
 			color: var(--medium-gray);
 			margin: 0px auto;
 		}
+		.about-stuff {
+			padding-right: 10%;
+		}
 		h1 {
 			font-size: 2.5em;
 		}
@@ -104,7 +117,7 @@
 			text-justify: justify;
 		}
 		.flex-break {
-			width: 60%;
+			width: 80%;
 			margin: 30px auto;
 			color: var(--medium-gray);
 		}
@@ -118,10 +131,10 @@
 			border: 1px solid var(--off-white);
 			border-radius: 5px;
 			margin: 20px;
-			width: 30vw;
-			height: 20vw;
+			width: 60vw;
+			height: 40vw;
 			background-color: var(--medium-gray);
-			max-height: 45vh;
+			max-height: 90vh;
 			max-width: 80vh;
 		}
 		.vidshow {
@@ -135,6 +148,7 @@
 			max-height: 90vh;
 			max-width: 160vh;
 			margin: auto;
+			margin-bottom: 50px;
 		}
 		.submit-stuff {
 			margin: 50px;
