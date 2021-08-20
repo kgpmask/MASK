@@ -582,6 +582,7 @@
 			display: flex;
 			padding: 0 40px 0 0;
 			margin: 30px;
+			box-sizing: border-box;
 		}
 		.noticebox {
 			margin-top: 20px;
@@ -656,8 +657,9 @@
 			border: 1px solid var(--off-white);
 			border-radius: 5px;
 			margin: 20px;
-			background-color: var(--medium-gray);
-			
+			background-color: var(--tinted-gray);
+			max-height: 45vh;
+			max-width: 80vh;
 		}
 		.vidshow {
 			
@@ -696,6 +698,11 @@
 			}
 			.notices, .vidshow, .imgshow {
 				margin: 30px auto;
+			}
+		}
+		@media (max-width: 600px) {
+			.about-stuff {
+				padding-right: 0;
 			}
 		}
 	</style>

@@ -220,11 +220,11 @@ span.navbar-line {
 	margin: 0px 10px;
 }
 
+/********************************************************/
+
 .hamburger-menu, .plate {
 	display: none;
 }
-
-/********************************************************/
 
 .plate {
 	height: 80px;
@@ -269,7 +269,7 @@ span.navbar-line {
 }
 
 .burger:hover {
-	background-color: var(--middle-gray);
+	background-color: var(--tinted-gray);
 }
 
 .patty {
