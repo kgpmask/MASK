@@ -17,6 +17,20 @@
 	"page": "_blank",
 	"hype": true
 }, {
+	"name": "Art - Yūji Itadori",
+	"link": "ankit-1.jpg",
+	"type": "art",
+	"attr": ["Ankit Chowdhury"],
+	"date": "16th Aug, 2021",
+	"hype": true
+}, {
+	"name": "Art - Zenitsu Agatsuma",
+	"link": "samarth-1.jpg",
+	"type": "art",
+	"attr": ["Samarth Singh"],
+	"date": "9th Aug, 2021",
+	"hype": true
+}, {
 	"name": "AMV - Buniyaad",
 	"link": "https://www.youtube.com/watch?v=qOngOlxEcnY",
 	"type": "video",

@@ -127,34 +127,33 @@
 
 					{% block customjsimg %}
 						<script>
-							window.presentSlide = -1;
+							let imageTimer;
+
+							window.indexIMG = -1;
 							let height = 0;
 							let width = 0;
 							let scaleWidth = 0;
 							let scaleHeight = 0;
-							let next = 0;
+							const IMAGE_TIMEOUT = 3000;
 							document.getElementById("prevbtn").addEventListener("click", prevImg);
 							document.getElementById("nextbtn").addEventListener("click", nextImg);
-							document.getElementById("imgi").addEventListener("mouseout", auto);
-							document.getElementById("imgi").addEventListener("mouseenter", pause);
+							['imgi', 'prevbtn', 'nextbtn'].forEach(name => {
+								document.getElementById(name).addEventListener("mouseout", auto);
+								document.getElementById(name).addEventListener("mouseover", pause);
+							});
 
 							function prevImg () {
-								next = 1;
-								slideShow(--presentSlide);
+								slideShow(true, true);
 							}
 							function nextImg () {
-								console.log("next");
-								next = 0;
-								slideShow(++presentSlide);
+								slideShow(false, true);
 							}
 							function pause () {
-								next = 2
 								document.getElementById("imgi").style.cursor = "grabbing";
-								console.log(document.getElementById("imgi").style.cursor);
-								slideShow(presentSlide);
+								clearTimeout(imageTimer);
 							}
 							function auto () {
-								next = 0;
+								imageTimer = setTimeout(slideShow, IMAGE_TIMEOUT, 0);
 							}
 
 							function setImageDimensions () {
@@ -184,19 +183,17 @@
 								return promise;
 							}
 
-							const images = [
-								"https://th.bing.com/th/id/OIP.AFynZQOGeeMUst9gbrHg3QHaNK?w=187&h=333&c=7&o=5&dpr=1.56&pid=1.7",
-								"https://th.bing.com/th/id/OIP.PBTX6v18k3qmWr0u4QOduQHaEK?w=310&h=180&c=7&o=5&dpr=1.56&pid=1.7",
-								"https://th.bing.com/th/id/OIP.1TQuwXOEwDvfWPA3_lsDpgHaEK?w=279&h=180&c=7&o=5&dpr=1.56&pid=1.7",
-							];
+							const images = [{% for img in art %}'/assets/art/{{ img.link }}'{{ ', ' if not loop.last }}{% endfor %}];
 							document.getElementById("imgi").src = images[0];
 
-							function slideShow (index) {
-								console.log(index);
+							function slideShow (prev = false, buttoned) {
+								clearTimeout(imageTimer);
 								let widthw = 0;
 								let heightw = 0;
-								index < 0 ? (index = -(index % images.length)) : (index = (index % images.length));
-								if (next === 1) {
+								if (prev) indexIMG--;
+								else indexIMG++;
+								indexIMG = Math.sign(indexIMG) * (indexIMG % images.length);
+								if (prev) {
 									let element2 = document.getElementById("imgi");
 									if (element2.classList.contains("slideRight")) {
 										element2.classList.remove("slideRight");
@@ -208,7 +205,7 @@
 										element2.classList.add("slideRight");
 									}
 								}
-								if (next === 0) {
+								else {
 									let element2 = document.getElementById("imgi");
 									if (element2.classList.contains("slideRight")) {
 										element2.classList.remove("slideRight");
@@ -220,37 +217,31 @@
 										element2.classList.add("slideLeft");
 									}
 								}
-								document.getElementById("imgi").src = images[index];
-
-								setImageDimensions()
-									.then((res) => {
-										document.getElementById("imagei").style.backgroundImage =
-											"linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7))," +
-											`url(${images[index]})`;
-										let aspectRatioDiv =
-											(scaleWidth * window.outerWidth) /
-											(scaleHeight * window.outerWidth);
-										let aspectRatioImage = width / height;
-										aspectRatioImage > aspectRatioDiv ? (widthw = 1) : (heightw = 1);
-										if (widthw) {
-											width = scaleWidth * window.outerWidth;
-											height = width / aspectRatioImage;
-										} else {
-											height = scaleHeight * window.outerWidth;
-											width = height * aspectRatioImage;
-										}
-										document.getElementById("imgi").height = height;
-										document.getElementById("imgi").width = width;
-									}).catch((err) => console.log(err));
+								document.getElementById("imgi").src = images[indexIMG];
+								setImageDimensions().then((res) => {
+									document.getElementById("imagei").style.backgroundImage =
+										"linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7))," +
+										`url(${images[indexIMG]})`;
+									let aspectRatioDiv =
+										(scaleWidth * window.outerWidth) /
+										(scaleHeight * window.outerWidth);
+									let aspectRatioImage = width / height;
+									aspectRatioImage > aspectRatioDiv ? (widthw = 1) : (heightw = 1);
+									if (widthw) {
+										width = scaleWidth * window.outerWidth;
+										height = width / aspectRatioImage;
+									} else {
+										height = scaleHeight * window.outerWidth;
+										width = height * aspectRatioImage;
+									}
+									document.getElementById("imgi").height = height;
+									document.getElementById("imgi").width = width;
+									imageTimer = setTimeout(() => {
+										if (!buttoned) slideShow(false);
+									}, IMAGE_TIMEOUT);
+								}).catch((err) => console.log(err));
 							};
-
-							slideShow(++presentSlide);
-							setInterval(() => {
-								document.getElementById("imgi").addEventListener("mouseenter", pause);
-								if (next !== 2) {
-									slideShow(++presentSlide);
-								}
-							}, 5000);
+							slideShow();
 						</script>
 					{% endblock %}
 				</div>
@@ -521,7 +512,7 @@
 		.notice-post {
 			transition: 0.4s;
 			padding: 4px;
-			background-color: var(--medium-gray);
+			background-color: var(--tinted-gray);
 			color: var(--white);
 		}
 		.notice-post:hover {
