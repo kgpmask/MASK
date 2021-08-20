@@ -65,6 +65,7 @@
 								z-index: 20;
 								padding-left: 0.6rem;
 								background-color: rgba(0, 0, 0, 0.6);
+								border-radius: 2px;
 							}
 							#nextbtn{
 								padding-left: 0;
@@ -153,7 +154,6 @@
 								slideShow(presentSlide);
 							}
 							function auto () {
-								console.log("auto");
 								next = 0;
 							}
 
@@ -378,6 +378,7 @@
 						}
 						function auto () {
 							autoScroll = 1;
+							nextv = 1;
 						}
 
 						function setImageDimensions (indexv) {
@@ -396,7 +397,7 @@
 							return promise;
 						}
 
-						const videos = ['<iframe src="https://www.youtube.com/embed/qOngOlxEcnY" height="100%" width="100%"	title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>', '<iframe src="https://www.youtube.com/embed/mz3l63l-uEs" height="100%" width="100%"	title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>', '<iframe src="https://www.youtube.com/embed/K1qJQu6qboY" height="100%" width="100%"	title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'];
+						const videos = [{% for vid in vids %}'{{ vid.show | safe }}'{{ ', ' if not loop.last }}{% endfor %}];
 
 						for (let i = 0; i < videos.length; i++) {
 							let div = document.createElement("div");
@@ -449,7 +450,6 @@
 							let slides = document.getElementsByClassName("div");
 							for (i = 0; i < slides.length; i++) {
 								if (slides[i].style.display === "block") {
-									//document.getElementsByClassName ("div")[i].addEventListener ("mouseout", auto);
 									document.getElementsByClassName("div")[i].addEventListener("mouseenter", pause);
 									document.getElementById("prevvbtn").addEventListener("mouseenter", pause);
 									document.getElementById("nextvbtn").addEventListener("mouseenter", pause);
@@ -587,6 +587,7 @@
 			margin: 50px;
 			display: flex;
 			align-items: center;
+			z-index: 29;
 		}
 		.submit-button {
 			border: 2px solid var(--off-white);
@@ -609,6 +610,11 @@
 			}
 			.notices, .vidshow, .imgshow {
 				margin: 30px auto;
+			}
+		}
+		@media (max-width: 600px) {
+			.about-stuff {
+				padding-right: 0;
 			}
 		}
 	</style>

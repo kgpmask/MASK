@@ -26,8 +26,8 @@ function handler (app, env, vapid) {
 					if (!isNaN(elapsed) && elapsed < 7 * 24 * 60 * 60 * 1000) post.recent = true;
 				});
 				const vids = require('./posts.json').filter(post => {
-					return post.type === 'video' && post.link.includes('www.youtube.com');
-				}).slice(0, 5);
+					return post.type === 'video' && post.hype && post.link.includes('www.youtube.com');
+				}).shuffle().slice(0, 5);
 				const art = require('./posts.json').filter(post => post.type === 'art').slice(0, 5);
 				res.render(path.join(__dirname, '../templates', 'home.njk'), { posts, vids, art });
 				break;

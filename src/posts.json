@@ -5,7 +5,8 @@
 	"attr": ["Abhibhu Prakash"],
 	"date": "20th Aug, 2021",
 	"show": "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/tH8zQdBkkBk\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>",
-	"page": "_blank"
+	"page": "_blank",
+	"hype": true
 }, {
 	"name": "AMV - Zombie",
 	"link": "https://www.instagram.com/tv/CSuMxP8g8YT",
@@ -13,7 +14,8 @@
 	"attr": ["Priyank Mundra"],
 	"date": "18th Aug, 2021",
 	"show": "",
-	"page": "_blank"
+	"page": "_blank",
+	"hype": true
 }, {
 	"name": "AMV - Buniyaad",
 	"link": "https://www.youtube.com/watch?v=qOngOlxEcnY",
@@ -21,7 +23,8 @@
 	"attr": ["Rituraj Warisa"],
 	"date": "1st Jan, 2021",
 	"show": "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/qOngOlxEcnY\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>",
-	"page": "_blank"
+	"page": "_blank",
+	"hype": true
 }, {
 	"name": "AMV - Avengers Trailer",
 	"link": "https://www.youtube.com/watch?v=K1qJQu6qboY",
@@ -29,7 +32,8 @@
 	"attr": ["Arya Tathe"],
 	"date": "27th May, 2020",
 	"show": "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/K1qJQu6qboY\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>",
-	"page": "_blank"
+	"page": "_blank",
+	"hype": true
 }, {
 	"name": "AMV - Courtesy Call",
 	"link": "https://www.youtube.com/watch?v=mz3l63l-uEs",
@@ -45,7 +49,8 @@
 	"attr": ["Arya Tathe"],
 	"date": "14th Feb, 2020",
 	"show": "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/RXTdlbArXlY\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>",
-	"page": "_blank"
+	"page": "_blank",
+	"hype": true
 }, {
 	"name": "AMV - Numb",
 	"link": "https://www.youtube.com/watch?v=O950107XEps",
@@ -53,5 +58,6 @@
 	"attr": ["Shounak Mehendale"],
 	"date": "19th Jan, 2020",
 	"show": "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/O950107XEps\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>",
-	"page": "_blank"
+	"page": "_blank",
+	"hype": true
 }]

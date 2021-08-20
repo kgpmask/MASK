@@ -227,6 +227,9 @@ span.navbar-line {
 }
 
 .plate {
+	position: sticky;
+	top: 0;
+	z-index: 30;
 	height: 80px;
 	width: 100%;
 	background-color: var(--darker-gray);
@@ -245,7 +248,7 @@ span.navbar-line {
 	margin: 10px;
 	float: left;
 	left: 10px;
-	z-index: 1;
+	z-index: 32;
 	position: absolute;
 	transition: all 0.5s linear;;
 }
@@ -261,7 +264,7 @@ span.navbar-line {
 	top: 15px;
 	right: 15px;
 	cursor: pointer;
-	z-index: 1;
+	z-index: 31;
 	text-align: left;
 	padding: 5px 0 5px 10px;
 	border-radius: 5px;
