@@ -23,8 +23,11 @@
 	</div>
 	<hr class="flex-break"/>
 	<div class="flex-container" id="bottom-container">
-		<div class="slideshow"></div>
-		<div class="submit-stuff"><a href="/submissions"><button class="submit-button">Submit your content!</button></a></div>
+		<div class="top-container">
+			<div class="imgshow"></div>
+			<div class="submit-stuff"><a href="/submissions"><button class="submit-button">Submit your content!</button></a></div>
+		</div>
+		<div class="vidshow"></div>
 	</div>
 {% endblock %}
 
@@ -44,12 +47,13 @@
 		.flex-container {
 			display: inline-flex;
 			justify-content: center;
-			padding: 30px 0px;
+			padding-top: 30px;
 		}
 		#bottom-container {
 			width: 100%;
 			justify-content: space-evenly;
 			flex-direction: column;
+			padding-top: 0;
 		}
 		.notices {
 			display: flex;
@@ -64,23 +68,27 @@
 			width: 200px;
 		}
 		.notices-header {
-			background-color: var(--medium-gray);
+			background-color: var(--red);
 			padding: 5px;
 			color: var(--white);
+			font-weight: bold;
+			font-size: 1.2em;
 		}
 		.notices-list {
-			max-height: 100px;
+			max-height: 150px;
 			overflow-y: auto;
 		}
 		.notice-post {
 			transition: 0.4s;
 			padding: 4px;
-		}
-		.notice-post:hover {
 			background-color: var(--tinted-gray);
 			color: var(--white);
 		}
-		.notice-link, .notice-post {
+		.notice-post:hover {
+			background-color: var(--medium-gray);
+			color: var(--white);
+		}
+		.notice-link {
 			text-decoration: none;
 			color: inherit;
 		}
@@ -100,21 +108,36 @@
 			margin: 30px auto;
 			color: var(--medium-gray);
 		}
-		.slideshow {
-			height: 600px;
-			width: 1000px;
+		.top-container {
+			display: inline-flex;
+			padding-bottom: 40px;
+			flex-wrap: wrap;
+			justify-content: center;
+		}
+		.imgshow {
 			border: 1px solid var(--off-white);
 			border-radius: 5px;
-			margin: 50px auto;
-			width: 90vw;
-			height: 50.625vw;
+			margin: 20px;
+			width: 30vw;
+			height: 20vw;
+			background-color: var(--medium-gray);
+			max-height: 45vh;
+			max-width: 80vh;
+		}
+		.vidshow {
+			height: 400px;
+			border: 1px solid var(--off-white);
+			border-radius: 5px;
+			margin: 40px auto;
+			width: 60vw;
+			height: 32vw;
 			background-color: var(--medium-gray);
 			max-height: 90vh;
 			max-width: 160vh;
 			margin: auto;
 		}
 		.submit-stuff {
-			margin: 50px auto;
+			margin: 50px;
 			display: flex;
 			align-items: center;
 		}
@@ -137,7 +160,7 @@
 			.flex-container {
 				flex-direction: column;
 			}
-			.notices, .slideshow {
+			.notices, .vidshow, .imgshow {
 				margin: 30px auto;
 			}
 		}
