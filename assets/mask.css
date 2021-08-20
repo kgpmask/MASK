@@ -66,8 +66,8 @@ h1 {
 
 footer {
 	position: absolute;
-	bottom: 0px;
-	left: 0px;
+	bottom: 0;
+	left: 0;
 	background-color: var(--shadow-gray);
 	height: 70px;
 	width: 100%;
@@ -391,6 +391,10 @@ span.navbar-line {
 	width: 83%;
 }
 
+.lettuce {
+	width: 100%;
+}
+
 /********************************************************/
 
 @media (max-width: 600px) {
@@ -399,5 +403,8 @@ span.navbar-line {
 	}
 	.hamburger-menu, .plate {
 		display: block;
+	}
+	.burger-open>div:not(.plate, .hamburger-menu) {
+		display: none;
 	}
 }

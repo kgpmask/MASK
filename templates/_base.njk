@@ -63,13 +63,14 @@
 						{% endfor %}
 						<a href="/about" target="_self"><div class="lettuce{% if 'about' == thispage %} active-page {% endif %}" id="most-bottom">Our Society</div></a>
 						<hr class="minor" id="lower-border"/>
-						<a href="/members" target="_self"><div class="lettuce{% if 'members' == thispage %}active-page{% endif %}" id="almost-bottom">Our Members</div></a>
+						<a href="/members" target="_self"><div class="lettuce{% if 'members' == thispage %} active-page{% endif %}" id="almost-bottom">Our Members</div></a>
 						<hr class="border-bottom"/>
 					</div>
 					<script>
 						document.querySelector('.burger').addEventListener('click', function () {
 							this.classList.toggle('open');
 							document.querySelector('.hamburger-menu').classList.toggle('slide');
+							document.querySelector('#content-wrap').classList.toggle('burger-open');
 						});
 					</script>
 				{% endblock %}
