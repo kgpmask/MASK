@@ -167,15 +167,15 @@
 											document.getElementById("imagei").style.height = 40 + "vw";
 											document.getElementsByClassName("btns")[0].style.width = 70 + "vw";
 											document.getElementsByClassName("btns")[0].style.height = 0.05 * window.innerHeight + "px";
-											scaleWidth = 0.7;
-											scaleHeight = 0.4;
+											scaleWidth = 0.699;
+											scaleHeight = 0.399;
 										} else {
-											document.getElementById("imagei").style.width = 45 + "vw";
-											document.getElementById("imagei").style.height = 40 + "vw";
-											document.getElementsByClassName("btns")[0].style.width = 45 + "vw";
+											document.getElementById("imagei").style.width = 50 + "vw";
+											document.getElementById("imagei").style.height = 30 + "vw";
+											document.getElementsByClassName("btns")[0].style.width = 50 + "vw";
 											document.getElementsByClassName("btns")[0].style.height = 0.05 * window.innerHeight + "px";
-											scaleWidth = 0.45;
-											scaleHeight = 0.4;
+											scaleWidth = 0.499;
+											scaleHeight = 0.299;
 										}
 										resolve();
 									};
@@ -223,15 +223,15 @@
 										"linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7))," +
 										`url(${images[indexIMG]})`;
 									let aspectRatioDiv =
-										(scaleWidth * window.innerWidth) /
-										(scaleHeight * window.innerWidth);
+										(scaleWidth * window.outerWidth) /
+										(scaleHeight * window.outerWidth);
 									let aspectRatioImage = width / height;
 									aspectRatioImage > aspectRatioDiv ? (widthw = 1) : (heightw = 1);
 									if (widthw) {
-										width = scaleWidth * window.innerWidth;
+										width = scaleWidth * window.outerWidth;
 										height = width / aspectRatioImage;
 									} else {
-										height = scaleHeight * window.innerWidth;
+										height = scaleHeight * window.outerWidth;
 										width = height * aspectRatioImage;
 									}
 									document.getElementById("imgi").height = height;
@@ -265,7 +265,7 @@
 						justify-content: space-between;
 						align-items: center;
 						width: 70vw;
-						height: 35vw;
+						height: 36.8vw;
 						margin: 0% auto;
 						background-size: cover;
 					}
@@ -375,11 +375,11 @@
 						function setImageDimensions (indexv) {
 							var promise = new Promise((resolve, reject) => {
 								if (window.innerWidth < 430 && window.innerHeight < 950) {
-									document.getElementById("containerv").style.width = 69 + "vw";
-									document.getElementById("containerv").style.height = 34 + "vw";
+									document.getElementById("containerv").style.width = 69.9 + "vw";
+									document.getElementById("containerv").style.height = 36.8 + "vw";
 									document.getElementsByClassName("btnsv")[0].style.width = 70 + "vw";
 									document.getElementsByClassName("div")[indexv].style.width = 70 + "vw";
-									document.getElementsByClassName("div")[indexv].style.height = 35 + "vw";
+									document.getElementsByClassName("div")[indexv].style.height = 36.8+ "vw";
 									scaleWidthv = 1;
 									scaleHeightv = 0.6;
 								}
@@ -552,7 +552,7 @@
 			display: inline-flex;
 			padding-bottom: 40px;
 			flex-wrap: wrap;
-			justify-content: center;
+			justify-content:centre;
 			width: 70vw;
 			margin: 0 auto;
 		}
@@ -561,21 +561,21 @@
 			height: fit-content;
 			border: 1px solid var(--off-white);
 			border-radius: 5px;
-			margin: 20px;
 			background-color: var(--tinted-gray);
+			
 		}
 		.vidshow {
 			border: 1px solid var(--off-white);
 			border-radius: 5px;
 			margin: 40px auto;
 			width: 70vw;
-			height: 35vw;
+			height: 37vw;
 			background-color: var(--medium-gray);
 			margin: auto;
 			margin-bottom: 50px;
 		}
 		.submit-stuff {
-			margin: 50px;
+			margin:0 auto;
 			display: flex;
 			align-items: center;
 			z-index: 29;
