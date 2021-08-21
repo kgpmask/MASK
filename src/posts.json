@@ -31,6 +31,13 @@
 	"date": "9th Aug, 2021",
 	"hype": true
 }, {
+	"name": "Art - Denji",
+	"link": "akshith-1.png",
+	"type": "art",
+	"attr": ["Akshith G."],
+	"date": "29th July, 2021",
+	"hype": true
+}, {
 	"name": "AMV - Buniyaad",
 	"link": "https://www.youtube.com/watch?v=qOngOlxEcnY",
 	"type": "video",

@@ -1,6 +1,8 @@
 {% set thispage = 'home' %}
 {% extends "_base.njk" %}
 
+{% set scripts = ['https://www.youtube.com/iframe_api'] %}
+
 {% block pagecontent %}
 	<div class="mask-banner">
 		<img class="mask-banner-image" src="/assets/logo.jpeg"/>
@@ -16,452 +18,353 @@
 		</div></div>
 		<div class="about-stuff">
 			<h1>Welcome to the MASK website!</h1>
-			<div class="text">
-				The Manga & Anime Society, Kharagpur is a society established by students at IIT Kharagpur dedicated to promoting East-Asian animation and comics. You could call us weebs and otakus - but we're proud of it!
+			<div class="text" style="font-size:1.1em;">
+				The Manga & Anime Society, Kharagpur (MASK) is a group of otakus - manga and anime enthusiasts - engaging in art creation, AMV production, event organization, and music performances.
 			</div>
 		</div>
 	</div>
 	<hr class="flex-break"/>
 	<div class="flex-container" id="bottom-container">
 		<div class="top-container">
-			<div class="imgshow-container">
-				<div class="imgshow">
-					{% block pagecontentimg %}
-						<div id="imagei">
-							<div class="blur">
-								<img id="imgi" src=" " height=" " width=" " />
-								<div class="btns">
-									<div id="prevbtn">&#10094;</div>
-									<div id="nextbtn">&#10095;</div>
-								</div>
-							</div>
-						</div>
-					{% endblock%}
-					{% block customcssimg %}
-						<style>
-							#imagei {
-								display: flex;
-								justify-content: space-evenly;
-								align-items: center;
-								margin: 0% auto;
-								background-size: cover;
-							}
-							.btns{
-								display: flex;
-								justify-content: space-between;
-								align-items: center;
-								position: absolute;
-								z-index: 20;
-							}
-							#nextbtn,
-							#prevbtn {
-								display: flex;
-								justify-content: center;
-								align-items: center;
-								color: white;
-								width: 30px;
-								height: 100%;
-								font-size: 1.5rem;
-								z-index: 20;
-								padding-left: 0.6rem;
-								background-color: rgba(0, 0, 0, 0.6);
-								border-radius: 2px;
-							}
-							#nextbtn{
-								padding-left: 0;
-								padding-right: 0.6rem;
-							}
-							#nextbtn:hover,
-							#prevbtn:hover {
-								background-color: red;
-								cursor: pointer;
-							}
-							.blur {
-								backdrop-filter: blur(20px);
-								width: 100%;
-								height: 100%;
-								display: flex;
-								justify-content: space-between;
-								align-items: center;
-							}
-							#imgi {
-								margin: auto;
-								z-index: 10;
-							}
-							.slideLeft {
-								animation-name: slideLeft;
-								animation-duration: 0.8s;
-								transition: ease-in-out;
-							}
-							.slideRight {
-								animation-name: slideRight;
-								animation-duration: 0.8s;
-								transition: ease-in-out;
-							}
-							@keyframes slideLeft {
-								0% {
-									opacity: 0;
-									transform: translateX(15rem);
-									transition: 3s ease-in;
-								}
-								100% {
-									opacity: 1;
-									transform: translateX(0);
-									transition: 0.01s ease-in;
-								}
-							}
-							@keyframes slideRight {
-								0% {
-									opacity: 0;
-									transform: translateX(-15rem);
-									transition: 0.01s ease-in;
-								}
-								100% {
-									opacity: 1;
-									transform: translateX(0);
-									transition: 0.01s ease-in;
-								}
-							}
-						</style>
-					{% endblock %}
-
-					{% block customjsimg %}
-						<script>
-							let imageTimer;
-
-							window.indexIMG = -1;
-							let height = 0;
-							let width = 0;
-							let scaleWidth = 0;
-							let scaleHeight = 0;
-							const IMAGE_TIMEOUT = 3000;
-							document.getElementById("prevbtn").addEventListener("click", prevImg);
-							document.getElementById("nextbtn").addEventListener("click", nextImg);
-							['imgi', 'prevbtn', 'nextbtn'].forEach(name => {
-								document.getElementById(name).addEventListener("mouseout", auto);
-								document.getElementById(name).addEventListener("mouseover", pause);
-							});
-
-							function prevImg () {
-								slideShow(true, true);
-							}
-							function nextImg () {
-								slideShow(false, true);
-							}
-							function pause () {
-								document.getElementById("imgi").style.cursor = "grabbing";
-								clearTimeout(imageTimer);
-							}
-							function auto () {
-								imageTimer = setTimeout(slideShow, IMAGE_TIMEOUT, 0);
-							}
-
-							function setImageDimensions () {
-								var promise = new Promise((resolve, reject) => {
-									let img = document.getElementById("imgi");
-									img.onload = () => {
-										height = img.naturalHeight;
-										width = img.naturalWidth;
-										if (window.innerWidth < 1280 && window.innerHeight < 1376) {
-											document.getElementById("imagei").style.width = 70 + "vw";
-											document.getElementById("imagei").style.height = 40 + "vw";
-											document.getElementsByClassName("btns")[0].style.width = 70 + "vw";
-											document.getElementsByClassName("btns")[0].style.height = 0.05 * window.innerHeight + "px";
-											scaleWidth = 0.7;
-											scaleHeight = 0.4;
-										} else {
-											document.getElementById("imagei").style.width = 45 + "vw";
-											document.getElementById("imagei").style.height = 40 + "vw";
-											document.getElementsByClassName("btns")[0].style.width = 45 + "vw";
-											document.getElementsByClassName("btns")[0].style.height = 0.05 * window.innerHeight + "px";
-											scaleWidth = 0.45;
-											scaleHeight = 0.4;
-										}
-										resolve();
-									};
-								});
-								return promise;
-							}
-
-							const images = [{% for img in art %}'/assets/art/{{ img.link }}'{{ ', ' if not loop.last }}{% endfor %}];
-							document.getElementById("imgi").src = images[0];
-
-							function slideShow (prev = false, buttoned) {
-								clearTimeout(imageTimer);
-								let widthw = 0;
-								let heightw = 0;
-								if (prev) indexIMG--;
-								else indexIMG++;
-								indexIMG = Math.sign(indexIMG) * (indexIMG % images.length);
-								if (prev) {
-									let element2 = document.getElementById("imgi");
-									if (element2.classList.contains("slideRight")) {
-										element2.classList.remove("slideRight");
-										element2.offsetWidth = element2.offsetWidth;
-										element2.classList.add("slideRight");
-									} else {
-										element2.classList.remove("slideLeft");
-										element2.offsetWidth = element2.offsetWidth;
-										element2.classList.add("slideRight");
-									}
-								}
-								else {
-									let element2 = document.getElementById("imgi");
-									if (element2.classList.contains("slideRight")) {
-										element2.classList.remove("slideRight");
-										element2.offsetWidth = element2.offsetWidth;
-										element2.classList.add("slideLeft");
-									} else {
-										element2.classList.remove("slideLeft");
-										element2.offsetWidth = element2.offsetWidth;
-										element2.classList.add("slideLeft");
-									}
-								}
-								document.getElementById("imgi").src = images[indexIMG];
-								setImageDimensions().then((res) => {
-									document.getElementById("imagei").style.backgroundImage =
-										"linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7))," +
-										`url(${images[indexIMG]})`;
-									let aspectRatioDiv =
-										(scaleWidth * window.innerWidth) /
-										(scaleHeight * window.innerWidth);
-									let aspectRatioImage = width / height;
-									aspectRatioImage > aspectRatioDiv ? (widthw = 1) : (heightw = 1);
-									if (widthw) {
-										width = scaleWidth * window.innerWidth;
-										height = width / aspectRatioImage;
-									} else {
-										height = scaleHeight * window.innerWidth;
-										width = height * aspectRatioImage;
-									}
-									document.getElementById("imgi").height = height;
-									document.getElementById("imgi").width = width;
-									imageTimer = setTimeout(() => {
-										if (!buttoned) slideShow(false);
-									}, IMAGE_TIMEOUT);
-								}).catch((err) => console.log(err));
-							};
-							slideShow();
-						</script>
-					{% endblock %}
-				</div>
-			</div>
-			<div class="submit-stuff"><a href="/submissions"><button class="submit-button">Submit your content!</button></a></div>
-		</div>
-		<div class="vidshow">
-			{% block pagecontentv %}
-				<div id="containerv">
-					<div class="btnsv">
-					<div id="prevvbtn">&#10094;</div>
-					<div id="nextvbtn">&#10095;</div>
+			<div class="with-controls">
+				<div class="imgshow-container">
+					<div class="imgshow">
+						{% for img in art %}
+							<div id="img-{{ loop.index }}" class="to-frost"><div class="full-image" style="background-image: url(/assets/art/{{ img.link }});"></div></div>
+						{% endfor %}
+					</div>
+					<div class="slide-buttons">
+						<div class="prevbtn" id="img-prev">&#10094;</div>
+						<div class="nextbtn" id="img-next">&#10095;</div>
 					</div>
 				</div>
-			{% endblock %}
-
-			{% block customcssv %}
-				<style>
-					#containerv {
-						display: flex;
-						justify-content: space-between;
-						align-items: center;
-						width: 70vw;
-						height: 35vw;
-						margin: 0% auto;
-						background-size: cover;
+				<span class="slider" id="slider-img">
+					{% for img in art %}
+						<a id="imgref-{{ loop.index }}"></a>
+					{% endfor %}
+				</span>
+				<script>
+					const imgSliders = document.querySelectorAll('#slider-img > a'), imgSlides = document.querySelectorAll(".imgshow > div");
+					let imageTimer;
+					let scrolledOutImg = true;
+					const IMAGE_TIME = 5000;
+					const imgAmt = {{ art | length }};
+					function imageSlide (prev, clicked) {
+						const currentIndex = [...imgSliders].findIndex(dot => dot.classList.contains('active-image-link'));
+						let nextIndex = currentIndex + (prev ? -1 : 1);
+						nextIndex = (nextIndex + imgAmt) % imgAmt;
+						imgSlides[nextIndex].scrollIntoView({ behaviour: 'smooth', block: 'nearest' });
+						clearTimeout(imageTimer);
+						if (!clicked) imageTimer = setTimeout(imageSlide, IMAGE_TIME);
 					}
-					.div{
+					imgSliders.forEach(a => a.addEventListener('click', () => {
+						clearTimeout(imageTimer);
+						const target = imgSlides[a.id.substr(7) - 1];
+						target.scrollIntoView({ behaviour: 'smooth', block: 'nearest' });
+						imageTimer = setTimeout(imageSlide, IMAGE_TIME);
+					}));
+					const pauseImages = () => {
+						clearTimeout(imageTimer);
+					}, resumeImages = () => {
+						clearTimeout(imageTimer);
+						imageTimer = setTimeout(imageSlide, IMAGE_TIME);
+					};
+					document.getElementById('img-prev').addEventListener('mouseenter', pauseImages);
+					document.getElementById('img-prev').addEventListener('mouseleave', resumeImages);
+					document.getElementById('img-prev').addEventListener('click', () => {
+						imageSlide(true, true);
+					});
+					document.getElementById('img-next').addEventListener('mouseenter', pauseImages);
+					document.getElementById('img-next').addEventListener('mouseleave', resumeImages);
+					document.getElementById('img-next').addEventListener('click', () => {
+						imageSlide(false, true);
+					});
+					const imageObserver = new IntersectionObserver(imgSlides => {
+						imgSlides.forEach(slide => {
+							if (slide.isIntersecting && slide.intersectionRatio > 0.2) return imgSliders[slide.target.id.substr(4) - 1].classList.add('active-image-link');
+							else imgSliders[slide.target.id.substr(4) - 1].classList.remove('active-image-link');
+						});
+					}, { threshold: [0.4] });
+					imgSlides.forEach(slide => imageObserver.observe(slide));
+					new IntersectionObserver(([imgShow]) => {
+						if (imgShow.isIntersecting && imgShow.intersectionRatio > 0.2) {
+							if (scrolledOutImg) {
+								scrolledOutImg = false;
+								resumeImages();
+								console.log('Rejoined images');
+							}
+						} else {
+							pauseImages();
+							scrolledOutImg = true;
+							console.log('Left images');
+						}
+					}, { threshold: [0.45] }).observe(document.querySelector('.imgshow'));
+					resumeImages();
+				</script>
+				<style>
+					.with-controls {
+						width: 100%;
+						max-width: 700px;
+						padding-bottom: 15px;
+						margin-bottom: 30px;
+					}
+					.imgshow-container, .vidshow-container {
+						overflow: hidden;
+						height: 500px;
+						max-height: 50vh;
+						width: 100%;
+						border: 2px solid var(--gray);
+						border-radius: 10px;
+						display: block;
+						margin-bottom: 10px;
+						position: relative;
+					}
+					.imgshow, .vidshow {
+						display: flex;
+						overflow-x: auto;
+						scroll-snap-type: x mandatory;
+						scroll-behavior: smooth;
+						-webkit-overflow-scrolling: touch;
+						height: 100%;
+						width: 100%;
+						-ms-overflow-style: none;
+						scrollbar-width: none;
+					}
+					.imgshow::-webkit-scrollbar {
 						display: none;
+					}
+					.imgshow > div, .vidshow > div {
+						scroll-snap-align: start;
+						flex-shrink: 0;
 						width: 100%;
 						height: 100%;
-						margin: auto;
-						z-index: 10;
-					}
-					.btnsv{
-						display: flex;
-						justify-content: space-between;
-						align-items: center;
-						width: 70vw;
-						height: 10vh;
-						position: absolute;
-						z-index: 30;
-					}
-					#nextvbtn,
-					#prevvbtn {
+						margin-right: 50px;
+						border-radius: 10px;
+						transform-origin: center center;
+						transform: scale(1);
+						transition: transform 0.8s;
+						position: relative;
 						display: flex;
 						justify-content: center;
 						align-items: center;
-						color: rgb(247, 239, 239);
-						width: 40px;
-						height: 100%;
-						font-size: 2.5rem;
-						z-index: 40;
-						background-color: rgba(0, 0, 0, 0.6);
-						border-radius: 0.3rem;
+						font-size: 100px;
+						overflow: hidden;
 					}
-					#nextvbtn:hover,
-					#prevvbtn:hover {
-						background-color: red;
+					.to-frost::before {
+						content: "";
+						position: absolute;
+						top: -100px;
+						left: -100px;
+						right: -100px;
+						bottom: -100px;
+						background-repeat: no-repeat;
+						background-attachment: fixed;
+						background-size: cover;
+						background-position: top;
+						filter: blur(10px);
+						z-index: -1;
+					}
+					{% for img in art %}
+						#img-{{ loop.index }}::before {
+							background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(/assets/art/{{ img.link }});
+						}
+					{% endfor %}
+					.full-image {
+						background-position: center;
+						background-size: contain;
+						background-repeat: no-repeat;
+						height: 90%;
+						width: 90%;
+					}
+					.slider {
+						margin: 20px 0px;
+					}
+					.slider > a {
+						display: inline-flex;
+						height: 1rem;
+						width: 1rem;
+						border-radius: 50%;
+						margin-left: 0.4rem;
+						background-color: var(--ghost-gray);
+						content: "";
+						z-index: 1;
 						cursor: pointer;
-						border-radius: 0.5rem;
 					}
-					.slideLeftv {
-						animation-name: slideLeftv;
-						animation-duration: 0.8s;
-						transition: ease-in-out;
+					.active-image-link, .active-video-link {
+						background-color: var(--off-white) !important;
 					}
-					.slideRightv {
-						animation-name: slideRightv;
-						animation-duration: 0.8s;
-						transition: ease-in-out;
+					.slide-buttons {
+						display: flex;
+						justify-content: space-between;
+						align-items: center;
+						width: 70vw;
+						height: 20%;
+						z-index: 2;
+						float: left;
+						width: 100%;
+						position: absolute;
+						top: 40%;
+						pointer-events: none;
 					}
-					@keyframes slideLeftv {
-						0% {
-							opacity: 0;
-							transform: translateX(15rem);
-							transition: 3s ease-in;
-						}
-						100% {
-							opacity: 1;
-							transform: translateX(0);
-							transition: 0.01s ease-in;
-						}
+					.slide-buttons > div {
+						color: var(--off-white);
+						padding: 10px;
+						font-weight: bold;
+						font-size: 2em;
+						cursor: pointer;
+						background-color: rgba(0, 0, 0, 0.3);
+						width: 30px;
+						height: 30px;
+						border-radius: 5px;
+						line-height: 30px;
+						pointer-events: auto;
 					}
-					@keyframes slideRightv {
-						0% {
-							opacity: 0;
-							transform: translateX(-15rem);
-							transition: 0.01s ease-in;
-						}
-						100% {
-							opacity: 1;
-							transform: translateX(0);
-							transition: 0.01s ease-in;
+					.prevbtn:hover, .nextbtn:hover {
+						color: var(--white);
+						background-color: rgba(0, 0, 0, 0.7);
+					}
+					@supports (scroll-snap-type) {
+						.slider > a {
+							display: none;
 						}
 					}
 				</style>
-			{% endblock %}
-
-			{% block customjsv %}
+			</div>
+			<div class="submit-stuff"><a href="/submissions"><button class="submit-button">Submit your content!</button></a></div>
+		</div>
+		<div class="with-controls" id="vid-main">
+			<div class="vidshow-container">
+				<div class="vidshow">
+					{% for vid in vids %}
+						<div id="vid-{{ loop.index }}"><div id="vidframe-{{ loop.index }}">{{ vid.show | safe }}</div></div>
+					{% endfor %}
+				</div>
 				<script>
-					window.onload = () => {
-						window.presentSlidev = -1;
-						let heightv = 0;
-						let widthv = 0;
-						let scaleWidthv = 0;
-						let scaleHeightv = 0;
-						let nextv = 0;
-						let autoScroll = 1;
-
-						document.getElementById("prevvbtn").addEventListener("click", prevvVideo);
-						document.getElementById("nextvbtn").addEventListener("click", nextvVideo);
-
-						function prevvVideo () {
-							nextv = 0;
-							slideShow(--presentSlidev);
-						}
-						function nextvVideo () {
-							nextv = 1;
-							slideShow(++presentSlidev);
-						}
-						function pause () {
-							autoScroll = 0;
-							document.getElementById("containerv").style.cursor = "pointer";
-						}
-						function auto () {
-							autoScroll = 1;
-							nextv = 1;
-						}
-
-						function setImageDimensions (indexv) {
-							var promise = new Promise((resolve, reject) => {
-								if (window.innerWidth < 430 && window.innerHeight < 950) {
-									document.getElementById("containerv").style.width = 69 + "vw";
-									document.getElementById("containerv").style.height = 34 + "vw";
-									document.getElementsByClassName("btnsv")[0].style.width = 70 + "vw";
-									document.getElementsByClassName("div")[indexv].style.width = 70 + "vw";
-									document.getElementsByClassName("div")[indexv].style.height = 35 + "vw";
-									scaleWidthv = 1;
-									scaleHeightv = 0.6;
-								}
-								resolve();
-							});
-							return promise;
-						}
-
-						const videos = [{% for vid in vids %}'{{ vid.show | safe }}'{{ ', ' if not loop.last }}{% endfor %}];
-
-						for (let i = 0; i < videos.length; i++) {
-							let div = document.createElement("div");
-							div.className = "div";
-							div.innerHTML = videos[i];
-							document.getElementById("containerv").appendChild(div);
-						}
-
-						function slideShow (indexv) {
-							indexv < 0 ? (indexv = -(indexv % videos.length)) : (indexv = (indexv % videos.length));
-							setImageDimensions(indexv)
-								.then(res => {
-									let slides = document.getElementsByClassName("div");
-									for (i = 0; i < slides.length; i++) {
-										slides[i].style.display = "none";
-									}
-									slides[indexv].style.display = "block";
-									if (nextv === 0) {
-										if (slides[indexv].classList.contains("slideRightv")) {
-											slides[indexv].classList.remove("slideRightv");
-											slides[indexv].offsetWidth = slides[indexv].offsetWidth;
-											slides[indexv].classList.add("slideRightv");
-										} else {
-											slides[indexv].classList.remove("slideLeftv");
-											slides[indexv].offsetWidth = slides[indexv].offsetWidth;
-											slides[indexv].classList.add("slideRightv");
-										}
-									} else {
-										if (slides[indexv].classList.contains("slideRightv")) {
-											slides[indexv].classList.remove("slideRightv");
-											slides[indexv].offsetWidth = slides[indexv].offsetWidth;
-											slides[indexv].classList.add("slideLeftv");
-										} else {
-											slides[indexv].classList.remove("slideLeftv");
-											slides[indexv].offsetWidth = slides[indexv].offsetWidth;
-											slides[indexv].classList.add("slideLeftv");
-										}
-									}
-									document.getElementsByClassName("div")[indexv].addEventListener("mouseenter", pause);
-									document.getElementById("prevvbtn").addEventListener("mouseenter", pause);
-									document.getElementById("nextvbtn").addEventListener("mouseenter", pause);
-									document.getElementById("prevvbtn").addEventListener("mouseout", auto);
-									document.getElementById("nextvbtn").addEventListener("mouseout", auto);
-									document.getElementsByClassName("div")[indexv].addEventListener("mouseout", auto);
-								}).catch((err) => console.log(err));
-						};
-
-						slideShow(++presentSlidev);
-						setInterval(() => {
-							let slides = document.getElementsByClassName("div");
-							for (i = 0; i < slides.length; i++) {
-								if (slides[i].style.display === "block") {
-									document.getElementsByClassName("div")[i].addEventListener("mouseenter", pause);
-									document.getElementById("prevvbtn").addEventListener("mouseenter", pause);
-									document.getElementById("nextvbtn").addEventListener("mouseenter", pause);
-									document.getElementById("prevvbtn").addEventListener("mouseout", auto);
-									document.getElementById("nextvbtn").addEventListener("mouseout", auto);
-									document.getElementsByClassName("div")[i].addEventListener("mouseout", auto);
-								}
-							}
-							if (autoScroll) {
-								slideShow(++presentSlidev);
-							}
-						}, 5000);
-					};
+					const inputVids = [{% for vid in vids %}'{{ vid.link }}'{{ ',' if not loop.last }}{% endfor %}].map(vid => vid.split('?v=')[1]);
+					console.log(inputVids);
+					let players = [];
 				</script>
-			{% endblock %}
+				<div class="slide-buttons">
+					<div class="prevbtn" id="vid-prev">&#10094;</div>
+					<div class="nextbtn" id="vid-next">&#10095;</div>
+				</div>
+			</div>
+			<div class="slider" id="slider-vid">
+				{% for vid in vids %}
+					<a id="vidref-{{ loop.index }}"></a>
+				{% endfor %}
+			</div>
+			<script>
+				const vidSliders = document.querySelectorAll('#slider-vid > a'), vidSlides = document.querySelectorAll(".vidshow > div");
+				let videoTimer, scrolledOutVid = true, playedVid = false;
+				const VIDEO_TIME = 7000;
+				const vidAmt = {{ vids | length }};
+				function videoSlide (prev, auto) {
+					const currentIndex = [...vidSliders].findIndex(dot => dot.classList.contains('active-video-link'));
+					let nextIndex = currentIndex + (prev ? -1 : 1);
+					nextIndex = (nextIndex + vidAmt) % vidAmt;
+					vidSlides[nextIndex].scrollIntoView({ behaviour: 'smooth', block: 'nearest' });
+					clearTimeout(videoTimer);
+					if (auto) videoTimer = setTimeout(videoSlide, VIDEO_TIME, false, auto);
+				}
+				vidSliders.forEach(a => a.addEventListener('click', () => {
+					clearTimeout(videoTimer);
+					const target = vidSlides[a.id.substr(7) - 1];
+					target.scrollIntoView({ behaviour: 'smooth', block: 'nearest' });
+				}));
+				document.getElementById('vid-prev').addEventListener('click', () => {
+					clearTimeout(videoTimer);
+					videoSlide(true);
+				});
+				document.getElementById('vid-next').addEventListener('click', () => {
+					clearTimeout(videoTimer);
+					videoSlide(false);
+				});
+				const videoObserver = new IntersectionObserver(vidSlides => {
+					vidSlides.forEach(slide => {
+						try {
+							if (slide.isIntersecting && slide.intersectionRatio > 0.2) return vidSliders[slide.target.id.substr(4) - 1].classList.add('active-video-link');
+							else vidSliders[slide.target.id.substr(4) - 1].classList.remove('active-video-link');
+						} catch (e) {
+							console.log(e, slide);
+						}
+					});
+				}, { threshold: [0.4] });
+				new IntersectionObserver(([vidShow]) => {
+					if (playedVid) return console.log(this);
+					if (vidShow.isIntersecting && vidShow.intersectionRatio > 0.2) {
+						if (scrolledOutVid) {
+							scrolledOutVid = false;
+							clearTimeout(videoTimer);
+							videoSlide(false, true);
+							console.log('Rejoined videos');
+						}
+					} else {
+						clearTimeout(videoTimer);
+						scrolledOutVid = true;
+						console.log('Left videos');
+					}
+				}, { threshold: [0.45] }).observe(document.querySelector('.vidshow'));
+				vidSlides.forEach(slide => videoObserver.observe(slide));
+				videoSlide(false, true);
+			</script>
+			<script>
+				function onYouTubeIframeAPIReady() {
+					players = inputVids.map((vid, j) => {
+						new YT.Player(`vidframe-${j + 1}`, {
+							height: '100%',
+							width: '100%',
+							videoId: vid,
+							playerVars: {
+								'playsinline': 1
+							},
+							events: {
+								'onStateChange': function (event) {
+									if (event.data === YT.PlayerState.PLAYING) {
+										playedVid = true;
+										clearTimeout(videoTimer);
+									}
+								}
+							}
+						});
+					});
+				}
+			</script>
+			<style>
+				#vid-main {
+					width: 100%;
+					max-width: 800px;
+					margin: auto;
+				}
+				.vidshow-container {
+					max-height: 60vh;
+					max-width: 90%;
+					margin: auto;
+				}
+				.vidshow::-webkit-scrollbar {
+					display: none;
+				}
+				.active-video-link {
+					background-color: var(--off-white) !important;
+				}
+				#vid-prev, #vid-next {
+					background-color: rgba(0, 0, 0, 0.7);
+					color: var(--white);
+				}
+				#vid-prev:hover, #vid-next:hover {
+					background-color: red;
+				}
+			</style>
 		</div>
 	</div>
 {% endblock %}
 
 {% block customcss %}
 	<style>
+		.text {
+			text-align: justify;
+			max-width: 700px;
+		}
 		.mask-banner {
 			width: 80%;
 			background: var(--red);
@@ -486,8 +389,8 @@
 		}
 		.notices {
 			display: flex;
-			padding: 0 40px 0 0;
-			margin: 30px;
+			margin: 30px 40px 30px 40px;
+			box-sizing: border-box;
 		}
 		.noticebox {
 			margin-top: 20px;
@@ -507,7 +410,11 @@
 		.notices-list {
 			max-height: 150px;
 			overflow-y: auto;
-			margin-right: -8px;
+			-ms-overflow-style: none;
+			scrollbar-width: none;
+		}
+		.notices-list::-webkit-scrollbar {
+			display: none;
 		}
 		.notice-post {
 			transition: 0.4s;
@@ -552,30 +459,21 @@
 			display: inline-flex;
 			padding-bottom: 40px;
 			flex-wrap: wrap;
-			justify-content: center;
 			width: 70vw;
 			margin: 0 auto;
-		}
-		.imgshow {
-			width: fit-content;
-			height: fit-content;
-			border: 1px solid var(--off-white);
-			border-radius: 5px;
-			margin: 20px;
-			background-color: var(--tinted-gray);
 		}
 		.vidshow {
 			border: 1px solid var(--off-white);
 			border-radius: 5px;
 			margin: 40px auto;
 			width: 70vw;
-			height: 35vw;
+			height: 37vw;
 			background-color: var(--medium-gray);
 			margin: auto;
 			margin-bottom: 50px;
 		}
 		.submit-stuff {
-			margin: 50px;
+			margin:0 auto;
 			display: flex;
 			align-items: center;
 			z-index: 29;
@@ -597,15 +495,21 @@
 		}
 		@media (max-width: 800px) {
 			.flex-container {
-				flex-direction: column;
+				flex-direction: column-reverse;
 			}
-			.notices, .vidshow, .imgshow {
+			.notices, .vidshow {
 				margin: 30px auto;
+			}
+			.text {
+				padding: 30px;
 			}
 		}
 		@media (max-width: 600px) {
 			.about-stuff {
 				padding-right: 0;
+			}
+			.vidshow-container {
+				height: 200px;
 			}
 		}
 	</style>
