@@ -165,7 +165,9 @@ span.float-middle {
 }
 
 hr.in-navbar {
-	border-top: 1px var(--off-white);
+	background-color: var(--off-white);
+	border-color: var(--off-white);
+	color: var(--off-white);
 }
 
 .dropdown-content {
@@ -222,7 +224,7 @@ span.navbar-line {
 
 /********************************************************/
 
-.hamburger-menu, .plate {
+.hamburger-menu, .plate, .plate-bar {
 	display: none;
 }
 
@@ -368,6 +370,8 @@ span.navbar-line {
 }
 
 .hamburger-menu hr.minor {
+	background-color: var(--tinted-gray);
+	border-color: var(--tinted-gray);
 	color: var(--tinted-gray);
 	margin-left: 7%;
 	margin-right: 10%;
@@ -409,7 +413,7 @@ span.navbar-line {
 	.navbar-full {
 		display: none;
 	}
-	.hamburger-menu, .plate {
+	.hamburger-menu, .plate, .plate-bar {
 		display: block;
 	}
 	.burger-open>div:not(.plate, .hamburger-menu) {

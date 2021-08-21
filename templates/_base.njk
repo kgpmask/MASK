@@ -34,6 +34,7 @@
 	<body>
 		<div id="page-container">
 			<div id="content-wrap">
+				<div style="max-height:0;max-width:0;overflow:hidden"><input autofocus/></div>
 				{% block navbar %}
 					<div class="navbar-full">
 						<ul>
@@ -85,6 +86,11 @@
 				<a href="https://www.facebook.com/maskiitkgp" target="_blank" target="_self"><img class="social-icon" src="/assets/facebook.png"/></a>
 				<a href="mailto:maskiitkgp@gmail.com" target="_blank" target="_self"><img class="social-icon" id="gmail" src="/assets/gmail.png"/></a>
 			</footer>
+			{% block autoscroll %}
+				<script>
+					window.scrollTo(0, 0);
+				</script>
+			{% endblock %}
 		</div>
 	</body>
 </html>
