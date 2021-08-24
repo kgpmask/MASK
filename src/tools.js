@@ -1,4 +1,4 @@
-exports.deepClone = function (aObject) {
+exports.deepClone = function deepClone (aObject) {
 	if (!aObject) return aObject;
 	let v, bObject = Array.isArray(aObject) ? [] : {};
 	for (const k in aObject) {
@@ -8,7 +8,24 @@ exports.deepClone = function (aObject) {
 	return bObject;
 };
 
-exports.toID = function (string) {
+exports.deepEquals = function deepEqual(obj1, obj2) {
+	if (obj1 === obj2) return true;
+	if (exports.isPrimitive(obj1) || exports.isPrimitive(obj2)) return obj1 === obj2;
+	const keys = Object.keys(obj1);
+	if (keys.length !== Object.keys(obj2).length) return false;
+	for (let i = 0; i < keys.length; i++) {
+		const key = keys[i];
+		if (!obj2.hasOwnProperty(key)) return false;
+		if (!exports.deepEquals(obj1[key], obj2[key])) return false;
+	}
+	return true;
+};
+
+exports.isPrimitive = function isPrimitive (obj) {
+	return (obj !== Object(obj));
+};
+
+exports.toID = function toID (string) {
 	return (string?.toString() || '').toLowerCase().replace(/[^a-z0-9-]/g, '');
 };
 
