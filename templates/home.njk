@@ -241,7 +241,6 @@
 				</div>
 				<script>
 					const inputVids = [{% for vid in vids %}'{{ vid.link }}'{{ ',' if not loop.last }}{% endfor %}].map(vid => vid.split('?v=')[1]);
-					console.log(inputVids);
 					let players = [];
 				</script>
 				<div class="slide-buttons">

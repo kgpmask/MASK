@@ -24,10 +24,10 @@
 }
 
 body {
-	background-color: var(--dark-gray);
+	background: linear-gradient(var(--medium-gray), var(--dark-gray));
 	text-align: center;
 	color: var(--light-gray);
-	font-family: ubuntu, roboto, open sans;
+	font-family: Ubuntu, Roboto, Arial, sans-serif;
 }
 
 div#page-container {
@@ -75,12 +75,37 @@ footer {
 	justify-content: flex-end;
 }
 
+#footer-logo {
+	display: block;
+	position: absolute;
+	left: 20px;
+	top: 10px;
+}
+
+#footer-logo img {
+	height: 50px;
+	width: 50px;
+	vertical-align: middle;
+	border-radius: 40%;
+	transition: all 0.5s linear;
+}
+
+#footer-name {
+	position: absolute;
+	left: 90px;
+	font-weight: bold;
+	color: var(--off-white);
+	text-decoration: none;
+	display: flex;
+	align-items: center;
+	height: 70px
+}
+
 img.social-icon {
 	margin: 17px 10px;
 	vertical-align: middle;
 	border-radius: 10px;
 	width: 36px;
-	filter: grayscale(40%);
 	transition: transform .2s;
 	display: inline-flex;
 }
@@ -104,14 +129,26 @@ div#contact-us {
 	margin-right: 40px;
 }
 
-@media (max-width: 370px) {
+@media (max-width: 400px) {
 	footer {
 		justify-content: space-evenly;
 	}
 	img#gmail {
 		margin-right: 10px;
 	}
+	#footer-logo {
+		display: none;
+	}
+}
+
+@media (max-width: 450px) {
 	div#contact-us {
+		display: none;
+	}
+}
+
+@media (max-width: 600px) {
+	#footer-name {
 		display: none;
 	}
 }
