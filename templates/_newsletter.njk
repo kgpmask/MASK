@@ -59,6 +59,10 @@
 			cursor: default;
 		}
 
+		button.rel:hover {
+			background-color: var(--middle-gray);
+		}
+
 		@media (max-width: 500px) {
 			div.controls {
 				width: 200px;
@@ -77,8 +81,10 @@
 			}
 		}
 	</style>
+	{% block lettercss %}{% endblock %}
 {% endblock %}
 
 {% block customjs %}
 	<script src="https://kit.fontawesome.com/dbc840a846.js" crossorigin="anonymous"></script>
+	{% block letterjs %}{% endblock %}
 {% endblock %}

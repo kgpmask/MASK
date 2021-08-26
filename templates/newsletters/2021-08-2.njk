@@ -9,7 +9,7 @@
 	</div>
 {% endblock %}
 
-{% block customcss %}
+{% block lettercss %}
 	<style>
 		.page {
 			background-color: var(--off-white);
@@ -68,18 +68,17 @@
 			background-color: var(--white);
 			border-radius: 5px;
 			opacity: 0.1;
-			animation: fadeOut 2.5s;
+			animation: fadeOut 1.5s;
 		}
-		@keyframes fadeIn{
-			from{
+		@keyframes fadeIn {
+			from {
 				opacity: 0;
 			}
-			to{
+			to {
 				opacity: 1;
-				display: none;
 			}
 		}
-		@keyframes fadeOut{
+		@keyframes fadeOut {
 			0% {
 				opacity: 1;
 			}
@@ -90,12 +89,25 @@
 	</style>
 {% endblock %}
 
-{% block customjs %}
+{% block letterjs %}
 <script type="text/javascript">
 "use strict";
 
-const words = `ALL FOR ONE
-ALL MIGHT`.split("\n").map(line => line.replace(/ /g, ""));
+const tempWords = `ALL FOR ONE
+ALL MIGHT
+BEST JEANIST
+CEMENTOSS
+DABI
+ENDEAVOR
+ERASER HEAD
+HAWKS
+KUROGIRI
+MIDNIGHT
+MIRKO
+MR COMPRESS
+PRESENT MIC
+RYUKYU
+TOMURA SHIGARAKI`.split("\n").slice(0, 2), words = tempWords.map(word => word.replace(/ /g, '').toUpperCase());
 
 let matrix = `M X A R O K R I M T X O K N K G S Q R Y Y N T
 H W K D Q M L Y P W C O A S U R B F J L R H M
@@ -159,9 +171,12 @@ function start() {
 							document.getElementById(`crossword-word-${word.toLowerCase()}`).classList.add("found-word");
 							if (words.length === found.length) {
 								mytablebody.id = "table-complete";
+								const wordsList = document.getElementById('crossword-words');
+								wordsList.style.animation = "fadeOut 1.5s";
+								wordsList.style.opacity = 0.1;
 								setTimeout(function () {
 									document.getElementById(`crossword`).innerHTML = `<div class="crossword-complete">Completed!</div>`;
-								},3000);
+								}, 1500);
 							}
 						}
 					}
@@ -170,7 +185,7 @@ function start() {
 				else {
 					click = [~~this.getAttribute("data-posI"), ~~this.getAttribute("data-posJ")];
 				}
-			},false);
+			}, false);
 			mycurrent_cell.addEventListener("mouseover", function (event) {
 				if (click) {
 					const start = click;
@@ -203,11 +218,9 @@ function start() {
 
 	let colnum = Math.ceil(words.length / 5);
 	let wordArea = document.getElementById("crossword-words");
-	let tempWords = words.map(word => `<div id="crossword-word-${word.toLowerCase()}">${word}</div>`);
-	wordArea.innerHTML = tempWords.join("<br/>");
-
+	wordArea.innerHTML = tempWords.map(word => `<div id="crossword-word-${word.replace(/ /g, '').toLowerCase()}">${word}</div>`).join("<br/>");
 }
 
 window.onload = start;
 </script>
-{%endblock%}
+{% endblock %}
