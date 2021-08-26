@@ -126,11 +126,9 @@ const rows = matrix.length;
 const cols = matrix[0].length;
 
 let found = [];
-for(let i = 0; i < rows; i++) {
+for (let i = 0; i < rows; i++) {
 	let tempRow = [];
-	for(let j = 0; j < cols; j++){
-		tempRow.push("-");	
-	}
+	for (let j = 0; j < cols; j++) tempRow.push("-");
 	found.push(tempRow);
 }
 
@@ -140,19 +138,19 @@ let keypressed = false;
 function start() {
 	let max = Math.max(rows, cols);
 	let size = (40 * 10 / max - 2) + "px";
-	let fontsize = (10 / max)**(1/2) + "em";
+	let fontsize = (10 / max) ** (1 / 2) + "em";
 	let mytablebody = document.getElementById("crossword-table");
 
-	for(let i = 0; i < rows; i++) {
+	for (let i = 0; i < rows; i++) {
 		let mycurrent_row = document.createElement("tr");
 
-		for(let j = 0; j < cols; j++) {
+		for (let j = 0; j < cols; j++) {
 			let mycurrent_cell = document.createElement("td");
-			if(matrix[i][j] === "-"){
+			if (matrix[i][j] === "-") {
 				mycurrent_cell.classList.add("crossword-cell-blank");
 				mycurrent_cell.setAttribute("Blank", "");
 			}
-			else{
+			else {
 				mycurrent_cell.classList.add("crossword-cell");
 				mycurrent_cell.setAttribute("Blank", "1");
 			}
@@ -164,44 +162,44 @@ function start() {
 			mycurrent_cell.style.height = size;
 			mycurrent_cell.style.maxHeight = size;
 			mycurrent_cell.style.fontSize = fontsize;
-			mycurrent_cell.addEventListener("click", function( event){
-				for(let i = 0; i < rows; i++){
-					for(let j = 0; j < cols; j++){
+			mycurrent_cell.addEventListener("click", function (event) {
+				for (let i = 0; i < rows; i++) {
+					for (let j = 0; j < cols; j++) {
 						let tempCell = document.getElementById(`crossword-cell-${i}-${j}`);
 						tempCell.classList.remove("crosswordCellH");
 						tempCell.classList.remove("crosswordCellS");
 					}
 				}
 				click = [~~this.getAttribute("data-posI"), ~~this.getAttribute("data-posJ")];
-				if(matrix[click[0]][click[1]] === "-"){
+				if (matrix[click[0]][click[1]] === "-") {
 					click = false;
 				}
-				else{
+				else {
 					event.target.classList.add("crosswordCellH");
 				}
-			},false);
-			document.addEventListener('keydown', function(e){
-				if(keypressed)return;
+			}, false);
+			document.addEventListener('keydown', function (e) {
+				if (keypressed)return;
 				keypressed = true;
-				if(click){
-					if(e.keyCode >= 65 && e.keyCode <= 90){
+				if (click) {
+					if (e.keyCode >= 65 && e.keyCode <= 90) {
 						let tempCell = document.getElementById(`crossword-cell-${click[0]}-${click[1]}`);
 						let currenttext = (String.fromCharCode(e.keyCode));
 						tempCell.innerHTML = currenttext;
 						found[click[0]][click[1]] = currenttext;
-						axios.post(`checker/date/puzzle_type`,found).then(res => {
-							if(res.data){
+						axios.post(`checker/date/puzzle_type`, found).then(res => {
+							if (res.data) {
 								mytablebody.id = "table-complete";
-								setTimeout(function(){
+								setTimeout(function () {
 									document.getElementById(`crossword`).innerHTML = `<div class="crossword-complete">Completed!</div>`;
-								},3000);
+								}, 3000);
 							}
 						});
 						let next = document.getElementById(`crossword-cell-${click[0]+1}-${click[1]}`);
-						if(next && next.getAttribute("Blank")){
+						if (next && next.getAttribute("Blank")) {
 							click[0] += 1;
-							for(let i = 0; i < rows; i++){
-								for(let j = 0; j < cols; j++){
+							for (let i = 0; i < rows; i++) {
+								for (let j = 0; j < cols; j++) {
 									let tempCell = document.getElementById(`crossword-cell-${i}-${j}`);
 									tempCell.classList.remove("crosswordCellH");
 									tempCell.classList.remove("crosswordCellS");
@@ -211,10 +209,10 @@ function start() {
 							return;
 						}
 						next = document.getElementById(`crossword-cell-${click[0]}-${click[1]+1}`);
-						if(next && next.getAttribute("Blank")){
+						if (next && next.getAttribute("Blank")) {
 							click[1] += 1;
-							for(let i = 0; i < rows; i++){
-								for(let j = 0; j < cols; j++){
+							for (let i = 0; i < rows; i++) {
+								for (let j = 0; j < cols; j++) {
 									let tempCell = document.getElementById(`crossword-cell-${i}-${j}`);
 									tempCell.classList.remove("crosswordCellH");
 									tempCell.classList.remove("crosswordCellS");
@@ -224,14 +222,14 @@ function start() {
 							return;
 						}
 					}
-					if(e.keyCode >= 37 && e.keyCode <= 40){
+					if (e.keyCode >= 37 && e.keyCode <= 40) {
 						e.preventDefault();
-						if(e.keyCode === 37){
+						if (e.keyCode === 37) {
 							let next = document.getElementById(`crossword-cell-${click[0]}-${click[1]-1}`);
-							if(next && next.getAttribute("Blank")){
+							if (next && next.getAttribute("Blank")) {
 								click[1] -= 1;
-								for(let i = 0; i < rows; i++){
-									for(let j = 0; j < cols; j++){
+								for (let i = 0; i < rows; i++) {
+									for (let j = 0; j < cols; j++) {
 										let tempCell = document.getElementById(`crossword-cell-${i}-${j}`);
 										tempCell.classList.remove("crosswordCellH");
 										tempCell.classList.remove("crosswordCellS");
@@ -241,12 +239,12 @@ function start() {
 								return;
 							}
 						}
-						else if(e.keyCode === 38){
+						else if (e.keyCode === 38) {
 							let next = document.getElementById(`crossword-cell-${click[0]-1}-${click[1]}`);
-							if(next && next.getAttribute("Blank")){
+							if (next && next.getAttribute("Blank")) {
 								click[0] -= 1;
-								for(let i = 0; i < rows; i++){
-									for(let j = 0; j < cols; j++){
+								for (let i = 0; i < rows; i++) {
+									for (let j = 0; j < cols; j++) {
 										let tempCell = document.getElementById(`crossword-cell-${i}-${j}`);
 										tempCell.classList.remove("crosswordCellH");
 										tempCell.classList.remove("crosswordCellS");
@@ -256,12 +254,12 @@ function start() {
 								return;
 							}
 						}
-						else if(e.keyCode === 39){
-							let next = document.getElementById(`crossword-cell-${click[0]}-${click[1]+1}`);
-							if(next && next.getAttribute("Blank")){
+						else if (e.keyCode === 39) {
+							let next = document.getElementById(`crossword-cell-${click[0]}-${click[1] + 1}`);
+							if (next && next.getAttribute("Blank")) {
 								click[1] += 1;
-								for(let i = 0; i < rows; i++){
-									for(let j = 0; j < cols; j++){
+								for (let i = 0; i < rows; i++) {
+									for (let j = 0; j < cols; j++) {
 										let tempCell = document.getElementById(`crossword-cell-${i}-${j}`);
 										tempCell.classList.remove("crosswordCellH");
 										tempCell.classList.remove("crosswordCellS");
@@ -271,12 +269,12 @@ function start() {
 								return;
 							}
 						}
-						else{
-							let next = document.getElementById(`crossword-cell-${click[0]+1}-${click[1]}`);
-							if(next && next.getAttribute("Blank")){
+						else {
+							let next = document.getElementById(`crossword-cell-${click[0] + 1}-${click[1]}`);
+							if (next && next.getAttribute("Blank")) {
 								click[0] += 1;
-								for(let i = 0; i < rows; i++){
-									for(let j = 0; j < cols; j++){
+								for (let i = 0; i < rows; i++) {
+									for (let j = 0; j < cols; j++) {
 										let tempCell = document.getElementById(`crossword-cell-${i}-${j}`);
 										tempCell.classList.remove("crosswordCellH");
 										tempCell.classList.remove("crosswordCellS");
@@ -289,21 +287,19 @@ function start() {
 					}
 				}
 			});
-			document.addEventListener("keyup",() => keypressed = false, false);
+			document.addEventListener("keyup", () => keypressed = false, false);
 			mycurrent_row.appendChild(mycurrent_cell);
 		}
 		mytablebody.appendChild(mycurrent_row);
 	}
 
-	function arraysAreIdentical(arr1, arr2){
-		for (let i = 0; i < arr1.length; i++){
-			for (let j = 0; j < arr1[0].length; j++){
-				if (arr1[i][j] !== arr2[i][j]){
-					return false;
-				}
+	function arraysAreIdentical(arr1, arr2) {
+		for (let i = 0; i < arr1.length; i++) {
+			for (let j = 0; j < arr1[0].length; j++) {
+				if (arr1[i][j] !== arr2[i][j]) return false;
 			}
 		}
-		return true; 
+		return true;
 	}
 
 }
