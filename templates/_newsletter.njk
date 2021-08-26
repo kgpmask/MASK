@@ -14,6 +14,7 @@
 	{{ nextprev() }}
 		<h1>{{ pagetitle }}</h1>
 		<div id="pages-container"><div id="pages">
+		<div class="page" id="cover-page"><img id="cover-logo" src="/assets/logo.jpeg"/><br/>Manga & Anime<br/>Society, Kharagpur<br/><br/><div id="cover-page-title">{{ pagetitle }}</div></div>
 			{% block article %}
 				<div class="faded">This article hasn't been published yet - stay tuned!</div>
 			{% endblock %}
@@ -30,21 +31,17 @@
 			margin: 0px auto;
 			justify-content: space-between;
 		}
-
 		span.buttontext {
 			display: block;
 		}
-
 		.buttonicon {
 			display: none;
 		}
-
 		span#flipped {
 			transform: scale(-1);
 			filter: flipH;
 			-ms-filter: flipH;
 		}
-
 		button.rel {
 			width: 100px;
 			height: 30px;
@@ -54,31 +51,25 @@
 			border-radius: 5px;
 			cursor: pointer;
 		}
-
 		button.rel:disabled {
 			background-color: var(--tinted-gray);
 			border: 1px solid var(--gray);
 			color: var(--ghost-gray);
 			cursor: default;
 		}
-
 		button.rel:not(:disabled):hover {
 			background-color: var(--middle-gray);
 		}
-
 		@media (max-width: 500px) {
 			div.controls {
 				width: 200px;
 			}
-
 			span.buttontext {
 				display: none;
 			}
-
 			.buttonicon {
 				display: block;
 			}
-
 			button.rel {
 				width: 50px;
 			}
@@ -125,6 +116,7 @@
 			box-sizing: border-box;
 			padding-top: 20px;
 			height: 594px;
+			border: 2px var(--light-pink);
 			border-radius: 5px;
 			color: var(--abyss);
 			page-break-before: always;
@@ -139,6 +131,65 @@
 			padding: 5px 12px;
 			font-size: 12px;
 			opacity: 0.5;
+			font-family: Ubuntu, Roboto, Open Sans !important;
+			text-shadow: none !important;
+		}
+		@font-face {
+			font-family: 'Cover';
+			src: url('/assets/cover-title-font.ttf') format('truetype');
+		}
+		#cover-page {
+			background-color: var(--red);
+			font-size: 2em;
+			font-weight: bold;
+			font-family: Cover;
+			text-shadow: -3px 0 var(--white), 0 3px var(--white), 3px 0 var(--white), 0 -3px var(--white);
+		}
+		#cover-logo {
+			width: 70%;
+		}
+		#cover-page-title {
+			font-size: 1.2em;
+		}
+
+		.article-full, .article-half {
+			width: 90%;
+			margin: auto;
+			overflow-y: scroll;
+			display: block;
+			padding-right: 10px;
+			scrollbar-color: var(--red) var(--off-white);
+		}
+		.article-full {
+			max-height: 90%;
+			min-height: 90%;
+		}
+		.article-half {
+			max-height: 40%;
+			min-height: 40%;
+		}
+		.article-full > h2, .article-half > h2 {
+			text-shadow: 0 0 0.5px var(--red);
+		}
+		.article-content {
+			margin-bottom: 30px;
+			text-align: justify;
+		}
+		.article-content > p {
+			margin-top: 20px;
+		}
+		.article-author {
+			opacity: 0.5;
+			font-size: 0.8em;
+		}
+		.anime-info {
+			font-size: 0.7em;
+			border: 1px solid var(--darker-gray);
+			text-align: left;
+			margin: 20px auto;
+		}
+		.anime-info > tbody > tr > td {
+			padding: 2px 10px;
 		}
 	</style>
 	{% block lettercss %}{% endblock %}
