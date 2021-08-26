@@ -124,13 +124,13 @@ let click = false;
 function start() {
 	let max = Math.max(rows, cols);
 	let size = 40 * 10 / max + "px";
-	let fontsize = (10 / max)**(1/2) + "em";
+	let fontsize = (10 / max) ** (1 / 2) + "em";
 	let mytablebody = document.getElementById("crossword-table");
 
-	for(let i = 0; i < rows; i++) {
+	for (let i = 0; i < rows; i++) {
 		let mycurrent_row = document.createElement("tr");
 
-		for(let j = 0; j < cols; j++) {
+		for (let j = 0; j < cols; j++) {
 			let mycurrent_cell = document.createElement("td");
 			mycurrent_cell.classList.add("crossword-cell");
 			mycurrent_cell.setAttribute("id", `crossword-cell-${i}-${j}`);
@@ -142,45 +142,43 @@ function start() {
 			mycurrent_cell.style.maxHeight = size;
 			mycurrent_cell.style.fontSize = fontsize;
 			let currenttext = document.createTextNode(matrix[i][j]);
-			mycurrent_cell.addEventListener("click", function( event){
-				if(click){
+			mycurrent_cell.addEventListener("click", function (event) {
+				if (click) {
 					const start = click;
 					const final = [~~this.getAttribute("data-posI"), ~~this.getAttribute("data-posJ")];
 					click = false;
-					if(start[0] === final[0] && start[1] === final[1])return; //same position
-					if(start[0] === final[0] || start[1] === final[1] || (Math.abs(start[0] - final[0]) === Math.abs(start[1] - final[1]))){
+					if (start[0] === final[0] && start[1] === final[1])return; //same position
+					if (start[0] === final[0] || start[1] === final[1] || (Math.abs(start[0] - final[0]) === Math.abs(start[1] - final[1]))) {
 						let word = "";
 						let offsets = [Math.sign(final[0] - start[0]), Math.sign(final[1] - start[1])];
-						for(let [i, j] = start; (i !== final[0] || j !== final[1]); [i += offsets[0], j += offsets[1]]){
-							word += matrix[i][j];
-						}
+						for (let [i, j] = start; (i !== final[0] || j !== final[1]); [i += offsets[0], j += offsets[1]]) word += matrix[i][j];
 						word += matrix[final[0]][final[1]];
 						console.log(word);
-						if(words.includes(word) && !found.includes(word)){
+						if (words.includes(word) && !found.includes(word)) {
 							found.push(word);
 							document.getElementById(`crossword-word-${word.toLowerCase()}`).classList.add("found-word");
-							if(words.length === found.length){
+							if (words.length === found.length) {
 								mytablebody.id = "table-complete";
-								setTimeout(function(){
+								setTimeout(function () {
 									document.getElementById(`crossword`).innerHTML = `<div class="crossword-complete">Completed!</div>`;
 								},3000);
 							}
 						}
 					}
-					return;//invalid
+					return; // invalid
 				}
-				else{
+				else {
 					click = [~~this.getAttribute("data-posI"), ~~this.getAttribute("data-posJ")];
 				}
 			},false);
-			mycurrent_cell.addEventListener("mouseover", function( event ) {
-				if(click){
+			mycurrent_cell.addEventListener("mouseover", function (event) {
+				if (click) {
 					const start = click;
 					const final = [~~this.getAttribute("data-posI"), ~~this.getAttribute("data-posJ")];
-					if(start[0] === final[0] && start[1] === final[1])return; //same position
-					if(start[0] === final[0] || start[1] === final[1] || (Math.abs(start[0] - final[0]) === Math.abs(start[1] - final[1]))){
+					if (start[0] === final[0] && start[1] === final[1])return; //same position
+					if (start[0] === final[0] || start[1] === final[1] || (Math.abs(start[0] - final[0]) === Math.abs(start[1] - final[1]))) {
 						let offsets = [Math.sign(final[0] - start[0]), Math.sign(final[1] - start[1])];
-						for(let [i, j] = start; (i !== final[0] + offsets[0] || j !== final[1] + offsets[1]); [i += offsets[0], j += offsets[1]]){
+						for (let [i, j] = start; (i !== final[0] + offsets[0] || j !== final[1] + offsets[1]); [i += offsets[0], j += offsets[1]]) {
 							let tempCell = document.getElementById(`crossword-cell-${i}-${j}`);
 							tempCell.classList.add("crosswordCellS");
 						}
@@ -188,9 +186,9 @@ function start() {
 				}
 				event.target.classList.add("crosswordCellH");
 			}, false);
-			mycurrent_cell.addEventListener("mouseleave", function( event ) {
-				for(let i = 0; i < rows; i++){
-					for(let j = 0; j < cols; j++){
+			mycurrent_cell.addEventListener("mouseleave", function (event) {
+				for (let i = 0; i < rows; i++) {
+					for (let j = 0; j < cols; j++) {
 						let tempCell = document.getElementById(`crossword-cell-${i}-${j}`);
 						tempCell.classList.remove("crosswordCellH");
 						tempCell.classList.remove("crosswordCellS");
