@@ -2,24 +2,18 @@
 
 {% set pagetitle = 'August - Issue 1' %}
 
+{% set pagecount = 2 %}
+
 {% block article %}
 	<div class="page" id="wordsearch">
 		<table id="wordsearch-table" cellspacing="0"></table>
 		<div id="wordsearch-words"></div>
 	</div>
+	<div class="page">o/</div>
 {% endblock %}
 
 {% block lettercss %}
 	<style>
-		.page {
-			background-color: var(--off-white);
-			margin: 20px auto;
-			padding: 20px;
-			width: 420px;
-			height: 594px;
-			border-radius: 5px;
-			color: var(--abyss);
-		}
 		#wordsearch {
 			cursor: default;
 		}
@@ -43,7 +37,6 @@
 		#wordsearch-words {
 			width: 100%;
 			columns: 80px 2;
-			padding: 1em;
 			margin-bottom: 1.3em;
 			-webkit-column-break-inside: avoid;
 			page-break-inside: avoid;
@@ -51,6 +44,9 @@
 		}
 		.wordsearch-word-col {
 			line-height: 90%;
+		}
+		.wordsearch-word {
+			margin: 10px auto;
 		}
 		.found-word{
 			color: var(--error-red);
@@ -137,7 +133,7 @@ let click = false;
 
 function start() {
 	let max = Math.max(rows, cols);
-	let size = 40 * 10 / max + "px";
+	let size = 40 * 10 / max - 2 + "px";
 	let fontsize = (10 / max) ** (1 / 2) + "em";
 	let mytablebody = document.getElementById("wordsearch-table");
 
@@ -161,7 +157,7 @@ function start() {
 					const start = click;
 					const final = [~~this.getAttribute("data-posI"), ~~this.getAttribute("data-posJ")];
 					click = false;
-					if (start[0] === final[0] && start[1] === final[1])return; //same position
+					if (start[0] === final[0] && start[1] === final[1]) return; //same position
 					if (start[0] === final[0] || start[1] === final[1] || (Math.abs(start[0] - final[0]) === Math.abs(start[1] - final[1]))) {
 						let word = "";
 						let offsets = [Math.sign(final[0] - start[0]), Math.sign(final[1] - start[1])];
@@ -192,7 +188,7 @@ function start() {
 				if (click) {
 					const start = click;
 					const final = [~~this.getAttribute("data-posI"), ~~this.getAttribute("data-posJ")];
-					if (start[0] === final[0] && start[1] === final[1])return; //same position
+					if (start[0] === final[0] && start[1] === final[1]) return; //same position
 					if (start[0] === final[0] || start[1] === final[1] || (Math.abs(start[0] - final[0]) === Math.abs(start[1] - final[1]))) {
 						let offsets = [Math.sign(final[0] - start[0]), Math.sign(final[1] - start[1])];
 						for (let [i, j] = start; (i !== final[0] + offsets[0] || j !== final[1] + offsets[1]); [i += offsets[0], j += offsets[1]]) {
@@ -220,7 +216,7 @@ function start() {
 
 	let colnum = Math.ceil(words.length / 5);
 	let wordArea = document.getElementById("wordsearch-words");
-	wordArea.innerHTML = tempWords.map(word => `<div id="wordsearch-word-${word.replace(/ /g, '').toLowerCase()}">${word}</div>`).join("<br/>");
+	wordArea.innerHTML = tempWords.map(word => `<div id="wordsearch-word-${word.replace(/ /g, '').toLowerCase()}" class="wordsearch-word">${word}</div>`).join("");
 }
 
 window.onload = start;

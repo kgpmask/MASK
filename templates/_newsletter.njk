@@ -12,16 +12,19 @@
 
 {% block pagecontent %}
 	{{ nextprev() }}
-	{% block article %}
-		<div class="faded">This article hasn't been published yet - stay tuned!</div>
-	{% endblock %}
+		<h1>{{ pagetitle }}</h1>
+		<div id="pages-container"><div id="pages">
+			{% block article %}
+				<div class="faded">This article hasn't been published yet - stay tuned!</div>
+			{% endblock %}
+		</div></div>
 	{{ nextprev() }}
 {% endblock %}
 
 {% block customcss %}
 	<style>
 		div.controls {
-			padding: 20px;
+			padding: 40px 20px;
 			display: flex;
 			width: 400px;
 			margin: 0px auto;
@@ -79,6 +82,63 @@
 			button.rel {
 				width: 50px;
 			}
+		}
+
+		#pages-container {
+			overflow: hidden;
+			width: 420px;
+			max-width: 100%;
+			max-height: 80%;
+			display: block;
+			margin-bottom: 10px;
+			position: relative;
+			margin: auto;
+		}
+		#pages {
+			display: flex;
+			overflow-x: auto;
+			scroll-snap-type: x mandatory;
+			scroll-behavior: smooth;
+			-webkit-overflow-scrolling: touch;
+			height: 100%;
+			width: 100%;
+			-ms-overflow-style: none;
+			scrollbar-width: none;
+		}
+		#pages::-webkit-scrollbar {
+			display: none;
+		}
+		.page {
+			scroll-snap-align: start;
+			flex-shrink: 0;
+			width: 100%;
+			margin-right: 20px;
+			transform-origin: center center;
+			transform: scale(1);
+			transition: transform 0.8s;
+			position: relative;
+			display: block;
+			justify-content: center;
+			align-items: center;
+			overflow: hidden;
+			background-color: var(--off-white);
+			box-sizing: border-box;
+			padding-top: 20px;
+			height: 594px;
+			border-radius: 5px;
+			color: var(--abyss);
+			page-break-before: always;
+			counter-increment: page;
+		}
+		.page:after {
+			content: counter(page) "/{{ pagecount }}";
+			position: absolute;
+			bottom: 0;
+			right: 10px;
+			z-index: 999;
+			padding: 5px 12px;
+			font-size: 12px;
+			opacity: 0.5;
 		}
 	</style>
 	{% block lettercss %}{% endblock %}
