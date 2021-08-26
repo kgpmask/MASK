@@ -9,7 +9,7 @@
 	</div>
 {% endblock %}
 
-{% block customcss %}
+{% block lettercss %}
 	<style>
 		.page {
 			background-color: var(--off-white);
@@ -26,6 +26,13 @@
 			background-color: var(--white);
 			border-radius: 5px;
 		}
+		#crossword-table > tr > td {
+			width: var(--crossword-cell-size);
+			min-width: var(--crossword-cell-size);
+			height: var(--crossword-cell-size);
+			max-height: var(--crossword-cell-size);
+			font-size: var(--crossword-font-size);
+		}
 		.crosswordCellH {
 			background-color: var(--light-gray);
 		}
@@ -33,8 +40,6 @@
 			background-color: var(--light-pink);
 		}
 		.crossword-cell-blank {
-			min-width: 40px;
-			height: 40px;
 			background-color: var(--dark-gray);
 		}
 		.crossword-cell {
@@ -64,18 +69,13 @@
 			font-size: 2.5em;
 			font-weight: bold;
 			color: var(--dark-red);
-			position: absolute;
 			width: 55%;
 		}
-		#table-complete{
-			margin: 0px auto 20px;
-			text-align: center;
-			background-color: var(--white);
-			border-radius: 5px;
+		.table-complete {
 			opacity: 0.1;
 			animation: fadeOut 2.5s;
 		}
-		@keyframes fadeIn{
+		@keyframes fadeIn {
 			from{
 				opacity: 0;
 			}
@@ -84,7 +84,7 @@
 				display: none;
 			}
 		}
-		@keyframes fadeOut{
+		@keyframes fadeOut {
 			0% {
 				opacity: 1;
 			}
@@ -100,45 +100,75 @@
 	</style>
 {% endblock %}
 
-{% block customjs %}
+{% set scripts = ['https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'] %}
+
+{% block prescript %}
+	<script>
+		const solMatrix = [
+			['-', '-', '-', 'B', '-', '-', '-', 'B', '-', '-', '-', '-', '-', '-', '-'],
+			['-', '-', '-', 'E', '-', '-', '-', 'L', '-', '-', '-', '-', '-', '-', '-'],
+			['-', '-', '-', 'A', 'K', 'A', 'Z', 'A', '-', '-', '-', '-', '-', '-', '-'],
+			['-', '-', '-', 'S', '-', '-', '-', 'C', '-', '-', '-', '-', '-', '-', '-'],
+			['-', '-', '-', 'T', '-', '-', '-', 'K', '-', '-', '-', '-', '-', '-', '-'],
+			['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+			['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+			['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+			['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+			['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+			['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+			['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+			['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+			['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+			['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-']
+		];
+		/*const solMatrix = [
+			['-', '-', '-', 'B', '-', '-', '-', 'B', '-', '-', '-', '-', '-', '-', '-'],
+			['F', 'I', 'V', 'E', '-', '-', '-', 'L', '-', 'G', 'Y', 'O', 'M', 'E', 'I'],
+			['-', '-', '-', 'A', 'K', 'A', 'Z', 'A', '-', '-', '-', '-', 'U', '-', '-'],
+			['-', '-', '-', 'S', '-', '-', '-', 'C', '-', '-', 'S', '-', 'Z', '-', '-'],
+			['-', '-', '-', 'T', '-', '-', '-', 'K', 'A', 'G', 'A', 'Y', 'A', '-', '-'],
+			['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', 'N', '-', 'N', '-', '-'],
+			['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', 'E', '-', '-', '-', '-'],
+			['-', '-', '-', '-', '-', '-', '-', 'K', '-', '-', 'M', '-', '-', '-', '-'],
+			['-', '-', '-', '-', 'S', 'A', 'K', 'O', 'N', 'J', 'I', '-', '-', '-', '-'],
+			['-', '-', '-', '-', 'P', '-', '-', 'C', '-', '-', '-', '-', '-', '-', '-'],
+			['-', '-', '-', '-', 'A', '-', '-', 'H', '-', '-', '-', '-', '-', '-', '-'],
+			['-', '-', '-', '-', 'R', '-', '-', 'O', '-', '-', '-', '-', '-', '-', '-'],
+			['-', '-', '-', '-', 'R', '-', '-', 'U', '-', '-', '-', '-', '-', '-', '-'],
+			['-', '-', '-', '-', 'O', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+			['-', '-', '-', '-', 'W', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-']
+		];*/
+		const matrix = solMatrix.map(row => row.map(cell => cell === '-' ? cell : ' '));
+
+		const letterSpaces = [];
+
+		(() => {
+			const maxDimension = Math.max(matrix.length, matrix[0].length);
+			const root = document.querySelector(':root');
+			root.style.setProperty('--crossword-cell-size', (40 * 10 / maxDimension - 1) + "px");
+			root.style.setProperty('--crossword-font-size', (10 / maxDimension) ** (1 / 2) + "em");
+			matrix.forEach((row, i) => {
+				row.forEach((char, j) => {
+					if (char === ' ') letterSpaces.push([i, j]);
+				});
+			});
+		})();
+	</script>
+{% endblock %}
+
+{% block letterjs %}
 <script type="text/javascript">
 "use strict";
-
-let matrix = [
-	['-', '-', '-', 'B', '-', '-', '-', 'B', '-', '-', '-', '-', '-', '-', '-'],
-	['F', 'I', 'V', 'E', '-', '-', '-', 'L', '-', 'G', 'Y', 'O', 'M', 'E', 'I'],
-	['-', '-', '-', 'A', 'K', 'A', 'Z', 'A', '-', '-', '-', '-', 'U', '-', '-'],
-	['-', '-', '-', 'S', '-', '-', '-', 'C', '-', '-', 'S', '-', 'Z', '-', '-'],
-	['-', '-', '-', 'T', '-', '-', '-', 'K', 'A', 'G', 'A', 'Y', 'A', '-', '-'],
-	['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', 'N', '-', 'N', '-', '-'],
-	['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', 'E', '-', '-', '-', '-'],
-	['-', '-', '-', '-', '-', '-', '-', 'K', '-', '-', 'M', '-', '-', '-', '-'],
-	['-', '-', '-', '-', 'S', 'A', 'K', 'O', 'N', 'J', 'I', '-', '-', '-', '-'],
-	['-', '-', '-', '-', 'P', '-', '-', 'C', '-', '-', '-', '-', '-', '-', '-'],
-	['-', '-', '-', '-', 'A', '-', '-', 'H', '-', '-', '-', '-', '-', '-', '-'],
-	['-', '-', '-', '-', 'R', '-', '-', 'O', '-', '-', '-', '-', '-', '-', '-'],
-	['-', '-', '-', '-', 'R', '-', '-', 'U', '-', '-', '-', '-', '-', '-', '-'],
-	['-', '-', '-', '-', 'O', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-	['-', '-', '-', '-', 'W', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-];
 
 const rows = matrix.length;
 const cols = matrix[0].length;
 
-let found = [];
-for (let i = 0; i < rows; i++) {
-	let tempRow = [];
-	for (let j = 0; j < cols; j++) tempRow.push("-");
-	found.push(tempRow);
-}
+const found = matrix.map(row => row.map(() => '-'));
 
 let click = false;
 let keypressed = false;
 
 function start() {
-	let max = Math.max(rows, cols);
-	let size = (40 * 10 / max - 2) + "px";
-	let fontsize = (10 / max) ** (1 / 2) + "em";
 	let mytablebody = document.getElementById("crossword-table");
 
 	for (let i = 0; i < rows; i++) {
@@ -157,11 +187,6 @@ function start() {
 			mycurrent_cell.setAttribute("id", `crossword-cell-${i}-${j}`);
 			mycurrent_cell.setAttribute("data-posI", i);
 			mycurrent_cell.setAttribute("data-posJ", j);
-			mycurrent_cell.style.width = size;
-			mycurrent_cell.style.minWidth = size;
-			mycurrent_cell.style.height = size;
-			mycurrent_cell.style.maxHeight = size;
-			mycurrent_cell.style.fontSize = fontsize;
 			mycurrent_cell.addEventListener("click", function (event) {
 				for (let i = 0; i < rows; i++) {
 					for (let j = 0; j < cols; j++) {
@@ -171,12 +196,8 @@ function start() {
 					}
 				}
 				click = [~~this.getAttribute("data-posI"), ~~this.getAttribute("data-posJ")];
-				if (matrix[click[0]][click[1]] === "-") {
-					click = false;
-				}
-				else {
-					event.target.classList.add("crosswordCellH");
-				}
+				if (matrix[click[0]][click[1]] === "-") click = false;
+				else event.target.classList.add("crosswordCellH");
 			}, false);
 			document.addEventListener('keydown', function (e) {
 				if (keypressed)return;
@@ -187,15 +208,25 @@ function start() {
 						let currenttext = (String.fromCharCode(e.keyCode));
 						tempCell.innerHTML = currenttext;
 						found[click[0]][click[1]] = currenttext;
-						axios.post(`checker/date/puzzle_type`, found).then(res => {
-							if (res.data) {
-								mytablebody.id = "table-complete";
-								setTimeout(function () {
-									document.getElementById(`crossword`).innerHTML = `<div class="crossword-complete">Completed!</div>`;
-								}, 3000);
-							}
-						});
-						let next = document.getElementById(`crossword-cell-${click[0]+1}-${click[1]}`);
+						// check if crossword is completed
+						if (!letterSpaces.find(([i, j]) => found[i][j] === '-')) {
+							const xios = {
+								post: function (_, info) {
+									return new Promise((resolve, reject) => resolve({
+										data: info.join('|') === solMatrix.join('|') ? 'solved' : ''
+									}));
+								}
+							} // Don't kill me
+							xios.post(`/checker/2021-08-1`, found).then(res => {
+								if (res.data) {
+									mytablebody.classList.add("table-complete");
+									setTimeout(function () {
+										document.getElementById(`crossword`).innerHTML = `<div class="crossword-complete">Completed!</div>`;
+									}, 1600);
+								}
+							}).catch(err => console.log(err));
+						}
+						let next = document.getElementById(`crossword-cell-${click[0] + 1}-${click[1]}`);
 						if (next && next.getAttribute("Blank")) {
 							click[0] += 1;
 							for (let i = 0; i < rows; i++) {
@@ -208,7 +239,7 @@ function start() {
 							next.classList.add("crosswordCellH");
 							return;
 						}
-						next = document.getElementById(`crossword-cell-${click[0]}-${click[1]+1}`);
+						next = document.getElementById(`crossword-cell-${click[0]}-${click[1] + 1}`);
 						if (next && next.getAttribute("Blank")) {
 							click[1] += 1;
 							for (let i = 0; i < rows; i++) {
@@ -224,66 +255,30 @@ function start() {
 					}
 					if (e.keyCode >= 37 && e.keyCode <= 40) {
 						e.preventDefault();
-						if (e.keyCode === 37) {
-							let next = document.getElementById(`crossword-cell-${click[0]}-${click[1]-1}`);
-							if (next && next.getAttribute("Blank")) {
-								click[1] -= 1;
-								for (let i = 0; i < rows; i++) {
-									for (let j = 0; j < cols; j++) {
-										let tempCell = document.getElementById(`crossword-cell-${i}-${j}`);
-										tempCell.classList.remove("crosswordCellH");
-										tempCell.classList.remove("crosswordCellS");
-									}
-								}
-								next.classList.add("crosswordCellH");
-								return;
-							}
+						const offsets = {
+							'37': [0, -1],
+							'38': [-1, 0],
+							'39': [0, +1],
+							'40': [+1, 0]
 						}
-						else if (e.keyCode === 38) {
-							let next = document.getElementById(`crossword-cell-${click[0]-1}-${click[1]}`);
-							if (next && next.getAttribute("Blank")) {
-								click[0] -= 1;
-								for (let i = 0; i < rows; i++) {
-									for (let j = 0; j < cols; j++) {
-										let tempCell = document.getElementById(`crossword-cell-${i}-${j}`);
-										tempCell.classList.remove("crosswordCellH");
-										tempCell.classList.remove("crosswordCellS");
-									}
+						const next = document.getElementById(`crossword-cell-${click[0] + offsets[e.keyCode][0]}-${click[1] + offsets[e.keyCode][1]}`);
+						if (next && next.getAttribute("Blank")) {
+							click[0] += offsets[e.keyCode][0];
+							click[1] += offsets[e.keyCode][1];
+							for (let i = 0; i < rows; i++) {
+								for (let j = 0; j < cols; j++) {
+									let tempCell = document.getElementById(`crossword-cell-${i}-${j}`);
+									tempCell.classList.remove("crosswordCellH");
+									tempCell.classList.remove("crosswordCellS");
 								}
-								next.classList.add("crosswordCellH");
-								return;
 							}
+							next.classList.add("crosswordCellH");
+							return;
 						}
-						else if (e.keyCode === 39) {
-							let next = document.getElementById(`crossword-cell-${click[0]}-${click[1] + 1}`);
-							if (next && next.getAttribute("Blank")) {
-								click[1] += 1;
-								for (let i = 0; i < rows; i++) {
-									for (let j = 0; j < cols; j++) {
-										let tempCell = document.getElementById(`crossword-cell-${i}-${j}`);
-										tempCell.classList.remove("crosswordCellH");
-										tempCell.classList.remove("crosswordCellS");
-									}
-								}
-								next.classList.add("crosswordCellH");
-								return;
-							}
-						}
-						else {
-							let next = document.getElementById(`crossword-cell-${click[0] + 1}-${click[1]}`);
-							if (next && next.getAttribute("Blank")) {
-								click[0] += 1;
-								for (let i = 0; i < rows; i++) {
-									for (let j = 0; j < cols; j++) {
-										let tempCell = document.getElementById(`crossword-cell-${i}-${j}`);
-										tempCell.classList.remove("crosswordCellH");
-										tempCell.classList.remove("crosswordCellS");
-									}
-								}
-								next.classList.add("crosswordCellH");
-								return;
-							}
-						}
+					}
+					if ([8, 46].includes(e.keyCode)) {
+						document.getElementById(`crossword-cell-${click[0]}-${click[1]}`).innerHTML = '';
+						found[click[0]][click[1]] = '-';
 					}
 				}
 			});
@@ -306,4 +301,4 @@ function start() {
 
 window.onload = start;
 </script>
-{%endblock%}
+{% endblock %}

@@ -3,9 +3,9 @@
 {% set pagetitle = 'August - Issue 1' %}
 
 {% block article %}
-	<div class="page" id="crossword">
-		<table id="crossword-table" cellspacing="0"></table>
-		<div id="crossword-words"></div>
+	<div class="page" id="wordsearch">
+		<table id="wordsearch-table" cellspacing="0"></table>
+		<div id="wordsearch-words"></div>
 	</div>
 {% endblock %}
 
@@ -20,24 +20,27 @@
 			border-radius: 5px;
 			color: var(--abyss);
 		}
-		#crossword-table {
+		#wordsearch {
+			cursor: default;
+		}
+		#wordsearch-table {
 			margin: 0px auto 20px;
 			text-align: center;
 			background-color: var(--white);
 			border-radius: 5px;
 		}
-		.crosswordCellH {
+		.wordsearchCellH {
 			background-color: var(--light-gray);
 		}
-		.crosswordCellS {
+		.wordsearchCellS {
 			background-color: var(--light-pink);
 		}
-		.crossword-cell {
+		.wordsearch-cell {
 			min-width: 40px;
 			height: 40px;
 			border-radius: 2px;
 		}
-		#crossword-words {
+		#wordsearch-words {
 			width: 100%;
 			columns: 80px 2;
 			padding: 1em;
@@ -46,20 +49,19 @@
 			page-break-inside: avoid;
 			break-inside: avoid;
 		}
-		.crossword-word-col {
+		.wordsearch-word-col {
 			line-height: 90%;
 		}
 		.found-word{
 			color: var(--error-red);
 			text-decoration: line-through;
 		}
-		.crossword-complete {
+		.wordsearch-complete {
 			animation: fadeIn 3s;
 			margin: 30% auto 0;
 			font-size: 2.5em;
 			font-weight: bold;
 			color: var(--dark-red);
-			position: absolute;
 			width: 55%;
 		}
 		#table-complete{
@@ -137,15 +139,15 @@ function start() {
 	let max = Math.max(rows, cols);
 	let size = 40 * 10 / max + "px";
 	let fontsize = (10 / max) ** (1 / 2) + "em";
-	let mytablebody = document.getElementById("crossword-table");
+	let mytablebody = document.getElementById("wordsearch-table");
 
 	for (let i = 0; i < rows; i++) {
 		let mycurrent_row = document.createElement("tr");
 
 		for (let j = 0; j < cols; j++) {
 			let mycurrent_cell = document.createElement("td");
-			mycurrent_cell.classList.add("crossword-cell");
-			mycurrent_cell.setAttribute("id", `crossword-cell-${i}-${j}`);
+			mycurrent_cell.classList.add("wordsearch-cell");
+			mycurrent_cell.setAttribute("id", `wordsearch-cell-${i}-${j}`);
 			mycurrent_cell.setAttribute("data-posI", i);
 			mycurrent_cell.setAttribute("data-posJ", j);
 			mycurrent_cell.style.width = size;
@@ -168,14 +170,14 @@ function start() {
 						console.log(word);
 						if (words.includes(word) && !found.includes(word)) {
 							found.push(word);
-							document.getElementById(`crossword-word-${word.toLowerCase()}`).classList.add("found-word");
+							document.getElementById(`wordsearch-word-${word.toLowerCase()}`).classList.add("found-word");
 							if (words.length === found.length) {
 								mytablebody.id = "table-complete";
-								const wordsList = document.getElementById('crossword-words');
+								const wordsList = document.getElementById('wordsearch-words');
 								wordsList.style.animation = "fadeOut 1.5s";
 								wordsList.style.opacity = 0.1;
 								setTimeout(function () {
-									document.getElementById(`crossword`).innerHTML = `<div class="crossword-complete">Completed!</div>`;
+									document.getElementById(`wordsearch`).innerHTML = `<div class="wordsearch-complete">Completed!</div>`;
 								}, 1500);
 							}
 						}
@@ -194,19 +196,19 @@ function start() {
 					if (start[0] === final[0] || start[1] === final[1] || (Math.abs(start[0] - final[0]) === Math.abs(start[1] - final[1]))) {
 						let offsets = [Math.sign(final[0] - start[0]), Math.sign(final[1] - start[1])];
 						for (let [i, j] = start; (i !== final[0] + offsets[0] || j !== final[1] + offsets[1]); [i += offsets[0], j += offsets[1]]) {
-							let tempCell = document.getElementById(`crossword-cell-${i}-${j}`);
-							tempCell.classList.add("crosswordCellS");
+							let tempCell = document.getElementById(`wordsearch-cell-${i}-${j}`);
+							tempCell.classList.add("wordsearchCellS");
 						}
 					}
 				}
-				event.target.classList.add("crosswordCellH");
+				event.target.classList.add("wordsearchCellH");
 			}, false);
 			mycurrent_cell.addEventListener("mouseleave", function (event) {
 				for (let i = 0; i < rows; i++) {
 					for (let j = 0; j < cols; j++) {
-						let tempCell = document.getElementById(`crossword-cell-${i}-${j}`);
-						tempCell.classList.remove("crosswordCellH");
-						tempCell.classList.remove("crosswordCellS");
+						let tempCell = document.getElementById(`wordsearch-cell-${i}-${j}`);
+						tempCell.classList.remove("wordsearchCellH");
+						tempCell.classList.remove("wordsearchCellS");
 					}
 				}
 			}, false);
@@ -217,8 +219,8 @@ function start() {
 	}
 
 	let colnum = Math.ceil(words.length / 5);
-	let wordArea = document.getElementById("crossword-words");
-	wordArea.innerHTML = tempWords.map(word => `<div id="crossword-word-${word.replace(/ /g, '').toLowerCase()}">${word}</div>`).join("<br/>");
+	let wordArea = document.getElementById("wordsearch-words");
+	wordArea.innerHTML = tempWords.map(word => `<div id="wordsearch-word-${word.replace(/ /g, '').toLowerCase()}">${word}</div>`).join("<br/>");
 }
 
 window.onload = start;
