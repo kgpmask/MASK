@@ -5,4 +5,4 @@
 /templates/test*.njk
 
 # Don't save CSS files since these are auto compressed. Use SCSS instead.
-assets/*.css
+assets/**/*.css

@@ -14,12 +14,12 @@
 					<div class="list">
 						{% for person in list %}
 							<div class="member">
-								<img src="/assets/members/{{ person.href }}" class="member-icon" height="80px" widht="80px"/>
+								<img src="/assets/members/{{ person.href }}" alt="{{ person.name }}" class="member-icon" height="80px" width="80px"/>
 								<div class="div-line">&nbsp;</div>
 								<div class="member-desc">{{ person.name }}<!--br/>{{ person.roll }}--><br/></div>
 								<div class="teamlist">
 									{% for team in person.teams %}
-										<i class="{{ team.icon }}" title="{{ team.name }}"></i>
+										<span class="icon-{{ team.icon }}" title="{{ team.name }}"></i>
 									{% endfor %}
 								</div>
 							</div>
@@ -35,6 +35,7 @@
 {% endblock %}
 
 {% block customcss %}
+	<link rel="stylesheet" type="text/css" href="/assets/styles/icons.css"/>
 	<style>
 		.yearbox {
 			color: var(--off-white);
@@ -94,7 +95,6 @@
 {% endblock %}
 
 {% block customjs %}
-	<script src="https://kit.fontawesome.com/dbc840a846.js" crossorigin="anonymous"></script>
 	<script>
 		window.onload = () => {
 			document.getElementById('loaded').style.display = 'initial';

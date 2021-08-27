@@ -9,7 +9,7 @@
 	--gray        : #6d6d6d;
 	--ghost-gray  : #777777;
 	--light-gray  : #a9a9a9;
-	--off-white   : #c0c0c0;
+	--off-white   : #d0d0d0;
 	--white       : #ffffff;
 
 	--dark-red    : #8b0000;
@@ -24,10 +24,12 @@
 }
 
 body {
-	background: linear-gradient(var(--medium-gray), var(--dark-gray));
+	background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url('/assets/background.jpg');
+	background-size: cover;
+	background-position: center;
 	text-align: center;
 	color: var(--light-gray);
-	font-family: Ubuntu, Roboto, Arial, sans-serif;
+	font-family: Ubuntu, Roboto, Arial, Open Sans, sans-serif;
 }
 
 div#page-container {
@@ -48,7 +50,7 @@ h1 {
 
 .text {
 	color: var(--light-gray);
-	background-color: rgba(255, 255, 255, 0.07);
+	background-color: rgba(255, 255, 255, 0.2);
 	padding: 30px 60px;
 	border-radius: 20px;
 	margin: 20px 10%;
@@ -453,7 +455,7 @@ span.navbar-line {
 	.hamburger-menu, .plate, .plate-bar {
 		display: block;
 	}
-	.burger-open>div:not(.plate, .hamburger-menu) {
+	.burger-open > div:not(.plate, .hamburger-menu) {
 		display: none;
 	}
 }

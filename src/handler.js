@@ -64,19 +64,19 @@ function handler (app, env, vapid) {
 						href: `${member.name.toLowerCase().replace(/[\.-]/g, '').replace(/ /g, '_')}.webp`,
 						teams: [{
 							name: 'AMV',
-							icon: 'fas fa-film'
+							icon: 'amv'
 						}, {
 							name: 'Design & Arts',
-							icon: 'fas fa-paint-brush'
+							icon: 'design'
 						}, {
 							name: 'Music',
-							icon: 'fas fa-music'
+							icon: 'music'
 						}, {
 							name: 'Quiz',
-							icon: 'fas fa-feather-alt'
+							icon: 'quiz'
 						}, {
 							name: 'WebDev',
-							icon: 'fas fa-laptop-code'
+							icon: 'webdev'
 						}].filter((_, index) => member.teams[index])
 					});
 				});
