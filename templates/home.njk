@@ -12,7 +12,7 @@
 			<div class="notices-header">Updates!</div>
 			<div class="notices-list">
 				{% for post in posts %}
-					<a href="{{ post.link }}" target="{{ post.page }}" class="notice-link" title="{{ post.date }}"><div class="notice-post">{{ post.name }}{{ ('<sup>NEW</sup>' | safe) if post.recent }}</div></a>{% if not loop.last %}<hr class="notice-break"/>{% endif %}
+					<a href="{{ '/assets/art/' if post.type == 'art' }}{{ post.link }}" target="{{ post.page }}" class="notice-link" title="{{ post.date }}"><div class="notice-post">{{ post.name }}{{ ('<sup>NEW</sup>' | safe) if post.recent }}</div></a>{% if not loop.last %}<hr class="notice-break"/>{% endif %}
 				{% endfor %}
 			</div>
 		</div></div>
