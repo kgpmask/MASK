@@ -2,6 +2,7 @@ const express = require('express');
 const fs = require('fs').promises;
 const nunjucks = require('nunjucks');
 const path = require('path');
+const tools = require('./tools.js');
 const webpush = require('web-push');
 
 const { PORT, DEBUG } = require('./config.js');

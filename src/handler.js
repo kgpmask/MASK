@@ -144,39 +144,34 @@ function handler (app, env, vapid) {
 		}
 	}
 	function post (req, res) {
-		// no POST routes currently in use
-
 		const args = req.url.split('/');
 		args.shift();
 
 		switch (args[0]) {
 			case "checker": {
 				const checker = require('./checker.js');
-				console.log(args[2], args[1], req.body)
 				const correct = checker.compare(args[2], args[1], req.body); //req.data
 				switch (correct) {
 					case true: {
-						console.log("True");
-						res.send(true);
+						return res.send("correct");
 						break;
 					}
 					case false: {
-						console.log("False");
-						res.send(false);
+						return res.send("");
 						break;
 					}
 					default: {
-						console.log("Error: File not found");
+						console.log("Error: File not found", correct, args, req.body);
+						return res.status(404).send('error');
 						break;
 					}
 				}
 				break;
 			}
 			default:
+				res.redirect(`/${args.join('/')}`);
 				break;
 		}
-		
-		res.end();
 	}
 
 	app.get(/.*/, (req, res) => get(req, res));
