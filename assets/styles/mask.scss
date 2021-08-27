@@ -24,7 +24,9 @@
 }
 
 body {
-	background: linear-gradient(var(--medium-gray), var(--dark-gray));
+	background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url('/assets/background.jpg');
+	background-size: cover;
+	background-position: center;
 	text-align: center;
 	color: var(--light-gray);
 	font-family: Ubuntu, Roboto, Arial, Open Sans, sans-serif;
@@ -48,7 +50,7 @@ h1 {
 
 .text {
 	color: var(--light-gray);
-	background-color: rgba(255, 255, 255, 0.07);
+	background-color: rgba(255, 255, 255, 0.2);
 	padding: 30px 60px;
 	border-radius: 20px;
 	margin: 20px 10%;

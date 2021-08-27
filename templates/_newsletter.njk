@@ -12,13 +12,30 @@
 
 {% block pagecontent %}
 	{{ nextprev() }}
-		<h1>{{ pagetitle }}</h1>
-		<div id="pages-container"><div id="pages">
-		{% block coverpage %}<div class="page" id="cover-page"><img id="cover-logo" src="/assets/logo.jpeg"/><br/>Manga & Anime<br/>Society, Kharagpur<br/><br/><div id="cover-page-title">{{ pagetitle }}</div></div>{% endblock %}
-			{% block article %}
-				<div class="faded">This article hasn't been published yet - stay tuned!</div>
-			{% endblock %}
-		</div></div>
+	<hr class="letter-breaker"/><br/>
+	<h1>{{ pagetitle }}</h1>
+	<!--<div id="button-controls"><div id="button-box">
+		<span id="left-control-button">&#10094;</span>
+		<span id="right-control-button">&#10095;</span>
+	</div></div>-->
+	<div id="pages-container"><div id="pages">
+	{% block coverpage %}<div class="page" id="cover-page"><img id="cover-logo" src="/assets/logo.jpeg"/><br/>Manga & Anime<br/>Society, Kharagpur<br/><br/><div id="cover-page-title">{{ pagetitle }}</div></div>{% endblock %}
+		{% block article %}
+			<div class="faded">This article hasn't been published yet - stay tuned!</div>
+		{% endblock %}
+	</div></div>
+	<script>
+		const spoilered = document.querySelectorAll('.spoiler');
+		for (let i = 0; i < spoilered.length; i++) {
+			const article = spoilered[i];
+			article.addEventListener('click', () => {
+				if (!article.classList.contains('spoiler')) return;
+				article.classList.add('being-removed');
+				setTimeout(() => article.classList.remove('spoiler'), 1000);
+			});
+		}
+	</script>
+	<br/><br/><hr class="letter-breaker"/><br/><br/>
 	{{ nextprev() }}
 {% endblock %}
 
@@ -37,6 +54,11 @@
 		}
 		.buttonicon {
 			display: none;
+		}
+		.letter-breaker {
+			width: 420px;
+			max-width: 90%;
+			margin: auto;
 		}
 		span#flipped {
 			transform: scale(-1);
@@ -76,12 +98,34 @@
 			}
 		}
 
+		#button-controls {
+			position: absolute;
+			top: 50%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: calc(100vw - 10px);
+		}
+		#button-box {
+			width: 540px;
+			max-width: 100%;
+			display: flex;
+			justify-content: space-between;
+			font-size: 2.5em;
+		}
+		#left-control-button, #right-control-button {
+			cursor: pointer;
+			transition: transform 0.3s;
+		}
+		#left-control-button:hover, #right-control-button:hover {
+			transform: scale(1.2);
+			color: var(--off-white);
+		}
+
 		#pages-container {
 			overflow: hidden;
-			width: 420px;
-			max-width: 100%;
-			max-height: 80%;
-			display: block;
+			width: 80%;
+			height: 100%;
 			margin-bottom: 10px;
 			position: relative;
 			margin: auto;
@@ -113,7 +157,7 @@
 			justify-content: center;
 			align-items: center;
 			overflow: hidden;
-			background-color: var(--white);
+			background: url(/assets/releases/page.png);
 			box-sizing: border-box;
 			padding-top: 20px;
 			height: 594px;
@@ -130,7 +174,6 @@
 			position: absolute;
 			bottom: 0;
 			right: 10px;
-			z-index: 999;
 			padding: 5px 12px;
 			font-size: 12px;
 			opacity: 0.5;
@@ -139,7 +182,7 @@
 		}
 		@font-face {
 			font-family: 'Cover';
-			src: url('/assets/cover-title-font.ttf') format('truetype');
+			src: url('/assets/releases/cover-title-font.ttf') format('truetype');
 		}
 		#cover-page {
 			background-color: var(--red);
@@ -171,17 +214,22 @@
 			max-height: 40%;
 			min-height: 40%;
 		}
-		.article-full > h2, .article-half > h2 {
-			text-shadow: 0 0 0.5px var(--red);
+		.article-full > h2, .article-half > h2, .article-header {
+			opacity: 0.99;
+			text-shadow: 0 0 3px var(--red);
+			font-weight: bold;
+		}
+		.article-header {
+			font-size: 1.5em;
 		}
 		.article-content {
 			text-align: justify;
 		}
 		.article-content > p {
-			margin-top: 20px;
+			margin-top: 5px;
+			margin-bottom: 20px;
 		}
 		.article-author {
-			opacity: 0.5;
 			font-size: 0.8em;
 		}
 		.anime-info {
@@ -203,6 +251,53 @@
 			mask-size: cover;
 			mask-repeat: no-repeat;
 			margin: auto;
+		}
+		.anime-ratings {
+			margin: auto;
+			font-size: 0.8em
+		}
+		.anime-ratings > tbody > tr > td {
+			width: 50%;
+		}
+		.anime-ratings > tbody > tr > td:nth-child(1) {
+			text-align: right;
+			padding-right: 5px
+		}
+
+		.spoiler {
+			position: relative;
+			display: inline-block;
+			cursor: help;
+		}
+		.page .spoiler h2 {
+			position: fixed;
+			margin: auto;
+			max-width: calc(100% - 48px);
+		}
+		.spoiler::before {
+			content: 'Major spoilers ahead! Click to reveal';
+			position: absolute;
+			left: 0;
+			top: 0;
+			right: 0;
+			height: 100%;
+			border-radius: 1px;
+			font-size: 3em;
+			font-weight: bold;
+			color: var(--middle-gray);
+			background: var(--off-white);
+			text-align: center;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			opacity: 1;
+			position: fixed;
+			transition: opacity 1.0s, transform 0.3s;
+		}
+		.being-removed:before {
+			transform: translateY(-50%) rotateX(80deg);
+			opacity: 0.6;
+			transition: opacity 0.8s linear, transform 0.8s linear;
 		}
 	</style>
 	{% block lettercss %}{% endblock %}
