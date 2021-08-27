@@ -17,6 +17,7 @@
 				<p>Four years later when Eren pays Reiner a visit in Marley, the shocked Reiner immediately realizes that Eren must’ve been there to take revenge for his mother. Eren tells him that he is just like Reiner but every word said by Eren comes as a bullet for Reiner. He now completely sees himself in the position Eren was nine years ago. But Eren didn’t have answers for what had happened back then, nor did he see it coming. Unfortunately enough, this made the situation even more miserable for Reiner and he breaks down into tears. Eren however has witnessed suffering in his own path and isn’t deterred from his goal.</p>
 				<p>One of the other main elements in the later half of the story is about defining correctness in one’s actions and behavior. The infamous scene where Eren obliterated Armin, his own childhood friend, and drove Mikasa to the point of crying in despair, defined his whole new character. Eren now believed in his own definition of freedom, which according to him, Mikasa and Armin never possessed. While people began to doubt Eren’s intentions when he killed thousands of unarmed men during the eve of the Declaration of War, this scene had particularly made it clear that Eren had his own plans. The ending arcs had made it clear that Eren had developed into a completely different man, with his own philosophy and outlook towards people and his friends, as compared to what he was in his childhood.</p>
 				<p>The beauty of AoT lies in the fact that the underlying themes keep the plot on the surface carefully tied up and flowing. The philosophical concepts of defining one’s own interpretation of things based on their experience, is very crucial in understanding the true meaning of the story. We can surely say that Isayama successfully manages to blend in together some very realistic themes in this fictional story and it manages to provide for a complete package combined with the gripping plot.</p>
+				<div class="article-end"></div>
 			</div>
 		</div>
 	</div>
@@ -31,10 +32,11 @@
 				<tr><td>Genres</td><td>Action, Dark Fantasy</td></tr>
 			</table>
 			<div class="article-content">
-				<p>Tower of God is a Korean anime which is the adaptation of a very popular webtoon/manhwa by the same name. It follows the story of a kid named “Twenty-Fifth Bam”, who follows a girl named Rachel, even after she abandons him to enter the tower of God.</p>
+				<p>Tower of God is a Korean anime which is the adaptation of a very popular webtoon/manhwa by the same name. It follows the story of a kid named “Twenty-Fifth Bam”, who follows a girl named Rachel, even after she abandons him to enter the Tower of God.</p>
 				<p>Surprisingly enough, that single line explains the story quite efficiently ;) The backstory of the protagonist (whose name is shortened to ‘Bam’) is not very clear, but he is alone in a dark place for a long time before a girl named Rachel frees him. She teaches him a lot about the outside world and slowly becomes the world to him. But one day she abandons him to enter the “Tower of God” - a place where any wishes you have are fulfilled if you reach the top . The devastated Bam decides to follow her and begins his own journey through the Tower, starting an adventure full of determination, betrayal, and treachery.</p>
 				<p>The animation isn’t mind-blowing since they tried to depict the characters the way they’re shown in the initial chapters of the manhwa, but if they announce the season 2 of this anime then the audience is in for a pleasant surprise as the artwork improves a lot after this story arc. Apart from animation, its music stands out and is appreciated around the world. The pacing of the story, on the other hand, is rather fast, and sometimes fast enough to make  it hard to follow the story.</p>
 				<p>If you’re looking for a one-season action flick then I’d definitely recommend Tower of God. It is dubbed in English and Japanese in addition to its original Korean language, and is available on Crunchyroll and Netflix in a couple countries.</p>
+				<div class="article-end"></div>
 			</div>
 		</div>
 	</div>
@@ -92,21 +94,7 @@
 	<script type="text/javascript">
 		"use strict";
 
-		const tempWords = `ALL FOR ONE
-		ALL MIGHT
-		BEST JEANIST
-		CEMENTOSS
-		DABI
-		ENDEAVOR
-		ERASER HEAD
-		HAWKS
-		KUROGIRI
-		MIDNIGHT
-		MIRKO
-		MR COMPRESS
-		PRESENT MIC
-		RYUKYU
-		TOMURA SHIGARAKI`.split("\n"), words = tempWords.map(word => word.replace(/ /g, '').toUpperCase());
+		const tempWords = `ALL FOR ONE\nALL MIGHT\nBEST JEANIST\nCEMENTOSS\nDABI\nENDEAVOR\nERASER HEAD\nHAWKS\nKUROGIRI\nMIDNIGHT\nMIRKO\nMR COMPRESS\nPRESENT MIC\nRYUKYU\nTOMURA SHIGARAKI`.split("\n").map(word => word.replace(/\t/g, '')), words = tempWords.map(word => word.replace(/[ ]/g, '').toUpperCase());
 
 		let wordMatrix = `M X A R O K R I M T X O K N K G S Q R Y Y N T
 		H W K D Q M L Y P W C O A S U R B F J L R H M
@@ -123,7 +111,7 @@
 		D A B I V C Q S W A W U V F Y I H H I T U H F
 		I B N M W R W K E S D S M R O V A E D N E B R
 		I W D A E H R E S A R E Q N U O H U D A Z M S
-		L I R Y U K Y U P Z D K Q L U X R J U X A B U`.split("\n").map(line => line.split(" "));
+		L I R Y U K Y U P Z D K Q L U X R J U X A B U`.replace(/\t/g, '').split("\n").map(line => line.split(" "));
 
 		const wordRows = wordMatrix.length;
 		const wordCols = wordMatrix[0].length;
@@ -164,6 +152,7 @@
 								let offsets = [Math.sign(final[0] - start[0]), Math.sign(final[1] - start[1])];
 								for (let [i, j] = start; (i !== final[0] || j !== final[1]); [i += offsets[0], j += offsets[1]]) word += wordMatrix[i][j];
 								word += wordMatrix[final[0]][final[1]];
+								console.log(word);
 								if (words.includes(word) && !wordFound.includes(word)) {
 									wordFound.push(word);
 									document.getElementById(`wordsearch-word-${word.toLowerCase()}`).classList.add("found-word");
@@ -216,7 +205,7 @@
 
 			let colnum = Math.ceil(words.length / 5);
 			let wordArea = document.getElementById("wordsearch-words");
-			wordArea.innerHTML = tempWords.map(word => `<div id="wordsearch-word-${word.replace(/ /g, '').toLowerCase()}" class="wordsearch-word">${word}</div>`).join("");
+			wordArea.innerHTML = tempWords.map(word => `<div id="wordsearch-word-${word.replace(/[ \t]/g, '').toLowerCase()}" class="wordsearch-word">${word}</div>`).join("");
 		}
 	</script>
 	<script>
@@ -263,13 +252,14 @@
 						if (crossMatrix[crossClick[0]][crossClick[1]] === "-") crossClick = false;
 						else event.target.classList.add("crosswordCellH");
 					}, false);
-					document.addEventListener('keydown', function (e) {
-						if (keypressed)return;
+					document.addEventListener('keypress', function (e) {
+						// if (keypressed) return; // WE NEED A FIX FOR THIS AAAAA
+						console.log('Clicked ' + e.keyCode);
 						keypressed = true;
 						if (crossClick) {
-							if (e.keyCode >= 65 && e.keyCode <= 90) {
+							if ((e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 97 && e.keyCode <= 122)) {
 								let tempCell = document.getElementById(`crossword-cell-${crossClick[0]}-${crossClick[1]}`);
-								let currenttext = (String.fromCharCode(e.keyCode));
+								let currenttext = String.fromCharCode(e.keyCode).toUpperCase();
 								tempCell.innerHTML = currenttext;
 								crossFound[crossClick[0]][crossClick[1]] = currenttext;
 								// check if crossword is completed
@@ -301,7 +291,7 @@
 										}
 									}
 									next.classList.add("crosswordCellH");
-									return;
+									return true;
 								}
 								next = document.getElementById(`crossword-cell-${crossClick[0]}-${crossClick[1] + 1}`);
 								if (next && next.getAttribute("Blank")) {
@@ -314,7 +304,7 @@
 										}
 									}
 									next.classList.add("crosswordCellH");
-									return;
+									return true;
 								}
 							}
 							if (e.keyCode >= 37 && e.keyCode <= 40) {
@@ -378,149 +368,8 @@
 {% endblock %}
 
 {% block lettercss %}
-	<style>
-		#wordsearch {
-			cursor: default;
-		}
-		#wordsearch-table {
-			margin: 0px auto 20px;
-			text-align: center;
-			background-color: var(--white);
-			border-radius: 5px;
-		}
-		.wordsearchCellH {
-			background-color: var(--light-gray);
-		}
-		.wordsearchCellS {
-			background-color: var(--light-pink);
-		}
-		.wordsearch-cell {
-			min-width: 40px;
-			height: 40px;
-			border-radius: 2px;
-		}
-		#wordsearch-words {
-			width: 100%;
-			columns: 80px 2;
-			margin-bottom: 1.3em;
-			-webkit-column-break-inside: avoid;
-			page-break-inside: avoid;
-			break-inside: avoid;
-		}
-		.wordsearch-word-col {
-			line-height: 90%;
-		}
-		.wordsearch-word {
-			margin: 10px auto;
-		}
-		.found-word{
-			color: var(--error-red);
-			text-decoration: line-through;
-		}
-		.wordsearch-complete {
-			animation: fadeIn 3s;
-			margin: 30% auto 0;
-			font-size: 2.5em;
-			font-weight: bold;
-			color: var(--dark-red);
-			width: 55%;
-		}
-		#table-complete{
-			margin: 0px auto 20px;
-			text-align: center;
-			background-color: var(--white);
-			border-radius: 5px;
-			opacity: 0.1;
-			animation: fadeOut 1.5s;
-		}
-	</style>
-	<style>
-		#crossword-table {
-			margin: 0px auto 20px;
-			text-align: center;
-			border-radius: 5px;
-			counter-reset: crossword;
-			padding: 5px;
-			background-color: var(--dark-gray);
-		}
-		#crossword-table > tr > td {
-			width: var(--crossword-cell-size);
-			min-width: var(--crossword-cell-size);
-			height: var(--crossword-cell-size);
-			max-height: var(--crossword-cell-size);
-			font-size: var(--crossword-font-size);
-			background-color: var(--white);
-		}
-		.crosswordCellH {
-			background-color: var(--error-red) !important;
-		}
-		.crossword-cell-blank {
-			background-color: var(--dark-gray) !important;
-		}
-		.crossword-cell {
-			min-width: 38px;
-			height: 38px;
-			border: 1px solid var(--abyss);
-		}
-		.crossword-count {
-			position: relative;
-			counter-increment: crossword;
-		}
-		.crossword-count:after {
-			padding: 0px;
-			font-size: 8px;
-			top: 1px;
-			left: 1px;
-			content: counter(crossword);
-			position: absolute;
-		}
-		#crossword-words {
-			width: 100%;
-			margin-bottom: 1.3em;
-			-webkit-column-break-inside: avoid;
-			page-break-inside: avoid;
-			break-inside: avoid;
-		}
-		#crossword-left, #crossword-right {
-			height: 140px;
-			margin: auto;
-			width: 45%;
-			overflow-y: scroll;
-			display: inline-block;
-			background-color: var(--light-gray);
-			border-radius: 5px;
-			font-size: 0.7em;
-		}
-		.crossword-complete {
-			animation: fadeIn 3s;
-			margin: 30% auto 0;
-			font-size: 2.5em;
-			font-weight: bold;
-			color: var(--dark-red);
-			width: 55%;
-		}
-		.table-complete-cross {
-			opacity: 0.1;
-			animation: fadeOut 2.5s;
-		}
-		@keyframes fadeIn {
-			from {
-				opacity: 0;
-			}
-			to {
-				opacity: 1;
-				display: none;
-			}
-		}
-		@keyframes fadeOut {
-			0% {
-				opacity: 1;
-			}
-			100% {
-				opacity: 0.1;
-			}
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="/assets/wordsearch.css"/>
+	<link rel="stylesheet" type="text/css" href="/assets/crossword.css"/>
 {% endblock %}
 
 {% set scripts = ['https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'] %}

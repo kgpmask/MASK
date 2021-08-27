@@ -5,7 +5,7 @@
 {% macro nextprev() %}
 	<div class="controls">
 		<a{% if adjs[0] %} href="/newsletters/{{ adjs[0] }}"{% endif %}><button class="rel" {{ 'disabled' if not adjs[0] }}><span class="buttonicon" id="flipped">&#x279C;</span><span class="buttontext">Previous</span></button></a>
-		<a href="/newsletters/{{ 'random' if (adjs[0] or adjs[1]) else '' }}"><button class="rel" {{ 'disabled' if not (adjs[0] or adjs[1]) }}><span class="buttonicon" id="random"><i class="fas fa-random"></i></span><span class="buttontext">Random</span></button></a>
+		<a href="/newsletters/{{ 'random' if (adjs[0] or adjs[1]) else '' }}"><button class="rel" {{ 'disabled' if not (adjs[0] or adjs[1]) }}><span class="buttonicon" id="random"><span class="icon-random"></span></span><span class="buttontext">Random</span></button></a>
 		<a{% if adjs[1] %} href="/newsletters/{{ adjs[1] }}"{% endif %}><button class="rel" {{ 'disabled' if not adjs[1] }}><span class="buttonicon">&#x279C;</span><span class="buttontext">Next</span></button></a>
 	</div>
 {% endmacro %}
@@ -23,6 +23,7 @@
 {% endblock %}
 
 {% block customcss %}
+	<link rel="stylesheet" type="text/css" href="/assets/icons.css"/>
 	<style>
 		div.controls {
 			padding: 40px 20px;
@@ -112,7 +113,7 @@
 			justify-content: center;
 			align-items: center;
 			overflow: hidden;
-			background-color: var(--off-white);
+			background-color: var(--white);
 			box-sizing: border-box;
 			padding-top: 20px;
 			height: 594px;
@@ -131,7 +132,7 @@
 			padding: 5px 12px;
 			font-size: 12px;
 			opacity: 0.5;
-			font-family: Ubuntu, Roboto, Open Sans !important;
+			font-family: Ubuntu, Roboto, Arial, Open Sans, sans-serif !important;
 			text-shadow: none !important;
 		}
 		@font-face {
@@ -172,7 +173,6 @@
 			text-shadow: 0 0 0.5px var(--red);
 		}
 		.article-content {
-			margin-bottom: 30px;
 			text-align: justify;
 		}
 		.article-content > p {
@@ -191,11 +191,19 @@
 		.anime-info > tbody > tr > td {
 			padding: 2px 10px;
 		}
+		.article-end {
+			background: url(/assets/red-divider.svg);
+			height: 80px;
+			width: 270px;
+			background-position: center;
+			background-size: cover;
+			background-repeat: no-repeat;
+			margin: auto;
+		}
 	</style>
 	{% block lettercss %}{% endblock %}
 {% endblock %}
 
 {% block customjs %}
-	<script src="https://kit.fontawesome.com/dbc840a846.js" crossorigin="anonymous"></script>
 	{% block letterjs %}{% endblock %}
 {% endblock %}

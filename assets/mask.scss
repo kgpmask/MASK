@@ -27,7 +27,7 @@ body {
 	background: linear-gradient(var(--medium-gray), var(--dark-gray));
 	text-align: center;
 	color: var(--light-gray);
-	font-family: Ubuntu, Roboto, Arial, sans-serif;
+	font-family: Ubuntu, Roboto, Arial, Open Sans, sans-serif;
 }
 
 div#page-container {
@@ -453,7 +453,7 @@ span.navbar-line {
 	.hamburger-menu, .plate, .plate-bar {
 		display: block;
 	}
-	.burger-open>div:not(.plate, .hamburger-menu) {
+	.burger-open > div:not(.plate, .hamburger-menu) {
 		display: none;
 	}
 }

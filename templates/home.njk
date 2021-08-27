@@ -44,7 +44,7 @@
 					{% endfor %}
 				</span>
 				<script>
-					const imgSliders = document.querySelectorAll('#slider-img > a'), imgSlides = document.querySelectorAll(".imgshow > div");
+					const imgSliders = document.querySelectorAll('#slider-img > a'), imgSlides = document.querySelectorAll(".imgshow > div"), imgSlideshow = document.querySelector(".imgshow");
 					let imageTimer;
 					let scrolledOutImg = true;
 					const IMAGE_TIME = 5000;
@@ -53,14 +53,14 @@
 						const currentIndex = [...imgSliders].findIndex(dot => dot.classList.contains('active-image-link'));
 						let nextIndex = currentIndex + (prev ? -1 : 1);
 						nextIndex = (nextIndex + imgAmt) % imgAmt;
-						imgSlides[nextIndex].scrollIntoView({ behaviour: 'smooth', block: 'nearest' });
+						imgSlideshow.scroll(nextIndex * imgSlideshow.clientWidth, 0);
 						clearTimeout(imageTimer);
 						if (!clicked) imageTimer = setTimeout(imageSlide, IMAGE_TIME);
 					}
 					imgSliders.forEach(a => a.addEventListener('click', () => {
 						clearTimeout(imageTimer);
-						const target = imgSlides[a.id.substr(7) - 1];
-						target.scrollIntoView({ behaviour: 'smooth', block: 'nearest' });
+						const target = a.id.substr(7) - 1;
+						imgSlideshow.scroll(target * imgSlideshow.clientWidth, 0);
 						imageTimer = setTimeout(imageSlide, IMAGE_TIME);
 					}));
 					const pauseImages = () => {
@@ -86,7 +86,7 @@
 						});
 					}, { threshold: [0.4] });
 					imgSlides.forEach(slide => imageObserver.observe(slide));
-					new IntersectionObserver(([imgShow]) => {
+					/*new IntersectionObserver(([imgShow]) => {
 						if (imgShow.isIntersecting && imgShow.intersectionRatio > 0.2) {
 							if (scrolledOutImg) {
 								scrolledOutImg = false;
@@ -98,7 +98,7 @@
 							scrolledOutImg = true;
 							console.log('Left images');
 						}
-					}, { threshold: [0.45] }).observe(document.querySelector('.imgshow'));
+					}, { threshold: [0.45] }).observe(document.querySelector('.imgshow'));*/
 					resumeImages();
 				</script>
 				<style>
@@ -216,7 +216,7 @@
 						width: 30px;
 						height: 30px;
 						border-radius: 5px;
-						line-height: 30px;
+						line-height: 70%;
 						pointer-events: auto;
 					}
 					.prevbtn:hover, .nextbtn:hover {
@@ -254,7 +254,7 @@
 				{% endfor %}
 			</div>
 			<script>
-				const vidSliders = document.querySelectorAll('#slider-vid > a'), vidSlides = document.querySelectorAll(".vidshow > div");
+				const vidSliders = document.querySelectorAll('#slider-vid > a'), vidSlides = document.querySelectorAll(".vidshow > div"), vidSlideshow = document.querySelector(".vidshow");
 				let videoTimer, scrolledOutVid = true, playedVid = false;
 				const VIDEO_TIME = 7000;
 				const vidAmt = {{ vids | length }};
@@ -262,14 +262,14 @@
 					const currentIndex = [...vidSliders].findIndex(dot => dot.classList.contains('active-video-link'));
 					let nextIndex = currentIndex + (prev ? -1 : 1);
 					nextIndex = (nextIndex + vidAmt) % vidAmt;
-					vidSlides[nextIndex].scrollIntoView({ behaviour: 'smooth', block: 'nearest' });
+					vidSlideshow.scroll(nextIndex * vidSlideshow.clientWidth, 0);
 					clearTimeout(videoTimer);
 					if (auto) videoTimer = setTimeout(videoSlide, VIDEO_TIME, false, auto);
 				}
 				vidSliders.forEach(a => a.addEventListener('click', () => {
 					clearTimeout(videoTimer);
-					const target = vidSlides[a.id.substr(7) - 1];
-					target.scrollIntoView({ behaviour: 'smooth', block: 'nearest' });
+					const target = a.id.substr(7) - 1;
+					vidSlideshow.scroll(target * vidSlideshow.clientWidth, 0);
 				}));
 				document.getElementById('vid-prev').addEventListener('click', () => {
 					clearTimeout(videoTimer);
@@ -289,7 +289,7 @@
 						}
 					});
 				}, { threshold: [0.4] });
-				new IntersectionObserver(([vidShow]) => {
+				/*new IntersectionObserver(([vidShow]) => {
 					if (playedVid) return console.log(this);
 					if (vidShow.isIntersecting && vidShow.intersectionRatio > 0.2) {
 						if (scrolledOutVid) {
@@ -303,7 +303,7 @@
 						scrolledOutVid = true;
 						console.log('Left videos');
 					}
-				}, { threshold: [0.45] }).observe(document.querySelector('.vidshow'));
+				}, { threshold: [0.45] }).observe(document.querySelector('.vidshow'));*/
 				vidSlides.forEach(slide => videoObserver.observe(slide));
 				videoSlide(false, true);
 			</script>
@@ -359,157 +359,5 @@
 {% endblock %}
 
 {% block customcss %}
-	<style>
-		.text {
-			text-align: justify;
-			max-width: 700px;
-		}
-		.mask-banner {
-			width: 80%;
-			background: var(--red);
-			text-align: center;
-			margin: 20px auto;
-			border-radius: 30px;
-		}
-		.mask-banner-image {
-			width: 120px;
-			height: 120px;
-		}
-		.flex-container {
-			display: inline-flex;
-			justify-content: center;
-			padding-top: 30px;
-		}
-		#bottom-container {
-			width: 100%;
-			justify-content: space-evenly;
-			flex-direction: column;
-			padding-top: 0;
-		}
-		.notices {
-			display: flex;
-			margin: 30px 40px 30px 40px;
-			box-sizing: border-box;
-		}
-		.noticebox {
-			margin-top: 20px;
-			border-radius: 5px;
-			border: 1px solid var(--ghost-gray);
-			align-self: center;
-			width: 200px;
-			overflow: hidden;
-		}
-		.notices-header {
-			background-color: var(--red);
-			padding: 5px;
-			color: var(--white);
-			font-weight: bold;
-			font-size: 1.2em;
-		}
-		.notices-list {
-			max-height: 150px;
-			overflow-y: auto;
-			-ms-overflow-style: none;
-			scrollbar-width: none;
-		}
-		.notices-list::-webkit-scrollbar {
-			display: none;
-		}
-		.notice-post {
-			transition: 0.4s;
-			padding: 4px;
-			background-color: var(--tinted-gray);
-			color: var(--white);
-		}
-		.notice-post:hover {
-			background-color: var(--medium-gray);
-			color: var(--white);
-		}
-		.notice-link sup {
-			font-size: 0.6em;
-			margin-left: 5px;
-			font-weight: bold;
-			color: var(--error-red);
-		}
-		.notice-link {
-			text-decoration: none;
-			color: inherit;
-		}
-		.notice-break {
-			width: 60%;
-			color: var(--medium-gray);
-			margin: 0px auto;
-		}
-		.about-stuff {
-			padding-right: 10%;
-		}
-		h1 {
-			font-size: 2.5em;
-		}
-		.text {
-			text-justify: justify;
-		}
-		.flex-break {
-			width: 80%;
-			margin: 30px auto;
-			color: var(--medium-gray);
-		}
-		.top-container {
-			display: inline-flex;
-			padding-bottom: 40px;
-			flex-wrap: wrap;
-			width: 70vw;
-			margin: 0 auto;
-		}
-		.vidshow {
-			border: 1px solid var(--off-white);
-			border-radius: 5px;
-			margin: 40px auto;
-			width: 70vw;
-			height: 37vw;
-			background-color: var(--medium-gray);
-			margin: auto;
-			margin-bottom: 50px;
-		}
-		.submit-stuff {
-			margin:0 auto;
-			display: flex;
-			align-items: center;
-			z-index: 29;
-		}
-		.submit-button {
-			border: 2px solid var(--off-white);
-			border-radius: 9px;
-			background: var(--tinted-gray);
-			padding: 20px;
-			color: var(--white);
-			transition: 0.4s;
-			cursor: pointer;
-			width: 180px;
-			height: 80px;
-			font-size: 1.1em;
-		}
-		.submit-button:hover {
-			background-color: var(--middle-gray);
-		}
-		@media (max-width: 800px) {
-			.flex-container {
-				flex-direction: column-reverse;
-			}
-			.notices, .vidshow {
-				margin: 30px auto;
-			}
-			.text {
-				padding: 30px;
-			}
-		}
-		@media (max-width: 600px) {
-			.about-stuff {
-				padding-right: 0;
-			}
-			.vidshow-container {
-				height: 200px;
-			}
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="/assets/home.css"/>
 {% endblock %}
