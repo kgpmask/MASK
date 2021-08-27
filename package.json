@@ -4,8 +4,8 @@
   "description": "Website for MASK",
   "main": "./src/index.js",
   "scripts": {
-    "lint": "node ./node_modules/eslint/bin/eslint.js . --config .eslintrc.json --ext .js",
-    "mocha": "./node_modules/mocha/bin/mocha",
+    "lint": "npx eslint . --config .eslintrc.json --ext .js",
+    "mocha": "npx mocha",
     "start": "npx sass assets --watch --no-source-map --style compressed & node src/mask.js",
     "test": "npm run lint && npm run mocha && echo \"Passing all tests.\" && exit 0"
   },
@@ -25,12 +25,12 @@
   "dependencies": {
     "express": "^4.17.1",
     "nunjucks": "^3.2.3",
+    "sass": "^1.38.1",
     "web-push": "^3.4.5"
   },
   "devDependencies": {
     "axios": "^0.21.1",
     "eslint": "^7.32.0",
-    "mocha": "^9.0.3",
-    "sass": "^1.38.1"
+    "mocha": "^9.0.3"
   }
 }
