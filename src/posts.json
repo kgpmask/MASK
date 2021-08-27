@@ -1,4 +1,18 @@
 [{
+	"name": "Art - Itachi Uchiha",
+	"link": "manasa-1.jpg",
+	"type": "art",
+	"attr": ["Manasa Mylavarapu"],
+	"date": "23rd Aug, 2021",
+	"hype": true
+}, {
+	"name": "Art - Yūji Itadori",
+	"link": "ext!ayush-sharma-1.jpg",
+	"type": "art",
+	"attr": ["Ayush Sharma"],
+	"date": "21st Aug, 2021",
+	"hype": true
+}, {
 	"name": "AMV - Beggin'",
 	"link": "https://www.youtube.com/watch?v=tH8zQdBkkBk",
 	"type": "video",
@@ -36,6 +50,13 @@
 	"type": "art",
 	"attr": ["Akshith G."],
 	"date": "29th July, 2021",
+	"hype": true
+}, {
+	"name": "Art - Zanitsu Agatsuma",
+	"link": "arjit-1.jpg",
+	"type": "art",
+	"attr": ["Arjit Lohia"],
+	"date": "23rd Jul, 2021",
 	"hype": true
 }, {
 	"name": "AMV - Buniyaad",
