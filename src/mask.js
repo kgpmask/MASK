@@ -2,12 +2,14 @@ const express = require('express');
 const fs = require('fs').promises;
 const nunjucks = require('nunjucks');
 const path = require('path');
+const tools = require('./tools.js');
 const webpush = require('web-push');
 
 const { PORT, DEBUG } = require('./config.js');
 const appHandler = require('./handler.js');
 
 global.app = express();
+app.use(express.json());
 
 let vapid;
 
@@ -23,8 +25,6 @@ try {
 		if (process.argv[2] === 'workflow') process.exit();
 	});
 }
-
-console.log(path.join(__dirname, '../templates'));
 
 const env = nunjucks.configure(path.join(__dirname, '../templates'), {
 	express: app,
