@@ -1,6 +1,5 @@
 const fs = require('fs').promises;
 const path = require('path');
-const tools = require('./tools.js');
 
 function handler (app, env, vapid) {
 	function get (req, res) {
@@ -146,8 +145,38 @@ function handler (app, env, vapid) {
 	}
 	function post (req, res) {
 		// no POST routes currently in use
-		// redirect to GET
-		return res.redirect(req.url);
+
+		const args = req.url.split('/');
+		args.shift();
+
+		switch (args[0]) {
+			case "checker": {
+				const checker = require('./checker.js');
+				console.log(args[2], args[1], req.body)
+				const correct = checker.compare(args[2], args[1], req.body); //req.data
+				switch (correct) {
+					case true: {
+						console.log("True");
+						res.send(true);
+						break;
+					}
+					case false: {
+						console.log("False");
+						res.send(false);
+						break;
+					}
+					default: {
+						console.log("Error: File not found");
+						break;
+					}
+				}
+				break;
+			}
+			default:
+				break;
+		}
+		
+		res.end();
 	}
 
 	app.get(/.*/, (req, res) => get(req, res));

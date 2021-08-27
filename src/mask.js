@@ -8,6 +8,7 @@ const { PORT, DEBUG } = require('./config.js');
 const appHandler = require('./handler.js');
 
 global.app = express();
+app.use(express.json());
 
 let vapid;
 
