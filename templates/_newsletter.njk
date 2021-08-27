@@ -14,7 +14,7 @@
 	{{ nextprev() }}
 		<h1>{{ pagetitle }}</h1>
 		<div id="pages-container"><div id="pages">
-		<div class="page" id="cover-page"><img id="cover-logo" src="/assets/logo.jpeg"/><br/>Manga & Anime<br/>Society, Kharagpur<br/><br/><div id="cover-page-title">{{ pagetitle }}</div></div>
+		{% block coverpage %}<div class="page" id="cover-page"><img id="cover-logo" src="/assets/logo.jpeg"/><br/>Manga & Anime<br/>Society, Kharagpur<br/><br/><div id="cover-page-title">{{ pagetitle }}</div></div>{% endblock %}
 			{% block article %}
 				<div class="faded">This article hasn't been published yet - stay tuned!</div>
 			{% endblock %}
@@ -23,7 +23,7 @@
 {% endblock %}
 
 {% block customcss %}
-	<link rel="stylesheet" type="text/css" href="/assets/icons.css"/>
+	<link rel="stylesheet" type="text/css" href="/assets/styles/icons.css"/>
 	<style>
 		div.controls {
 			padding: 40px 20px;
@@ -121,9 +121,11 @@
 			border-radius: 5px;
 			color: var(--abyss);
 			page-break-before: always;
+		}
+		.page:not(#cover-page) {
 			counter-increment: page;
 		}
-		.page:after {
+		.page:not(#cover-page):after {
 			content: counter(page) "/{{ pagecount }}";
 			position: absolute;
 			bottom: 0;
@@ -192,12 +194,14 @@
 			padding: 2px 10px;
 		}
 		.article-end {
-			background: url(/assets/red-divider.svg);
+			background-color: var(--red);
+			-webkit-mask-image: url(/assets/releases/divider.svg);
+			mask-image: url(/assets/releases/divider.svg);
 			height: 80px;
 			width: 270px;
-			background-position: center;
-			background-size: cover;
-			background-repeat: no-repeat;
+			mask-position: center;
+			mask-size: cover;
+			mask-repeat: no-repeat;
 			margin: auto;
 		}
 	</style>

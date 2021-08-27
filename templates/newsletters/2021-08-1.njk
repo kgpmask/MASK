@@ -2,7 +2,11 @@
 
 {% set pagetitle = 'August - Issue 1' %}
 
-{% set pagecount = 5 %}
+{% set pagecount = 4 %}
+
+{% block coverpage %}
+	<div class="page" id="cover-page"></div>
+{% endblock %}
 
 {% block article %}
 	<div class="page">
@@ -33,8 +37,9 @@
 			</table>
 			<div class="article-content">
 				<p>Tower of God is a Korean anime which is the adaptation of a very popular webtoon/manhwa by the same name. It follows the story of a kid named “Twenty-Fifth Bam”, who follows a girl named Rachel, even after she abandons him to enter the Tower of God.</p>
-				<p>Surprisingly enough, that single line explains the story quite efficiently ;) The backstory of the protagonist (whose name is shortened to ‘Bam’) is not very clear, but he is alone in a dark place for a long time before a girl named Rachel frees him. She teaches him a lot about the outside world and slowly becomes the world to him. But one day she abandons him to enter the “Tower of God” - a place where any wishes you have are fulfilled if you reach the top . The devastated Bam decides to follow her and begins his own journey through the Tower, starting an adventure full of determination, betrayal, and treachery.</p>
-				<p>The animation isn’t mind-blowing since they tried to depict the characters the way they’re shown in the initial chapters of the manhwa, but if they announce the season 2 of this anime then the audience is in for a pleasant surprise as the artwork improves a lot after this story arc. Apart from animation, its music stands out and is appreciated around the world. The pacing of the story, on the other hand, is rather fast, and sometimes fast enough to make  it hard to follow the story.</p>
+				<p>Surprisingly enough, that single line explains the story quite efficiently! ;) The backstory of the protagonist (whose name is shortened to ‘Bam’) is not very clear, but he is alone in a dark place for a long time before a girl named Rachel frees him. She teaches him a lot about the outside world and slowly becomes the world to him. But one day she abandons him to enter the “Tower of God” - a place where any wishes you have are fulfilled if you reach the top . The devastated Bam decides to follow her and begins his own journey through the Tower, starting an adventure full of determination, betrayal, and treachery.</p>
+				<img src="/assets/releases/2021-08-1/1.webp" alt="Tower of God" style="width: 90%;margin:10px"/>
+				<p>The animation isn’t mind-blowing since they tried to depict the characters the way they’re shown in the initial chapters of the manhwa, but if they announce the season 2 of this anime then the audience is in for a pleasant surprise as the artwork improves a lot after this story arc. Apart from animation, its music stands out and is appreciated around the world. The pacing of the story, on the other hand, is rather fast, and sometimes fast enough to make it hard to follow the story.</p>
 				<p>If you’re looking for a one-season action flick then I’d definitely recommend Tower of God. It is dubbed in English and Japanese in addition to its original Korean language, and is available on Crunchyroll and Netflix in a couple countries.</p>
 				<div class="article-end"></div>
 			</div>
@@ -45,7 +50,7 @@
 		<div id="wordsearch-words"></div>
 	</div>
 	<div class="page" id="crossword">
-		<table id="crossword-table" cellspacing="0"></table>
+		<table class="crossword-table" id="crossword-table" cellspacing="0"></table>
 		<div id="crossword-words">
 			<div id="crossword-left"></div>
 			<div id="crossword-right"></div>
@@ -68,7 +73,7 @@
 			['-', '-', '-', '-', 'P', '-', '-', 'C', '-', '-', '-', '-', '-', '-', '-'],
 			['-', '-', '-', '-', 'A', '-', '-', 'H', '-', '-', '-', '-', '-', '-', '-'],
 			['-', '-', '-', '-', 'R', '-', '-', 'O', '-', '-', '-', '-', '-', '-', '-'],
-			['-', '-', '-', '-', 'R', '-', '-', 'U', '-', '-', '-', '-', '-', '-', '-'],
+			['-', '-', '-', '-', 'R', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
 			['-', '-', '-', '-', 'O', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
 			['-', '-', '-', '-', 'W', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-']
 		];
@@ -217,7 +222,8 @@
 		const crossFound = crossMatrix.map(row => row.map(() => '-'));
 
 		let crossClick = false;
-		let keypressed = false;
+		let crossDir = false; // 1234 NESW
+		let crosswordVis = false;
 
 		function startCross () {
 			let mytablebody = document.getElementById("crossword-table");
@@ -229,10 +235,10 @@
 					let mycurrent_cell = document.createElement("td");
 					if (crossMatrix[i][j] === "-") {
 						mycurrent_cell.classList.add("crossword-cell-blank");
-						mycurrent_cell.setAttribute("Blank", "");
+						mycurrent_cell.setAttribute("data-cell", "");
 					} else {
 						mycurrent_cell.classList.add("crossword-cell");
-						mycurrent_cell.setAttribute("Blank", "1");
+						mycurrent_cell.setAttribute("data-cell", "1");
 						if (((!i || crossMatrix[i - 1][j] === '-') && crossMatrix[i + 1][j] !== '-') || ((!j || crossMatrix[i][j - 1] === '-') && crossMatrix[i][j + 1] !== '-')) {
 							mycurrent_cell.classList.add('crossword-count');
 						}
@@ -252,108 +258,118 @@
 						if (crossMatrix[crossClick[0]][crossClick[1]] === "-") crossClick = false;
 						else event.target.classList.add("crosswordCellH");
 					}, false);
-					document.addEventListener('keypress', function (e) {
-						// if (keypressed) return; // WE NEED A FIX FOR THIS AAAAA
-						console.log('Clicked ' + e.keyCode);
-						keypressed = true;
-						if (crossClick) {
-							if ((e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 97 && e.keyCode <= 122)) {
-								let tempCell = document.getElementById(`crossword-cell-${crossClick[0]}-${crossClick[1]}`);
-								let currenttext = String.fromCharCode(e.keyCode).toUpperCase();
-								tempCell.innerHTML = currenttext;
-								crossFound[crossClick[0]][crossClick[1]] = currenttext;
-								// check if crossword is completed
-								if (!letterSpaces.find(([i, j]) => crossFound[i][j] === '-')) {
-									const xios = {
-										post: function (_, info) {
-											return new Promise((resolve, reject) => resolve({
-												data: info.join('|') === solMatrix.join('|') ? 'solved' : ''
-											}));
-										}
-									} // Don't kill me
-									xios.post(`/checker/2021-08-1`, crossFound).then(res => {
-										if (res.data) {
-											mytablebody.classList.add("table-complete-cross");
-											setTimeout(function () {
-												document.getElementById(`crossword`).innerHTML = `<div class="crossword-complete">Completed!</div>`;
-											}, 1600);
-										}
-									}).catch(err => console.log(err));
-								}
-								let next = document.getElementById(`crossword-cell-${crossClick[0] + 1}-${crossClick[1]}`);
-								if (next && next.getAttribute("Blank")) {
-									crossClick[0] += 1;
-									for (let i = 0; i < crossRows; i++) {
-										for (let j = 0; j < crossCols; j++) {
-											let tempCell = document.getElementById(`crossword-cell-${i}-${j}`);
-											tempCell.classList.remove("crosswordCellH");
-											tempCell.classList.remove("crosswordCellS");
-										}
-									}
-									next.classList.add("crosswordCellH");
-									return true;
-								}
-								next = document.getElementById(`crossword-cell-${crossClick[0]}-${crossClick[1] + 1}`);
-								if (next && next.getAttribute("Blank")) {
-									crossClick[1] += 1;
-									for (let i = 0; i < crossRows; i++) {
-										for (let j = 0; j < crossCols; j++) {
-											let tempCell = document.getElementById(`crossword-cell-${i}-${j}`);
-											tempCell.classList.remove("crosswordCellH");
-											tempCell.classList.remove("crosswordCellS");
-										}
-									}
-									next.classList.add("crosswordCellH");
-									return true;
-								}
-							}
-							if (e.keyCode >= 37 && e.keyCode <= 40) {
-								e.preventDefault();
-								const offsets = {
-									'37': [0, -1],
-									'38': [-1, 0],
-									'39': [0, +1],
-									'40': [+1, 0]
-								}
-								const next = document.getElementById(`crossword-cell-${crossClick[0] + offsets[e.keyCode][0]}-${crossClick[1] + offsets[e.keyCode][1]}`);
-								if (next && next.getAttribute("Blank")) {
-									crossClick[0] += offsets[e.keyCode][0];
-									crossClick[1] += offsets[e.keyCode][1];
-									for (let i = 0; i < crossRows; i++) {
-										for (let j = 0; j < crossCols; j++) {
-											let tempCell = document.getElementById(`crossword-cell-${i}-${j}`);
-											tempCell.classList.remove("crosswordCellH");
-											tempCell.classList.remove("crosswordCellS");
-										}
-									}
-									next.classList.add("crosswordCellH");
-									return;
-								}
-							}
-							if ([8, 46].includes(e.keyCode)) {
-								document.getElementById(`crossword-cell-${crossClick[0]}-${crossClick[1]}`).innerHTML = '';
-								crossFound[crossClick[0]][crossClick[1]] = '-';
-							}
-						}
-					});
-					document.addEventListener("keyup", () => keypressed = false, false);
 					mycurrent_row.appendChild(mycurrent_cell);
 				}
 				mytablebody.appendChild(mycurrent_row);
 			}
+			document.addEventListener('keydown', function (e) {
+				if (!crosswordVis) return;
+				if (crossClick) {
+					if ((e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 97 && e.keyCode <= 122)) {
+						let tempCell = document.getElementById(`crossword-cell-${crossClick[0]}-${crossClick[1]}`);
+						let currenttext = String.fromCharCode(e.keyCode).toUpperCase();
+						tempCell.innerHTML = currenttext;
+						crossFound[crossClick[0]][crossClick[1]] = currenttext;
+						// check if crossword is completed
+						if (!letterSpaces.find(([i, j]) => crossFound[i][j] === '-')) {
+							const xios = {
+								post: function (_, info) {
+									return new Promise((resolve, reject) => resolve({
+										data: info.join('|') === solMatrix.join('|') ? 'solved' : ''
+									}));
+								}
+							} // Don't kill me
+							xios.post(`/checker/2021-08-1`, crossFound).then(res => {
+								if (res.data) {
+									mytablebody.classList.add("table-complete-cross");
+									setTimeout(function () {
+										document.getElementById(`crossword`).innerHTML = `<div class="crossword-complete">Completed!</div>`;
+									}, 1600);
+								}
+							}).catch(err => console.log(err));
+						}
+						const nexts = [];
+						(() => {
+							const a = crossClick;
+							nexts.push({ c: [a[0] + 1, a[1]], d: 3 });
+							nexts.push({ c: [a[0], a[1] + 1], d: 2 });
+							if (crossDir) {
+								const o = [null, [-1, 0], [0, 1], [1, 0], [0, -1]][crossDir];
+								nexts.unshift({ c: [a[0] + o[0], a[1] + o[1]], d: crossDir });
+							}
+						})();
+						return nexts.find(coords => {
+							const cell = document.getElementById(`crossword-cell-${coords.c[0]}-${coords.c[1]}`);
+							if (cell && cell.getAttribute("data-cell")) {
+								crossClick = coords.c;
+								crossDir = coords.d;
+								for (let i = 0; i < crossRows; i++) {
+									for (let j = 0; j < crossCols; j++) {
+										let tempCell = document.getElementById(`crossword-cell-${i}-${j}`);
+										tempCell.classList.remove("crosswordCellH");
+										tempCell.classList.remove("crosswordCellS");
+									}
+								}
+								cell.classList.add('crosswordCellH');
+								return true;
+							}
+						});
+					}
+					if (e.keyCode >= 37 && e.keyCode <= 40) {
+						const offsets = {
+							'37': [0, -1],
+							'38': [-1, 0],
+							'39': [0, +1],
+							'40': [+1, 0]
+						}, keyDir = {
+							'37': 4,
+							'38': 1,
+							'39': 2,
+							'40': 3
+						};
+						e.preventDefault();
+						const next = document.getElementById(`crossword-cell-${crossClick[0] + offsets[e.keyCode][0]}-${crossClick[1] + offsets[e.keyCode][1]}`);
+						if (next && next.getAttribute("data-cell")) {
+							crossClick[0] += offsets[e.keyCode][0];
+							crossClick[1] += offsets[e.keyCode][1];
+							for (let i = 0; i < crossRows; i++) {
+								for (let j = 0; j < crossCols; j++) {
+									let tempCell = document.getElementById(`crossword-cell-${i}-${j}`);
+									tempCell.classList.remove("crosswordCellH");
+									tempCell.classList.remove("crosswordCellS");
+								}
+							}
+							next.classList.add("crosswordCellH");
+							crossDir = keyDir[e.keyCode];
+							return;
+						}
+					}
+					if ([8, 46].includes(e.keyCode)) {
+						document.getElementById(`crossword-cell-${crossClick[0]}-${crossClick[1]}`).innerHTML = '';
+						crossFound[crossClick[0]][crossClick[1]] = '-';
+					}
+				}
+			});
+			new IntersectionObserver(([crossword]) => {
+				if (crossword.isIntersecting && crossword.intersectionRatio > 0.8) {
+					crosswordVis = true;
+				} else {
+					crosswordVis = false;
+				}
+			}, { threshold: [0.99] }).observe(document.getElementById('crossword-table'));
 
 			const clues = [];
-			clues.push(`3. No.of siblings that Tanjiro has
+			clues.push(`3. No. of siblings that Tanjiro has
 			4. Name of stone Hashira (Pillar)
 			6. Name of Upper Moon Three
 			8. Current leader of Demon Slayer Corps
-			10. Former water Hashira (Pillar)`.replace(/\t/g, '').split('\n').map(line => line.split('. ')));
+			10. Former water Hashira (Pillar)`.replace(/\t/g, '').split('\n').map(line => line.split(/\. (.*)/)));
 			clues.push(`1. Breathing style that Inosuke uses
 			2. Colour of Tanjiro's nichirin blade
 			5. First demon ever
 			7. Hashira with green nichirin blade
 			9. Last name of Shinobu
-			10. Type of bird that Zenitsu has`.replace(/\t/g, '').split('\n').map(line => line.split('. ')));
+			10. Type of bird that Zenitsu has`.replace(/\t/g, '').split('\n').map(line => line.split(/\. (.*)/)));
 
 			document.getElementById('crossword-left').innerHTML = `<h3>Across</h3><br/><table class="cross-words">${clues[0].map(clue => `<tr><td>${clue[0]}</td><td>${clue[1]}</td></tr>`).join('')}</table>`;
 			document.getElementById('crossword-right').innerHTML = `<h3>Down</h3><br/><table class="cross-words">${clues[1].map(clue => `<tr><td>${clue[0]}</td><td>${clue[1]}</td></tr>`).join('')}</table>`;
@@ -368,8 +384,47 @@
 {% endblock %}
 
 {% block lettercss %}
-	<link rel="stylesheet" type="text/css" href="/assets/wordsearch.css"/>
-	<link rel="stylesheet" type="text/css" href="/assets/crossword.css"/>
+	<style>
+		:root {
+			--navy        : #0e1b45;
+			--deep-purple : #392352;
+			--wine        : #f73f75;
+			--violet      : #7c2f64;
+			--pink        : #f04dc8;
+			--purple      : #c03ebb;
+		}
+		.page {
+			color: var(--deep-purple);
+		}
+		#cover-page {
+			background-image: url(/assets/releases/2021-08-1/cover.webp);
+			background-position: center;
+			background-size: cover;
+		}
+		.article-full, .article-half, #crossword-left, #crossword-right {
+			scrollbar-color: var(--purple) var(--off-white) !important;
+		}
+		.article-full > h2, .article-half > h2 {
+			text-shadow: 0 0 0.5px var(--purple);
+		}
+		.article-end {
+			background-color: var(--purple);
+		}
+		.crosswordCellH {
+			background-color: var(--purple) !important;
+		}
+		.wordsearchCellS {
+			background-color: var(--wine) !important;
+		}
+		.found-word {
+			color: var(--wine) !important;
+		}
+		.wordsearch-complete, .crossword-complete {
+			color: var(--wine) !important;
+		}
+	</style>
+	<link rel="stylesheet" type="text/css" href="/assets/styles/wordsearch.css"/>
+	<link rel="stylesheet" type="text/css" href="/assets/styles/crossword.css"/>
 {% endblock %}
 
 {% set scripts = ['https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'] %}

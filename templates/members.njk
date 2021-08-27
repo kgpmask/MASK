@@ -14,7 +14,7 @@
 					<div class="list">
 						{% for person in list %}
 							<div class="member">
-								<img src="/assets/members/{{ person.href }}" class="member-icon" height="80px" width="80px"/>
+								<img src="/assets/members/{{ person.href }}" alt="{{ person.name }}" class="member-icon" height="80px" width="80px"/>
 								<div class="div-line">&nbsp;</div>
 								<div class="member-desc">{{ person.name }}<!--br/>{{ person.roll }}--><br/></div>
 								<div class="teamlist">
@@ -35,7 +35,7 @@
 {% endblock %}
 
 {% block customcss %}
-	<link rel="stylesheet" type="text/css" href="/assets/icons.css"/>
+	<link rel="stylesheet" type="text/css" href="/assets/styles/icons.css"/>
 	<style>
 		.yearbox {
 			color: var(--off-white);

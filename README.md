@@ -2,9 +2,10 @@
 The website for the Manga and Anime Society Kharagpur
 
 ## Contributing
-Anyone can make a pull request. PRs will be merged if they pass the workflows.
+Anyone can make a pull request. PRs will not be merged if they fail the workflows.
 
 At the moment, @PartMan7 is the sole maintainer of this repo (and thus the only person who can merge pull requests), since the code is hosted live on his server. From next year this'll change.
+^ This was intended but he screwed up, but still please make pull requests for non-trivial changes!
 
 
 ## Guidelines
@@ -15,12 +16,10 @@ Tabs for indentation, basic JS style guidelines. If you have any questions, post
 ## Code
 
 We'll be using nunjucks for rendering pages.
-
 NGINX has been used for server-side traffic direction and pointing.
-
 Serving is done via express.
-
 Mocha is used for testing, and ESLint for linting JS.
+SASS is used for CSS, too.
 
 
 ## Templates
@@ -61,9 +60,15 @@ The default newsletter template is:
 {% extends "_newsletter.njk" %}
 
 {% set pagetitle = 'Month - Issue num' %}
+{% set pagecount = number_of_pages %}
 
 {% block article %}
 	Article goes here
 {% endblock %}
 
+{% block letterjs %}<script></script>{% endblock %}
+{% block lettercss %}<style></style>{% endblock %}
+
 ```
+
+Take a look at existing articles for the various classes and where they're used.
