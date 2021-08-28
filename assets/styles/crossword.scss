@@ -1,3 +1,6 @@
+#cross-alt {
+	display: none;
+}
 .crossword-table {
 	margin: 0px auto 20px;
 	text-align: center;
@@ -50,7 +53,7 @@
 	width: 45%;
 	overflow-y: scroll;
 	display: inline-block;
-	background-color: var(--off-white);
+	background-color: rgba(155, 155, 155, 0.4);
 	border-radius: 5px;
 	font-size: 0.7em;
 	scrollbar-color: var(--red) var(--off-white);
@@ -88,5 +91,14 @@
 	}
 	100% {
 		opacity: 0.1;
+	}
+}
+
+@media (max-width: 500px) {
+	#cross-wrapper {
+		display: none;
+	}
+	#cross-alt {
+		display: block;
 	}
 }

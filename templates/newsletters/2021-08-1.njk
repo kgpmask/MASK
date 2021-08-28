@@ -97,7 +97,7 @@
 			</table>
 			<div class="article-content">
 				<img src="/assets/releases/2021-08-1/2.webp" style="float:right;margin:10px 0 5px 20px;width:32%;min-width:100px;max-width:300px"/>
-				<p>Most of you probably haven’t heard of this anime. It suffered a major setback due to lack of proper marketing and has remained a rather unknown masterpiece. Unlike many other action anime, it is rather well-rounded,with its fair share of comedy, romance, and thrill - which perfectly complement, which is honestly somewhat rare.</p>
+				<p>Most of you probably haven’t heard of this anime. It suffered a major setback due to lack of proper marketing and has remained a rather unknown masterpiece. Unlike many other action anime, it is rather well-rounded, with its fair share of comedy, romance, and thrill - which perfectly complement, which is honestly somewhat rare.</p>
 				<p>Released in 2015, Chivalry of a Failed Knight shows an uncanny resemblance to "The Asterisk War", another anime released in the same season and on the same date.</p>
 				<p>It is set in a world where certain humans exist who wield the ability to materialize their soul into devices that greatly enhance their combat abilities, by allowing them to use magic. These humans are called blazers.</p>
 				<p>This anime follows the story of a high school blazer, Ikki Kurogane, an outcast of the most prestigious and noble blazer clan of Japan, who always suffered mistreatment from his own clan due to his astonishingly low magic potential as a blazer. Considered to be the weakest student in his grade based on the gauged physical and magical abilities, he is further bullied and looked down in his school by his peers and is given the nickname 'The Worst One'.</p>
@@ -157,48 +157,32 @@
 		</div>
 	</div>
 	<div class="page" id="wordsearch">
-		<table id="wordsearch-table" cellspacing="0"></table>
+		<span class="article-header">BnHA Wordsearch</span><span style="display: inline-block;min-width:50px"></span><span class="article-author">By: Aditya Das</span>
+		<br/><br/>
+		<div class="word-wrapper"><table id="wordsearch-table" cellspacing="0"></table></div>
 		<hr style="width:80%;margin:20px auto"/>
 		<div id="wordsearch-words"></div>
-		<span class="article-header">BnHA Wordsearch</span><span style="display: inline-block;min-width:50px"></span><span class="article-author">By: Aditya Das</span>
+
 	</div>
 	<div class="page" id="crossword">
-		<table class="crossword-table" id="crossword-table" cellspacing="0"></table>
-		<div id="crossword-words">
-			<div id="crossword-left"></div>
-			<div id="crossword-right"></div>
+		<div id="cross-wrapper">
+			<span class="article-header">KnY Crossword</span><span style="display: inline-block;min-width:50px"></span><span class="article-author">By: Arjit Lohia</span><br/><br/>
+			<table class="crossword-table" id="crossword-table" cellspacing="0"></table>
+			<div id="crossword-words">
+				<div id="crossword-left"></div>
+				<div id="crossword-right"></div>
+			</div>
 		</div>
-		<span class="article-header">KnY Crossword</span><span style="display: inline-block;min-width:50px"></span><span class="article-author">By: Arjit Lohia</span>
+		<div id="cross-alt">Your device is too thin to view this content; please rotate your screen or use a larger device!</div>
 	</div>
 {% endblock %}
 
 {% block prescript %}
 	<script>
-		const crossMatrix = [['-','-','-',' ','-','-','-',' ','-','-','-','-','-','-','-'],[' ',' ',' ',' ','-','-','-',' ','-',' ',' ',' ',' ',' ',' '],['-','-','-',' ',' ',' ',' ',' ','-','-','-','-',' ','-','-'],['-','-','-',' ','-','-','-',' ','-','-',' ','-',' ','-','-'],['-','-','-',' ','-','-','-',' ',' ',' ',' ',' ',' ','-','-'],['-','-','-','-','-','-','-','-','-','-',' ','-',' ','-','-'],['-','-','-','-','-','-','-','-','-','-',' ','-','-','-','-'],['-','-','-','-','-','-','-',' ','-','-',' ','-','-','-','-'],['-','-','-','-',' ',' ',' ',' ',' ',' ',' ','-','-','-','-'],['-','-','-','-',' ','-','-',' ','-','-','-','-','-','-','-'],['-','-','-','-',' ','-','-',' ','-','-','-','-','-','-','-'],['-','-','-','-',' ','-','-',' ','-','-','-','-','-','-','-'],['-','-','-','-',' ','-','-','-','-','-','-','-','-','-','-'],['-','-','-','-',' ','-','-','-','-','-','-','-','-','-','-'],['-','-','-','-',' ','-','-','-','-','-','-','-','-','-','-']];;
-
-		const letterSpaces = [];
-
-		(() => {
-			const maxDimension = Math.max(crossMatrix.length, crossMatrix[0].length);
-			const root = document.querySelector(':root');
-			root.style.setProperty('--crossword-cell-size', (40 * 10 / maxDimension - 4) + "px");
-			root.style.setProperty('--crossword-font-size', (10 / maxDimension) ** (1 / 2) + "em");
-			crossMatrix.forEach((row, i) => {
-				row.forEach((char, j) => {
-					if (char === ' ') letterSpaces.push([i, j]);
-				});
-			});
-		})();
-	</script>
-{% endblock %}
-
-{% block letterjs %}
-	<script type="text/javascript">
 		"use strict";
+		const crossMatrix = [['-','-','-',' ','-','-','-',' ','-','-','-','-','-','-','-'],[' ',' ',' ',' ','-','-','-',' ','-',' ',' ',' ',' ',' ',' '],['-','-','-',' ',' ',' ',' ',' ','-','-','-','-',' ','-','-'],['-','-','-',' ','-','-','-',' ','-','-',' ','-',' ','-','-'],['-','-','-',' ','-','-','-',' ',' ',' ',' ',' ',' ','-','-'],['-','-','-','-','-','-','-','-','-','-',' ','-',' ','-','-'],['-','-','-','-','-','-','-','-','-','-',' ','-','-','-','-'],['-','-','-','-','-','-','-',' ','-','-',' ','-','-','-','-'],['-','-','-','-',' ',' ',' ',' ',' ',' ',' ','-','-','-','-'],['-','-','-','-',' ','-','-',' ','-','-','-','-','-','-','-'],['-','-','-','-',' ','-','-',' ','-','-','-','-','-','-','-'],['-','-','-','-',' ','-','-',' ','-','-','-','-','-','-','-'],['-','-','-','-',' ','-','-','-','-','-','-','-','-','-','-'],['-','-','-','-',' ','-','-','-','-','-','-','-','-','-','-'],['-','-','-','-',' ','-','-','-','-','-','-','-','-','-','-']];
 
-		const tempWords = `ALL FOR ONE\nALL MIGHT\nBEST JEANIST\nCEMENTOSS\nDABI\nENDEAVOR\nERASER HEAD\nHAWKS\nKUROGIRI\nMIDNIGHT\nMIRKO\nMR COMPRESS\nPRESENT MIC\nRYUKYU\nTOMURA SHIGARAKI`.split("\n").map(word => word.replace(/\t/g, '')), words = tempWords.map(word => word.replace(/[ ]/g, '').toUpperCase());
-
-		let wordMatrix = `M X A R O K R I M T X O K N K G S Q R Y Y N T
+		const wordMatrix = `M X A R O K R I M T X O K N K G S Q R Y Y N T
 		H W K D Q M L Y P W C O A S U R B F J L R H M
 		T I U A Z D I D F E S Q L S R P B R R P G F T
 		L V M I D N I G H T N Y L O O X P E S R M S H
@@ -214,6 +198,32 @@
 		I B N M W R W K E S D S M R O V A E D N E B R
 		I W D A E H R E S A R E Q N U O H U D A Z M S
 		L I R Y U K Y U P Z D K Q L U X R J U X A B U`.replace(/\t/g, '').split("\n").map(line => line.split(" "));
+
+		const letterSpaces = [];
+
+		(() => {
+			const maxDimension = Math.max(crossMatrix.length, crossMatrix[0].length);
+			const root = document.querySelector(':root');
+			root.style.setProperty('--crossword-cell-size', (40 * 10 / maxDimension - 4) + "px");
+			root.style.setProperty('--crossword-font-size', (10 / maxDimension) ** (1 / 2) + "em");
+			crossMatrix.forEach((row, i) => {
+				row.forEach((char, j) => {
+					if (char === ' ') letterSpaces.push([i, j]);
+				});
+			});
+			root.style.setProperty('--wordsearch-padding', (100 * wordMatrix.length / wordMatrix[0].length) + '%');
+			root.style.setProperty('--wordsearch-cell-height', (100 / wordMatrix.length) + '%');
+			root.style.setProperty('--wordsearch-cell-width', (100 / wordMatrix[0].length) + '%');
+		})();
+
+
+	</script>
+{% endblock %}
+
+{% block letterjs %}
+	<script type="text/javascript">
+
+		const tempWords = `ALL FOR ONE\nALL MIGHT\nBEST JEANIST\nCEMENTOSS\nDABI\nENDEAVOR\nERASER HEAD\nHAWKS\nKUROGIRI\nMIDNIGHT\nMIRKO\nMR COMPRESS\nPRESENT MIC\nRYUKYU\nTOMURA SHIGARAKI`.split("\n").map(word => word.replace(/\t/g, '')), words = tempWords.map(word => word.replace(/[ ]/g, '').toUpperCase());
 
 		const wordRows = wordMatrix.length;
 		const wordCols = wordMatrix[0].length;
@@ -237,11 +247,11 @@
 					mycurrent_cell.setAttribute("id", `wordsearch-cell-${i}-${j}`);
 					mycurrent_cell.setAttribute("data-posI", i);
 					mycurrent_cell.setAttribute("data-posJ", j);
-					mycurrent_cell.style.width = size;
+					/*mycurrent_cell.style.width = size;
 					mycurrent_cell.style.minWidth = size;
 					mycurrent_cell.style.height = size;
 					mycurrent_cell.style.maxHeight = size;
-					mycurrent_cell.style.fontSize = fontsize;
+					mycurrent_cell.style.fontSize = fontsize;*/
 					let currenttext = document.createTextNode(wordMatrix[i][j]);
 					mycurrent_cell.addEventListener("click", function (event) {
 						if (wordClick) {
