@@ -1,4 +1,10 @@
 [{
+	"name": "Newsletter - August I",
+	"link": "/newsletters/2021-08-1",
+	"type": "letter",
+	"date": "28th Aug, 2021",
+	"hype": true
+}, {
 	"name": "Art - Itachi Uchiha",
 	"link": "manasa-1.jpg",
 	"type": "art",
