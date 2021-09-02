@@ -32,8 +32,8 @@ function handler (app, env, vapid) {
 				break;
 			}
 			case 'art': {
-				const posts = require('./posts.json').filter(post => post.type === 'art');
-				res.render(path.join(__dirname, '../templates', 'art.njk'));
+				const art = require('./posts.json').filter(post => post.type === 'art');
+				res.render(path.join(__dirname, '../templates', 'art.njk'), { art });
 				break;
 			}
 			case 'assets': {
