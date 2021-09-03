@@ -11,7 +11,7 @@
 	<div class="img-container">
 		<img id="img-{{ loop.index }}" src="/assets/art/{{ img.link }}" />
 		<div class="overlay">
-			<h1>{{ img.name }}</h1>
+			<h1>{{ img.name | replace('Art - ', '') }}</h1>
 			<h3>{{ img.attr | join(", ") }}</h3>
 			<!-- <h5>{{ img.date }}</h5> -->
 		</div>
@@ -62,10 +62,12 @@
 		width: 100%;
 		height: auto;
 		opacity: 1;
+		transform: scale(0.94);
 	}
 
 	#photos .img-container:hover img {
 		opacity: 0.3;
+		transform: scale(1);
 	}
 
 	@media (max-width: 768px) {
