@@ -27,7 +27,7 @@ function handler (app, env, vapid) {
 				const vids = require('./posts.json').filter(post => {
 					return post.type === 'video' && post.hype && post.link.includes('www.youtube.com');
 				}).shuffle().slice(0, 5);
-				const art = require('./posts.json').filter(post => post.type === 'art').slice(0, 5);
+				const art = require('./posts.json').filter(post => post.type === 'art' && post.hype).slice(0, 5);
 				res.render(path.join(__dirname, '../templates', 'home.njk'), { posts, vids, art });
 				break;
 			}
