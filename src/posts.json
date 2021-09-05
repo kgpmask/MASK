@@ -108,4 +108,144 @@
 	"show": "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/O950107XEps\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>",
 	"page": "_blank",
 	"hype": true
+}, {
+	"name": "Art - Tanjiro Kamado",
+	"link": "_1.jpeg",
+	"type": "art",
+	"attr": ["Sanjeev Raj Ganji"],
+	"date": "30th Aug, 2021",
+	"hype": true
+}, {
+	"name": "Art - Gojo Satoru",
+	"link": "_2.jpeg",
+	"type": "art",
+	"attr": ["Shivam Sood"],
+	"date": "29th Aug, 2021",
+	"hype": true
+}, {
+	"name": "Art - Saitama",
+	"link": "_3.jpeg",
+	"type": "art",
+	"attr": ["Gary S"],
+	"date": "14th Aug, 2021",
+	"hype": true
+}, {
+	"name": "Art - Kaneki Ken",
+	"link": "_4.jpeg",
+	"type": "art",
+	"attr": ["Pratyasha Kalita"],
+	"date": "2nd Sept, 2019",
+	"hype": true
+}, {
+	"name": "Art - Shiina Mayuri",
+	"link": "_5.jpeg",
+	"type": "art",
+	"attr": ["Sai Sanjeet"],
+	"date": "9th Sept, 2019",
+	"hype": true
+}, {
+	"name": "Art - Yagami Light x Shinigami Ryuk",
+	"link": "_6.jpeg",
+	"type": "art",
+	"attr": ["Deepam Banerjee"],
+	"date": "16th Sept, 2019",
+	"hype": true
+}, {
+	"name": "Art - Mikasa Ackerman",
+	"link": "_7.jpeg",
+	"type": "art",
+	"attr": ["Vipul Modak"],
+	"date": "23rd Sept, 2019",
+	"hype": true
+}, {
+	"name": "Art - Kirishima Touka",
+	"link": "_8.jpeg",
+	"type": "art",
+	"attr": ["Aman Khashbar"],
+	"date": "30th Sept, 2019",
+	"hype": true
+}, {
+	"name": "Art - Jiraiya",
+	"link": "_9.jpeg",
+	"type": "art",
+	"attr": ["Parth Lohomi"],
+	"date": "7th Oct, 2019",
+	"hype": true
+}, {
+	"name": "Art - Rias Gremory",
+	"link": "_10.jpeg",
+	"type": "art",
+	"attr": ["Sai Venkat"],
+	"date": "14th Oct, 2019",
+	"hype": true
+}, {
+	"name": "Art - Monkey D. Luffy",
+	"link": "_11.jpeg",
+	"type": "art",
+	"attr": ["Nithin Krishna"],
+	"date": "21st Oct, 2019",
+	"hype": true
+}, {
+	"name": "Art - Garou",
+	"link": "_12.jpeg",
+	"type": "art",
+	"attr": ["Pritam Mallick"],
+	"date": "28th Oct, 2019",
+	"hype": true
+}, {
+	"name": "Art - Uzumaki Naruto and Uchiha Sasuke",
+	"link": "_13.jpeg",
+	"type": "art",
+	"attr": ["Amruit Sahoo"],
+	"date": "4th Nov, 2019",
+	"hype": true
+}, {
+	"name": "Art - Uchiha brothers : Itachi and Sasuke",
+	"link": "_14.jpeg",
+	"type": "art",
+	"attr": ["Rachana Verma"],
+	"date": "11th Nov, 2019",
+	"hype": true
+}, {
+	"name": "Art - Zanitsu Agatsuma",
+	"link": "_15.jpeg",
+	"type": "art",
+	"attr": ["Taushif Mohammed"],
+	"date": "3rd Dec, 2019",
+	"hype": true
+}, {
+	"name": "Art - Kirigakure Shinobi Massacre",
+	"link": "_16.jpeg",
+	"type": "art",
+	"attr": ["Arpit Das"],
+	"date": "13th May, 2020",
+	"hype": true
+}, {
+	"name": "Art - Nara Shikamaru",
+	"link": "_17.jpeg",
+	"type": "art",
+	"attr": ["Ashwin Kumar"],
+	"date": "19th Oct, 2020",
+	"hype": true
+}, {
+	"name": "Art - Ichigo Kurosaki",
+	"link": "_18.jpeg",
+	"type": "art",
+	"attr": ["Ashwin Kumar"],
+	"date": "10th Jun, 2021",
+	"hype": true
+}, {
+	"name": "Art - Sukuna",
+	"link": "_19.jpeg",
+	"type": "art",
+	"attr": ["Saptashwa Maity"],
+	"date": "28th Aug, 2021",
+	"hype": true
+}, {
+	"name": "Art - Kaneki Ken",
+	"link": "_20.jpeg",
+	"type": "art",
+	"attr": ["Shreyas Ranveerkar"],
+	"date": "3rd Jul, 2021",
+	"hype": true
 }]
