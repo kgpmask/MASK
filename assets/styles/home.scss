@@ -1,3 +1,7 @@
+@font-face {
+	font-family: 'Cover';
+	src: url('/assets/releases/cover-title-font.ttf') format('truetype');
+}
 .text {
 	text-align: justify;
 	max-width: 700px;
@@ -5,13 +9,32 @@
 .mask-banner {
 	width: 80%;
 	background: var(--red);
-	text-align: center;
+	text-align: left;
 	margin: 20px auto;
 	border-radius: 30px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: space-between;
 }
 .mask-banner-image {
 	width: 120px;
 	height: 120px;
+	left: 5%;
+	display: inline-block;
+	position: relative;
+}
+.mask-banner-text-container {
+	display: inline-block;
+	height: 100%;
+	position: relative;
+	vertical-align: middle;
+}
+.mask-banner-text {
+	color: var(--abyss);
+	font-size: 1.8em;
+	font-weight: bolder;
+	-webkit-text-stroke-width: 1px;
+	-webkit-text-stroke-color: var(--dark-red);
 }
 .flex-container {
 	display: inline-flex;
@@ -136,6 +159,16 @@ h1 {
 	}
 	.text {
 		padding: 30px;
+	}
+	.mask-banner-text-container, .mask-banner-edge {
+		display: none;
+	}
+	.mask-banner {
+		text-align: center;
+		justify-content: center;
+	}
+	.mask-banner-image {
+		left: 0;
 	}
 }
 @media (max-width: 600px) {
