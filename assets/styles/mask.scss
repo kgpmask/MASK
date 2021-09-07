@@ -104,10 +104,14 @@ footer {
 	height: 70px
 }
 
+a.social-link {
+	align-self: center;
+}
+
 img.social-icon {
 	margin: 17px 10px;
 	vertical-align: middle;
-	border-radius: 10px;
+	border-radius: 2px;
 	width: 36px;
 	transition: transform .2s;
 	display: inline-flex;
@@ -115,12 +119,6 @@ img.social-icon {
 
 img.social-icon:hover {
 	transform: scale(1.2);
-}
-
-img#gmail {
-	margin-top: 22px;
-	border-radius: 0px;
-	margin-right: 30px;
 }
 
 div#contact-us {
