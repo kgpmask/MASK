@@ -75,6 +75,7 @@ footer {
 	width: 100%;
 	display: flex;
 	justify-content: flex-end;
+	z-index: 30;
 }
 
 #footer-logo {
@@ -375,6 +376,7 @@ span.navbar-line {
 	transition: all .3s ease-in-out;
 	transform: translateX(100%);
 	text-align: left;
+	z-index: 29;
 }
 
 .slide {
@@ -455,7 +457,7 @@ span.navbar-line {
 	.hamburger-menu, .plate, .plate-bar {
 		display: block;
 	}
-	.burger-open > div:not(.plate, .hamburger-menu) {
+	.burger-open > *:not(.plate, .hamburger-menu) {
 		display: none;
 	}
 }
