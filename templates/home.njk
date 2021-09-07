@@ -261,6 +261,7 @@
 				const VIDEO_TIME = 7000;
 				const vidAmt = {{ vids | length }};
 				function videoSlide (prev, auto) {
+					if (playedVid) playedVid.pauseVideo();
 					const currentIndex = [...vidSliders].findIndex(dot => dot.classList.contains('active-video-link'));
 					let nextIndex = currentIndex + (prev ? -1 : 1);
 					nextIndex = (nextIndex + vidAmt) % vidAmt;
@@ -312,7 +313,7 @@
 			<script>
 				function onYouTubeIframeAPIReady() {
 					players = inputVids.map((vid, j) => {
-						new YT.Player(`vidframe-${j + 1}`, {
+						return new YT.Player(`vidframe-${j + 1}`, {
 							height: '100%',
 							width: '100%',
 							videoId: vid,
@@ -322,7 +323,7 @@
 							events: {
 								'onStateChange': function (event) {
 									if (event.data === YT.PlayerState.PLAYING) {
-										playedVid = true;
+										playedVid = players[j];
 										clearTimeout(videoTimer);
 									}
 								}
