@@ -19,7 +19,7 @@
 		<span id="right-control-button">&#10095;</span>
 	</div></div>-->
 	<div id="pages-container"><div id="pages">
-	{% block coverpage %}<div class="page" id="cover-page"><img id="cover-logo" src="/assets/logo.jpeg"/><br/>Manga & Anime<br/>Society, Kharagpur<br/><br/><div id="cover-page-title">{{ pagetitle }}</div></div>{% endblock %}
+	{% block coverpage %}<div class="page cover-default" id="cover-page"><img id="cover-logo" src="/assets/transparent_logo.png"/><br/>Manga & Anime<br/>Society, Kharagpur<br/><br/><div id="cover-page-title">{{ pagetitle }}</div></div>{% endblock %}
 		{% block article %}
 			<div class="faded">This article hasn't been published yet - stay tuned!</div>
 		{% endblock %}
@@ -167,6 +167,12 @@
 			color: var(--abyss);
 			page-break-before: always;
 		}
+		div.cover-default {
+			width: 420px;
+			max-width: 100%;
+			height: 594px;
+			margin: 0 calc(50% - 210px);
+		}
 		.page:not(#cover-page) {
 			counter-increment: page;
 		}
@@ -187,6 +193,8 @@
 		}
 		#cover-page {
 			background-color: var(--red);
+			background-image: none;
+			scroll-snap-align: center;
 			font-size: 2em;
 			font-weight: bold;
 			font-family: Cover;
@@ -229,6 +237,12 @@
 		.article-content > p {
 			margin-top: 5px;
 			margin-bottom: 20px;
+		}
+		.article-content > small {
+			text-align: center;
+			font-size: 0.7em;
+			width: 100%;
+			display: inline-block;
 		}
 		.article-author {
 			font-size: 0.8em;

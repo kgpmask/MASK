@@ -1,4 +1,10 @@
 [{
+	"name": "Newsletter - Sept I",
+	"link": "/newsletters/2021-09-1",
+	"type": "letter",
+	"date": "11th Sep, 2021",
+	"hype": true
+}, {
 	"name": "Art - Tanjiro Kamado",
 	"link": "0025.webp",
 	"type": "art",
