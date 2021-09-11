@@ -4,6 +4,10 @@
 
 {% set pagecount = 8 %}
 
+{% block coverpage %}
+	<div class="page" id="cover-page"></div>
+{% endblock %}
+
 {% block article %}
 	<div class="page">
 		<div class="article-full">
@@ -473,40 +477,46 @@
 {% block lettercss %}
 	<style>
 		:root {
-			--navy        : #0e1b45;
-			--deep-purple : #392352;
-			--wine        : #f73f75;
-			--violet      : #7c2f64;
-			--pink        : #f04dc8;
-			--purple      : #c03ebb;
+			--black-blue   : #121920;
+			--dark-blue    : #112f3f;
+			--teal         : #006280;
+			--dirty-green  : #4d5843;
+			--dirty-yellow : #a98135;
 		}
 		.page {
-			color: var(--deep-purple);
+			color: var(--dark-blue);
+		}
+		#cover-page {
+			background-image: url(/assets/releases/2021-09-1/cover.webp);
+			background-position: center;
+			background-size: contain;
+			background-repeat: no-repeat;
+			background-color: rgba(0, 0, 0, 0) !important;
 		}
 		.article-full, .article-half, #crossword-left, #crossword-right {
-			scrollbar-color: var(--purple) var(--off-white) !important;
+			scrollbar-color: var(--teal) var(--off-white) !important;
 		}
 		.article-full > h2, .article-half > h2, .article-header {
-			text-shadow: 0 0 2px var(--wine) !important;
+			text-shadow: 0 0 2px var(--teal) !important;
 		}
 		.article-end {
-			background-color: var(--purple);
+			background-color: var(--dirty-green);
 		}
 		.crosswordCellH {
-			background-color: var(--purple) !important;
+			background-color: var(--dirty-yellow) !important;
 		}
 		.wordsearchCellS {
-			background-color: var(--wine) !important;
+			background-color: var(--dirty-yellow) !important;
 		}
 		.found-word {
-			color: var(--wine) !important;
+			color: var(--teal) !important;
 		}
 		.wordsearch-complete, .crossword-complete {
-			color: var(--wine) !important;
+			color: var(--teal) !important;
 		}
 		.spoiler:before {
-			color: var(--wine);
-			background: var(--light-pink);
+			color: var(--teal);
+			background: var(--dirty-yellow);
 		}
 	</style>
 	<link rel="stylesheet" type="text/css" href="/assets/styles/wordsearch.css"/>
