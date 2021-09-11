@@ -83,20 +83,6 @@
 		button.rel:not(:disabled):hover {
 			background-color: var(--middle-gray);
 		}
-		@media (max-width: 500px) {
-			div.controls {
-				width: 200px;
-			}
-			span.buttontext {
-				display: none;
-			}
-			.buttonicon {
-				display: block;
-			}
-			button.rel {
-				width: 50px;
-			}
-		}
 
 		#button-controls {
 			position: absolute;
@@ -313,6 +299,26 @@
 			transform: translateY(-50%) rotateX(80deg);
 			opacity: 0.6;
 			transition: opacity 0.8s linear, transform 0.8s linear;
+		}
+
+		@media (max-width: 500px) {
+			div.controls {
+				width: 200px;
+			}
+			span.buttontext {
+				display: none;
+			}
+			.buttonicon {
+				display: block;
+			}
+			button.rel {
+				width: 50px;
+			}
+			#pages-container {
+				padding-left: 0;
+				padding-right: 0;
+				width: 100%;
+			}
 		}
 	</style>
 	{% block lettercss %}{% endblock %}
