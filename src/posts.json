@@ -1,4 +1,13 @@
 [{
+	"name": "AMV - Symphony",
+	"link": "https://www.youtube.com/watch?v=-CZ7lZFwcsA",
+	"type": "video",
+	"attr": ["Hrishabh Kumar Tundwar"],
+	"date": "12th Sep, 2021",
+	"show": "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/-CZ7lZFwcsA\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>",
+	"page": "_blank",
+	"hype": true
+}, {
 	"name": "Newsletter - Sept I",
 	"link": "/newsletters/2021-09-1",
 	"type": "letter",
