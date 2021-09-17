@@ -35,8 +35,14 @@
 			});
 		}
 	</script>
-	<br/><div style="width:200px;margin:10px auto;background-color:rgba(255,255,255,0.2);border-radius:5px;padding:10px;color:var(--light-gray)">Swipe left/right or use arrow keys to scroll<br/>Best viewed on PC</div><hr class="letter-breaker"/><br/>
+	<br/><div style="width:200px;margin:10px auto;background-color:rgba(255,255,255,0.2);border-radius:5px;padding:10px;color:var(--light-gray);font-size:0.8em;text-align:justify-center">Swipe left/right or click and use arrow keys to scroll<br/>Best viewed on PC</div><hr class="letter-breaker"/><br/>
 	{{ nextprev() }}
+	{% if pdf %}
+		<div class="pdf-link"><a href="/assets/releases/{{ pdf }}" target="_blank" class="undecorated-link">
+			<span class="icon-download" style="font-size:2em;line-height:50%"></span>
+			<span style="position:relative;bottom:0.4em">&nbsp;&nbsp;Download PDF</span>
+		</a></div>
+	{% endif %}
 {% endblock %}
 
 {% block customcss %}
@@ -319,6 +325,14 @@
 				padding-right: 0;
 				width: 100%;
 			}
+		}
+
+		.pdf-link {
+			padding: 20px 20px 15px;
+			display: inline-block;
+			border: 1px solid var(--off-white);
+			border-radius: 5px;
+			margin-bottom: 20px;
 		}
 	</style>
 	{% block lettercss %}{% endblock %}

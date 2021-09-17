@@ -11,7 +11,6 @@
 }
 
 [class^="icon-"], [class*=" icon-"] {
-	/* use !important to prevent issues with browser extensions that change fonts */
 	font-family: 'icomoon' !important;
 	speak: never;
 	font-style: normal;
@@ -20,7 +19,6 @@
 	text-transform: none;
 	line-height: 1;
 
-	/* Better Font Rendering =========== */
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
@@ -36,6 +34,9 @@
 }
 .icon-amv:before {
 	content: "\e913";
+}
+.icon-download:before {
+	content: "\e933";
 }
 .icon-random:before {
 	content: "\ea30";
