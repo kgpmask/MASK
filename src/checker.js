@@ -4,6 +4,6 @@ exports.compare = function compare (puzzle_type, date, obj) {
 	if (!solutions.hasOwnProperty(date)) return -1;
 	const puzzles = solutions[date];
 	if (!puzzles.hasOwnProperty(puzzle_type)) return -1; // use Promises!
-	if (puzzle_type === 'quiz') return puzzles[puzzle_type][obj.index];
+	if (puzzle_type.startsWith('quiz')) return puzzles[puzzle_type][obj.index];
 	return tools.deepEquals(puzzles[puzzle_type], obj);
 };
