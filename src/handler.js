@@ -161,8 +161,7 @@ function handler (app, env, vapid) {
 						break;
 					}
 					default: {
-						console.log("Error: File not found", correct, args, req.body);
-						return res.status(404).send('error');
+						return res.send(correct);
 						break;
 					}
 				}

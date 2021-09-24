@@ -1,4 +1,10 @@
 [{
+	"name": "Newsletter - Sept II",
+	"link": "/newsletters/2021-09-2",
+	"type": "letter",
+	"date": "25th Sep, 2021",
+	"hype": true
+}, {
 	"name": "AMV - Symphony",
 	"link": "https://www.youtube.com/watch?v=-CZ7lZFwcsA",
 	"type": "video",
