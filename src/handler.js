@@ -15,6 +15,8 @@ function handler (app, env, vapid) {
 			});
 			
 		}
+		const GET = req.url.match(/(?<=\?)[^/]+$/);
+		if (GET) req.url = req.url.slice(0, -(GET[0].length + 1));
 		const args = req.url.split('/');
 		args.shift();
 		switch (args[0]) {
