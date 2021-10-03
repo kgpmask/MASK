@@ -13,6 +13,12 @@
 {% block pagecontent %}
 	{{ nextprev() }}
 	<hr class="letter-breaker"/><br/>
+	{% if pdf %}
+		<div class="pdf-link"><a href="/assets/releases/{{ pdf }}" target="_blank" class="undecorated-link">
+			<span class="icon-download" style="font-size:2em;line-height:50%"></span>
+			<span style="position:relative;bottom:0.4em">&nbsp;&nbsp;Download PDF</span>
+		</a></div>
+	{% endif %}
 	<h1>{{ pagetitle }}</h1>
 	<!--<div id="button-controls"><div id="button-box">
 		<span id="left-control-button">&#10094;</span>
@@ -37,12 +43,6 @@
 	</script>
 	<br/><div style="width:200px;margin:10px auto;background-color:rgba(255,255,255,0.2);border-radius:5px;padding:10px;color:var(--light-gray);font-size:0.8em;text-align:justify-center">Swipe left/right or click and use arrow keys to scroll<br/>Best viewed on PC</div><hr class="letter-breaker"/><br/>
 	{{ nextprev() }}
-	{% if pdf %}
-		<div class="pdf-link"><a href="/assets/releases/{{ pdf }}" target="_blank" class="undecorated-link">
-			<span class="icon-download" style="font-size:2em;line-height:50%"></span>
-			<span style="position:relative;bottom:0.4em">&nbsp;&nbsp;Download PDF</span>
-		</a></div>
-	{% endif %}
 {% endblock %}
 
 {% block customcss %}
