@@ -1,4 +1,10 @@
 [{
+	"name": "Newsletter - Oct I",
+	"link": "/newsletters/2021-10-1",
+	"type": "letter",
+	"date": "9th Oct, 2021",
+	"hype": true
+}, {
 	"name": "Newsletter - Sept II",
 	"link": "/newsletters/2021-09-2",
 	"type": "letter",
