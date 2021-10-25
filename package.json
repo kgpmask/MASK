@@ -1,6 +1,6 @@
 {
   "name": "mask",
-  "version": "1.8.1",
+  "version": "1.9.0",
   "description": "Website for MASK",
   "main": "./src/index.js",
   "scripts": {
