@@ -1,14 +1,95 @@
 [{
+	"name": "AMV - Unstoppable",
+	"link": "https://www.youtube.com/watch?v=jYNqbGxeb6g",
+	"type": "video",
+	"attr": ["Priyank Mundra"],
+	"date": "4th Dec, 2021",
+	"show": "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/jYNqbGxeb6g\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>",
+	"page": "_blank",
+	"hype": true
+}, {
+	"name": "Music - Lost My Pieces",
+	"link": "https://www.youtube.com/watch?v=6-PNURaK8uY",
+	"type": "video",
+	"attr": ["Parth Mane"],
+	"date": "31st Nov, 2021",
+	"show": "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/6-PNURaK8uY\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>",
+	"page": "_blank",
+	"hype": true
+}, {
+	"name": "AMV - I'm a Mess",
+	"link": "https://www.youtube.com/watch?v=BOT8ge4YHu4",
+	"type": "video",
+	"attr": ["Kunal Gupta"],
+	"date": "26th Nov, 2021",
+	"show": "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/BOT8ge4YHu4\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>",
+	"page": "_blank",
+	"hype": true
+}, {
+	"name": "AMV - A Thousand Years",
+	"link": "https://www.youtube.com/watch?v=WbNgavtMjIA",
+	"type": "video",
+	"attr": ["Hrishabh Kumar Tundwar"],
+	"date": "21st Nov, 2021",
+	"show": "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/WbNgavtMjIA\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>",
+	"page": "_blank",
+	"hype": true
+}, {
+	"name": "AMV - Payphone",
+	"link": "https://www.youtube.com/watch?v=AILjMeocuV0",
+	"type": "video",
+	"attr": ["Abhibhu Prakash"],
+	"date": "14th Nov, 2021",
+	"show": "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/AILjMeocuV0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>",
+	"page": "_blank",
+	"hype": true
+}, {
+	"name": "AMV - Changes",
+	"link": "https://www.youtube.com/watch?v=Bws8w3F_yKA",
+	"type": "video",
+	"attr": ["Ayush Kumar"],
+	"date": "6th Nov, 2021",
+	"show": "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/Bws8w3F_yKA\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>",
+	"page": "_blank",
+	"hype": true
+}, {
 	"name": "Newsletter - Oct II",
 	"link": "/newsletters/2021-10-2",
 	"type": "letter",
 	"date": "23rd Oct, 2021",
 	"hype": true
 }, {
+	"name": "AMV - Six Feet Under",
+	"link": "https://www.youtube.com/watch?v=p4WyHaQd-K0",
+	"type": "video",
+	"attr": ["Spandan Halder"],
+	"date": "9th Oct, 2021",
+	"show": "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/p4WyHaQd-K0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>",
+	"page": "_blank",
+	"hype": true
+}, {
 	"name": "Newsletter - Oct I",
 	"link": "/newsletters/2021-10-1",
 	"type": "letter",
 	"date": "9th Oct, 2021",
+	"hype": true
+}, {
+	"name": "AMV - Hide and Seek",
+	"link": "https://www.youtube.com/watch?v=E9-DiS6MFwc",
+	"type": "video",
+	"attr": ["Rishabh Jain"],
+	"date": "1st Oct, 2021",
+	"show": "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/E9-DiS6MFwc\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>",
+	"page": "_blank",
+	"hype": true
+}, {
+	"name": "AMV - Rockstar",
+	"link": "https://www.youtube.com/watch?v=PecVuz0a6c0",
+	"type": "video",
+	"attr": ["Ayush Kumar"],
+	"date": "25th Sep, 2021",
+	"show": "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/PecVuz0a6c0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>",
+	"page": "_blank",
 	"hype": true
 }, {
 	"name": "Newsletter - Sept II",
