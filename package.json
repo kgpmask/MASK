@@ -23,9 +23,12 @@
   },
   "homepage": "https://github.com/mask-tech/MASK#readme",
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.17.3",
+    "mongoose": "^6.2.2",
+    "mysql": "^2.18.1",
     "nunjucks": "^3.2.3",
     "sass": "^1.38.1",
+    "sqlite3": "^5.0.2",
     "web-push": "^3.4.5"
   },
   "devDependencies": {

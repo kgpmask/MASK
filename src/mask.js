@@ -4,7 +4,7 @@ const nunjucks = require('nunjucks');
 const path = require('path');
 const tools = require('./tools.js');
 const webpush = require('web-push');
-
+const database = require("../database/database.js");
 const { PORT, DEBUG } = require('./config.js');
 const appHandler = require('./handler.js');
 
