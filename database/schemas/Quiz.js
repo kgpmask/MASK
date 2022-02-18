@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const quizSchema = new mongoose.Schema({
 	types : [String], // can be converted to an object
+	quizName : String,
 	maxScore : Number,
 	maxTime : Number,
 	dateTime : Date,

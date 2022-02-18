@@ -1,0 +1,14 @@
+{% extends "_base.njk" %}
+
+{% set thispage = 'login' %}
+{% set pagetitle = 'Login' %}
+
+{% block pagecontent %}
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+{% endblock %}
+{# <script src="https://apis.google.com/js/platform.js" async defer></script> #}
+{#   <!-- Google Sign-In -->
+  <meta name="google-signin-client_id" content="{{client_id}}">
+
+  <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+  <script src="https://apis.google.com/js/api.js"></script> #}
