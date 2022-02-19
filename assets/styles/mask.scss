@@ -48,6 +48,14 @@ h1 {
 	margin: 30px;
 }
 
+a, a.visited {
+	color: inherit;
+}
+
+a:hover {
+	color: white;
+}
+
 .text {
 	color: var(--light-gray);
 	background-color: rgba(255, 255, 255, 0.2);
