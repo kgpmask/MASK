@@ -11,6 +11,27 @@ function nth (num) {
 	}
 }
 
+function xmur3 (str) {
+	for (var i = 0, h = 1779033703 ^ str.length; i < str.length; i++) {
+		h = Math.imul(h ^ str.charCodeAt(i), 3432918353);
+		h = h << 13 | h >>> 19;
+	} return function() {
+		h = Math.imul(h ^ (h >>> 16), 2246822507);
+		h = Math.imul(h ^ (h >>> 13), 3266489909);
+		return (h ^= h >>> 16) >>> 0;
+	}
+}
+
+function fakeRandom (seed) {
+	let a = xmur3(seed)();
+	return function () {
+		let t = a += 0x6D2B79F5;
+		t = Math.imul(t ^ t >>> 15, t | 1);
+		t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+		return ((t ^ t >>> 14) >>> 0) / 4294967296;
+	}
+}
+
 function handler (app, env, vapid) {
 	function get (req, res) {
 		function notFound (custom404, ctx) {
@@ -131,6 +152,7 @@ function handler (app, env, vapid) {
 				break;
 			}
 			case 'quizzes': case 'events': {
+				const QUIZZES = require('./quiz.json');
 				const months = [
 					'-', 'January', 'February', 'March', 'April', 'May', 'June',
 					'July', 'August', 'September', 'October', 'November', 'December'
@@ -161,7 +183,22 @@ function handler (app, env, vapid) {
 					if (index === -1) return notFound('quizzes_404.njk', { years: renderYears.reverse() });
 					const filepath = path.join(__dirname, '../templates', 'quizzes', quizzes[index]);
 					const adjs = [quizzes[index - 1]?.slice(0, -5), quizzes[index + 1]?.slice(0, -5), quizzes[index].slice(0, -5)];
-					return res.render(filepath, { adjs, questions: });
+					const QUIZ = QUIZZES[args[1]];
+					const rand = fakeRandom("TOKEN_GOES_HERE");
+					function shuffle (array) {
+						for (let i = array.length - 1; i > 0; i--) {
+							let j = Math.floor(rand() * (i + 1));
+							[array[i], array[j]] = [array[j], array[i]];
+						}
+						return array;
+					}
+					const questions = [];
+					QUIZ.random.forEach(randDef => {
+						const keys = shuffle(Object.keys(randDef.from)).slice(0, randDef.amount);
+						questions.push(...keys.map(key => randDef.from[key]).map(key => QUIZ.questions[key]));
+					});
+					console.log(questions);
+					return res.render(filepath, { adjs, questions });
 				}).catch(err => console.log(err) || notFound());
 				break;
 			}
