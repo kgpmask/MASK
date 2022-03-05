@@ -161,7 +161,7 @@ function handler (app, env, vapid) {
 					if (index === -1) return notFound('quizzes_404.njk', { years: renderYears.reverse() });
 					const filepath = path.join(__dirname, '../templates', 'quizzes', quizzes[index]);
 					const adjs = [quizzes[index - 1]?.slice(0, -5), quizzes[index + 1]?.slice(0, -5), quizzes[index].slice(0, -5)];
-					return res.render(filepath, { adjs });
+					return res.render(filepath, { adjs, questions: });
 				}).catch(err => console.log(err) || notFound());
 				break;
 			}

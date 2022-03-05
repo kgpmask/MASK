@@ -1,0 +1,14 @@
+{
+	"2021-03-05": {
+		"questions": [{
+			"q": [{ "val": "Guess the anime character: ", "type": "string" }, { "val": "/assets/quiz/images/20210305_.png", "type": "image" }],
+			"options": [
+				[{ "val": "image", "type": "image" }],
+				[{ "val": "image", "type": "image" }],
+				[{ "val": "image", "type": "image" }],
+				[{ "val": "image", "type": "image" }]
+			],
+			"solution": 2
+		}]
+	}
+}
