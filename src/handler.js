@@ -195,10 +195,14 @@ function handler (app, env, vapid) {
 					const questions = [];
 					QUIZ.random.forEach(randDef => {
 						const keys = shuffle(Object.keys(randDef.from)).slice(0, randDef.amount);
-						questions.push(...keys.map(key => randDef.from[key]).map(key => QUIZ.questions[key]));
+						questions.push(...keys.map(key => randDef.from[key]).map(key => {
+							const q = JSON.parse(JSON.stringify(QUIZ.questions[key]));
+							delete q.solution;
+							return q;
+						}));
 					});
-					console.log(questions);
-					return res.render(filepath, { adjs, questions });
+					shuffle(questions);
+					return res.render(filepath, { adjs, questions: JSON.stringify(questions) });
 				}).catch(err => console.log(err) || notFound());
 				break;
 			}

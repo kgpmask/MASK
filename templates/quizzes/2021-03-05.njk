@@ -12,22 +12,22 @@
 			
 		</div>
 		<div class="quiz">
-			<div class="qs"></div>
+			<div class="qs" id="question-el"></div>
 			<div class="option">
-				<input type="radio" id="html" name="option1" value="HTML">
-				<label  id="option1" for="html"></label><br>
+				<input type="radio" id="answer-1" name="option" value="HTML"/>
+				<label id="option1" for="answer-1"></label><br/>
 			</div>
 			<div class="option">
-				<input type="radio" id="html" name="option2" value="HTML">
-				<label  id="option2" for="html"></label><br>
+				<input type="radio" id="answer-2" name="option" value="HTML"/>
+				<label id="option2" for="answer-2"></label><br/>
 			</div>
 			<div class="option">
-				<input type="radio" id="html" name="option3" value="HTML">
-				<label  id="option3" for="html"></label><br>
+				<input type="radio" id="answer-3" name="option" value="HTML"/>
+				<label id="option3" for="answer-3"></label><br/>
 			</div>
 			<div class="option">
-				<input type="radio" id="html" name="option4" value="HTML">
-				<label  id="option4" for="html"></label><br>
+				<input type="radio" id="answer-4" name="option" value="HTML"/>
+				<label id="option4" for="answer-4"></label><br/>
 			</div>
 		</div>
 		
@@ -48,23 +48,20 @@
 		let qsSeen = 0;
 		let countLeftPerQs = 30;
 		let next = false;
-		let qs = [["85127557_p0.png", "85127557_p0.png", "85127557_p0.png", "85127557_p0.png", "85127557_p0.png"], ["85127557_p0.png", "85127557_p0.png", "85127557_p0.png", "85127557_p0.png", "85127557_p0.png"], ["85127557_p0.png", "85127557_p0.png", "85127557_p0.png", "85127557_p0.png", "85127557_p0.png"]];
+		const qs = {{ questions | safe }};
+		// let qs = [["85127557_p0.png", "85127557_p0.png", "85127557_p0.png", "85127557_p0.png", "85127557_p0.png"], ["85127557_p0.png", "85127557_p0.png", "85127557_p0.png", "85127557_p0.png", "85127557_p0.png"], ["85127557_p0.png", "85127557_p0.png", "85127557_p0.png", "85127557_p0.png", "85127557_p0.png"]];
 		function removeStartbtn () {
 			document.getElementById("startbtn").style.display = "none";
 			document.getElementById("nextbtn").style.display = "block";
 			startQuiz(countLeftPerQs);
 		}
 		function startQuiz (totaltimeleft) {
-			console.log("inside startquiz");
 			if (next) totaltimeleft = countLeftPerQs;
 			setTimeout(() => {
 				countDown(totaltimeleft);
 			}, 1000);
 		}
-		
-		function nextQs () {
-			next = true;
-		}
+		const nextQs = () => next = true;
 		async function countDown (totaltimeleft) {
 			if (totaltimeleft != -1) document.getElementById("count").innerText = totaltimeleft;
 			if (totaltimeleft === 0 && qsSeen === 10) {
@@ -87,7 +84,19 @@
 			}
 		}
 		async function setNewQuestions (index) {
-			if (qs[index][0].includes(".png")) {
+			const Q = qs[index];
+			function generateHTML (components) {
+				return components.map(component => {
+					switch (component.type) {
+						case 'image': return `<img src="${component.val}" style="${component.style || ''}"/>`;
+						case 'mp3': return `<audio src="${component.val}" type="audio/mpeg"> </audio>`;
+						default: return component.val;
+					}
+				}).join('');
+			}
+			document.getElementById("question-el").innerHTML = generateHTML(Q.q);
+			for (let i = 1; i <= 4; i++) document.getElementById(`option${i}`).innerHTML = generateHTML(Q.options[i - 1]);
+			/*if (qs[index][0].includes(".png")) {
 				const img = document.createElement("img");
 				img.src = qs[index][0];
 
@@ -124,7 +133,7 @@
 				document.getElementById("option2").innerText = qs[index][2];
 				document.getElementById("option3").innerText = qs[index][3];
 				document.getElementById("option4").innerText = qs[index][4];
-			}
+			}*/
 		}
 	</script>
 {% endblock %}
