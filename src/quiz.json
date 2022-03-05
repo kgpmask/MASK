@@ -32,7 +32,7 @@
 			"solution": 2
 		},
 		{
-			"q": [{ "val": "Guess the anime character.", "type": "string" }, { "val": "../assets/quiz/images/20220305_17_0.png", "type": "image"}],
+			"q": [{ "val": "Guess the anime character.", "type": "string" }, { "val": "../assets/quiz/images/20220305_17_0.png", "type": "image", "style": "height:100px;width:100px"}],
 			"options": [
 				[{ "val": "Diablo [How Not to Summon a Demon Lord]", "type": "string" }],
 				[{ "val": "Ainz Ooal Gown [Overlord]", "type": "string" }],
