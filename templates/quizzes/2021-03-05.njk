@@ -1,0 +1,129 @@
+{% extends "_base.njk" %}
+
+{% set thispage = 'events' %}
+{% set pagetitle = 'Events' %}
+
+{% block pagecontent %}
+	<div class="quizContainer">
+		<div class="countDown">
+			<button id="startbtn" onclick="removeStartbtn()" >start</button>
+			<button id="nextbtn" onclick="nextQs()">Next</button>
+			<div id="count"></div>
+			
+		</div>
+		<div class="quiz">
+			<div class="qs"></div>
+			<div class="option">
+				<input type="radio" id="html" name="option1" value="HTML">
+				<label  id="option1" for="html"></label><br>
+			</div>
+			<div class="option">
+				<input type="radio" id="html" name="option2" value="HTML">
+				<label  id="option2" for="html"></label><br>
+			</div>
+			<div class="option">
+				<input type="radio" id="html" name="option3" value="HTML">
+				<label  id="option3" for="html"></label><br>
+			</div>
+			<div class="option">
+				<input type="radio" id="html" name="option4" value="HTML">
+				<label  id="option4" for="html"></label><br>
+			</div>
+		</div>
+		
+
+	</div>
+{% endblock %}
+
+
+{% block customcss %}
+	<link rel="stylesheet" type="text/css" href="/assets/styles/icons.css"/>
+	<style>
+		
+	</style>
+{% endblock %}
+
+{% block customjs %}
+	<script>
+		let qsSeen = 0;
+		let countLeftPerQs = 30;
+		let next = false;
+		let qs = [["85127557_p0.png", "85127557_p0.png", "85127557_p0.png", "85127557_p0.png", "85127557_p0.png"], ["85127557_p0.png", "85127557_p0.png", "85127557_p0.png", "85127557_p0.png", "85127557_p0.png"], ["85127557_p0.png", "85127557_p0.png", "85127557_p0.png", "85127557_p0.png", "85127557_p0.png"]];
+		function removeStartbtn () {
+			document.getElementById("startbtn").style.display = "none";
+			document.getElementById("nextbtn").style.display = "block";
+			startQuiz(countLeftPerQs);
+		}
+		function startQuiz (totaltimeleft) {
+			console.log("inside startquiz");
+			if (next) totaltimeleft = countLeftPerQs;
+			setTimeout(() => {
+				countDown(totaltimeleft);
+			}, 1000);
+		}
+		
+		function nextQs () {
+			next = true;
+		}
+		async function countDown (totaltimeleft) {
+			if (totaltimeleft != -1) document.getElementById("count").innerText = totaltimeleft;
+			if (totaltimeleft === 0 && qsSeen === 10) {
+				document.getElementById("count").innerText = "Time is Up!";
+			} else {
+				if (totaltimeleft == 30 || totaltimeleft === -1) {
+					qsSeen++;
+					totaltimeleft = countLeftPerQs;
+					if (qsSeen < 11) {
+						await setNewQuestions((qsSeen - 1) % 3);
+						next = false;
+						startQuiz(totaltimeleft - 1);
+					} else {
+						document.getElementsByClassName('quiz')[0].innerText = "Thanx for attempting the quiz! :)";
+					}
+				} else {
+					startQuiz(totaltimeleft - 1);
+				}
+			}
+		}
+		async function setNewQuestions (index) {
+			if (qs[index][0].includes(".png")) {
+				const img = document.createElement("img");
+				img.src = qs[index][0];
+
+				document.getElementsByClassName("qs")[0].innerText = img;
+				document.getElementById("option1").innerText = qs[index][1];
+				document.getElementById("option2").innerText = qs[index][2];
+				document.getElementById("option3").innerText = qs[index][3];
+				document.getElementById("option4").innerText = qs[index][4];
+			} else if (qs[index][0].includes(".mp3")) {
+				const audio = document.createElement("audio");
+				audio.src = qs[index][0];
+				audio.type = "audio/mpeg";
+
+				document.getElementsByClassName("qs")[0].innerText = "<audio controls src = \"" + qs[index][0] + "\" type = \"audio/mpeg\"> </audio>";
+				document.getElementById("option1").innerText = qs[index][1];
+				document.getElementById("option2").innerText = qs[index][2];
+				document.getElementById("option3").innerText = qs[index][3];
+				document.getElementById("option4").innerText = qs[index][4];
+			} else if (qs[index][1].includes(".png")) {
+				const img = document.createElement("img");
+
+				document.getElementsByClassName("qs")[0].innerText = qs[index][0];
+				img.src = qs[index][1];
+				document.getElementById("option1").innerText = img;
+				img.src = qs[index][2];
+				document.getElementById("option2").innerText = img;
+				img.src = qs[index][3];
+				document.getElementById("option3").innerText = img;
+				img.src = qs[index][4];
+				document.getElementById("option4").innerText = img;
+			} else {
+				document.getElementsByClassName("qs")[0].innerText = qs[index][0];
+				document.getElementById("option1").innerText = qs[index][1];
+				document.getElementById("option2").innerText = qs[index][2];
+				document.getElementById("option3").innerText = qs[index][3];
+				document.getElementById("option4").innerText = qs[index][4];
+			}
+		}
+	</script>
+{% endblock %}
