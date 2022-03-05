@@ -49,7 +49,6 @@
 		let countLeftPerQs = 30;
 		let next = false;
 		const qs = {{ questions | safe }};
-		// let qs = [["85127557_p0.png", "85127557_p0.png", "85127557_p0.png", "85127557_p0.png", "85127557_p0.png"], ["85127557_p0.png", "85127557_p0.png", "85127557_p0.png", "85127557_p0.png", "85127557_p0.png"], ["85127557_p0.png", "85127557_p0.png", "85127557_p0.png", "85127557_p0.png", "85127557_p0.png"]];
 		function removeStartbtn () {
 			document.getElementById("startbtn").style.display = "none";
 			document.getElementById("nextbtn").style.display = "block";
@@ -90,50 +89,13 @@
 					switch (component.type) {
 						case 'image': return `<img src="${component.val}" style="${component.style || ''}"/>`;
 						case 'mp3': return `<audio src="${component.val}" type="audio/mpeg"> </audio>`;
+						case 'title': return `<h3>${component.val}</h3>`;
 						default: return component.val;
 					}
 				}).join('');
 			}
 			document.getElementById("question-el").innerHTML = generateHTML(Q.q);
 			for (let i = 1; i <= 4; i++) document.getElementById(`option${i}`).innerHTML = generateHTML(Q.options[i - 1]);
-			/*if (qs[index][0].includes(".png")) {
-				const img = document.createElement("img");
-				img.src = qs[index][0];
-
-				document.getElementsByClassName("qs")[0].innerText = img;
-				document.getElementById("option1").innerText = qs[index][1];
-				document.getElementById("option2").innerText = qs[index][2];
-				document.getElementById("option3").innerText = qs[index][3];
-				document.getElementById("option4").innerText = qs[index][4];
-			} else if (qs[index][0].includes(".mp3")) {
-				const audio = document.createElement("audio");
-				audio.src = qs[index][0];
-				audio.type = "audio/mpeg";
-
-				document.getElementsByClassName("qs")[0].innerText = "<audio controls src = \"" + qs[index][0] + "\" type = \"audio/mpeg\"> </audio>";
-				document.getElementById("option1").innerText = qs[index][1];
-				document.getElementById("option2").innerText = qs[index][2];
-				document.getElementById("option3").innerText = qs[index][3];
-				document.getElementById("option4").innerText = qs[index][4];
-			} else if (qs[index][1].includes(".png")) {
-				const img = document.createElement("img");
-
-				document.getElementsByClassName("qs")[0].innerText = qs[index][0];
-				img.src = qs[index][1];
-				document.getElementById("option1").innerText = img;
-				img.src = qs[index][2];
-				document.getElementById("option2").innerText = img;
-				img.src = qs[index][3];
-				document.getElementById("option3").innerText = img;
-				img.src = qs[index][4];
-				document.getElementById("option4").innerText = img;
-			} else {
-				document.getElementsByClassName("qs")[0].innerText = qs[index][0];
-				document.getElementById("option1").innerText = qs[index][1];
-				document.getElementById("option2").innerText = qs[index][2];
-				document.getElementById("option3").innerText = qs[index][3];
-				document.getElementById("option4").innerText = qs[index][4];
-			}*/
 		}
 	</script>
 {% endblock %}
