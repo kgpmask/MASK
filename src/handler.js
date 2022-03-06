@@ -292,7 +292,7 @@ function handler (app, env, vapid) {
 				});
 				shuffle(solutions);
 				const answers = Array.from({ length: solutions.length }).map((_, i) => ~~(req.body[`answer-${i + 1}`]));
-				const points = [answers.filter((ans, i) => ans === solutions[i]).length, solutions.length];
+				const points = [answers.filter((ans, i) => ~~ans === ~~solutions[i]).length, solutions.length];
 				res.render(path.join(__dirname, '../templates', 'quiz_success.njk'), { score: points[0], totalScore: points[1] });
 				const dbh = require('../database/database_handler');
 				dbh.updateUserQuizRecord({ userId: req.user.userId, quizId, score: points[0], time: Date.now() });
