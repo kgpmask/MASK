@@ -1,7 +1,7 @@
 {
-	"2021-03-05": {
+	"2022-03-05": {
 		"questions": [{
-			"q": [{ "val": "Anime: Rising of the Shield Hero<br/>Which Kingdom expresses demi-human supremacy?", "type": "string" }],
+			"q": [{ "val": "Anime: Rising of the Shield Hero", "type": "title" }, { "val": "Which Kingdom expresses demi-human supremacy?", "type": "string" }],
 			"options": [
 				[{ "val": "Reiki", "type": "string" }],
 				[{ "val": "Shieldfreeden", "type": "string" }],
@@ -11,7 +11,7 @@
 			"solution": 2
 		},
 		{
-			"q": [{ "val": "Anime: That Time I Got Reincarnated as a Slime<br/>What was Beretta's Evolutionary Stage when it was summoned?", "type": "string" }],
+			"q": [{ "val": "Anime: That Time I Got Reincarnated as a Slime", "type": "title" }, { "val": "What was Beretta's Evolutionary Stage when it was summoned?", "type": "string" }],
 			"options": [
 				[{ "val": "Demon Peer", "type": "string" }],
 				[{ "val": "Demon General", "type": "string" }],
@@ -21,7 +21,7 @@
 			"solution": 2
 		},
 		{
-			"q": [{ "val": "Anime: Overlord<br/>Which Supreme Being's Armour was used by Ainz against Shaltear?", "type": "string" }],
+			"q": [{ "val": "Anime: Overlord", "type": "title" }, { "val": "Which Supreme Being's Armour was used by Ainz against Shaltear?", "type": "string" }],
 			"options": [
 				[{ "val": "Flat-footed", "type": "string" }],
 				[{ "val": "Touch me", "type": "string" }],
@@ -32,7 +32,7 @@
 			"solution": 2
 		},
 		{
-			"q": [{ "val": "Guess the anime character.", "type": "string" }, { "val": "../assets/quiz/images/20220305_17_0.png", "type": "image", "style": "height:100px;width:100px"}],
+			"q": [{ "val": "Guess the anime character.", "type": "string" }, { "val": "/assets/quiz/images/20220305_17_0.png", "type": "image", "style": "height:100px;width:100px"}],
 			"options": [
 				[{ "val": "Diablo [How Not to Summon a Demon Lord]", "type": "string" }],
 				[{ "val": "Ainz Ooal Gown [Overlord]", "type": "string" }],
@@ -43,7 +43,7 @@
 			"solution": 2
 		},
 		{
-			"q": [{ "val": "Anime: Mushoku Tensei: Jobless Reincarnation<br/>Who was hired to teach 'Rudeus Greyrat' about magic by his parents?", "type": "string" }],
+			"q": [{ "val": "Anime: Mushoku Tensei: Jobless Reincarnation", "type": "title" }, { "val": "Who was hired to teach 'Rudeus Greyrat' about magic by his parents?", "type": "string" }],
 			"options": [
 				[{ "val": "Eris Boreas Greyrat", "type": "string" }],
 				[{ "val": "Roxy Migurdia", "type": "string" }],
@@ -54,7 +54,7 @@
 			"solution": 2
 		},
 		{
-			"q": [{ "val": "Anime: The Devil is a Part-timer!<br/>What’s the name of ‘The grand inquisitor of the Church’ in Ente Isla?", "type": "string" }],
+			"q": [{ "val": "Anime: The Devil is a Part-timer!", "type": "title" }, { "val": "What’s the name of ‘The grand inquisitor of the Church’ in Ente Isla?", "type": "string" }],
 			"options": [
 				[{ "val": "Shiro Ashiya", "type": "string" }],
 				[{ "val": "Sadao Maou", "type": "string" }],
@@ -65,7 +65,7 @@
 			"solution": 2
 		},
 		{
-			"q": [{ "val": "Anime: Mushoku  Tensei<br/>How old was the main character when he died and reincarnated as Rudeus ?", "type": "string" }],
+			"q": [{ "val": "Anime: Mushoku  Tensei", "type": "title" }, { "val": "How old was the main character when he died and reincarnated as Rudeus ?", "type": "string" }],
 			"options": [
 				[{ "val": "29", "type": "string" }],
 				[{ "val": "32", "type": "string" }],
@@ -76,7 +76,7 @@
 			"solution": 2
 		},
 		{
-			"q": [{ "val": "Anime: Mushoku Tensei<br/>The Asura Kingdom is located in which part of the Central Continent?", "type": "string" }],
+			"q": [{ "val": "Anime: Mushoku Tensei", "type": "title" }, { "val": "The Asura Kingdom is located in which part of the Central Continent?", "type": "string" }],
 			"options": [
 				[{ "val": "North", "type": "string" }],
 				[{ "val": "South", "type": "string" }],
@@ -87,7 +87,7 @@
 			"solution": 2
 		},
 		{
-			"q": [{ "val": "Anime:  Mushoku Tensei<br/>What is Ghislaine's current Sword rank?", "type": "string" }],
+			"q": [{ "val": "Anime:  Mushoku Tensei", "type": "title" }, { "val": "What is Ghislaine's current Sword rank?", "type": "string" }],
 			"options": [
 				[{ "val": "Advance", "type": "string" }],
 				[{ "val": "King", "type": "string" }],
@@ -98,7 +98,7 @@
 			"solution": 2
 		},
 		{
-			"q": [{ "val": "Anime: The Rising of the Shield Hero<br/>Who has support and healing infinity?", "type": "string" }],
+			"q": [{ "val": "Anime: The Rising of the Shield Hero", "type": "title" }, { "val": "Who has support and healing infinity?", "type": "string" }],
 			"options": [
 				[{ "val": "Princess Malty", "type": "string" }],
 				[{ "val": "Naofumi", "type": "string" }],
@@ -109,7 +109,7 @@
 			"solution": 2
 		},
 		{
-			"q": [{ "val": "Anime: The Rising of the Shield Hero<br/>Who betrayed the Shield hero ?", "type": "string" }],
+			"q": [{ "val": "Anime: The Rising of the Shield Hero", "type": "title" }, { "val": "Who betrayed the Shield hero ?", "type": "string" }],
 			"options": [
 				[{ "val": "Raphtalia", "type": "string" }],
 				[{ "val": "Princess Melty", "type": "string" }],
@@ -120,7 +120,7 @@
 			"solution": 2
 		},
 		{
-			"q": [{ "val": "Anime: Sword Art Online<br/>What is the Last Weapon that Illfang the Kobold Lord, first floor boss uses when its health bar depletes a third of its capacity?", "type": "string" }],
+			"q": [{ "val": "Anime: Sword Art Online", "type": "title" }, { "val": "What is the Last Weapon that Illfang the Kobold Lord, first floor boss uses when its health bar depletes a third of its capacity?", "type": "string" }],
 			"options": [
 				[{ "val": "Talwar", "type": "string" }],
 				[{ "val": "Katana", "type": "string" }],
@@ -131,7 +131,7 @@
 			"solution": 2
 		},
 		{
-			"q": [{ "val": "Anime: Sword Art Online<br/>Pick the odd one out:-", "type": "string" }],
+			"q": [{ "val": "Anime: Sword Art Online", "type": "title" }, { "val": "Pick the odd one out:", "type": "string" }],
 			"options": [
 				[{ "val": "Dark Repulsor", "type": "string" }],
 				[{ "val": "The Night Sky Sword", "type": "string" }],
@@ -142,7 +142,7 @@
 			"solution": 2
 		},
 		{
-			"q": [{ "val": "Anime: No Game No Life<br/>What is the Race Emblem of Warbeasts race ?", "type": "string" }],
+			"q": [{ "val": "Anime: No Game No Life", "type": "title" }, { "val": "What is the Race Emblem of Warbeasts race ?", "type": "string" }],
 			"options": [
 				[{ "val": "Queen", "type": "string" }],
 				[{ "val": "Pawn", "type": "string" }],
@@ -153,7 +153,7 @@
 			"solution": 2
 		},
 		{
-			"q": [{ "val": "Anime: Konosuba<br/>How many General in Konosuba does Demon King have ?", "type": "string" }],
+			"q": [{ "val": "Anime: Konosuba", "type": "title" }, { "val": "How many Generals in Konosuba does the Demon King have ?", "type": "string" }],
 			"options": [
 				[{ "val": "5", "type": "string" }],
 				[{ "val": "8", "type": "string" }],
@@ -164,7 +164,7 @@
 			"solution": 2
 		},
 		{
-			"q": [{ "val": "Anime: No Game No Life<br/>Which of the following Ixseeds were not created by the Old Deus?", "type": "string" }],
+			"q": [{ "val": "Anime: No Game No Life", "type": "title" }, { "val": "Which of the following Ixseeds were not created by the Old Deus?", "type": "string" }],
 			"options": [
 				[{ "val": "Fairy", "type": "string" }],
 				[{ "val": "Flügel", "type": "string" }],
@@ -177,16 +177,16 @@
 		{
 			"q": [{ "val": "Pick the odd one out.", "type": "string" }],
 			"options": [
-				[{ "val": "../assets/quiz/images/20220305_16_1.png", "type": "image" }],
-				[{ "val": "../assets/quiz/images/20220305_16_2.jpg", "type": "image" }],
-				[{ "val": "../assets/quiz/images/20220305_16_3.jpg", "type": "image" }],
-				[{ "val": "../assets/quiz/images/20220305_16_4.jpg", "type": "image" }]
+				[{ "val": "/assets/quiz/images/20220305_16_1.png", "type": "image" }],
+				[{ "val": "/assets/quiz/images/20220305_16_2.jpg", "type": "image" }],
+				[{ "val": "/assets/quiz/images/20220305_16_3.jpg", "type": "image" }],
+				[{ "val": "/assets/quiz/images/20220305_16_4.jpg", "type": "image" }]
 			],
 			
 			"solution": 2
 		},
 		{
-			"q": [{ "val": "Anime: The Devil is a Part-timer!<br/>Which one of the following characters reside in this house?", "type": "string" }, { "val": "../assets/quiz/images/20220305_18_0.png", "type": "image"}],
+			"q": [{ "val": "Anime: The Devil is a Part-timer!", "type": "title" }, { "val": "Which one of the following characters resides in this house?", "type": "string" }, { "val": "/assets/quiz/images/20220305_18_0.png", "type": "image"}],
 			"options": [
 				[{ "val": "Olba Meyer", "type": "string" }],
 				[{ "val": "The hero", "type": "string" }],
@@ -197,7 +197,7 @@
 			"solution": 2
 		},
 		{
-			"q": [{ "val": "Anime: Mushoku Tensei: Jobless Reincarnation<br/>The character in the above image belongs to which demon race?", "type": "string" }, { "val": "../assets/quiz/images/20220305_19_0.jpg", "type": "image"}],
+			"q": [{ "val": "Anime: Mushoku Tensei: Jobless Reincarnation", "type": "title" }, { "val": "The character in the above image belongs to which demon race?", "type": "string" }, { "val": "/assets/quiz/images/20220305_19_0.jpg", "type": "image"}],
 			"options": [
 				[{ "val": "Chimera", "type": "string" }],
 				[{ "val": "Superds", "type": "string" }],
@@ -208,16 +208,16 @@
 			"solution": 2
 		},
 		{
-			"q": [{ "val": "Anime: The Devil is a Part-timer!<br/>Which of the following images is not related to the character ‘Sariel’?", "type": "string" }],
+			"q": [{ "val": "Anime: The Devil is a Part-timer!", "type": "title" }, { "val": "Which of the following images is not related to the character ‘Sariel’?", "type": "string" }],
 			"options": [
-				[{ "val": "../assets/quiz/images/20220305_20_1.png", "type": "image" }],
-				[{ "val": "../assets/quiz/images/20220305_20_2.png", "type": "image" }],
-				[{ "val": "../assets/quiz/images/20220305_20_3.png", "type": "image" }],
-				[{ "val": "../assets/quiz/images/20220305_20_4.png", "type": "image" }]
+				[{ "val": "/assets/quiz/images/20220305_20_1.png", "type": "image" }],
+				[{ "val": "/assets/quiz/images/20220305_20_2.png", "type": "image" }],
+				[{ "val": "/assets/quiz/images/20220305_20_3.png", "type": "image" }],
+				[{ "val": "/assets/quiz/images/20220305_20_4.png", "type": "image" }]
 			],
 			
 			"solution": 2
 		}],
-		"random": [{ "amount": 3, "from": [1, 4, 5, 8, 9] }, { "amount": 7, "from": [0, 2, 3, 6, 7, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19] }]
+		"random": [{ "amount": 2, "from": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19] }]
 	}
 }

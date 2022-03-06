@@ -1,38 +1,8 @@
 const fs = require('fs').promises;
 const path = require('path');
 
-function nth (num) {
-	const lastDigit = num % 10;
-	switch (lastDigit) {
-		case 1: return num + 'st';
-		case 2: return num + 'nd';
-		case 3: return num + 'rd';
-		default: return num + 'th';
-	}
-}
-
-function xmur3 (str) {
-	for (var i = 0, h = 1779033703 ^ str.length; i < str.length; i++) {
-		h = Math.imul(h ^ str.charCodeAt(i), 3432918353);
-		h = h << 13 | h >>> 19;
-	} return function() {
-		h = Math.imul(h ^ (h >>> 16), 2246822507);
-		h = Math.imul(h ^ (h >>> 13), 3266489909);
-		return (h ^= h >>> 16) >>> 0;
-	};
-}
-
-function fakeRandom (seed) {
-	let a = xmur3(seed)();
-	return function () {
-		let t = a += 0x6D2B79F5;
-		t = Math.imul(t ^ t >>> 15, t | 1);
-		t ^= t + Math.imul(t ^ t >>> 7, t | 61);
-		return ((t ^ t >>> 14) >>> 0) / 4294967296;
-	};
-}
-
 require('./login.js');
+const dbh = require('../database/database_handler.js');
 
 function handler (app, env, vapid) {
 
@@ -55,6 +25,7 @@ function handler (app, env, vapid) {
 				notFound(false, ctx);
 			});
 		}
+		const loggedIn = res.locals.loggedIn = Boolean(req.user);
 		const GET = req.url.match(/(?<=\?)[^/]+$/);
 		if (GET) req.url = req.url.slice(0, -(GET[0].length + 1));
 		const args = req.url.split('/');
@@ -88,14 +59,12 @@ function handler (app, env, vapid) {
 				break;
 			}
 			case 'login': {
-				/*if (args[1] === 'federated' && args[2] === 'google' && !args[3]) {
-					console.log(req, req.user);
-					passport.authenticate('google');
-				}*/
+				if (loggedIn) return res.redirect('/');
 				res.render(path.join(__dirname, '../templates', 'login.njk'));
 				break;
 			}
 			case 'logout': {
+				if (!loggedIn) return res.redirect('/login');
 				req.logout();
 				res.redirect('/');
 				break;
@@ -173,39 +142,65 @@ function handler (app, env, vapid) {
 				}).catch(err => console.log(err) || notFound());
 				break;
 			}
+			case 'profile': {
+				if (!loggedIn) return res.redirect('/');
+				dbh.getUser(req.user.userId).then(user => {
+					return res.render(path.join(__dirname, '../templates', 'profile.njk'), {
+						name: req.user.name,
+						picture: req.user.picture,
+						points: user.points,
+						quizzes: Object.keys(user.quizData).map(stamp => {
+							const months = [
+								'-', 'January', 'February', 'March', 'April', 'May', 'June',
+								'July', 'August', 'September', 'October', 'November', 'December'
+							];
+							const [year, month, date] = stamp.split('-');
+							return `${Tools.nth(~~date)} ${months[~~month]}`;
+						}),
+						test: [1, 2, 3, 4]
+					});
+				});
+				break;
+			}
 			case 'quizzes': case 'events': {
-				const QUIZZES = require('./quiz.json');
-				const months = [
-					'-', 'January', 'February', 'March', 'April', 'May', 'June',
-					'July', 'August', 'September', 'October', 'November', 'December'
-				];
-				fs.readdir(path.join(__dirname, '../templates/quizzes')).then(quizzes => {
+				if (!loggedIn) {
+					req.session.returnTo = req.url;
+					return res.render(path.join(__dirname, '../templates', 'quiz_login.njk'));
+				}
+				dbh.getUser(req.user.userId).then(user => {
+					const quizzed = Object.keys(user.quizData);
+					const QUIZZES = require('./quiz.json');
+					const months = [
+						'-', 'January', 'February', 'March', 'April', 'May', 'June',
+						'July', 'August', 'September', 'October', 'November', 'December'
+					];
+					const quizzes = Object.keys(QUIZZES);
 					const years = {};
 					quizzes.sort();
 					quizzes.forEach(quiz => {
-						const [year, month, date] = quiz.slice(0, -4).split('-');
+						const [year, month, date] = quiz.split('-');
 						if (!years[year]) years[year] = { title: year, months: {} };
 						if (!years[year].months[~~month]) years[year].months[~~month] = { title: months[~~month], issues: [] };
 						years[year].months[~~month].issues.push({
-							title: `${nth(~~date)} ${months[~~month]}`,
-							href: quiz.slice(0, -4)
+							title: `${Tools.nth(~~date)} ${months[~~month]}`,
+							href: quiz
 						});
 					});
 					const renderYears = Object.values(years);
 					renderYears.forEach(year => year.months = Object.values(year.months).reverse());
 					if (!args[1]) {
-						const LOGGED_IN = true;
-						if (!LOGGED_IN) return res.render(__dirname, '../templates', 'quiz_login.njk');
 						return res.render(path.join(__dirname, '../templates', 'events.njk'), {
+							quizzed,
 							years: renderYears.reverse()
 						});
 					}
-					const index = quizzes.indexOf(args[1] + '.njk');
+					const index = quizzes.indexOf(args[1]);
 					if (index === -1) return notFound('quizzes_404.njk', { years: renderYears.reverse() });
-					const filepath = path.join(__dirname, '../templates', 'quizzes', quizzes[index]);
-					const adjs = [quizzes[index - 1]?.slice(0, -5), quizzes[index + 1]?.slice(0, -5), quizzes[index].slice(0, -5)];
+					if (quizzed.includes(args[1])) return res.render(path.join(__dirname, '../templates', 'quiz_attempted.njk'));
+					const filepath = path.join(__dirname, '../templates', '_quiz.njk');
+					const adjs = [quizzes[index - 1], quizzes[index + 1], quizzes[index]];
 					const QUIZ = QUIZZES[args[1]];
-					const rand = fakeRandom("TOKEN_GOES_HERE");
+					const rand = Tools.fakeRandom(req.user.userId);
 					function shuffle (array) {
 						for (let i = array.length - 1; i > 0; i--) {
 							let j = Math.floor(rand() * (i + 1));
@@ -223,8 +218,8 @@ function handler (app, env, vapid) {
 						}));
 					});
 					shuffle(questions);
-					return res.render(filepath, { adjs, questions: JSON.stringify(questions) });
-				}).catch(err => console.log(err) || notFound());
+					return res.render(filepath, { adjs, questions: JSON.stringify(questions), qAmt: questions.length, id: args[1] });
+				});
 				break;
 			}
 			case 'rebuild': {
@@ -274,6 +269,33 @@ function handler (app, env, vapid) {
 						break;
 					}
 				}
+				break;
+			}
+			case 'quizzes': {
+				// Regenerate questions
+				const rand = Tools.fakeRandom(req.user.userId);
+				function shuffle (array) {
+					for (let i = array.length - 1; i > 0; i--) {
+						let j = Math.floor(rand() * (i + 1));
+						[array[i], array[j]] = [array[j], array[i]];
+					}
+					return array;
+				}
+				const quizId = req.body.quizId;
+				const solutions = [];
+				const QUIZZES = require('./quiz.json');
+				if (!QUIZZES.hasOwnProperty(quizId)) return res.status(400).send('Invalid Quiz ID');
+				const QUIZ = QUIZZES[quizId];
+				QUIZ.random.forEach(randDef => {
+					const keys = shuffle(Object.keys(randDef.from)).slice(0, randDef.amount);
+					solutions.push(...keys.map(key => QUIZ.questions[randDef.from[key]].solution));
+				});
+				shuffle(solutions);
+				const answers = Array.from({ length: solutions.length }).map((_, i) => ~~(req.body[`answer-${i + 1}`]));
+				const points = [answers.filter((ans, i) => ans === solutions[i]).length, solutions.length];
+				res.render(path.join(__dirname, '../templates', 'quiz_success.njk'), { score: points[0], totalScore: points[1] });
+				const dbh = require('../database/database_handler');
+				dbh.updateUserQuizRecord({ userId: req.user.userId, quizId, score: points[0], time: Date.now() });
 				break;
 			}
 			default:

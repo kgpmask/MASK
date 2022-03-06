@@ -1,9 +1,3 @@
-global.MongoConfig = {
-	db: 'mask_tech_test',
-	host: 'localhost',
-	port: 27017
-};
-
 const cookieParser = require('cookie-parser');
 const csrf = require('csurf');
 const express = require('express');
@@ -12,8 +6,9 @@ const fs = require('fs').promises;
 const nunjucks = require('nunjucks');
 global.passport = require('passport');
 const path = require('path');
-const tools = require('./tools.js');
+global.Tools = require('./tools.js');
 const webpush = require('web-push');
+global.MongoConfig = require('./config.js').MongoConfig;
 const database = require("../database/database.js");
 const { PORT, DEBUG } = require('./config.js');
 const appHandler = require('./handler.js');
@@ -48,7 +43,7 @@ app.use(session({
 	secret: 'SaegusaMayumi',
 	resave: false, // don't save session if unmodified
 	saveUninitialized: false, // don't create session until something stored
-	store: MongoStore.create({mongoUrl:`mongodb://${MongoConfig.host}:${MongoConfig.port}/${MongoConfig.db}`})
+	store: MongoStore.create({ mongoUrl: `mongodb://${MongoConfig.host}:${MongoConfig.port}/${MongoConfig.db}` })
 }));
 app.use(csrf());
 app.use(passport.authenticate('session'));

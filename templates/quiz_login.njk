@@ -1,6 +1,6 @@
 {% extends "_base.njk" %}
 
-{% set thispage = 'login' %}
+{% set thispage = 'events' %}
 {% set pagetitle = 'Login' %}
 
 {% block pagecontent %}
@@ -9,5 +9,5 @@
 			<b>{{ msg }}</b>
 		{% endfor %}
 	{% endif %}
-	<a class="button google" href="/login/federated/google">Sign in with Google</a>
+	To participate in our quizzes, you'll need to <a class="button google" href="/login/federated/google">sign in with Google</a>.
 {% endblock %}

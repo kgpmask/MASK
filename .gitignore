@@ -1,5 +1,6 @@
 /node_modules
 /src/vapid.json
+.env
 
 # testing template, test changes here
 /templates/test*.njk

@@ -1,0 +1,55 @@
+{% extends "_base.njk" %}
+
+{% set thispage = 'profile' %}
+{% set pagetitle = 'Profile' %}
+
+{% block pagecontent %}
+	<div class="container">
+		<div class="text">
+			<div class="flexer">
+				<img src="{{ picture }}" height="100" width="100" style="display:inline-block"/>
+				<span style="font-weight:bold;font-size:1.5em;">{{ name }}</span>
+			</div>
+			<h3>Points: {{ points }}</h3>
+			<br/><br/>
+			<div>Quizzes attempted: {{ quizzes | join(', ') }}</div>
+		</div>
+	</div>
+	<a href="/logout"><button class="rel">Logout</button></a>
+{% endblock %}
+
+{% block customcss %}
+	<style>
+		.flexer {
+			display: flex;
+			align-items: center;
+			margin: auto;
+			justify-content: center;
+		}
+		.flexer>img, .flexer>div {
+			margin: 20px;
+		}
+		.flexer>img {
+			border-radius: 20px;
+			border: 2px solid;
+		}
+		button.rel {
+			width: 100px;
+			height: 30px;
+			background-color: var(--gray);
+			color: var(--off-white);
+			border: 2px solid var(--ghost-gray);
+			border-radius: 5px;
+			cursor: pointer;
+		}
+		button.rel:disabled {
+			background-color: var(--tinted-gray);
+			border: 1px solid var(--gray);
+			color: var(--ghost-gray);
+			cursor: default;
+		}
+		button.rel:not(:disabled):hover {
+			background-color: var(--middle-gray);
+		}
+	</style>
+{% endblock %}

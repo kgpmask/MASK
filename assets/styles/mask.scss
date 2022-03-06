@@ -425,18 +425,23 @@ span.navbar-line {
 	background-color: var(--tinted-gray);
 	border-color: var(--tinted-gray);
 	color: var(--tinted-gray);
-	margin-left: 7%;
+	margin-left: 5.5%;
 	margin-right: 10%;
 }
 
 .hamburger-menu #most-bottom {
 	position: absolute;
-	bottom: 70px;
+	bottom: 75px;
 }
 
 .hamburger-menu #almost-bottom {
 	position: absolute;
-	bottom: 110px;
+	bottom: 115px;
+}
+
+.hamburger-menu #top-bottom {
+	position: absolute;
+	bottom: 155px;
 }
 
 .border-bottom {
@@ -447,12 +452,16 @@ span.navbar-line {
 	color: var(--gray);
 }
 
-#lower-border {
+.lower-border {
 	position: absolute;
-	bottom: 110px;
-	margin-left: 7%;
+	bottom: 115px;
+	margin-left: 5.5%;
 	margin-right: 10%;
 	width: 83%;
+}
+
+.lower-border-upper {
+	bottom: 155px;
 }
 
 .lettuce {
