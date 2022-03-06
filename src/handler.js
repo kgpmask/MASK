@@ -1,6 +1,37 @@
 const fs = require('fs').promises;
 const path = require('path');
 
+function nth (num) {
+	const lastDigit = num % 10;
+	switch (lastDigit) {
+		case 1: return num + 'st';
+		case 2: return num + 'nd';
+		case 3: return num + 'rd';
+		default: return num + 'th';
+	}
+}
+
+function xmur3 (str) {
+	for (var i = 0, h = 1779033703 ^ str.length; i < str.length; i++) {
+		h = Math.imul(h ^ str.charCodeAt(i), 3432918353);
+		h = h << 13 | h >>> 19;
+	} return function() {
+		h = Math.imul(h ^ (h >>> 16), 2246822507);
+		h = Math.imul(h ^ (h >>> 13), 3266489909);
+		return (h ^= h >>> 16) >>> 0;
+	};
+}
+
+function fakeRandom (seed) {
+	let a = xmur3(seed)();
+	return function () {
+		let t = a += 0x6D2B79F5;
+		t = Math.imul(t ^ t >>> 15, t | 1);
+		t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+		return ((t ^ t >>> 14) >>> 0) / 4294967296;
+	};
+}
+
 function handler (app, env, vapid) {
 	function get (req, res) {
 		function notFound (custom404, ctx) {
@@ -13,7 +44,6 @@ function handler (app, env, vapid) {
 			}).catch(() => {
 				notFound(false, ctx);
 			});
-			
 		}
 		const GET = req.url.match(/(?<=\?)[^/]+$/);
 		if (GET) req.url = req.url.slice(0, -(GET[0].length + 1));
@@ -92,18 +122,18 @@ function handler (app, env, vapid) {
 				];
 				fs.readdir(path.join(__dirname, '../templates/newsletters')).then(letters => {
 					const years = {};
-					letters.sort(); // Windows isn't automatically sorted
+					letters.sort();
 					letters.forEach(letter => {
 						const [year, month, num] = letter.slice(0, -4).split('-');
 						if (!years[year]) years[year] = { title: year, months: {} };
-						if (!years[year].months[month]) years[year].months[month] = { title: months[~~month], issues: [] };
-						years[year].months[month].issues.push({
+						if (!years[year].months[~~month]) years[year].months[~~month] = { title: months[~~month], issues: [] };
+						years[year].months[~~month].issues.push({
 							title: ['-', 'First', 'Second', 'Special'][~~num],
 							href: letter.slice(0, -4)
 						});
 					});
 					const renderYears = Object.values(years);
-					renderYears.forEach(year => year.months = Object.values(year.months));
+					renderYears.forEach(year => year.months = Object.values(year.months).reverse());
 					if (!args[1]) return res.render(path.join(__dirname, '../templates', 'newsletters.njk'), {
 						years: renderYears.reverse()
 					});
@@ -117,6 +147,65 @@ function handler (app, env, vapid) {
 					const filepath = path.join(__dirname, '../templates', 'newsletters', letters[index]);
 					const adjs = [letters[index - 1]?.slice(0, -4), letters[index + 1]?.slice(0, -4), letters[index].slice(0, -4)];
 					return res.render(filepath, { adjs });
+				}).catch(err => console.log(err) || notFound());
+				break;
+			}
+			case 'quizzes': case 'events': {
+				const QUIZZES = require('./quiz.json');
+				const months = [
+					'-', 'January', 'February', 'March', 'April', 'May', 'June',
+					'July', 'August', 'September', 'October', 'November', 'December'
+				];
+				fs.readdir(path.join(__dirname, '../templates/quizzes')).then(quizzes => {
+					const years = {};
+					quizzes.sort();
+					quizzes.forEach(quiz => {
+						const [year, month, date] = quiz.slice(0, -4).split('-');
+						if (!years[year]) years[year] = { title: year, months: {} };
+						if (!years[year].months[~~month]) years[year].months[~~month] = { title: months[~~month], issues: [] };
+						years[year].months[~~month].issues.push({
+							title: `${nth(~~date)} ${months[~~month]}`,
+							href: quiz.slice(0, -4)
+						});
+					});
+					const renderYears = Object.values(years);
+					renderYears.forEach(year => year.months = Object.values(year.months).reverse());
+					if (!args[1]) {
+						const LOGGED_IN = true;
+						if (!LOGGED_IN) return res.render(__dirname, '../templates', 'quiz_login.njk');
+						return res.render(path.join(__dirname, '../templates', 'events.njk'), {
+							years: renderYears.reverse()
+						});
+					}
+					if (args[1] === 'random') {
+						const referer = req.headers.referer?.split('/').pop();
+						const randQuiz = quizzes.filter(quiz => quiz.slice(0, -5) !== referer).random().slice(0, -5);
+						return res.redirect(`/quizzes/${randQuiz}`);
+					}
+					const index = quizzes.indexOf(args[1] + '.njk');
+					if (index === -1) return notFound('quizzes_404.njk', { years: renderYears.reverse() });
+					const filepath = path.join(__dirname, '../templates', 'quizzes', quizzes[index]);
+					const adjs = [quizzes[index - 1]?.slice(0, -5), quizzes[index + 1]?.slice(0, -5), quizzes[index].slice(0, -5)];
+					const QUIZ = QUIZZES[args[1]];
+					const rand = fakeRandom("TOKEN_GOES_HERE");
+					function shuffle (array) {
+						for (let i = array.length - 1; i > 0; i--) {
+							let j = Math.floor(rand() * (i + 1));
+							[array[i], array[j]] = [array[j], array[i]];
+						}
+						return array;
+					}
+					const questions = [];
+					QUIZ.random.forEach(randDef => {
+						const keys = shuffle(Object.keys(randDef.from)).slice(0, randDef.amount);
+						questions.push(...keys.map(key => randDef.from[key]).map(key => {
+							const q = JSON.parse(JSON.stringify(QUIZ.questions[key]));
+							delete q.solution;
+							return q;
+						}));
+					});
+					shuffle(questions);
+					return res.render(filepath, { adjs, questions: JSON.stringify(questions) });
 				}).catch(err => console.log(err) || notFound());
 				break;
 			}
