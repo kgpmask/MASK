@@ -7,11 +7,10 @@ const dbh = require('../database/database_handler');
 passport.use(new GoogleStrategy({
 	clientID: process.env['GOOGLE_CLIENT_ID'],
 	clientSecret: process.env['GOOGLE_CLIENT_SECRET'],
-	callbackURL: '/oauth2/redirect/google',
+	callbackURL: 'https://mask-kgp.club/oauth2/redirect/google',
 	scope: [ 'profile' ],
 	state: true
-},
-function (accessToken, refreshToken, profile, cb) {
+}, function (accessToken, refreshToken, profile, cb) {
 	console.log(accessToken, refreshToken, profile, cb, '^^^^^');
 	dbh.createNewUser(profile).then((userResponse) => {
 		cb(null, userResponse);
@@ -21,12 +20,12 @@ function (accessToken, refreshToken, profile, cb) {
 }));
 
 // Login
-passport.serializeUser(function(user, cb) {
+passport.serializeUser(function (user, cb) {
 	cb(null, user._id);
 });
 // Logout
-passport.deserializeUser(function(id, cb) {
-	dbh.logoutUser(id).then((userRes) => {
+passport.deserializeUser(function (id, cb) {
+	dbh.logoutUser(id).then(userRes => {
 		cb(null, userRes);
 	}).catch((userErr) => {
 		cb(userErr, false);
