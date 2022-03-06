@@ -10,7 +10,7 @@ const userQuizDataSchema = new mongoose.Schema({
 // module.exports = mongoose.model('Quiz', quizSchema);
 // module.exports = mongoose.model('UserQuiz', UserQuizDataSchema);
 
-module.exports = {UserQuizData: mongoose.model('UserQuizData', userQuizDataSchema)}
+module.exports = { UserQuizData: mongoose.model('UserQuizData', userQuizDataSchema) };
 
 /*
 A | { points: 15, time: ISO1 }

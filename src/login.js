@@ -5,8 +5,8 @@ const dbh = require('../database/database_handler');
 // Configure the login strategy
 // profile: id, displayName, name = {familyName, givenName}, emails = [{value, varified}], photos = [{value: json.picture}]
 passport.use(new GoogleStrategy({
-	clientID: "492788221693-fau95a69a9otgms9b3djc75lois5r94k.apps.googleusercontent.com",//process.env['GOOGLE_CLIENT_ID'],
-	clientSecret: "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",//process.env['GOOGLE_CLIENT_SECRET'],
+	clientID: process.env['GOOGLE_CLIENT_ID'],
+	clientSecret: process.env['GOOGLE_CLIENT_SECRET'],
 	callbackURL: '/oauth2/redirect/google',
 	scope: [ 'profile' ],
 	state: true

@@ -11,12 +11,7 @@
 			"SwitchCase": 1
 		}],
 		"max-len": ["error", 135],
-		"no-tabs": [
-			"error",
-			{
-				"allowIndentationTabs": true
-			}
-		],
+		"no-tabs": 0,
 		"semi": ["error", "always"],
 		"semi-spacing": [
 			"error",
