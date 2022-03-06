@@ -38,9 +38,6 @@
 
 {% block customcss %}
 	<link rel="stylesheet" type="text/css" href="/assets/styles/icons.css"/>
-	<style>
-		
-	</style>
 {% endblock %}
 
 {% block customjs %}
@@ -75,7 +72,7 @@
 						startQuiz(totaltimeleft - 1);
 					} else {
 						// submit
-						document.getElementsByClassName('quiz')[0].innerText = "Thanx for attempting the quiz! :)";
+						document.getElementsByClassName('quiz')[0].innerText = "Thanks for attempting the quiz! :)";
 					}
 				} else {
 					startQuiz(totaltimeleft - 1);

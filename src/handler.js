@@ -44,7 +44,6 @@ function handler (app, env, vapid) {
 			}).catch(() => {
 				notFound(false, ctx);
 			});
-			
 		}
 		const GET = req.url.match(/(?<=\?)[^/]+$/);
 		if (GET) req.url = req.url.slice(0, -(GET[0].length + 1));
@@ -171,9 +170,13 @@ function handler (app, env, vapid) {
 					});
 					const renderYears = Object.values(years);
 					renderYears.forEach(year => year.months = Object.values(year.months).reverse());
-					if (!args[1]) return res.render(path.join(__dirname, '../templates', 'events.njk'), {
-						years: renderYears.reverse()
-					});
+					if (!args[1]) {
+						const LOGGED_IN = true;
+						if (!LOGGED_IN) return res.render(__dirname, '../templates', 'quiz_login.njk');
+						return res.render(path.join(__dirname, '../templates', 'events.njk'), {
+							years: renderYears.reverse()
+						});
+					}
 					if (args[1] === 'random') {
 						const referer = req.headers.referer?.split('/').pop();
 						const randQuiz = quizzes.filter(quiz => quiz.slice(0, -5) !== referer).random().slice(0, -5);
