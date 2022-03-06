@@ -3,7 +3,7 @@
 {% set thispage = 'events' %}
 {% set pagetitle = 'Events' %}
 
-{% block pagecontent %}
+{% block pagecontent %}{# 
 	{% block extrainfo %}{% endblock %}
 	<div id="accordion-container">
 	{% for year in years %}
@@ -22,7 +22,8 @@
 			{% endfor %}
 		</div></div>
 	{% endfor %}
-	</div>
+	</div> #}
+	<div>(In progress)</div>
 {% endblock %}
 
 {% block customcss %}

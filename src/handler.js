@@ -32,7 +32,17 @@ function fakeRandom (seed) {
 	};
 }
 
+require('./login.js');
+
 function handler (app, env, vapid) {
+
+	// Pre-routing
+	app.get('/login/federated/google', passport.authenticate('google'));
+	app.get('/oauth2/redirect/google', passport.authenticate('google', {
+		successReturnToOrRedirect: '/',
+		failureRedirect: '/login'
+	}));
+
 	function get (req, res) {
 		function notFound (custom404, ctx) {
 			res.status(404).render(path.join(__dirname, '../templates', custom404 || '404.njk'), ctx);
@@ -75,6 +85,19 @@ function handler (app, env, vapid) {
 					if (err) notFound();
 					else res.sendFile(filepath);
 				}).catch(() => notFound());
+				break;
+			}
+			case 'login': {
+				/*if (args[1] === 'federated' && args[2] === 'google' && !args[3]) {
+					console.log(req, req.user);
+					passport.authenticate('google');
+				}*/
+				res.render(path.join(__dirname, '../templates', 'login.njk'));
+				break;
+			}
+			case 'logout': {
+				req.logout();
+				res.redirect('/');
 				break;
 			}
 			case 'members': {
@@ -176,11 +199,6 @@ function handler (app, env, vapid) {
 						return res.render(path.join(__dirname, '../templates', 'events.njk'), {
 							years: renderYears.reverse()
 						});
-					}
-					if (args[1] === 'random') {
-						const referer = req.headers.referer?.split('/').pop();
-						const randQuiz = quizzes.filter(quiz => quiz.slice(0, -5) !== referer).random().slice(0, -5);
-						return res.redirect(`/quizzes/${randQuiz}`);
 					}
 					const index = quizzes.indexOf(args[1] + '.njk');
 					if (index === -1) return notFound('quizzes_404.njk', { years: renderYears.reverse() });

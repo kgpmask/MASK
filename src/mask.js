@@ -1,15 +1,25 @@
+global.MongoConfig = {
+	db: 'mask_tech_test',
+	host: 'localhost',
+	port: 27017
+};
+
+const cookieParser = require('cookie-parser');
+const csrf = require('csurf');
 const express = require('express');
+const session = require('express-session');
 const fs = require('fs').promises;
 const nunjucks = require('nunjucks');
+global.passport = require('passport');
 const path = require('path');
 const tools = require('./tools.js');
 const webpush = require('web-push');
-
+const database = require("../database/database.js");
 const { PORT, DEBUG } = require('./config.js');
 const appHandler = require('./handler.js');
+const MongoStore = require('connect-mongo');
 
 global.app = express();
-app.use(express.json());
 
 let vapid;
 
@@ -29,6 +39,29 @@ try {
 const env = nunjucks.configure(path.join(__dirname, '../templates'), {
 	express: app,
 	noCache: DEBUG
+});
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(session({
+	secret: 'SaegusaMayumi',
+	resave: false, // don't save session if unmodified
+	saveUninitialized: false, // don't create session until something stored
+	store: MongoStore.create({mongoUrl:`mongodb://${MongoConfig.host}:${MongoConfig.port}/${MongoConfig.db}`})
+}));
+app.use(csrf());
+app.use(passport.authenticate('session'));
+app.use(function (req, res, next) {
+	const msgs = req.session.messages || [];
+	res.locals.messages = msgs;
+	res.locals.hasMessages = !!msgs.length;
+	req.session.messages = [];
+	next();
+});
+app.use(function (req, res, next) {
+	res.locals.csrfToken = req.csrfToken();
+	next();
 });
 
 appHandler(app, env, vapid);
