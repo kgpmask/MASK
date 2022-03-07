@@ -4,10 +4,10 @@
 {% set pagetitle = 'Login' %}
 
 {% block pagecontent %}
-	{% if hasMessages %}
-		{% for msg in messages %}
-			<b>{{ msg }}</b>
-		{% endfor %}
-	{% endif %}
-	To participate in our quizzes, you'll need to <a class="button google" href="/login/federated/google">sign in with Google</a>.
+	{# <br/>
+	<div class="text">
+		Feel free to check out people's progress on the <a style="font-size:1.2em;" href="/leaderboard">Leaderboard</a>!
+	</div> #}
+	<br/><br/>
+	To participate in our quizzes, you'll need to <b><a class="button google" href="/login/federated/google">sign in with Google</a></b>.
 {% endblock %}

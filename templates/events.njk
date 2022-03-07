@@ -5,6 +5,11 @@
 
 {% block pagecontent %}
 	{% block extrainfo %}{% endblock %}
+	{# <br/>
+	<div class="text">
+		Feel free to check out people's progress on the <a style="font-size:1.2em;" href="/leaderboard">Leaderboard</a>!
+	</div> #}
+	<br/><br/>
 	<h1>Quizzes</h1>
 	<div id="accordion-container">
 	{% for year in years %}
@@ -15,7 +20,7 @@
 					<h3 style="color:var(--off-white)">{{ month.title }}</h3>
 					<div class="monthposts">
 						{% for issue in month.issues %}
-							<div class="flex-link"><a class="issue-link{{ ' disabled' if issue.href in quizzed }}" href="/quizzes/{{ issue.href }}">{{ issue.title }}</a></div>
+							<div class="flex-link"{{ ' title=Attempted' if issue.href in quizzed }}><a class="issue-link{{ ' disabled' if issue.href in quizzed }}" href="/quizzes/{{ issue.href }}">{{ issue.title }}</a></div>
 						{% endfor %}
 					</div>
 				</div>
@@ -90,6 +95,10 @@
 
 		.flex-link {
 			display: inline-flex;
+		}
+
+		.issue-link.disabled {
+			text-decoration: line-through;
 		}
 
 		div h3 {

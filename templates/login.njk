@@ -4,10 +4,5 @@
 {% set pagetitle = 'Login' %}
 
 {% block pagecontent %}
-	{% if hasMessages %}
-		{% for msg in messages %}
-			<b>{{ msg }}</b>
-		{% endfor %}
-	{% endif %}
-	<a class="button google" href="/login/federated/google">Sign in with Google</a>
+	<a class="undecorated-link" href="/login/federated/google"><img src="/assets/icons/google_sign_in.png" height="46"/></a>
 {% endblock %}
