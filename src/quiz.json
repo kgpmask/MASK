@@ -32,7 +32,7 @@
 			"solution": 3
 		},
 		{
-			"q": [{ "val": "Guess the anime character.", "type": "text" }, { "val": "/assets/quiz/images/20220305_17_0.png", "type": "image", "style": "height:100px;width:100px"}],
+			"q": [{ "val": "Guess the anime character.", "type": "text" }, { "val": "/assets/quiz/images/20220305_17_0.png", "type": "image", "style": "height:59px;width:256px"}],
 			"options": [
 				[{ "val": "Diablo [How Not to Summon a Demon Lord]", "type": "text" }],
 				[{ "val": "Ainz Ooal Gown [Overlord]", "type": "text" }],
@@ -177,16 +177,16 @@
 		{
 			"q": [{ "val": "Pick the odd one out.", "type": "text" }],
 			"options": [
-				[{ "val": "/assets/quiz/images/20220305_16_1.png", "type": "image" }],
-				[{ "val": "/assets/quiz/images/20220305_16_2.jpg", "type": "image" }],
-				[{ "val": "/assets/quiz/images/20220305_16_3.jpg", "type": "image" }],
-				[{ "val": "/assets/quiz/images/20220305_16_4.jpg", "type": "image" }]
+				[{ "val": "/assets/quiz/images/20220305_16_1.png", "type": "image", "style": "height:256;width:173px"}],
+				[{ "val": "/assets/quiz/images/20220305_16_2.jpg", "type": "image", "style": "height:256px;width:256px"}],
+				[{ "val": "/assets/quiz/images/20220305_16_3.jpg", "type": "image", "style": "height:256px;width:165px"}],
+				[{ "val": "/assets/quiz/images/20220305_16_4.jpg", "type": "image", "style": "height:238px;width:224px"}]
 			],
 			
 			"solution": 3
 		},
 		{
-			"q": [{ "val": "Anime: The Devil is a Part-timer!", "type": "title" }, { "val": "Which one of the following characters resides in this house?", "type": "text" }, { "val": "/assets/quiz/images/20220305_18_0.png", "type": "image"}],
+			"q": [{ "val": "Anime: The Devil is a Part-timer!", "type": "title" }, { "val": "Which one of the following characters resides in this house?", "type": "text" }, { "val": "/assets/quiz/images/20220305_18_0.png", "type": "image", "style": "height:132px;width:256px" }],
 			"options": [
 				[{ "val": "Olba Meyer", "type": "text" }],
 				[{ "val": "The hero", "type": "text" }],
@@ -197,7 +197,7 @@
 			"solution": 2
 		},
 		{
-			"q": [{ "val": "Anime: Mushoku Tensei: Jobless Reincarnation", "type": "title" }, { "val": "The character in the above image belongs to which demon race?", "type": "text" }, { "val": "/assets/quiz/images/20220305_19_0.jpg", "type": "image"}],
+			"q": [{ "val": "Anime: Mushoku Tensei: Jobless Reincarnation", "type": "title" }, { "val": "The character in the above image belongs to which demon race?", "type": "text" }, { "val": "/assets/quiz/images/20220305_19_0.jpg", "type": "image", "style": "height:144px;width:256px" }],
 			"options": [
 				[{ "val": "Chimera", "type": "text" }],
 				[{ "val": "Superds", "type": "text" }],
@@ -210,10 +210,10 @@
 		{
 			"q": [{ "val": "Anime: The Devil is a Part-timer!", "type": "title" }, { "val": "Which of the following images is not related to the character ‘Sariel’?", "type": "text" }],
 			"options": [
-				[{ "val": "/assets/quiz/images/20220305_20_1.png", "type": "image" }],
-				[{ "val": "/assets/quiz/images/20220305_20_2.png", "type": "image" }],
-				[{ "val": "/assets/quiz/images/20220305_20_3.png", "type": "image" }],
-				[{ "val": "/assets/quiz/images/20220305_20_4.png", "type": "image" }]
+				[{ "val": "/assets/quiz/images/20220305_20_1.png", "type": "image", "style": "height:256px;width:256px"}],
+				[{ "val": "/assets/quiz/images/20220305_20_2.png", "type": "image", "style": "height:123px;width:256px"}],
+				[{ "val": "/assets/quiz/images/20220305_20_3.png", "type": "image", "style": "height:247px;width:256px"}],
+				[{ "val": "/assets/quiz/images/20220305_20_4.png", "type": "image", "style": "height:168px;width:299px"}]
 			],
 			
 			"solution": 4
