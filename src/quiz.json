@@ -32,7 +32,7 @@
 			"solution": 3
 		},
 		{
-			"q": [{ "val": "Guess the anime character.", "type": "text" }, { "val": "/assets/quiz/images/20220305_17_0.png", "type": "image", "style": "height:59px;width:256px"}],
+			"q": [{ "val": "Guess the anime character.", "type": "text" }, { "val": "/assets/quiz/images/20220305_17_0.png", "type": "image", "style": "height:59px;width:256px" }],
 			"options": [
 				[{ "val": "Diablo [How Not to Summon a Demon Lord]", "type": "text" }],
 				[{ "val": "Ainz Ooal Gown [Overlord]", "type": "text" }],
@@ -177,10 +177,10 @@
 		{
 			"q": [{ "val": "Pick the odd one out.", "type": "text" }],
 			"options": [
-				[{ "val": "/assets/quiz/images/20220305_16_1.png", "type": "image", "style": "height:256;width:173px"}],
-				[{ "val": "/assets/quiz/images/20220305_16_2.jpg", "type": "image", "style": "height:256px;width:256px"}],
-				[{ "val": "/assets/quiz/images/20220305_16_3.jpg", "type": "image", "style": "height:256px;width:165px"}],
-				[{ "val": "/assets/quiz/images/20220305_16_4.jpg", "type": "image", "style": "height:238px;width:224px"}]
+				[{ "val": "/assets/quiz/images/20220305_16_1.png", "type": "image", "style": "height:256px;width:173px" }],
+				[{ "val": "/assets/quiz/images/20220305_16_2.jpg", "type": "image", "style": "height:256px;width:256px" }],
+				[{ "val": "/assets/quiz/images/20220305_16_3.jpg", "type": "image", "style": "height:256px;width:165px" }],
+				[{ "val": "/assets/quiz/images/20220305_16_4.jpg", "type": "image", "style": "height:238px;width:224px" }]
 			],
 			
 			"solution": 3
@@ -210,14 +210,14 @@
 		{
 			"q": [{ "val": "Anime: The Devil is a Part-timer!", "type": "title" }, { "val": "Which of the following images is not related to the character ‘Sariel’?", "type": "text" }],
 			"options": [
-				[{ "val": "/assets/quiz/images/20220305_20_1.png", "type": "image", "style": "height:256px;width:256px"}],
-				[{ "val": "/assets/quiz/images/20220305_20_2.png", "type": "image", "style": "height:123px;width:256px"}],
-				[{ "val": "/assets/quiz/images/20220305_20_3.png", "type": "image", "style": "height:247px;width:256px"}],
-				[{ "val": "/assets/quiz/images/20220305_20_4.png", "type": "image", "style": "height:168px;width:299px"}]
+				[{ "val": "/assets/quiz/images/20220305_20_1.png", "type": "image", "style": "height:256px;width:256px" }],
+				[{ "val": "/assets/quiz/images/20220305_20_2.png", "type": "image", "style": "height:123px;width:256px" }],
+				[{ "val": "/assets/quiz/images/20220305_20_3.png", "type": "image", "style": "height:247px;width:256px" }],
+				[{ "val": "/assets/quiz/images/20220305_20_4.png", "type": "image", "style": "height:168px;width:299px" }]
 			],
 			
 			"solution": 4
 		}],
-		"random": [{ "amount": 3, "from": [1, 4, 5, 8, 9] }, { "amount": 7, "from": [0, 2, 3, 6, 7, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19] }]
+		"random": [{ "amount": 20, "from": [1, 4, 5, 8, 9, 0, 2, 3, 6, 7, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19] }]
 	}
 }

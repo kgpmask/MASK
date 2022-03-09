@@ -110,8 +110,7 @@
 			const c = currentQ;
 			document.getElementById(`qbox-${c + 1}`).style.display = 'block';
 			if (c) document.getElementById(`qbox-${c}`).style.display = 'none';
-			timeVal = qs[c].time || 10;
-			let interval;
+			timeVal = qs[c].time || 30;
 			let cancel = false;
 			function endTimer () {
 				cancel = true;
@@ -139,9 +138,7 @@
 			const c = currentQ;
 			if (c >= qAmt) {
 				document.getElementById('quiz').submit();
-			} else {
-				currentTimer = timer();
-			}
+			} else currentTimer = timer();
 		}
 	</script>
 {% endblock %}
