@@ -149,15 +149,14 @@ function handler (app, env, vapid) {
 						name: req.user.name,
 						picture: req.user.picture,
 						points: user.points,
-						quizzes: Object.keys(user.quizData).map(stamp => {
+						quizzes: Object.keys(user.quizData || {}).map(stamp => {
 							const months = [
 								'-', 'January', 'February', 'March', 'April', 'May', 'June',
 								'July', 'August', 'September', 'October', 'November', 'December'
 							];
 							const [year, month, date] = stamp.split('-');
 							return `${Tools.nth(~~date)} ${months[~~month]}`;
-						}),
-						test: [1, 2, 3, 4]
+						})
 					});
 				});
 				break;
@@ -168,7 +167,7 @@ function handler (app, env, vapid) {
 					return res.render(path.join(__dirname, '../templates', 'quiz_login.njk'));
 				}
 				dbh.getUser(req.user.userId).then(user => {
-					const quizzed = Object.keys(user.quizData);
+					const quizzed = Object.keys(user.quizData || {});
 					const QUIZZES = require('./quiz.json');
 					const months = [
 						'-', 'January', 'February', 'March', 'April', 'May', 'June',
@@ -189,9 +188,11 @@ function handler (app, env, vapid) {
 					const renderYears = Object.values(years);
 					renderYears.forEach(year => year.months = Object.values(year.months).reverse());
 					if (!args[1]) {
+						const now = Date.now();
 						return res.render(path.join(__dirname, '../templates', 'events.njk'), {
 							quizzed,
-							years: renderYears.reverse()
+							years: renderYears.reverse(),
+							locked: Object.entries(QUIZZES).filter(([_, quiz]) => new Date(quiz.unlock).getTime() > now).map(k => k[0])
 						});
 					}
 					const index = quizzes.indexOf(args[1]);
@@ -200,6 +201,10 @@ function handler (app, env, vapid) {
 					const filepath = path.join(__dirname, '../templates', '_quiz.njk');
 					const adjs = [quizzes[index - 1], quizzes[index + 1], quizzes[index]];
 					const QUIZ = QUIZZES[args[1]];
+					const quizDate = new Date(QUIZ.unlock).getTime();
+					if (quizDate > Date.now()) return res.render(path.join(__dirname, '../templates', 'quiz_countdown.njk'), {
+						timeLeft: quizDate - Date.now() + 1000
+					});
 					const rand = Tools.fakeRandom(req.user.userId);
 					function shuffle (array) {
 						for (let i = array.length - 1; i > 0; i--) {
@@ -212,7 +217,7 @@ function handler (app, env, vapid) {
 					QUIZ.random.forEach(randDef => {
 						const keys = shuffle(Object.keys(randDef.from)).slice(0, randDef.amount);
 						questions.push(...keys.map(key => randDef.from[key]).map(key => {
-							const q = JSON.parse(JSON.stringify(QUIZ.questions[key]));
+							const q = Tools.deepClone(QUIZ.questions[key]);
 							delete q.solution;
 							return q;
 						}));
@@ -225,6 +230,7 @@ function handler (app, env, vapid) {
 			case 'rebuild': {
 				env.loaders.forEach(loader => loader.cache = {});
 				['./members.json', './posts.json'].forEach(cache => delete require.cache[require.resolve(cache)]);
+				delete require.cache[require.resolve('./quiz.json')];
 				res.render(path.join(__dirname, '../templates', 'rebuild.njk'));
 				break;
 			}
@@ -243,7 +249,6 @@ function handler (app, env, vapid) {
 					isAsset ? '../assets' : '../templates', path.join(...args) + (isAsset ? '' : '.njk')
 				);
 				tryFile(filepath, isAsset);
-				
 			}
 		}
 	}

@@ -20,7 +20,7 @@
 					<h3 style="color:var(--off-white)">{{ month.title }}</h3>
 					<div class="monthposts">
 						{% for issue in month.issues %}
-							<div class="flex-link"{{ ' title=Attempted' if issue.href in quizzed }}><a class="issue-link{{ ' disabled' if issue.href in quizzed }}" href="/quizzes/{{ issue.href }}">{{ issue.title }}</a></div>
+							<div class="flex-link"{{ ' title=Attempted' if issue.href in quizzed }}><a class="issue-link{{ ' disabled' if issue.href in quizzed }}" href="/quizzes/{{ issue.href }}">{{ '&#128274;&nbsp;' | safe if issue.href in locked }}{{ issue.title }}</a></div>
 						{% endfor %}
 					</div>
 				</div>

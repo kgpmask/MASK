@@ -12,7 +12,7 @@
 			</div>
 			<h3>Points: {{ points }}</h3>
 			<br/><br/>
-			<div>Quizzes attempted: {{ quizzes | join(', ') }}</div>
+			<div>Quizzes attempted: {{ quizzes | join(', ') if quizzes | length else '-' }}</div>
 		</div>
 	</div>
 	<a href="/logout"><button class="rel">Logout</button></a>

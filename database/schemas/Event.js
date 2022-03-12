@@ -17,3 +17,10 @@ module.exports = {
 	Event: mongoose.model('Event', eventSchema),
 	UserEventData: mongoose.model('UserEventData', userEventDataSchema),
 };
+
+// これ。。。何？
+// 何の用だ？
+// 目的は。。。何？
+// 全てはパゴルのせいだ
+// (Ignore me messing around with my Japanese keyboard)
+// -PartMan

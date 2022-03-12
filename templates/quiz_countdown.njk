@@ -1,0 +1,78 @@
+{% extends "_base.njk" %}
+
+{% set thispage = 'events' %}
+{% set pagetitle = 'Quiz - Countdown' %}
+
+{% block pagecontent %}
+	<div class="countdown">
+		<div class="label">Quiz opens in:</div>
+		<br/><br/>
+		<span id="timer" class="timer"></span>
+	</div>
+	<br/><br/><br/>
+	<a href="/quizzes"><button class="rel">Back to quizzes</button></a>
+{% endblock %}
+
+{% block customjs %}
+	<script>
+		let timeLeft = {{ timeLeft }};
+		function pad (num) {
+			return String(num).padStart(2, '0');
+		}
+		function getTime (num) {
+			const day = ~~(num / 86_400_000);
+			const hrs = ~~((num -= day * 86_400_000) / 3_600_000);
+			const min = ~~((num -= hrs * 3_600_000) / 60_000);
+			const sec = ~~((num -= min * 60_000) / 1000);
+			return [day, hrs, min, sec];
+		}
+		function timer () {
+			const times = getTime(timeLeft -= 1000);
+			if (times.reduce((a, b) => a + b, 0) <= 0) document.location.reload();
+			document.getElementById('timer').innerHTML = times.map(pad).join('&nbsp;:&nbsp;');
+		}
+		window.onload = () => {
+			timer();
+			setInterval(timer, 1000);
+		};
+	</script>
+{% endblock %}
+
+{% block customcss %}
+	<style>
+		.countdown {
+			background: rgba(200, 200, 200, 0.3);
+			display: inline-block;
+			padding: 20px;
+			border-radius: 5px;
+		}
+		.label {
+			font-size: 2em;
+			font-weight: bold;
+		}
+		.timer {
+			padding: 20px;
+			border-radius: 2px;
+			font-size: 3em;
+			color: var(--white);
+		}
+		button.rel {
+			width: 100px;
+			height: 30px;
+			background-color: var(--gray);
+			color: var(--off-white);
+			border: 2px solid var(--ghost-gray);
+			border-radius: 5px;
+			cursor: pointer;
+		}
+		button.rel:disabled {
+			background-color: var(--tinted-gray);
+			border: 1px solid var(--gray);
+			color: var(--ghost-gray);
+			cursor: default;
+		}
+		button.rel:not(:disabled):hover {
+			background-color: var(--middle-gray);
+		}
+	</style>
+{% endblock %}

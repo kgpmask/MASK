@@ -93,12 +93,10 @@
 							if (scrolledOutImg) {
 								scrolledOutImg = false;
 								resumeImages();
-								console.log('Rejoined images');
 							}
 						} else {
 							pauseImages();
 							scrolledOutImg = true;
-							console.log('Left images');
 						}
 					}, { threshold: [0.45] }).observe(document.querySelector('.imgshow'));*/
 					resumeImages();
@@ -293,18 +291,16 @@
 					});
 				}, { threshold: [0.4] });
 				/*new IntersectionObserver(([vidShow]) => {
-					if (playedVid) return console.log(this);
+					if (playedVid) return;
 					if (vidShow.isIntersecting && vidShow.intersectionRatio > 0.2) {
 						if (scrolledOutVid) {
 							scrolledOutVid = false;
 							clearTimeout(videoTimer);
 							videoSlide(false, true);
-							console.log('Rejoined videos');
 						}
 					} else {
 						clearTimeout(videoTimer);
 						scrolledOutVid = true;
-						console.log('Left videos');
 					}
 				}, { threshold: [0.45] }).observe(document.querySelector('.vidshow'));*/
 				vidSlides.forEach(slide => videoObserver.observe(slide));

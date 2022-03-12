@@ -1,5 +1,6 @@
 {
 	"2022-03-05": {
+		"unlock": "2022-03-13 00:00 GMT+0000",
 		"questions": [{
 			"q": [{ "val": "Anime: Rising of the Shield Hero", "type": "title" }, { "val": "Which Kingdom expresses demi-human supremacy?", "type": "text" }],
 			"options": [
@@ -218,6 +219,6 @@
 			
 			"solution": 4
 		}],
-		"random": [{ "amount": 20, "from": [1, 4, 5, 8, 9, 0, 2, 3, 6, 7, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19] }]
+		"random": [{ "amount": 3, "from": [1, 4, 5, 8, 9] }, { "amount": 7, "from": [0, 2, 3, 6, 7, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19] }]
 	}
 }
