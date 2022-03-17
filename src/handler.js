@@ -58,6 +58,12 @@ function handler (app, env, vapid) {
 				}).catch(() => notFound());
 				break;
 			}
+			case 'blog': {
+				args.shift();
+				const url = `https://maskiitkgp.blogspot.com/${args.join('/')}.html`;
+				res.redirect(url);
+				break;
+			}
 			case 'login': {
 				if (loggedIn) return res.redirect('/');
 				res.render(path.join(__dirname, '../templates', 'login.njk'));
