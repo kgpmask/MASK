@@ -4,7 +4,7 @@ const dbh = require('../database/database_handler');
 passport.use(new GoogleStrategy({
 	clientID: process.env['GOOGLE_CLIENT_ID'],
 	clientSecret: process.env['GOOGLE_CLIENT_SECRET'],
-	callbackURL: 'https://mask-kgp.club/oauth2/redirect/google',
+	callbackURL: (process.env['NODE_ENV'] === 'production' ? 'https://mask-kgp.club' : `http://localhost:${require('./config.js').PORT}`) + '/oauth2/redirect/google',
 	scope: ['profile'],
 	state: true
 }, (_, __, profile, cb) => dbh.createNewUser(profile).then(res => cb(null, res)).catch(err => cb(err))));
