@@ -32,7 +32,7 @@ function handler (app, env, vapid) {
 		args.shift();
 		switch (args[0]) {
 			case '': case 'home': {
-				const posts = require('./posts.json').slice(0, 7);
+				const posts = require('./posts.json').filter(post => post.type !== 'video' || post.show === '').slice(0, 7);
 				posts.forEach(post => {
 					const elapsed = Date.now() - Date.parse(post.date.replace(/(?<=^\d{1,2})[a-z]{2}/, '').replace(/,/, ''));
 					if (!isNaN(elapsed) && elapsed < 7 * 24 * 60 * 60 * 1000) post.recent = true;
