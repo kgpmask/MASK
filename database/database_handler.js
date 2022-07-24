@@ -16,7 +16,7 @@ async function logoutUser (id) {
 
 // Add new record to database
 async function updateUserQuizRecord (stats) { // {userId, quizId, time, score}
-	const user = await Quiz.findOne({ userId: stats.userId })
+	const user = await Quiz.findOne({ userId: stats.userId });
 	const record = user || new Quiz({ userId: stats.userId, points: 0, quizData: {} });
 	if (!record.quizData) record.quizData = {};
 	const key = stats.quizId;
