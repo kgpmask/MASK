@@ -49,9 +49,9 @@
 									<a href="/about" {% if 'about' === thispage %} class="active-page" {% endif %} target="_self">Our Society</a>
 									<a href="/members" {% if 'members' === thispage %} class="active-page" {% endif %} target="_self">Our Members</a>
 									{% if loggedIn %}
-										<a href="/profile" {% if 'profile' === thispage %} class="active-page" {% endif %} target="_self">Profile</a>
+										<a href="/profile" class="{% if 'profile' === thispage %}active-page {% endif %}{% if userless %}disabled {% endif %}" target="_self">Profile</a>
 									{% else %}
-										<a href="/login" {% if 'login' === thispage %} class="active-page" {% endif %} target="_self">Login</a>
+										<a href="/login" class="{% if 'login' === thispage %}active-page {% endif %}{% if userless %}disabled {% endif %}" target="_self">Login</a>
 									{% endif %}
 								</div>
 							</div>
@@ -70,9 +70,9 @@
 						<a href="/members" target="_self"><div class="lettuce{% if 'members' == thispage %} active-page{% endif %}" id="almost-bottom">Our Members</div></a>
 						<hr class="minor lower-border lower-border-upper"/>
 						{% if loggedIn %}
-							<a href="/profile" target="_self"><div class="lettuce{% if 'profile' == thispage %} active-page{% endif %}" id="top-bottom">Profile</div></a>
+							<a href="/profile" target="_self"><div class="lettuce{% if 'profile' == thispage %} active-page{% endif %}{% if userless %} disabled{% endif %}" id="top-bottom">Profile</div></a>
 						{% else %}
-							<a href="/login" target="_self"><div class="lettuce{% if 'login' == thispage %} active-page{% endif %}" id="top-bottom">Login</div></a>
+							<a href="/login" target="_self"><div class="lettuce{% if 'login' == thispage %} active-page{% endif %}{% if userless %} disabled{% endif %}" id="top-bottom">Login</div></a>
 						{% endif %}
 						<hr class="border-bottom"/>
 					</div>

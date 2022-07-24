@@ -56,6 +56,11 @@ a:hover {
 	color: white;
 }
 
+.dropdown-content a.disabled {
+	pointer-events: none;
+	color: var(--light-gray);
+}
+
 .text {
 	color: var(--light-gray);
 	background-color: rgba(255, 255, 255, 0.2);
