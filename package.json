@@ -4,7 +4,7 @@
   "description": "Website for MASK",
   "main": "./src/index.js",
   "scripts": {
-    "dev": "nodemon src/mask.js dev",
+    "dev": "npx nodemon src/mask.js dev",
     "lint": "npx eslint . --config .eslintrc.json --ext .js",
     "mocha": "npx mocha",
     "start": "node src/mask.js",
