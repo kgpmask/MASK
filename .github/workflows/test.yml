@@ -1,6 +1,9 @@
 name: Node.js CI
 
 on:
+  paths-ignore:
+      - 'LICENSE'
+      - 'README.md'
   push:
     branches: [ main ]
   pull_request:
@@ -9,11 +12,10 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
-
     strategy:
       matrix:
-        node-version: [14.x]
+        node-version: [14.x, 16.x]
+        runs-on: [ubuntu-latest, macos-latest, windows-latest]
 
     steps:
     - uses: actions/checkout@v2
@@ -23,5 +25,3 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm install
     - run: npm test
-      env:
-        CI: true
