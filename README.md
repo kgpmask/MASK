@@ -2,10 +2,27 @@
 The website for the Manga and Anime Society Kharagpur
 
 ## Contributing
-Anyone can make a pull request. PRs will not be merged if they fail the workflows.
+=== This has been updated! ===
+The owner of this repository is @PartMan7, who also runs the server. He's also running the server cost (at the time of writing he's in his final year, but it'll carry on even after graduation).
 
-At the moment, @PartMan7 is the sole maintainer of this repo (and thus the only person who can merge pull requests), since the code is hosted live on his server. From next year this'll change.
-^ This was intended but he screwed up, but still please make pull requests for non-trivial changes!
+All non-trivial changes are done through PULL REQUESTS ONLY. The WebDev Team Head is responsible for testing and merging all PRs. Feel free to pester them to look at the changes you've prepared.
+
+A webhook-based pull system will be implemented eventually.
+
+Ensure that pull requests pass tests (`npm test` for both lint and mocha tests).
+
+
+## Running the Server
+
+There are multiple ways to run the server. The vast majority of the time, you will be running it in dev mode - the command for this is `npm run dev`. If you wish to run in regular mode, the command is `npm start`. Note that the server run in both cases will be identical - the only difference is that dev mode will automatically refresh changes made to the server code and/or pages, while regular mode will not. In addition, you can add flags to customize the operation of the server. These are: 
+
+* `dev`: An internal flag that does the same as `npm run dev`, except you lose access to nodemon. Just use `npm run dev` instead.
+* `local`: Uses a local database (mongodb://127.0.0.1/mask) instead of the designated test database. Overwrites all other DB flags.
+* `prod`: Connects directly to the production database. Do NOT use this flag lightly; it can break many, many things if you mess up and the testing database should serve your purposes. Cannot be used in conjuction with dev mode, for security reasons.
+* `userless`: Runs the server without a database connection. All user-based pages cannot be loaded. A planned feature is to have a dummy user with a modifiable JSON file, but as of now no user exists.
+
+
+In order to start the server, you will require a credentials.json file - contact your WebDev Team Head for this file, and do NOT share it. The only exception to this is the userless flag - it is recommended to use `npm run dev userless` for any page that does not involve a logged-in user.
 
 
 ## Guidelines

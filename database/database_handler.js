@@ -2,48 +2,37 @@ const User = require('./schemas/User');
 const Quiz = require('./schemas/Quiz');
 
 // Handle newly registered user or normal login
-exports.createNewUser = function createNewUser (profile) {
-	return new Promise((resolve, reject) => {
-		User.find({ userId: profile.id }).exec((err, existing_users) => {
-			if (err) reject(err);
-			if (existing_users.length) resolve(existing_users[0]);
-			else {
-				const new_user = new User({ userId: profile.id, name: profile.displayName, picture: profile.photos[0].value });
-				new_user.save(err => err ? reject(err) : resolve(new_user));
-			}
-		});
-	});
+async function createNewUser (profile) {
+	const user = await User.findById(profile.id);
+	if (user) return user;
+	const newUser = new User({ _id: profile.id, name: profile.displayName, picture: profile.photos[0].value });
+	return newUser.save();
 };
 
 // Logout User
-exports.logoutUser = function logoutUser (id) {
-	return new Promise((resolve, reject) => User.findById(id).exec((err, user) => err ? reject(err) : resolve(user)));
+async function logoutUser (id) {
+	return User.findById(id);
 };
 
-// Add new record to database, uses put
-exports.updateUserQuizRecord = function updateUserQuizRecord (stats) { // {userId, quizId, time, score}
-	return new Promise((resolve, reject) => {
-		Quiz.find({ userId: stats.userId }).exec((err, existing_users) => {
-			if (err) reject(err);
-			const record = existing_users[0] || new Quiz({ userId: stats.userId, points: 0, quizData: {} });
-			if (!record.quizData) record.quizData = {};
-			const key = stats.quizId;
-			if (!key) return record.save(err => err ? reject(err) : resolve(record));
-			if (record[key]) return resolve(record);
-			record.points += stats.score;
-			record.quizData[key] = { score: stats.score, time: stats.time };
-			record.save(err => err ? reject(err) : resolve(record));
-		});
-	});
+// Add new record to database
+async function updateUserQuizRecord (stats) { // {userId, quizId, time, score}
+	const user = await Quiz.findOne({ userId: stats.userId });
+	const record = user || new Quiz({ userId: stats.userId, points: 0, quizData: {} });
+	if (!record.quizData) record.quizData = {};
+	const key = stats.quizId;
+	if (!key) return record.save();
+	if (record[key]) return record;
+	record.points += stats.score;
+	record.quizData[key] = { score: stats.score, time: stats.time };
+	return record.save();
 };
 
 // User statistics
-exports.getUser = function getUser (userId) {
-	return new Promise((resolve, reject) => {
-		Quiz.find({ userId }).exec((err, existing_users) => {
-			if (err) reject(err);
-			if (!existing_users.length) exports.updateUserQuizRecord({ userId }).then(u => resolve(u));
-			else resolve(existing_users[0]);
-		});
-	});
+async function getUser (userId) {
+	const user = await Quiz.findOne({ userId });
+	if (user) return user;
+	else return updateUserQuizRecord({ userId });
 };
+
+
+module.exports = { createNewUser, logoutUser, updateUserQuizRecord, getUser };

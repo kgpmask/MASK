@@ -9,5 +9,5 @@
 		Feel free to check out people's progress on the <a style="font-size:1.2em;" href="/leaderboard">Leaderboard</a>!
 	</div> #}
 	<br/><br/>
-	To participate in our quizzes, you'll need to <b><a class="button google" href="/login/federated/google">sign in with Google</a></b>.
+	To participate in our quizzes, you'll need to <b><a class="button google" href="/login/federated/google"{% if userless %} style="pointer-events:none"{% endif %}>sign in with Google</a></b>{% if userless %} (which is disabled in userless mode){% endif %}.
 {% endblock %}
