@@ -52,6 +52,9 @@ const server = app.listen(PORT, () => {
 	console.log(`The MASK server's up at http://localhost:${PORT}/`);
 });
 
-childProcess.exec(`npx sass assets${PARAMS.dev ? ' --watch' : ''} --no-source-map --style compressed`);
+const sass = childProcess.exec(`npx sass assets${PARAMS.dev ? ' --watch' : ''} --no-source-map --style compressed`);
 
-module.exports = server;
+exports.close = () => {
+	server.close();
+	sass.kill();
+};
