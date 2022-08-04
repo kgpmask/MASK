@@ -111,7 +111,7 @@ function handler (app, env) {
 						href: `${member.name.toLowerCase().replace(/[\.-]/g, '').replace(/ /g, '_')}.webp`,
 						teams: [{
 							name: 'AMV',
-							icon: 'amv'
+							icon: 'video'
 						}, {
 							name: 'Design & Arts',
 							icon: 'design'
@@ -120,7 +120,7 @@ function handler (app, env) {
 							icon: 'music'
 						}, {
 							name: 'Quiz',
-							icon: 'quiz'
+							icon: 'writing'
 						}, {
 							name: 'WebDev',
 							icon: 'webdev'
