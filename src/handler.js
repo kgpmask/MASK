@@ -1,3 +1,4 @@
+const axios = require('axios');
 const fs = require('fs').promises;
 const path = require('path');
 
@@ -268,6 +269,19 @@ function handler (app, env) {
 				res.renderFile('videos.njk', { youtubeVids, instaVids });
 				break;
 			}
+
+
+			case 'corsProxy': {
+				const base64Url = req.query.base64Url;
+				console.log(base64Url);
+				const url = atob(base64Url);
+				axios.get(url, { headers: { 'Access-Control-Allow-Origin': '*' } }).then(response => {
+					return res.send(response.data);
+				});
+				break;
+			}
+
+
 			default: {
 				while (!args[args.length - 1]) args.pop();
 				const isAsset = /\.(?:js|ico)$/.test(args[args.length - 1]);
