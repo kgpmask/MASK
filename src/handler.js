@@ -2,38 +2,21 @@ const axios = require('axios');
 const fs = require('fs').promises;
 const path = require('path');
 
-const login = require('./login.js');
-const dbh = PARAMS.userless ? {} : require('../database/database_handler.js');
+require('./login.js');
+const dbh = require('../database/database_handler.js');
 
-if (!PARAMS.userless) login.init();
-
-function handler (app, env) {
+function handler (app, env, vapid) {
 
 	// Pre-routing
-	if (!PARAMS.userless) {
-		app.get('/login/federated/google', passport.authenticate('google'));
-		app.get('/oauth2/redirect/google', passport.authenticate('google', {
-			successReturnToOrRedirect: '/',
-			failureRedirect: '/login'
-		}));
-	}
-
-	app.use((req, res, next) => {
-		res.renderFile = (files, ctx) => {
-			if (!Array.isArray(files)) files = [files];
-			return res.render(path.join(__dirname, '../templates', ...files), ctx);
-		};
-		next();
-	});
-
-	app.use((req, res, next) => {
-		res.locals.userless = PARAMS.userless;
-		next();
-	});
+	app.get('/login/federated/google', passport.authenticate('google'));
+	app.get('/oauth2/redirect/google', passport.authenticate('google', {
+		successReturnToOrRedirect: '/',
+		failureRedirect: '/login'
+	}));
 
 	function get (req, res) {
 		function notFound (custom404, ctx) {
-			res.status(404).renderFile(custom404 || '404.njk', ctx);
+			res.status(404).render(path.join(__dirname, '../templates', custom404 || '404.njk'), ctx);
 		}
 		function tryFile (path, asset, ctx) {
 			fs.access(path).then(err => {
@@ -50,7 +33,7 @@ function handler (app, env) {
 		args.shift();
 		switch (args[0]) {
 			case '': case 'home': {
-				const posts = require('./posts.json').filter(post => post.type !== 'video' || post.show === '').slice(0, 7);
+				const posts = require('./posts.json').slice(0, 7);
 				posts.forEach(post => {
 					const elapsed = Date.now() - Date.parse(post.date.replace(/(?<=^\d{1,2})[a-z]{2}/, '').replace(/,/, ''));
 					if (!isNaN(elapsed) && elapsed < 7 * 24 * 60 * 60 * 1000) post.recent = true;
@@ -59,12 +42,12 @@ function handler (app, env) {
 					return post.type === 'video' && post.hype && post.link.includes('www.youtube.com');
 				}).shuffle().slice(0, 5);
 				const art = require('./posts.json').filter(post => post.type === 'art' && post.hype).slice(0, 5);
-				res.renderFile('home.njk', { posts, vids, art });
+				res.render(path.join(__dirname, '../templates', 'home.njk'), { posts, vids, art });
 				break;
 			}
 			case 'art': {
 				const art = require('./posts.json').filter(post => post.type === 'art');
-				res.renderFile('art.njk', { art });
+				res.render(path.join(__dirname, '../templates', 'art.njk'), { art });
 				break;
 			}
 			case 'assets': {
@@ -84,7 +67,7 @@ function handler (app, env) {
 			}
 			case 'login': {
 				if (loggedIn) return res.redirect('/');
-				res.renderFile('login.njk');
+				res.render(path.join(__dirname, '../templates', 'login.njk'));
 				break;
 			}
 			case 'logout': {
@@ -96,39 +79,95 @@ function handler (app, env) {
 			case 'members': {
 				const members = require('./members.json');
 				const ctx = {
-					'Governors': [],
-					'5th': [],
-					'4th': [],
-					'3rd': [],
-					'2nd': [],
-					'1st': [],
-					'Former Governors': [],
-					'Alumni': []
+					'Governors': {
+						'19':[],
+						'20':[]
+					},
+					'Active Members':{
+						'20':[],
+						'21':[]
+					}
 				};
 				members.forEach(member => {
-					ctx[member.gov || ['0th', '1st', '2nd', '3rd', '4th', '5th'][member.year]].push({
+					let key;
+					if(member.active){
+						if(member.gov){
+							key = 'Governors'
+						}
+						else{
+							key = 'Active Members'
+						}
+					}
+					ctx[key][member.roll.slice(0,2)].push( output = {
 						name: member.name,
 						roll: member.roll,
 						href: `${member.name.toLowerCase().replace(/[\.-]/g, '').replace(/ /g, '_')}.webp`,
-						teams: [{
-							name: 'AMV',
-							icon: 'video'
-						}, {
-							name: 'Design & Arts',
-							icon: 'design'
-						}, {
-							name: 'Music',
-							icon: 'music'
-						}, {
-							name: 'Quiz',
-							icon: 'writing'
-						}, {
-							name: 'WebDev',
-							icon: 'webdev'
-						}].filter((_, index) => member.teams[index])
+						teams: member.teams.map(team => {
+							if(team=='a'){
+								return {
+									name : 'AMV',
+									icon : 'amv'
+								}
+							}
+							else if(team=='A'){
+								return {
+									name : 'AMV',
+									icon : 'amv-head'
+								}
+							}
+							else if(team=='d'){
+								return {
+									name : 'Design & Arts',
+									icon : 'design'
+								}
+							}
+							else if(team=='D'){
+								return {
+									name : 'Design & Arts',
+									icon : 'design-head'
+								}
+							}
+							else if(team=='n'){
+								return {
+									name : 'Newsletter',
+									icon : 'newsletter'
+								}
+							}
+							else if(team=='N'){
+								return {
+									name : 'Newsletter',
+									icon : 'newsletter-head'
+								}
+							}
+							else if(team=='q'){
+								return {
+									name : 'Quiz',
+									icon : 'quiz'
+								}
+							}
+							else if(team=='Q'){
+								return {
+									name : 'Quiz',
+									icon : 'quiz-head'
+								}
+							}
+							else if(team=='w'){
+								return {
+									name : 'WebDev',
+									icon : 'webdev'
+								}
+							}
+							else if(team=='W'){
+								return {
+									name : 'WebDev',
+									icon : 'webdev-head'
+								}
+							}
+						})
 					});
-				});
-				res.renderFile('members.njk', { members: ctx });
+					
+					});
+				tryFile(path.join(__dirname, '../templates', 'members.njk'), false, { members: ctx });
 				break;
 			}
 			case 'newsletters': {
@@ -150,7 +189,7 @@ function handler (app, env) {
 					});
 					const renderYears = Object.values(years);
 					renderYears.forEach(year => year.months = Object.values(year.months).reverse());
-					if (!args[1]) return res.renderFile('newsletters.njk', {
+					if (!args[1]) return res.render(path.join(__dirname, '../templates', 'newsletters.njk'), {
 						years: renderYears.reverse()
 					});
 					if (args[1] === 'random') {
@@ -160,16 +199,16 @@ function handler (app, env) {
 					}
 					const index = letters.indexOf(args[1] + '.njk');
 					if (index === -1) return notFound('newsletters_404.njk', { years: renderYears.reverse() });
-					const filepath = ['newsletters', letters[index]];
+					const filepath = path.join(__dirname, '../templates', 'newsletters', letters[index]);
 					const adjs = [letters[index - 1]?.slice(0, -4), letters[index + 1]?.slice(0, -4), letters[index].slice(0, -4)];
-					return res.renderFile(filepath, { adjs });
+					return res.render(filepath, { adjs });
 				}).catch(err => console.log(err) || notFound());
 				break;
 			}
 			case 'profile': {
 				if (!loggedIn) return res.redirect('/');
-				dbh.getUser(req.user._id).then(user => {
-					return res.renderFile('profile.njk', {
+				dbh.getUser(req.user.userId).then(user => {
+					return res.render(path.join(__dirname, '../templates', 'profile.njk'), {
 						name: req.user.name,
 						picture: req.user.picture,
 						points: user.points,
@@ -187,10 +226,10 @@ function handler (app, env) {
 			}
 			case 'quizzes': case 'events': {
 				if (!loggedIn) {
-					if (!PARAMS.userless) req.session.returnTo = req.url;
-					return res.renderFile('quiz_login.njk');
+					req.session.returnTo = req.url;
+					return res.render(path.join(__dirname, '../templates', 'quiz_login.njk'));
 				}
-				dbh.getUser(req.user._id).then(user => {
+				dbh.getUser(req.user.userId).then(user => {
 					const quizzed = Object.keys(user.quizData || {});
 					const QUIZZES = require('./quiz.json');
 					const months = [
@@ -213,7 +252,7 @@ function handler (app, env) {
 					renderYears.forEach(year => year.months = Object.values(year.months).reverse());
 					if (!args[1]) {
 						const now = Date.now();
-						return res.renderFile('events.njk', {
+						return res.render(path.join(__dirname, '../templates', 'events.njk'), {
 							quizzed,
 							years: renderYears.reverse(),
 							locked: Object.entries(QUIZZES).filter(([_, quiz]) => new Date(quiz.unlock).getTime() > now).map(k => k[0])
@@ -221,14 +260,15 @@ function handler (app, env) {
 					}
 					const index = quizzes.indexOf(args[1]);
 					if (index === -1) return notFound('quizzes_404.njk', { years: renderYears.reverse() });
-					if (quizzed.includes(args[1])) return res.renderFile('quiz_attempted.njk');
+					if (quizzed.includes(args[1])) return res.render(path.join(__dirname, '../templates', 'quiz_attempted.njk'));
+					const filepath = path.join(__dirname, '../templates', '_quiz.njk');
 					const adjs = [quizzes[index - 1], quizzes[index + 1], quizzes[index]];
 					const QUIZ = QUIZZES[args[1]];
 					const quizDate = new Date(QUIZ.unlock).getTime();
-					if (quizDate > Date.now()) return res.renderFile(path.join(__dirname, '../templates', 'quiz_countdown.njk'), {
+					if (quizDate > Date.now()) return res.render(path.join(__dirname, '../templates', 'quiz_countdown.njk'), {
 						timeLeft: quizDate - Date.now() + 1000
 					});
-					const rand = Tools.fakeRandom(req.user._id);
+					const rand = Tools.fakeRandom(req.user.userId);
 					function shuffle (array) {
 						for (let i = array.length - 1; i > 0; i--) {
 							let j = Math.floor(rand() * (i + 1));
@@ -246,12 +286,7 @@ function handler (app, env) {
 						}));
 					});
 					shuffle(questions);
-					return res.renderFile('_quiz.njk', {
-						adjs,
-						questions: JSON.stringify(questions),
-						qAmt: questions.length,
-						id: args[1]
-					});
+					return res.render(filepath, { adjs, questions: JSON.stringify(questions), qAmt: questions.length, id: args[1] });
 				});
 				break;
 			}
@@ -259,14 +294,14 @@ function handler (app, env) {
 				env.loaders.forEach(loader => loader.cache = {});
 				['./members.json', './posts.json'].forEach(cache => delete require.cache[require.resolve(cache)]);
 				delete require.cache[require.resolve('./quiz.json')];
-				res.renderFile('rebuild.njk');
+				res.render(path.join(__dirname, '../templates', 'rebuild.njk'));
 				break;
 			}
 			case 'videos': {
 				const vids = require('./posts.json');
 				const youtubeVids = vids.filter(vid => vid.link.includes('www.youtube.com'));
 				const instaVids = vids.filter(vid => vid.link.includes('www.instagram.com'));
-				res.renderFile('videos.njk', { youtubeVids, instaVids });
+				res.render(path.join(__dirname, '../templates', 'videos.njk'), { youtubeVids, instaVids });
 				break;
 			}
 
@@ -319,7 +354,7 @@ function handler (app, env) {
 			}
 			case 'quizzes': {
 				// Regenerate questions
-				const rand = Tools.fakeRandom(req.user._id);
+				const rand = Tools.fakeRandom(req.user.userId);
 				function shuffle (array) {
 					for (let i = array.length - 1; i > 0; i--) {
 						let j = Math.floor(rand() * (i + 1));
@@ -339,9 +374,9 @@ function handler (app, env) {
 				shuffle(solutions);
 				const answers = Array.from({ length: solutions.length }).map((_, i) => ~~(req.body[`answer-${i + 1}`]));
 				const points = [answers.filter((ans, i) => ~~ans === ~~solutions[i]).length, solutions.length];
-				res.renderFile('quiz_success.njk', { score: points[0], totalScore: points[1] });
+				res.render(path.join(__dirname, '../templates', 'quiz_success.njk'), { score: points[0], totalScore: points[1] });
 				const dbh = require('../database/database_handler');
-				dbh.updateUserQuizRecord({ userId: req.user._id, quizId, score: points[0], time: Date.now() });
+				dbh.updateUserQuizRecord({ userId: req.user.userId, quizId, score: points[0], time: Date.now() });
 				break;
 			}
 			default:
@@ -352,6 +387,8 @@ function handler (app, env) {
 
 	app.get(/.*/, (req, res) => get(req, res));
 	app.post(/.*/, (req, res) => post(req, res));
+
+	// VAPID will be required for push notifications
 }
 
 module.exports = handler;
