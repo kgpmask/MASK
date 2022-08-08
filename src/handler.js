@@ -79,10 +79,10 @@ function handler (app, env, vapid) {
 				const members = require('./members.json');
 				const ctx = {
 					'Governors': {
-						'19':[],
 						'20':[]
 					},
 					'Active Members':{
+						'19':[],
 						'20':[],
 						'21':[]
 					}
@@ -100,7 +100,7 @@ function handler (app, env, vapid) {
 					ctx[key][member.roll.slice(0,2)].push( output = {
 						name: member.name,
 						roll: member.roll,
-						href: `${member.name.toLowerCase().replace(/[\.-]/g, '').replace(/ /g, '_')}.webp`,
+						href: `${member.id}.webp`,
 						teams: member.teams.map(team => {
 							if(team=='a'){
 								return {

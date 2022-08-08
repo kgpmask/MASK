@@ -1,5 +1,12 @@
 [
 	{
+		"id": "PartMan",
+		"name": "Parth Mane",
+		"roll": "19MF10022",
+		"teams": ["W"],
+		"active": true,
+		"gov": false},
+	{
 		"id": "phantom_shadow",
 		"email": "prakashabhibhu@gmail.com",
 		"name": "Abhibhu Prakash",
@@ -128,7 +135,7 @@
 		"active": true, "gov": false
 	},
 	{
-		"id": "akshith_gbt",
+		"id": "g_akshith",
 		"email": "akshithgonnabhakthula@gmail.com",
 		"name": "G Akshith",
 		"roll": "20BT30009",
@@ -208,7 +215,7 @@
 		"active": true, "gov": false
 	},
 	{
-		"id": "ritesha_m",
+		"id": "ritesah_m",
 		"email": "irnmadhunala123@gmail.com",
 		"name": "Ritesah M",
 		"roll": "21CS30042",
@@ -236,7 +243,7 @@
 		"email": "spandanhalder1729@gmail.com",
 		"name": "Spandan Halder",
 		"roll": "20CS10063",
-		"teams": ["a", "n", "W"],
+		"teams": ["a", "n", "w"],
 		"active": true, "gov": true
 	},
 	{

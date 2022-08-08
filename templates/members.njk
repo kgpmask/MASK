@@ -5,10 +5,10 @@
 
 {% block pagecontent %}
 	<div id="loaded" style="display:none">
-		<h1>Our Members</h1>
+		<h1><u>Our Members</u></h1>
 		{% for status, state in members %}
 			<div class="status">
-				<h2>{{status}}</h2>
+				<h2><u>{{status}}</u></h2>
 				{% for year, list in state %}
 					{% if list | length %}
 						<div class="yearbox">
