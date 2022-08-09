@@ -4,13 +4,13 @@
 {% extends "_base.njk" %}
 
 {% block pagecontent %}
-	<h1 id="formpre">Submit your content here!</h1>
+	<h1 id="formpre" style="text-align: center;">Submit your content here!</h1>
 	<script src="/GoogleFormStyler.js"
 		form="https://docs.google.com/forms/d/e/1FAIpQLSfwnkz0L_oTyHPgzCtWg9xusAmiQbG4AjMA2zCRjsRu0959cw/viewform?embedded=true&lang=en">
 	</script>
-	<div class="faded" style="max-width:560px;display:flex;margin:20px auto;justify-self:center;" id="disclaimer">
+	<!--<div class="faded" style="max-width:560px;display:flex;margin:20px auto;justify-self:center;" id="disclaimer">
 		This content is neither created by nor endorsed by Google.<br/><br/>
-	</div>
+	</div>-->
 	<style>
 		/* post-form CSS overwrites */
 		/*
@@ -55,33 +55,61 @@
 		.freebirdFormviewerViewFooterEmbeddedBackground, .freebirdFormviewerViewNavigationPasswordWarning {
 			display: none;
 		}*/
+
+
 		body {
 			background-color: var(--dark-gray) !important;
+			text-align: left;
 		}
-		/**/
+		/*Form as a whole*/
+		.teQAzf {
+			margin: auto;
+			max-width: 90vw;
+			width: 900px;
+		}
+
+		/*Form name class*/
 		.m7w29c {
-			background-color: var(--black) !important;
+			background-color: transparent;
 			color: var(--white) !important;
 		}
+
 		/*geS5n is the question div*/
 		.geS5n {
 			background-color: var(--black) !important;
 		}
+
 		/*M7eMe is the question in the div above, the other 3 are divs in the form heading*/
 		.M7eMe, .F9yp7e, .cBGGJ, .kesdnc{
 			color: var(--off-white) !important;
 			text-align: left;
 		}
+
+		/*Question div...*/
+		.z12JJ {
+			margin-bottom: 2px;
+		}
+
 		/*aDTYNe is the span used for options*/
 		.aDTYNe {
 			color: var(--off-white) !important;
 		}
-		input {
+
+		input, .tL9Q4c {
 			justify-self: left;
-			background-color: var(--dark-gray) !important;
+			background-color: #22222299 !important;
 			color: var(--white) !important;
 		}
-		
+
+		/*Some Background Elements*/
+		.QvWxOd, .RVEQke {
+			background-color: var(--red) !important;
+			color: var(--abyss) !important;
+		}
+		/*'Clear form' text*/
+		.TFBnVe{
+			color: var(--red) !important;
+		}
 
 	</style>
 	<script>
@@ -111,5 +139,8 @@
 			parent.appendChild(submitted);
 		}
 		fixFavicon();
+		var elm = document.getElementsByClassName("xpWfed")[0];
+		elm.removeChild(elm.firstChild);
+		elm.parentElement.removeChild(elm);
 	</script>
 {% endblock %}

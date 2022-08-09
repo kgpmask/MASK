@@ -273,6 +273,14 @@
 		"active": true, "gov": false
 	},
 	{
+		"id": "RandomGhost",
+		"name": "Soham Sen",
+		"roll": "20XX00000",
+		"teams": ["w"],
+		"active": true, 
+		"gov": false
+	},
+	{
 		"id": "spandan_halder",
 		"email": "spandanhalder1729@gmail.com",
 		"name": "Spandan Halder",
