@@ -33,7 +33,7 @@
 	{
 		"id": "panda_senpai",
 		"email": "aniruddhapanda2020@gmail.com",
-		"name": "Aniruddha panda",
+		"name": "Aniruddha Panda",
 		"roll": "20MI10008",
 		"teams": ["a", "n"],
 		"active": true, "gov": true
@@ -103,19 +103,19 @@
 		"active": true, "gov": false
 	},
 	{
-		"id": "divyansh_tripathi",
-		"email": "divyanshkktrip@gmail.com",
-		"name": "Divyansh Tripathi",
-		"roll": "21MF10016",
-		"teams": ["n"],
-		"active": true, "gov": false
-	},
-	{
 		"id": "dillip",
 		"email": "dillipdibyajyotidash@gmail.com",
 		"name": "Dillip Dibyajyoti Dash",
 		"roll": "21EC10020",
 		"teams": ["n", "q"],
+		"active": true, "gov": false
+	},
+	{
+		"id": "divyansh_tripathi",
+		"email": "divyanshkktrip@gmail.com",
+		"name": "Divyansh Tripathi",
+		"roll": "21MF10016",
+		"teams": ["n"],
 		"active": true, "gov": false
 	},
 	{
@@ -129,7 +129,7 @@
 	{
 		"id": "lohitakshay",
 		"email": "lohitakshay2004@gmail.com",
-		"name": "G.Lohitakshay",
+		"name": "G Lohitakshay",
 		"roll": "21CY10015",
 		"teams": ["a"],
 		"active": true, "gov": false
@@ -141,6 +141,13 @@
 		"roll": "20BT30009",
 		"teams": ["d"],
 		"active": true, "gov": true
+	},
+	{
+		"id": "ganji_sanjeev_raj",
+		"name": "Ganji Sanjeev Raj",
+		"roll": "20XX00000",
+		"teams": ["d"],
+		"active": true, "gov": false
 	},
 	{
 		"id": "hrishabh",
@@ -171,6 +178,12 @@
 		"email": "manitejamaloth@gmail.com",
 		"name": "Maloth Maniteja",
 		"roll": "21PH20002",
+		"teams": ["d"],
+		"active": true, "gov": false
+	},{
+		"id": "manasvi_rathore",
+		"name": "Manasvi Rathore",
+		"roll": "21HS10025",
 		"teams": ["d"],
 		"active": true, "gov": false
 	},
@@ -215,11 +228,32 @@
 		"active": true, "gov": false
 	},
 	{
+		"id": "rishabh_mishra",
+		"name": "Rishabh Mishra",
+		"roll": "21XX00000",
+		"teams": ["a"],
+		"active": true, "gov": false
+	},
+	{
+		"id": "rishabh_prasad",
+		"name": "Rishabh Prasad",
+		"roll": "21XX00000",
+		"teams": ["d"],
+		"active": true, "gov": false
+	},
+	{
 		"id": "ritesah_m",
 		"email": "irnmadhunala123@gmail.com",
 		"name": "Ritesah M",
 		"roll": "21CS30042",
 		"teams": ["a", "d"],
+		"active": true, "gov": false
+	},
+	{
+		"id": "pagol",
+		"name": "Saumyadip Nandy",
+		"roll": "20XX00000",
+		"teams": ["w"],
 		"active": true, "gov": false
 	},
 	{
@@ -303,11 +337,18 @@
 		"active": true, "gov": false
 	},
 	{
+		"id": "LoliKami",
+		"name": "Vishesh Gupta",
+		"roll": "20XX00000",
+		"teams": ["w"],
+		"active": true, "gov": false
+	},
+	{
 		"id": "yaman_meena",
 		"email": "yamanmeena8202@gmail.com",
 		"name": "Yaman Meena",
 		"roll": "21IE10044",
-		"teams": ["a", "w"],
+		"teams": ["a"],
 		"active": true, "gov": false
 	}
 ]
