@@ -91,7 +91,7 @@
 		"email": "bhavesh.bm.3000@gmail.com",
 		"name": "Bhavesh Mukheja",
 		"roll": "21PH10008",
-		"teams": ["a", "q", "w"],
+		"teams": ["a", "q"],
 		"active": true, "gov": false
 	},
 	{
@@ -145,7 +145,7 @@
 	{
 		"id": "ganji_sanjeev_raj",
 		"name": "Ganji Sanjeev Raj",
-		"roll": "20XX00000",
+		"roll": "20EC10029",
 		"teams": ["d"],
 		"active": true, "gov": false
 	},
@@ -252,7 +252,7 @@
 	{
 		"id": "pagol",
 		"name": "Saumyadip Nandy",
-		"roll": "20XX00000",
+		"roll": "20EC10072",
 		"teams": ["w"],
 		"active": true, "gov": false
 	},
@@ -275,7 +275,7 @@
 	{
 		"id": "RandomGhost",
 		"name": "Soham Sen",
-		"roll": "20XX00000",
+		"roll": "20MF10038",
 		"teams": ["w"],
 		"active": true, 
 		"gov": false
@@ -347,7 +347,7 @@
 	{
 		"id": "LoliKami",
 		"name": "Vishesh Gupta",
-		"roll": "20XX00000",
+		"roll": "20EE10080",
 		"teams": ["w"],
 		"active": true, "gov": false
 	},
