@@ -92,10 +92,10 @@ function handler (app, env, vapid) {
 					let key;
 					if(member.active){
 						if(member.gov){
-							key = 'Governors'
+							key = 'Governors';
 						}
 						else{
-							key = 'Active Members'
+							key = 'Active Members';
 						}
 					}
 					ctx[key][member.roll.slice(0,2)].push( output = {
@@ -107,66 +107,66 @@ function handler (app, env, vapid) {
 								return {
 									name : 'AMV',
 									icon : 'amv'
-								}
+								};
 							}
 							else if(team=='A'){
 								return {
 									name : 'AMV',
 									icon : 'amv-head'
-								}
+								};
 							}
 							else if(team=='d'){
 								return {
 									name : 'Design & Arts',
 									icon : 'design'
-								}
+								};
 							}
 							else if(team=='D'){
 								return {
 									name : 'Design & Arts',
 									icon : 'design-head'
-								}
+								};
 							}
 							else if(team=='n'){
 								return {
 									name : 'Newsletter',
 									icon : 'newsletter'
-								}
+								};
 							}
 							else if(team=='N'){
 								return {
 									name : 'Newsletter',
 									icon : 'newsletter-head'
-								}
+								};
 							}
 							else if(team=='q'){
 								return {
 									name : 'Quiz',
 									icon : 'quiz'
-								}
+								};
 							}
 							else if(team=='Q'){
 								return {
 									name : 'Quiz',
 									icon : 'quiz-head'
-								}
+								};
 							}
 							else if(team=='w'){
 								return {
 									name : 'WebDev',
 									icon : 'webdev'
-								}
+								};
 							}
 							else if(team=='W'){
 								return {
 									name : 'WebDev',
 									icon : 'webdev-head'
-								}
+								};
 							}
 						})
 					});
 					
-					});
+				});
 				tryFile(path.join(__dirname, '../templates', 'members.njk'), false, { members: ctx });
 				break;
 			}
