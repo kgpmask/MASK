@@ -118,7 +118,7 @@
 			background-color: rgba(0, 0, 0, 0) !important;
 		}
 
-		.T2dutf {
+		.T2dutf, .xpWfed {
 			display: none;
 		}
 
@@ -152,16 +152,11 @@
 			const form = document.getElementsByClassName('freebirdFormviewerViewFormContentWrapper')[0];
 			const parent = form.parentNode;
 			form.remove();
-			document.getElementById('formpre').remove();
-			document.getElementById('disclaimer').remove();
 			const submitted = document.createElement('div');
 			submitted.setAttribute('class', 'text');
 			submitted.innerHTML = '<h1>Thank you for submitting! We\'ll get back to you soon.</h1>';
 			parent.appendChild(submitted);
 		}
 		fixFavicon();
-		var elm = document.getElementsByClassName("xpWfed")[0];
-		elm.removeChild(elm.firstChild);
-		elm.parentElement.removeChild(elm);
 	</script>
 {% endblock %}
