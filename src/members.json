@@ -3,7 +3,7 @@
 		"id": "PartMan",
 		"name": "Parth Mane",
 		"roll": "19MF10022",
-		"teams": ["m", "n", "W"],
+		"teams": ["a", "n", "W"],
 		"active": true,
 		"gov": false
 	},
