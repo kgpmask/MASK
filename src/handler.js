@@ -114,13 +114,9 @@ function handler (app, env) {
 				};
 				members.forEach(member => {
 					let key;
-					if(member.active){
-						if(member.gov){
-							key = 'Governors';
-						}
-						else{
-							key = 'Active Members';
-						}
+					if (member.active) {
+						if (member.gov) key = 'Governors';
+						else key = 'Active Members';
 					}
 					ctx[key][member.roll.slice(0,2)].push(output = {
 						name: member.name,
