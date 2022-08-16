@@ -278,7 +278,6 @@ function handler (app, env) {
 
 			case 'corsProxy': {
 				const base64Url = req.query.base64Url;
-				console.log(base64Url);
 				const url = atob(base64Url);
 				axios.get(url, { headers: { 'Access-Control-Allow-Origin': '*' } }).then(response => {
 					return res.send(response.data);
