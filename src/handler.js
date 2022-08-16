@@ -2,10 +2,12 @@ const axios = require('axios');
 const fs = require('fs').promises;
 const path = require('path');
 
-require('./login.js');
-const dbh = require('../database/database_handler.js');
+const login = require('./login.js');
+const dbh = PARAMS.userless ? {} : require('../database/database_handler.js');
 
-function handler (app, env, vapid) {
+if (!PARAMS.userless) login.init();
+
+function handler (app, env) {
 
 	// Pre-routing
 	if (!PARAMS.userless) {
@@ -130,7 +132,6 @@ function handler (app, env, vapid) {
 							return team;
 						})
 					});
-					
 				});
 				res.renderFile('members.njk', { members: ctx });
 				break;
@@ -356,8 +357,6 @@ function handler (app, env, vapid) {
 
 	app.get(/.*/, (req, res) => get(req, res));
 	app.post(/.*/, (req, res) => post(req, res));
-
-	// VAPID will be required for push notifications
 }
 
 module.exports = handler;
