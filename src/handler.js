@@ -89,26 +89,11 @@ function handler (app, env, vapid) {
 					}
 				};
 				const teams = {
-					a: {
-						"name": "AMV",
-						"icon": "video"
-					},
-					d: {
-						"name": "Design & Arts",
-						"icon": "design"
-					},
-					n: {
-						"name": "Newsletter",
-						"icon": "writing"
-					},
-					q: {
-						"name": "Quiz",
-						"icon": "quiz"
-					},
-					w: {
-						"name": "WebDev",
-						"icon": "webdev"
-					}
+					a: { name: "AMV", icon: "video" },
+					d: { name: "Design & Arts", icon: "design" },
+					n: { name: "Newsletter", icon: "writing" },
+					q: { name: "Quiz", icon: "quiz" },
+					w: { name: "WebDev", icon: "webdev" }
 				};
 				members.forEach(member => {
 					let key;
