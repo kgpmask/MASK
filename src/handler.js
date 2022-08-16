@@ -191,7 +191,7 @@ function handler (app, env, vapid) {
 			}
 			case 'quizzes': case 'events': {
 				if (!loggedIn) {
-					req.session.returnTo = req.url;
+					if (req.session) req.session.returnTo = req.url;
 					return res.render(path.join(__dirname, '../templates', 'quiz_login.njk'));
 				}
 				dbh.getUser(req.user.userId).then(user => {
