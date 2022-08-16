@@ -1,281 +1,363 @@
 [
-{
-	"name": "Aaryan Durgam",
-	"roll": "19AE30002",
-	"year": "3",
-	"teams": [1, 1, 0, 1, 0]
-},
-{
-	"name": "Abhishek Kumar",
-	"roll": "19EC30001",
-	"year": "3",
-	"teams": [0, 0, 0, 1, 0]
-},
-{
-	"name": "Aman Nagrale",
-	"roll": "19IM10004",
-	"year": "3",
-	"teams": [0, 1, 0, 0, 0]
-},
-{
-	"name": "Arpit Das",
-	"roll": "19CS10012",
-	"year": "3",
-	"teams": [0, 1, 0, 0, 0]
-},
-{
-	"name": "Ashwin Kumar",
-	"roll": "19ME30008",
-	"year": "3",
-	"teams": [0, 1, 0, 0, 0],
-	"gov": "Governors"
-},
-{
-	"name": "Ayush Dongre",
-	"roll": "19MA20008",
-	"year": "3",
-	"teams": [1, 0, 0, 0, 0]
-},
-{
-	"name": "Manish Kumar",
-	"roll": "19GG20017",
-	"year": "3",
-	"teams": [1, 0, 0, 0, 0]
-},
-{
-	"name": "Parth Mane",
-	"roll": "19MF10022",
-	"year": "3",
-	"teams": [0, 0, 1, 1, 1],
-	"gov": "Governors"
-},
-{
-	"name": "Rituraj Warisa",
-	"roll": "19EC10055",
-	"year": "3",
-	"teams": [1, 0, 0, 0, 0],
-	"gov": "Governors"
-},
-{
-	"name": "Shreyas Ranveerkar",
-	"roll": "19NA10021",
-	"year": "3",
-	"teams": [0, 1, 0, 0, 0]
-},
-{
-	"name": "Viraj Madke",
-	"roll": "19ME30059",
-	"year": "3",
-	"teams": [1, 0, 1, 0, 0],
-	"gov": "Governors"
-},
-{
-	"name": "Abhibhu Prakash",
-	"roll": "20CS10002",
-	"year": "2",
-	"teams": [1, 0, 0, 1, 0]
-},
-{
-	"name": "Aditya Das",
-	"roll": "20EX20014",
-	"year": "2",
-	"teams": [0, 0, 0, 1, 0]
-},
-{
-	"name": "Aditya Sarode",
-	"roll": "20HS20014",
-	"year": "2",
-	"teams": [0, 0, 0, 1, 0]
-},
-{
-	"name": "Akshith G.",
-	"roll": "20BT30009",
-	"year": "2",
-	"teams": [0, 1, 0, 0, 0]
-},
-{
-	"name": "Aniruddha Panda",
-	"roll": "20MI10008",
-	"year": "2",
-	"teams": [0, 0, 1, 0, 0]
-},
-{
-	"name": "Anjani Kumar",
-	"roll": "20EE30005",
-	"year": "2",
-	"teams": [0, 0, 0, 0, 1]
-},
-{
-	"name": "Ankit Chowdhury",
-	"roll": "20ME30008",
-	"year": "2",
-	"teams": [0, 1, 1, 1, 0]
-},
-{
-	"name": "Anmol Kumar",
-	"roll": "20HS20010",
-	"year": "2",
-	"teams": [0, 0, 0, 1, 0]
-},
-{
-	"name": "Anshul Bankar",
-	"roll": "20ME10030",
-	"year": "2",
-	"teams": [0, 0, 0, 1, 0]
-},
-{
-	"name": "Arjit Lohia",
-	"roll": "20EC30006",
-	"year": "2",
-	"teams": [0, 1, 0, 1, 0]
-},
-{
-	"name": "Ayush Kumar",
-	"roll": "20HS20012",
-	"year": "2",
-	"teams": [1, 0, 0, 0, 0]
-},
-{
-	"name": "Bhavyaa Sharma",
-	"roll": "20ME10033",
-	"year": "2",
-	"teams": [0, 0, 1, 0, 0]
-},
-{
-	"name": "Bishal Kumar Behera",
-	"roll": "20MT10020",
-	"year": "2",
-	"teams": [0, 0, 0, 1, 0]
-},
-{
-	"name": "Deepa Raj",
-	"roll": "20IM10006",
-	"year": "2",
-	"teams": [1, 0, 0, 0, 0]
-},
-{
-	"name": "Dhruv Baheti",
-	"roll": "20PH20010",
-	"year": "2",
-	"teams": [0, 0, 1, 0, 0]
-},
-{
-	"name": "Faiza Kashish",
-	"roll": "20EE10026",
-	"year": "2",
-	"teams": [0, 0, 1, 0, 0]
-},
-{
-	"name": "Ganji Sanjeev Raj",
-	"roll": "20EC10029",
-	"year": "2",
-	"teams": [0, 1, 0, 0, 0]
-},
-{
-	"name": "Garima Mendhe",
-	"roll": "20BT10017",
-	"year": "2",
-	"teams": [0, 1, 0, 0, 0]
-},
-{
-	"name": "Gourav Parashar",
-	"roll": "20CE10025",
-	"year": "2",
-	"teams": [1, 0, 0, 0, 0]
-},
-{
-	"name": "Hrishabh Kumar Tundwar",
-	"roll": "20MI10020",
-	"year": "2",
-	"teams": [1, 0, 0, 0, 0]
-},
-{
-	"name": "Kartik Narayan Sahoo",
-	"roll": "20MI10025",
-	"year": "2",
-	"teams": [0, 0, 1, 0, 0]
-},
-{
-	"name": "Kunal Gupta",
-	"roll": "20AG10022",
-	"year": "2",
-	"teams": [1, 0, 0, 0, 0]
-},
-{
-	"name": "Manasa Mylavarapu",
-	"roll": "20MI10034",
-	"year": "2",
-	"teams": [0, 1, 0, 0, 0]
-},
-{
-	"name": "Priyank Mundra",
-	"roll": "20EC30034",
-	"year": "2",
-	"teams": [1, 0, 0, 0, 0]
-},
-{
-	"name": "Rishabh Jain",
-	"roll": "20HS20045",
-	"year": "2",
-	"teams": [1, 0, 0, 0, 0]
-},
-{
-	"name": "Samarth Singh",
-	"roll": "20MF10031",
-	"year": "2",
-	"teams": [0, 1, 0, 0, 0]
-},
-{
-	"name": "Sarthak Vijaywat",
-	"roll": "20CE10063",
-	"year": "2",
-	"teams": [0, 0, 0, 1, 0]
-},
-{
-	"name": "Saumyadip Nandy",
-	"roll": "20EC10072",
-	"year": "2",
-	"teams": [0, 0, 0, 0, 1]
-},
-{
-	"name": "Shroyon Dasgupta",
-	"roll": "20NA10037",
-	"year": "2",
-	"teams": [0, 0, 1, 0, 0]
-},
-{
-	"name": "Soham Sen",
-	"roll": "20MF10038",
-	"year": "2",
-	"teams": [0, 0, 0, 0, 1]
-},
-{
-	"name": "Spandan Halder",
-	"roll": "20CS10063",
-	"year": "2",
-	"teams": [1, 0, 0, 0, 0]
-},
-{
-	"name": "Srijan Srivastava",
-	"roll": "20EC30051",
-	"year": "2",
-	"teams": [0, 0, 0, 1, 0]
-},
-{
-	"name": "Surendra Kolhe",
-	"roll": "20AE10040",
-	"year": "2",
-	"teams": [1, 0, 0, 0, 0]
-},
-{
-	"name": "Vidhu Vikas Singh",
-	"roll": "20AG30039",
-	"year": "2",
-	"teams": [0, 0, 0, 1, 0]
-},
-{
-	"name": "Vishesh Gupta",
-	"roll": "20EE10080",
-	"year": "2",
-	"teams": [0, 0, 0, 1, 1]
-}]
+	{
+		"id": "PartMan",
+		"name": "Parth Mane",
+		"roll": "19MF10022",
+		"teams": ["m", "n", "W"],
+		"active": true,
+		"gov": false
+	},
+	{
+		"id": "phantom_shadow",
+		"email": "prakashabhibhu@gmail.com",
+		"name": "Abhibhu Prakash",
+		"roll": "20CS10002",
+		"teams": ["a", "n", "q"],
+		"active": true, "gov": true
+	},
+	{
+		"id": "abhinav_prakash", 
+		"email": "abhinav.prakash319@gmail.com",
+		"name": "Abhinav Prakash",
+		"roll": "21CH10001",
+		"teams": ["a", "d", "q"],
+		"active": true, "gov": false
+	},
+	{
+		"id": "abhinav_pillai",
+		"email": "abhinavviju.p@gmail.com",
+		"name": "Abhinav V Pillai",
+		"roll": "21ME10004",
+		"teams": ["a"],
+		"active": true, "gov": false
+	},
+	{
+		"id": "panda_senpai",
+		"email": "aniruddhapanda2020@gmail.com",
+		"name": "Aniruddha Panda",
+		"roll": "20MI10008",
+		"teams": ["a", "n"],
+		"active": true, "gov": true
+	},
+	{
+		"id": "anwesha_das",
+		"email": "dasanwesha235@gmail.com",
+		"name": "Anwesha Das",
+		"roll": "21CS30007",
+		"teams": ["d"],
+		"active": true, "gov": false
+	},
+	{
+		"id": "arghadeep_biswas",
+		"email": "arghadeepbiswas2003@gmail.com",
+		"name": "Arghadeep Biswas",
+		"roll": "21CH10008",
+		"teams": ["a", "q"],
+		"active": true, "gov": false
+	},
+	{
+		"id": "AL_106",
+		"email": "arjit.lohia@gmail.com",
+		"name": "Arjit Lohia",
+		"roll": "20EC30006",
+		"teams": ["d", "Q"],
+		"active": true, "gov": false
+	},
+	{
+		"id": "ayush_kumar_20",
+		"email": "ayush.kumar.iitkgp.25@gmail.com",
+		"name": "Ayush Kumar",
+		"roll": "20HS20012",
+		"teams": ["A"],
+		"active": true, "gov": false
+	},
+	{
+		"id": "ayush_kumar_21",
+		"email": "ayushkumar0077680@gmail.com",
+		"name": "Ayush Kumar",
+		"roll": "21AG10008",
+		"teams": ["d"],
+		"active": true, "gov": false
+	},
+	{
+		"id": "akp",
+		"email": "ayush.parm.ise@gmail.com",
+		"name": "Ayush Parmar",
+		"roll": "21IM30005",
+		"teams": ["q"],
+		"active": true, "gov": false
+	},
+	{
+		"id": "bhavesh_mukheja",
+		"email": "bhavesh.bm.3000@gmail.com",
+		"name": "Bhavesh Mukheja",
+		"roll": "21PH10008",
+		"teams": ["a", "q"],
+		"active": true, "gov": false
+	},
+	{
+		"id": "chiranjeet_mishra",
+		"email": "chiranjeetmishra13@gmail.com",
+		"name": "Chiranjeet Mishra",
+		"roll": "21PH10011",
+		"teams": ["a", "n"],
+		"active": true, "gov": false
+	},
+	{
+		"id": "dillip",
+		"email": "dillipdibyajyotidash@gmail.com",
+		"name": "Dillip Dibyajyoti Dash",
+		"roll": "21EC10020",
+		"teams": ["n", "q"],
+		"active": true, "gov": false
+	},
+	{
+		"id": "divyansh_tripathi",
+		"email": "divyanshkktrip@gmail.com",
+		"name": "Divyansh Tripathi",
+		"roll": "21MF10016",
+		"teams": ["n"],
+		"active": true, "gov": false
+	},
+	{
+		"id": "chaitanya_ds",
+		"email": "chaitanyads127@gmail.com",
+		"name": "Dommeti Chaitanya Srinivas",
+		"roll": "21EC10021",
+		"teams": ["a", "d"],
+		"active": true, "gov": false
+	},
+	{
+		"id": "lohitakshay",
+		"email": "lohitakshay2004@gmail.com",
+		"name": "G Lohitakshay",
+		"roll": "21CY10015",
+		"teams": ["a"],
+		"active": true, "gov": false
+	},
+	{
+		"id": "g_akshith",
+		"email": "akshithgonnabhakthula@gmail.com",
+		"name": "G Akshith",
+		"roll": "20BT30009",
+		"teams": ["d"],
+		"active": true, "gov": true
+	},
+	{
+		"id": "ganji_sanjeev_raj",
+		"name": "Ganji Sanjeev Raj",
+		"roll": "20EC10029",
+		"teams": ["d"],
+		"active": true, "gov": false
+	},
+	{
+		"id": "hrishabh",
+		"email": "hrishabh919@gmail.com",
+		"name": "Hrishabh Kumar Tundwar",
+		"roll": "20MI10020",
+		"teams": ["a", "d", "N"],
+		"active": true, "gov": false
+	},
+	{
+		"id": "AyaVi",
+		"email": "karannag7777@gmail.com",
+		"name": "Karan Nag",
+		"roll": "21ME30038",
+		"teams": ["d"],
+		"active": true, "gov": false
+	},
+	{
+		"id": "LurkingRyuu",
+		"email": "yelisettikarthik0@gmail.com",
+		"name": "Karthikeya S M Yelisetty",
+		"roll": "21CS30060",
+		"teams": ["a", "w"],
+		"active": true, "gov": false
+	},
+	{
+		"id": "maloth_maniteja",
+		"email": "manitejamaloth@gmail.com",
+		"name": "Maloth Maniteja",
+		"roll": "21PH20002",
+		"teams": ["d"],
+		"active": true, "gov": false
+	},{
+		"id": "manasvi_rathore",
+		"name": "Manasvi Rathore",
+		"roll": "21HS10025",
+		"teams": ["d"],
+		"active": true, "gov": false
+	},
+	{
+		"id": "mohit_k_meena",
+		"email": "mohitmeena2404@gmail.com",
+		"name": "Mohit Kumar Meena",
+		"roll": "21CE10035",
+		"teams": ["a"],
+		"active": true, "gov": false
+	},
+	{
+		"id": "nikhith_manoj",
+		"email": "manojnikhith@gmail.com",
+		"name": "Nikhith Mathai Manoj",
+		"roll": "21AE10027",
+		"teams": ["a", "n"],
+		"active": true, "gov": false
+	},
+	{
+		"id": "nischay_gururani",
+		"email": "nischaygururani@gmail.com",
+		"name": "Nischay Gururani",
+		"roll": "21AG30026",
+		"teams": ["a"],
+		"active": true, "gov": false
+	},
+	{
+		"id": "pranay_bhaskar",
+		"email": "pranay.sosw@gmail.com",
+		"name": "Pranay Bhaskar",
+		"roll": "21MI33015",
+		"teams": ["q"],
+		"active": true, "gov": false
+	},
+	{
+		"id": "purba_saren",
+		"email": "purbasaren@gmail.com",
+		"name": "Purba Saren",
+		"roll": "21IE10030",
+		"teams": ["d"],
+		"active": true, "gov": false
+	},
+	{
+		"id": "rishabh_mishra",
+		"name": "Rishabh Mishra",
+		"roll": "21XX00000",
+		"teams": ["a"],
+		"active": true, "gov": false
+	},
+	{
+		"id": "rishabh_prasad",
+		"name": "Rishabh Prasad",
+		"roll": "21XX00000",
+		"teams": ["d"],
+		"active": true, "gov": false
+	},
+	{
+		"id": "ritesah_m",
+		"email": "irnmadhunala123@gmail.com",
+		"name": "Ritesah M",
+		"roll": "21CS30042",
+		"teams": ["a", "d"],
+		"active": true, "gov": false
+	},
+	{
+		"id": "pagol",
+		"name": "Saumyadip Nandy",
+		"roll": "20EC10072",
+		"teams": ["w"],
+		"active": true, "gov": false
+	},
+	{
+		"id": "shreya_rajvanshi",
+		"email": "rajvanshishreya5@gmail.com",
+		"name": "Shreya Rajvanshi",
+		"roll": "21PP00064",
+		"teams": ["a", "d"],
+		"active": true, "gov": false
+	},
+	{
+		"id": "shubham_dilawar",
+		"email": "shubhamdilawar23@gmail.com",
+		"name": "Shubham Dilawar",
+		"roll": "21AR10031",
+		"teams": ["a", "d", "n"],
+		"active": true, "gov": false
+	},
+	{
+		"id": "RandomGhost",
+		"name": "Soham Sen",
+		"roll": "20MF10038",
+		"teams": ["w"],
+		"active": true, 
+		"gov": false
+	},
+	{
+		"id": "spandan_halder",
+		"email": "spandanhalder1729@gmail.com",
+		"name": "Spandan Halder",
+		"roll": "20CS10063",
+		"teams": ["a", "n", "w"],
+		"active": true, "gov": true
+	},
+	{
+		"id": "srijan_srivastava",
+		"email": "srijansrivastava279@gmail.com",
+		"name": "Srijan Srivastava",
+		"roll": "20EC30051",
+		"teams": ["q"],
+		"active": true, "gov": false
+	},
+	{
+		"id": "suraj_pati",
+		"email": "surajpati55@gmail.com",
+		"name": "Suraj Pati",
+		"roll": "21EC30050",
+		"teams": ["a"],
+		"active": true, "gov": false
+	},
+	{
+		"id": "arty",
+		"email": "suvojit31202@gmail.com",
+		"name": "Suvojit Das",
+		"roll": "21EE30029",
+		"teams": ["d"],
+		"active": true, "gov": false
+	},
+	{
+		"id": "tussar_roy",
+		"email": "tussarroy28@gmail.com",
+		"name": "Tussar Roy",
+		"roll": "21EC10083",
+		"teams": ["a", "n"],
+		"active": true, "gov": false
+	},
+	{
+		"id": "mokshith",
+		"email": "venkatsaimokshithp@gmail.com",
+		"name": "Venkatsai Mokshith",
+		"roll": "21CS10050",
+		"teams": ["w"],
+		"active": true, "gov": false
+	},
+	{
+		"id": "vidhu_v_singh",
+		"email": "vidhu19122002@gmail.com",
+		"name": "Vidhu Vikas Singh",
+		"roll": "20AG30039",
+		"teams": ["n", "q"],
+		"active": true, "gov": true
+	},
+	{
+		"id": "Shinda_Gacho",
+		"email": "var.7vidun@gmail.com",
+		"name": "Vidunram",
+		"roll": "21EE30033",
+		"teams": ["q", "w"],
+		"active": true, "gov": false
+	},
+	{
+		"id": "LoliKami",
+		"name": "Vishesh Gupta",
+		"roll": "20EE10080",
+		"teams": ["w"],
+		"active": true, "gov": false
+	},
+	{
+		"id": "yaman_meena",
+		"email": "yamanmeena8202@gmail.com",
+		"name": "Yaman Meena",
+		"roll": "21IE10044",
+		"teams": ["a"],
+		"active": true, "gov": false
+	}
+]

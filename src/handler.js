@@ -96,36 +96,37 @@ function handler (app, env) {
 			case 'members': {
 				const members = require('./members.json');
 				const ctx = {
-					'Governors': [],
-					'5th': [],
-					'4th': [],
-					'3rd': [],
-					'2nd': [],
-					'1st': [],
-					'Former Governors': [],
-					'Alumni': []
+					'Governors': {
+						'20':[]
+					},
+					'Active Members':{
+						'19':[],
+						'20':[],
+						'21':[]
+					}
+				};
+				const teams = {
+					a: { name: "AMV", icon: "amv" },
+					d: { name: "Design & Arts", icon: "design" },
+					n: { name: "Newsletter", icon: "newsletter" },
+					q: { name: "Quiz", icon: "quiz" },
+					w: { name: "WebDev", icon: "webdev" }
 				};
 				members.forEach(member => {
-					ctx[member.gov || ['0th', '1st', '2nd', '3rd', '4th', '5th'][member.year]].push({
+					let key;
+					if (member.active) {
+						if (member.gov) key = 'Governors';
+						else key = 'Active Members';
+					}
+					ctx[key][member.roll.slice(0,2)].push(output = {
 						name: member.name,
 						roll: member.roll,
-						href: `${member.name.toLowerCase().replace(/[\.-]/g, '').replace(/ /g, '_')}.webp`,
-						teams: [{
-							name: 'AMV',
-							icon: 'video'
-						}, {
-							name: 'Design & Arts',
-							icon: 'design'
-						}, {
-							name: 'Music',
-							icon: 'music'
-						}, {
-							name: 'Quiz',
-							icon: 'writing'
-						}, {
-							name: 'WebDev',
-							icon: 'webdev'
-						}].filter((_, index) => member.teams[index])
+						href: `${member.id}.webp`,
+						teams: member.teams.map(teamID => {
+							const team = teams[teamID.toLowerCase()];
+							if (teamID === teamID.toUpperCase()) return { name: team.name, icon: team.icon + '-head' };
+							return team;
+						})
 					});
 				});
 				res.renderFile('members.njk', { members: ctx });
@@ -225,7 +226,7 @@ function handler (app, env) {
 					const adjs = [quizzes[index - 1], quizzes[index + 1], quizzes[index]];
 					const QUIZ = QUIZZES[args[1]];
 					const quizDate = new Date(QUIZ.unlock).getTime();
-					if (quizDate > Date.now()) return res.renderFile(path.join(__dirname, '../templates', 'quiz_countdown.njk'), {
+					if (quizDate > Date.now()) return res.renderFile('quiz_countdown.njk', {
 						timeLeft: quizDate - Date.now() + 1000
 					});
 					const rand = Tools.fakeRandom(req.user._id);
@@ -273,7 +274,6 @@ function handler (app, env) {
 
 			case 'corsProxy': {
 				const base64Url = req.query.base64Url;
-				console.log(base64Url);
 				const url = atob(base64Url);
 				axios.get(url, { headers: { 'Access-Control-Allow-Origin': '*' } }).then(response => {
 					return res.send(response.data);
