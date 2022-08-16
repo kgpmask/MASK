@@ -97,12 +97,12 @@ function handler (app, env) {
 				const members = require('./members.json');
 				const ctx = {
 					'Governors': {
-						'20':[]
+						'20': []
 					},
-					'Active Members':{
-						'19':[],
-						'20':[],
-						'21':[]
+					'Active Members': {
+						'19': [],
+						'20': [],
+						'21': []
 					}
 				};
 				const teams = {
@@ -118,7 +118,7 @@ function handler (app, env) {
 						if (member.gov) key = 'Governors';
 						else key = 'Active Members';
 					}
-					ctx[key][member.roll.slice(0,2)].push(output = {
+					ctx[key][member.roll.slice(0, 2)].push(output = {
 						name: member.name,
 						roll: member.roll,
 						href: `${member.id}.webp`,
@@ -232,7 +232,7 @@ function handler (app, env) {
 					const rand = Tools.fakeRandom(req.user._id);
 					function shuffle (array) {
 						for (let i = array.length - 1; i > 0; i--) {
-							let j = Math.floor(rand() * (i + 1));
+							const j = Math.floor(rand() * (i + 1));
 							[array[i], array[j]] = [array[j], array[i]];
 						}
 						return array;
@@ -300,18 +300,18 @@ function handler (app, env) {
 		switch (args[0]) {
 			case "checker": {
 				const checker = require('./checker.js');
-				const correct = checker.compare(args[2], args[1], req.body); //req.data
+				const correct = checker.compare(args[2], args[1], req.body); // req.data
 				switch (correct) {
 					case true: {
-						return res.send("correct");
+						res.send("correct");
 						break;
 					}
 					case false: {
-						return res.send("");
+						res.send("");
 						break;
 					}
 					default: {
-						return res.send(correct);
+						res.send(correct);
 						break;
 					}
 				}
@@ -322,7 +322,7 @@ function handler (app, env) {
 				const rand = Tools.fakeRandom(req.user._id);
 				function shuffle (array) {
 					for (let i = array.length - 1; i > 0; i--) {
-						let j = Math.floor(rand() * (i + 1));
+						const j = Math.floor(rand() * (i + 1));
 						[array[i], array[j]] = [array[j], array[i]];
 					}
 					return array;
@@ -337,7 +337,7 @@ function handler (app, env) {
 					solutions.push(...keys.map(key => QUIZ.questions[randDef.from[key]].solution));
 				});
 				shuffle(solutions);
-				const answers = Array.from({ length: solutions.length }).map((_, i) => ~~(req.body[`answer-${i + 1}`]));
+				const answers = Array.from({ length: solutions.length }).map((_, i) => ~~req.body[`answer-${i + 1}`]);
 				const points = [answers.filter((ans, i) => ~~ans === ~~solutions[i]).length, solutions.length];
 				res.renderFile('quiz_success.njk', { score: points[0], totalScore: points[1] });
 				const dbh = require('../database/database_handler');
