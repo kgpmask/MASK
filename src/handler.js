@@ -88,6 +88,28 @@ function handler (app, env, vapid) {
 						'21':[]
 					}
 				};
+				const teams = {
+					a: {
+						"name": "AMV",
+						"icon": "video"
+					},
+					d: {
+						"name": "Design & Arts",
+						"icon": "design"
+					},
+					n: {
+						"name": "Newsletter",
+						"icon": "writing"
+					},
+					q: {
+						"name": "Quiz",
+						"icon": "quiz"
+					},
+					w: {
+						"name": "WebDev",
+						"icon": "webdev"
+					}
+				};
 				members.forEach(member => {
 					let key;
 					if(member.active){
@@ -98,71 +120,14 @@ function handler (app, env, vapid) {
 							key = 'Active Members';
 						}
 					}
-					ctx[key][member.roll.slice(0,2)].push( output = {
+					ctx[key][member.roll.slice(0,2)].push(output = {
 						name: member.name,
 						roll: member.roll,
 						href: `${member.id}.webp`,
-						teams: member.teams.map(team => {
-							if(team=='a'){
-								return {
-									name : 'AMV',
-									icon : 'amv'
-								};
-							}
-							else if(team=='A'){
-								return {
-									name : 'AMV',
-									icon : 'amv-head'
-								};
-							}
-							else if(team=='d'){
-								return {
-									name : 'Design & Arts',
-									icon : 'design'
-								};
-							}
-							else if(team=='D'){
-								return {
-									name : 'Design & Arts',
-									icon : 'design-head'
-								};
-							}
-							else if(team=='n'){
-								return {
-									name : 'Newsletter',
-									icon : 'newsletter'
-								};
-							}
-							else if(team=='N'){
-								return {
-									name : 'Newsletter',
-									icon : 'newsletter-head'
-								};
-							}
-							else if(team=='q'){
-								return {
-									name : 'Quiz',
-									icon : 'quiz'
-								};
-							}
-							else if(team=='Q'){
-								return {
-									name : 'Quiz',
-									icon : 'quiz-head'
-								};
-							}
-							else if(team=='w'){
-								return {
-									name : 'WebDev',
-									icon : 'webdev'
-								};
-							}
-							else if(team=='W'){
-								return {
-									name : 'WebDev',
-									icon : 'webdev-head'
-								};
-							}
+						teams: member.teams.map(teamID => {
+							const team = teams[teamID.toLowerCase()];
+							if (teamID === teamID.toUpperCase()) return { name: team.name, icon: team.name + '-head' };
+							return team;
 						})
 					});
 					
