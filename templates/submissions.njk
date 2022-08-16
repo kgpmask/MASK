@@ -4,62 +4,85 @@
 {% extends "_base.njk" %}
 
 {% block pagecontent %}
-	<h1 id="formpre">Submit your content here!</h1>
-	<script src="/GoogleFormStyler.js"
-		form="https://docs.google.com/forms/d/e/1FAIpQLSfwnkz0L_oTyHPgzCtWg9xusAmiQbG4AjMA2zCRjsRu0959cw/viewform?embedded=true&lang=en">
-	</script>
-	<div class="faded" style="max-width:560px;display:flex;margin:20px auto;justify-self:center;" id="disclaimer">
-		This content is neither created by nor endorsed by Google.<br/><br/>
-	</div>
+	<!--h1 id="formpre" style="text-align: center;">Submit your content here!</h1-->
+	<script src="/GoogleFormStyler.js" form="https://docs.google.com/forms/d/e/1FAIpQLSfwnkz0L_oTyHPgzCtWg9xusAmiQbG4AjMA2zCRjsRu0959cw/viewform?embedded=true&lang=en"></script>
 	<style>
-		/* post-form CSS overwrites */
+		a[href] {
+			color: var(--white) !important;
+		}
+
+		.navbar-full{
+			font-family: Ubuntu,Roboto,Arial,Open Sans,sans-serif;
+		}
+
 		body {
 			background-color: var(--dark-gray) !important;
-		}
-		.freebirdFormviewerViewCenteredContent {
 			text-align: left;
 		}
-		.freebirdFormviewerViewHeaderHeader.exportHeader {
-			background-color: var(--medium-gray);
+		/*Form as a whole*/
+
+		form>div>div>div>div {
+			background-color: rgba(20, 20, 20, 0.8);
 		}
-		.freebirdFormviewerViewHeaderTitle.exportFormTitle.freebirdCustomFont, .freebirdFormviewerViewHeaderDescription {
-			color: var(--white);
+
+		.teQAzf {
+			margin: auto;
+			max-width: 90vw;
+			width: 900px;
 		}
-		.freebirdFormviewerComponentsQuestionBaseRoot {
-			background-color: var(--medium-gray) !important;
-			border: 2px solid var(--off-white) !important;
-		}
-		.freebirdCustomFont {
-			color: var(--white);
-		}
-		.quantumWizTextinputPaperinputPlaceholder.exportLabel, .quantumWizTextinputPapertextareaInput.exportTextarea, .quantumWizTextinputPapertextareaPlaceholder.exportLabel {
-			color: var(--light-gray) !important;
-		}
-		.freebirdFormviewerComponentsQuestionBaseValidationError, .freebirdFormviewerComponentsQuestionBaseRequiredAsterisk, .freebirdFormviewerViewHeaderRequiredLegend {
-			color: var(--error-red) !important;
-		}
-		input {
+
+		/*Form name class*/
+		.m7w29c {
+			background-color: transparent;
 			color: var(--white) !important;
 		}
-		.quantumWizTextinputPaperinputUnderline.exportUnderline, .quantumWizTextinputSimpleinputUnderline, .quantumWizTextinputPapertextareaUnderline.exportUnderline {
-			background-color: var(--light-gray);
+
+		/*geS5n is the question div*/
+		.geS5n {
+			background-color: var(--black) !important;
 		}
-		.appsMaterialWizToggleRadiogroupOffRadio.exportOuterCircle {
-			background-color: var(--ghost-gray);
-			border-color: var(--light-gray);
+
+		/*M7eMe is the question in the div above, the other 3 are divs in the form heading*/
+		.M7eMe, .F9yp7e, .cBGGJ, .kesdnc{
+			color: var(--off-white) !important;
+			text-align: left;
 		}
-		.freebirdThemedRadio .isChecked:not(.isDisabled) .exportOuterCircle, .freebirdThemedRadio.isChecked:not(.isDisabled) .exportOuterCircle, .freebirdThemedRadio .exportInnerCircle {
-			border-color: var(--white);
+
+		/*Question div...*/
+		.z12JJ {
+			margin-bottom: 2px;
 		}
-		.quantumWizTextinputPaperinputFocusUnderline.exportFocusUnderline.animationInitialized, .freebirdThemedInput .exportFocusUnderline {
-			background-color: var(--error-red);
+
+		/*aDTYNe is the span used for options*/
+		.aDTYNe {
+			color: var(--off-white) !important;
 		}
-		span {
+
+		input, .tL9Q4c {
+			justify-self: left;
+			background-color: #22222299 !important;
 			color: var(--white) !important;
 		}
-		.freebirdFormviewerViewFooterEmbeddedBackground, .freebirdFormviewerViewNavigationPasswordWarning {
+
+		/*Some Background Elements*/
+		.DE3NNc.CekdCb {
+			background-color: rgba(0, 0, 0, 0) !important;
+		}
+
+		.T2dutf, .xpWfed {
 			display: none;
 		}
+
+		.QvWxOd, .RVEQke {
+			background-color: var(--red) !important;
+			color: var(--abyss) !important;
+		}
+
+		/*'Clear form' text*/
+		.TFBnVe{
+			color: var(--red) !important;
+		}
+
 	</style>
 	<script>
 		function fixFavicon () {
@@ -77,11 +100,9 @@
 		document.forms[0].target = "swallow";
 		document.getElementById('swallow').onload = () => {
 			if (firstLoad === false) return firstLoad = true;
-			const form = document.getElementsByClassName('freebirdFormviewerViewFormContentWrapper')[0];
+			const form = document.getElementsByTagName('form')[0];
 			const parent = form.parentNode;
 			form.remove();
-			document.getElementById('formpre').remove();
-			document.getElementById('disclaimer').remove();
 			const submitted = document.createElement('div');
 			submitted.setAttribute('class', 'text');
 			submitted.innerHTML = '<h1>Thank you for submitting! We\'ll get back to you soon.</h1>';

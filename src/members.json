@@ -1,5 +1,13 @@
 [
 	{
+		"id": "PartMan",
+		"name": "Parth Mane",
+		"roll": "19MF10022",
+		"teams": ["a", "n", "W"],
+		"active": true,
+		"gov": false
+	},
+	{
 		"id": "phantom_shadow",
 		"email": "prakashabhibhu@gmail.com",
 		"name": "Abhibhu Prakash",
@@ -26,7 +34,7 @@
 	{
 		"id": "panda_senpai",
 		"email": "aniruddhapanda2020@gmail.com",
-		"name": "Aniruddha panda",
+		"name": "Aniruddha Panda",
 		"roll": "20MI10008",
 		"teams": ["a", "n"],
 		"active": true, "gov": true
@@ -84,7 +92,7 @@
 		"email": "bhavesh.bm.3000@gmail.com",
 		"name": "Bhavesh Mukheja",
 		"roll": "21PH10008",
-		"teams": ["a", "q", "w"],
+		"teams": ["a", "q"],
 		"active": true, "gov": false
 	},
 	{
@@ -96,19 +104,19 @@
 		"active": true, "gov": false
 	},
 	{
-		"id": "divyansh_tripathi",
-		"email": "divyanshkktrip@gmail.com",
-		"name": "Divyansh Tripathi",
-		"roll": "21MF10016",
-		"teams": ["n"],
-		"active": true, "gov": false
-	},
-	{
 		"id": "dillip",
 		"email": "dillipdibyajyotidash@gmail.com",
 		"name": "Dillip Dibyajyoti Dash",
 		"roll": "21EC10020",
 		"teams": ["n", "q"],
+		"active": true, "gov": false
+	},
+	{
+		"id": "divyansh_tripathi",
+		"email": "divyanshkktrip@gmail.com",
+		"name": "Divyansh Tripathi",
+		"roll": "21MF10016",
+		"teams": ["n"],
 		"active": true, "gov": false
 	},
 	{
@@ -122,18 +130,25 @@
 	{
 		"id": "lohitakshay",
 		"email": "lohitakshay2004@gmail.com",
-		"name": "G.Lohitakshay",
+		"name": "G Lohitakshay",
 		"roll": "21CY10015",
 		"teams": ["a"],
 		"active": true, "gov": false
 	},
 	{
-		"id": "akshith_gbt",
+		"id": "g_akshith",
 		"email": "akshithgonnabhakthula@gmail.com",
 		"name": "G Akshith",
 		"roll": "20BT30009",
 		"teams": ["d"],
 		"active": true, "gov": true
+	},
+	{
+		"id": "ganji_sanjeev_raj",
+		"name": "Ganji Sanjeev Raj",
+		"roll": "20EC10029",
+		"teams": ["d"],
+		"active": true, "gov": false
 	},
 	{
 		"id": "hrishabh",
@@ -164,6 +179,12 @@
 		"email": "manitejamaloth@gmail.com",
 		"name": "Maloth Maniteja",
 		"roll": "21PH20002",
+		"teams": ["d"],
+		"active": true, "gov": false
+	},{
+		"id": "manasvi_rathore",
+		"name": "Manasvi Rathore",
+		"roll": "21HS10025",
 		"teams": ["d"],
 		"active": true, "gov": false
 	},
@@ -208,11 +229,32 @@
 		"active": true, "gov": false
 	},
 	{
-		"id": "ritesha_m",
+		"id": "rishabh_mishra",
+		"name": "Rishabh Mishra",
+		"roll": "21XX00000",
+		"teams": ["a"],
+		"active": true, "gov": false
+	},
+	{
+		"id": "rishabh_prasad",
+		"name": "Rishabh Prasad",
+		"roll": "21XX00000",
+		"teams": ["d"],
+		"active": true, "gov": false
+	},
+	{
+		"id": "ritesah_m",
 		"email": "irnmadhunala123@gmail.com",
 		"name": "Ritesah M",
 		"roll": "21CS30042",
 		"teams": ["a", "d"],
+		"active": true, "gov": false
+	},
+	{
+		"id": "pagol",
+		"name": "Saumyadip Nandy",
+		"roll": "20EC10072",
+		"teams": ["w"],
 		"active": true, "gov": false
 	},
 	{
@@ -232,11 +274,19 @@
 		"active": true, "gov": false
 	},
 	{
+		"id": "RandomGhost",
+		"name": "Soham Sen",
+		"roll": "20MF10038",
+		"teams": ["w"],
+		"active": true, 
+		"gov": false
+	},
+	{
 		"id": "spandan_halder",
 		"email": "spandanhalder1729@gmail.com",
 		"name": "Spandan Halder",
 		"roll": "20CS10063",
-		"teams": ["a", "n", "W"],
+		"teams": ["a", "n", "w"],
 		"active": true, "gov": true
 	},
 	{
@@ -244,7 +294,7 @@
 		"email": "srijansrivastava279@gmail.com",
 		"name": "Srijan Srivastava",
 		"roll": "20EC30051",
-		"teams": ["Q"],
+		"teams": ["q"],
 		"active": true, "gov": false
 	},
 	{
@@ -296,11 +346,18 @@
 		"active": true, "gov": false
 	},
 	{
+		"id": "LoliKami",
+		"name": "Vishesh Gupta",
+		"roll": "20EE10080",
+		"teams": ["w"],
+		"active": true, "gov": false
+	},
+	{
 		"id": "yaman_meena",
 		"email": "yamanmeena8202@gmail.com",
 		"name": "Yaman Meena",
 		"roll": "21IE10044",
-		"teams": ["a", "w"],
+		"teams": ["a"],
 		"active": true, "gov": false
 	}
 ]
