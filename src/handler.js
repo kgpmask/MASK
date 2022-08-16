@@ -126,7 +126,7 @@ function handler (app, env, vapid) {
 						href: `${member.id}.webp`,
 						teams: member.teams.map(teamID => {
 							const team = teams[teamID.toLowerCase()];
-							if (teamID === teamID.toUpperCase()) return { name: team.name, icon: team.name.toLowerCase() + '-head' };
+							if (teamID === teamID.toUpperCase()) return { name: team.name, icon: team.icon + '-head' };
 							return team;
 						})
 					});
