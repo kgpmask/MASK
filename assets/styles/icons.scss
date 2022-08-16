@@ -26,13 +26,13 @@
 .icon-design:before {
 	content: "\e900";
 }
-.icon-writing:before {
+.icon-newsletter:before {
 	content: "\e907";
 }
 .icon-music:before {
 	content: "\e911";
 }
-.icon-video:before {
+.icon-amv:before {
 	content: "\e913";
 }
 .icon-download:before {
@@ -43,4 +43,30 @@
 }
 .icon-webdev:before {
 	content: "\ea80";
+}
+.icon-quiz:before {
+	content: "☑";
+	font-size: 1.3em;
+}
+
+.icon-design-head:before {
+	content: "";
+	color: #e8ce3d;
+}
+.icon-newsletter-head:before {
+	content: "";
+	color: #e8ce3d;
+}
+.icon-amv-head:before {
+	content: "";
+	color: #e8ce3d;
+}
+.icon-quiz-head:before {
+	content: "☑";
+	font-size: 1.3em;
+	color: #e8ce3d;
+}
+.icon-webdev-head:before {
+	content: "";
+	color: #e8ce3d;
 }
