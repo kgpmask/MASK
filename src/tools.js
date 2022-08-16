@@ -1,16 +1,20 @@
 exports.deepClone = function deepClone (aObject) {
 	if (!aObject) return aObject;
-	let v, bObject = Array.isArray(aObject) ? [] : {};
+	const bObject = Array.isArray(aObject) ? [] : {};
 	for (const k in aObject) {
-		v = aObject[k];
-		bObject[k] = (typeof v === "object") ? exports.deepClone(v) : v;
+		const v = aObject[k];
+		bObject[k] = typeof v === "object" ? exports.deepClone(v) : v;
 	}
 	return bObject;
 };
 
-exports.deepEquals = function deepEqual(obj1, obj2) {
+function isPrimitive (obj) {
+	return obj !== Object(obj);
+}
+
+exports.deepEquals = function deepEquals (obj1, obj2) {
 	if (obj1 === obj2) return true;
-	if (exports.isPrimitive(obj1) || exports.isPrimitive(obj2)) return obj1 === obj2;
+	if (isPrimitive(obj1) || isPrimitive(obj2)) return obj1 === obj2;
 	const keys = Object.keys(obj1);
 	if (keys.length !== Object.keys(obj2).length) return false;
 	for (let i = 0; i < keys.length; i++) {
@@ -19,10 +23,6 @@ exports.deepEquals = function deepEqual(obj1, obj2) {
 		if (!exports.deepEquals(obj1[key], obj2[key])) return false;
 	}
 	return true;
-};
-
-exports.isPrimitive = function isPrimitive (obj) {
-	return (obj !== Object(obj));
 };
 
 exports.toID = function toID (string) {
@@ -40,18 +40,18 @@ exports.nth = function nth (num) {
 };
 
 function xmur3 (str) {
-	for (var i = 0, h = 1779033703 ^ str.length; i < str.length; i++) {
+	for (let i = 0, h = 1779033703 ^ str.length; i < str.length; i++) {
 		h = Math.imul(h ^ str.charCodeAt(i), 3432918353);
 		h = h << 13 | h >>> 19;
 	} return () => {
-		h = Math.imul(h ^ (h >>> 16), 2246822507);
-		h = Math.imul(h ^ (h >>> 13), 3266489909);
+		h = Math.imul(h ^ h >>> 16, 2246822507);
+		h = Math.imul(h ^ h >>> 13, 3266489909);
 		return (h ^= h >>> 16) >>> 0;
 	};
-};
+}
 
 exports.fakeRandom = function fakeRandom (seed) {
-	let a = xmur3(seed)();
+	const a = xmur3(seed)();
 	return () => {
 		let t = a += 0x6D2B79F5;
 		t = Math.imul(t ^ t >>> 15, t | 1);
@@ -67,9 +67,10 @@ exports.fakeRandom = function fakeRandom (seed) {
 
 Array.prototype.random = function (amount) {
 	if (!amount || typeof amount !== 'number') return this[Math.floor(Math.random() * this.length)];
-	let sample = Array.from(this), i = 0, out = [];
+	const sample = Array.from(this), out = [];
+	let i = 0;
 	while (sample.length && i++ < amount) {
-		let term = sample[Math.floor(Math.random() * sample.length)];
+		const term = sample[Math.floor(Math.random() * sample.length)];
 		out.push(term);
 		sample.remove(term);
 	}
@@ -78,7 +79,7 @@ Array.prototype.random = function (amount) {
 
 Array.prototype.shuffle = function () {
 	for (let i = this.length - 1; i > 0; i--) {
-		let j = Math.floor(Math.random() * (i + 1));
+		const j = Math.floor(Math.random() * (i + 1));
 		[this[i], this[j]] = [this[j], this[i]];
 	}
 	return Array.from(this);
@@ -86,7 +87,7 @@ Array.prototype.shuffle = function () {
 
 /*
 * Note:
-* 
+*
 * Adding Array prototypes (or any prototypes for that matter)
 * is something that should only be done if you're absolutely
 * sure about what you're doing. In this case, the prototypes
