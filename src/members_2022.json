@@ -233,7 +233,7 @@
 		"name": "Rishabh Mishra",
 		"roll": "21XX00000",
 		"teams": ["a"],
-		"active": true, "gov": false
+		"active": false, "gov": false
 	},
 	{
 		"id": "rishabh_prasad",
