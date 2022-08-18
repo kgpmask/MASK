@@ -229,13 +229,6 @@
 		"active": true, "gov": false
 	},
 	{
-		"id": "rishabh_mishra",
-		"name": "Rishabh Mishra",
-		"roll": "21XX00000",
-		"teams": ["a"],
-		"active": true, "gov": false
-	},
-	{
 		"id": "rishabh_prasad",
 		"name": "Rishabh Prasad",
 		"roll": "21XX00000",
