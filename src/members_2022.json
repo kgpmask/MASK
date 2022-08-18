@@ -140,7 +140,7 @@
 		"email": "akshithgonnabhakthula@gmail.com",
 		"name": "G Akshith",
 		"roll": "20BT30009",
-		"teams": ["d"],
+		"teams": ["D"],
 		"active": true, "gov": true
 	},
 	{
@@ -233,7 +233,7 @@
 		"name": "Rishabh Mishra",
 		"roll": "21XX00000",
 		"teams": ["a"],
-		"active": true, "gov": false
+		"active": false, "gov": false
 	},
 	{
 		"id": "rishabh_prasad",
