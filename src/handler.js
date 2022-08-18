@@ -93,8 +93,46 @@ function handler (app, env) {
 				res.redirect('/');
 				break;
 			}
-			case 'members': {
-				const members = require('./members.json');
+			case 'members-2021': {
+				const members = require('./members_2021.json');
+				const ctx = {
+					'Governors': [],
+					'5th': [],
+					'4th': [],
+					'3rd': [],
+					'2nd': [],
+					'1st': [],
+					'Former Governors': [],
+					'Alumni': []
+				};
+				members.forEach(member => {
+					ctx[member.gov || ['0th', '1st', '2nd', '3rd', '4th', '5th'][member.year]].push({
+						name: member.name,
+						roll: member.roll,
+						href: `${member.name.toLowerCase().replace(/[\.-]/g, '').replace(/ /g, '_')}.webp`,
+						teams: [{
+							name: 'AMV',
+							icon: 'amv'
+						}, {
+							name: 'Design & Arts',
+							icon: 'design'
+						}, {
+							name: 'Music',
+							icon: 'music'
+						}, {
+							name: 'Quiz',
+							icon: 'quiz'
+						}, {
+							name: 'WebDev',
+							icon: 'webdev'
+						}].filter((_, index) => member.teams[index])
+					});
+				});
+				res.renderFile('members.njk', { members: ctx });
+				break;
+			}
+			case 'members': case 'members-2022': {
+				const members = require('./members_2022.json');
 				const ctx = {
 					'Governors': {
 						'20': []
