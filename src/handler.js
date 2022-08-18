@@ -96,7 +96,7 @@ function handler (app, env) {
 			case 'members': {
 				switch (args[1]) {
 					case "2021": {
-						const members = require('./members_2021.json');
+						const members = require('./member21.json');
 						const ctx = {
 							'Governors': [],
 							'5th': [],
@@ -109,7 +109,7 @@ function handler (app, env) {
 							ctx[member.gov || ['0th', '1st', '2nd', '3rd', '4th', '5th'][member.year]].push({
 								name: member.name,
 								roll: member.roll,
-								href: (member.id) ? `${member.id}.webp` : `${member.name.toLowerCase().replace(/[\.-]/g, '').replace(/ /g, '_')}.webp`,
+								href: `${member.id}.webp` ,
 								teams: [
 									{ name: 'AMV', icon: 'amv'}, 
 									{ name: 'Design & Arts', icon: 'design'},
@@ -123,7 +123,7 @@ function handler (app, env) {
 						break;
 					}
 					case '2022': default: {
-						const members = require('./members_2022.json');
+						const members = require('./member22.json');
 						const ctx = {
 							'Governors': {
 								'20': []
