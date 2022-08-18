@@ -9,12 +9,12 @@
 	};
 })(XMLHttpRequest);
 
-(function() {
+(function () {
 	const script = document.currentScript || Array.prototype.slice.call(document.getElementsByTagName('script')).pop();
 	const URL = script.getAttribute('form');
 	const xhr = new XMLHttpRequest();
 	xhr.open("GET", URL);
-	xhr.onload = function() {
+	xhr.onload = function () {
 		document.write(xhr.response);
 	};
 	xhr.send();
