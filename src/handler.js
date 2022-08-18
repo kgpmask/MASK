@@ -109,7 +109,7 @@ function handler (app, env) {
 							ctx[member.gov || ['0th', '1st', '2nd', '3rd', '4th', '5th'][member.year]].push({
 								name: member.name,
 								roll: member.roll,
-								href: (members.id) ? `${members.id}.webp` : `${member.name.toLowerCase().replace(/[\.-]/g, '').replace(/ /g, '_')}.webp`,
+								href: (member.id) ? `${member.id}.webp` : `${member.name.toLowerCase().replace(/[\.-]/g, '').replace(/ /g, '_')}.webp`,
 								teams: [
 									{ name: 'AMV', icon: 'amv'}, 
 									{ name: 'Design & Arts', icon: 'design'},
