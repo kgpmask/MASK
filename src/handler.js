@@ -128,7 +128,7 @@ function handler (app, env) {
 						}].filter((_, index) => member.teams[index])
 					});
 				});
-				res.renderFile('members.njk', { members: ctx });
+				res.renderFile('members-2021.njk', { members: ctx });
 				break;
 			}
 			case 'members': case 'members-2022': {
@@ -167,7 +167,7 @@ function handler (app, env) {
 						})
 					});
 				});
-				res.renderFile('members.njk', { members: ctx });
+				res.renderFile('members-2022.njk', { members: ctx });
 				break;
 			}
 			case 'newsletters': {

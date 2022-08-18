@@ -28,7 +28,8 @@
 		"roll": "19ME30008",
 		"year": "3",
 		"teams": [0, 1, 0, 0, 0],
-		"gov": "Governors"},
+		"gov": "Governors"
+	},
 	{
 		"name": "Ayush Dongre",
 		"roll": "19MA20008",
@@ -46,13 +47,15 @@
 		"roll": "19MF10022",
 		"year": "3",
 		"teams": [0, 0, 1, 1, 1],
-		"gov": "Governors"},
+		"gov": "Governors"
+	},
 	{
 		"name": "Rituraj Warisa",
 		"roll": "19EC10055",
 		"year": "3",
 		"teams": [1, 0, 0, 0, 0],
-		"gov": "Governors"},
+		"gov": "Governors"
+	},
 	{
 		"name": "Shreyas Ranveerkar",
 		"roll": "19NA10021",
@@ -64,7 +67,8 @@
 		"roll": "19ME30059",
 		"year": "3",
 		"teams": [1, 0, 1, 0, 0],
-		"gov": "Governors"},
+		"gov": "Governors"
+	},
 	{
 		"name": "Abhibhu Prakash",
 		"roll": "20CS10002",
@@ -274,191 +278,5 @@
 		"roll": "20EE10080",
 		"year": "2",
 		"teams": [0, 0, 0, 1, 1]
-	},
-	{
-		"name": "Ritesah Madhunala",
-		"roll": "",
-		"year": "1",
-		"teams": [0, 1, 0, 0, 0]
-	},
-	{
-		"name": "Nishay Gurunani",
-		"roll": "",
-		"year": "1",
-		"teams": [0, 0, 1, 0, 0]
-	},
-	{
-		"name": "Lohit Akshay",
-		"roll": "",
-		"year": "1",
-		"teams": [1, 0, 0, 0, 0]
-	},
-	{
-		"name": "Chaitanya Srinivas",
-		"roll": "",
-		"year": "1",
-		"teams": [1, 0, 0, 0, 0]
-	},
-	{
-		"name": "Ayush Parmar",
-		"roll": "",
-		"year": "1",
-		"teams": [0, 0, 0, 1, 0]
-	},
-	{
-		"name": "Rishab Prasad",
-		"roll": "",
-		"year": "1",
-		"teams": [0, 1, 0, 0, 0]
-	},
-	{
-		"name": "Ayush Kumar",
-		"roll": "",
-		"year": "1",
-		"teams": [0, 1, 0, 0, 0]
-	},
-	{
-		"name": "Karthik Y",
-		"roll": "",
-		"year": "1",
-		"teams": [1, 0, 0, 0, 1]
-	},
-	{
-		"name": "Venkatsai Mokshith",
-		"roll": "",
-		"year": "1",
-		"teams": [0, 0, 0, 0, 1]
-	},
-	{
-		"name": "Anwesha Das",
-		"roll": "",
-		"year": "1",
-		"teams": [0, 1, 0, 0, 0]
-	},
-	{
-		"name": "Shreya Rajvanshi",
-		"roll": "",
-		"year": "1",
-		"teams": [0, 1, 1, 0, 0]
-	},
-	{
-		"name": "Pranay Bhaskar",
-		"roll": "",
-		"year": "1",
-		"teams": [0, 0, 0, 1, 0]
-	},
-	{
-		"name": "Purba Sen",
-		"roll": "",
-		"year": "1",
-		"teams": [0, 1, 0, 0, 0]
-	},
-	{
-		"name": "Shubham Dilawar",
-		"roll": "",
-		"year": "1",
-		"teams": [1, 1, 0, 0, 0]
-	},
-	{
-		"name": "Dillip D Dash",
-		"roll": "",
-		"year": "1",
-		"teams": [0, 0, 0, 1, 0]
-	},
-	{
-		"name": "Tussar Ror",
-		"roll": "",
-		"year": "1",
-		"teams": [1, 0, 0, 0, 0]
-	},
-	{
-		"name": "Bhavesh Mukheja",
-		"roll": "",
-		"year": "1",
-		"teams": [1, 0, 1, 1, 0]
-	},
-	{
-		"name": "Karan Nag",
-		"roll": "",
-		"year": "1",
-		"teams": [0, 1, 0, 0, 0]
-	},
-	{
-		"name": "Suvojit Das",
-		"roll": "",
-		"year": "1",
-		"teams": [0, 1, 0, 0, 0]
-	},
-	{
-		"name": "Abhinav Pillai",
-		"roll": "",
-		"year": "1",
-		"teams": [0, 0, 1, 0, 0]
-	},
-	{
-		"name": "Manasvi",
-		"roll": "",
-		"year": "1",
-		"teams": [0, 1, 0, 0, 0]
-	},
-	{
-		"name": "Arghadeep Biswas",
-		"roll": "",
-		"year": "1",
-		"teams": [1, 0, 0, 1, 0]
-	},
-	{
-		"name": "Suraj Pati",
-		"roll": "",
-		"year": "1",
-		"teams": [0, 0, 1, 0, 0]
-	},
-	{
-		"name": "Vidunram A R",
-		"roll": "",
-		"year": "1",
-		"teams": [0, 0, 0, 1, 0]
-	},
-	{
-		"name": "Divyansh Tripathi",
-		"roll": "",
-		"year": "1",
-		"teams": [0, 0, 0, 1, 0]
-	},
-	{
-		"name": "Mohit Meena",
-		"roll": "",
-		"year": "1",
-		"teams": [1, 0, 0, 0, 0]
-	},
-	{
-		"name": "Rishab Mishra",
-		"roll": "",
-		"year": "1",
-		"teams": [1, 0, 0, 0, 0]
-	},
-	{
-		"name": "Maniteja Maloth",
-		"roll": "",
-		"year": "1",
-		"teams": [0, 1, 0, 0, 0]
-	},
-	{
-		"name": "Nikhith Mathai Manoj",
-		"roll": "",
-		"year": "1",
-		"teams": [0, 0, 1, 0, 0]
-	},
-	{
-		"name": "Yaman Meena",
-		"roll": "",
-		"year": "1",
-		"teams": [1, 0, 0, 0, 0]
-	},
-	{
-		"name": "Chiranjeet Mishra",
-		"roll": "",
-		"year": "1",
-		"teams": [1, 0, 0, 0, 0]
 	}
 ]

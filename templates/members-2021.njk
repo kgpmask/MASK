@@ -1,0 +1,104 @@
+{% extends "_base.njk" %}
+
+{% set thispage = 'members' %}
+{% set pagetitle = 'Our Members' %}
+
+{% block pagecontent %}
+	<div id="loaded" style="display:none">
+		<h1>Our Members</h1>
+		{% for year, list in members %}
+			{% if list | length %}
+				<div class="yearbox">
+					<h2>{{ year }} {% if not (year == 'Governors' or year == 'Alumni' or year == 'Former Governors') %} Years {% endif %}</h2>
+					<br/><hr class="div-line"/>
+					<div class="list">
+						{% for person in list %}
+							<div class="member">
+								<img src="/assets/members/{{ person.href }}" alt="{{ person.name }}" class="member-icon" height="80px" width="80px"/>
+								<div class="div-line">&nbsp;</div>
+								<div class="member-desc">{{ person.name }}<!--br/>{{ person.roll }}--><br/></div>
+								<div class="teamlist">
+									{% for team in person.teams %}
+										<span class="icon-{{ team.icon }}" title="{{ team.name }}"></i>
+									{% endfor %}
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+			{% endif %}
+		{% endfor %}
+	</div>
+	<div id="unloaded">
+		Loading! ^-^
+	</div>
+{% endblock %}
+
+{% block customcss %}
+	<link rel="stylesheet" type="text/css" href="/assets/styles/icons.css"/>
+	<style>
+		.yearbox {
+			color: var(--off-white);
+			padding: 20px;
+			border-radius: 10px;
+			background-color: var(--tinted-gray);
+			margin: 40px auto;
+			width: 80%;
+		}
+		h3 {
+			margin: auto;
+		}
+		.div-line {
+			width: 70%;
+			margin: 5px auto;
+			display: block;
+			height: 0px;
+			border: 1px solid var(--ghost-gray);
+		}
+		.list {
+			display: flex;
+			align-items: stretch;
+			flex-wrap: wrap;
+			list-style: none;
+			justify-content: center;
+		}
+		.member {
+			border-radius: 10px;
+			background-color: var(--medium-gray);
+			width: 80px;
+			display: grid;
+			text-align: center;
+			margin: 20px;
+			padding: 10px;
+		}
+		.member-icon {
+			border-radius: 15px;
+			margin-bottom: 10px;
+		}
+		.member-desc {
+			margin-top: 10px;
+			display: block;
+			font-size: 0.8em;
+			overflow: wrap;
+			word-wrap: break-word;
+			hyphens: auto;
+		}
+		.teamlist {
+			margin-top: 10px;
+			align-self: flex-end;
+		}
+		#unloaded {
+			margin-top: 10%;
+			font-size: 2em;
+		}
+	</style>
+{% endblock %}
+
+{% block customjs %}
+	<script>
+		window.onload = () => {
+			document.getElementById('loaded').style.display = 'initial';
+			document.getElementById('unloaded').style.display = 'none';
+		}
+	</script>
+{% endblock %}
