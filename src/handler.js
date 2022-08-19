@@ -95,16 +95,31 @@ function handler (app, env) {
 			}
 			case 'members': {
 				switch (args[1]) {
+					case "2020": {
+						const members = require("./member20.json");
+						const teams = {
+							AMV: { name: "AMV", icon: "amv" },
+							Creative: { name: "Creative", icon: "design" },
+							Quiz: { name: "Quiz", icon: "quiz" },
+							WebDev: { name: "WebDev", icon: "webdev" }
+						};
+						const ctx = { 'Governors' : [], '3rd' : [], '2nd' : []};
+						members.forEach(member => {
+							ctx[member.gov || ['2nd', '3rd'][19 - parseInt(member.roll.slice(0,2))]].push({
+								name: member.name,
+								roll: member.roll,
+								href : (member.id[0] != 'X') ? `members/${member.id}.webp` : `logo.jpeg`,
+								teams : member.teams.map( teamID => {
+									if (teamID) return teams[teamID]; 
+								})
+							})
+						})
+						res.renderFile('members-2020.njk', { members: ctx });
+						break;
+					}
 					case "2021": {
 						const members = require('./member21.json');
-						const ctx = {
-							'Governors': [],
-							'5th': [],
-							'4th': [],
-							'3rd': [],
-							'2nd': [],
-							'1st': []
-						};
+						const ctx = { 'Governors': [], '5th': [], '4th': [], '3rd': [], '2nd': [], '1st': [] };
 						members.forEach(member => {
 							ctx[member.gov || ['0th', '1st', '2nd', '3rd', '4th', '5th'][member.year]].push({
 								name: member.name,
@@ -146,17 +161,17 @@ function handler (app, env) {
 							if (member.active) {
 								if (member.gov) key = 'Governors';
 								else key = 'Active Members';
+								ctx[key][member.roll.slice(0, 2)].push(output = {
+									name: member.name,
+									roll: member.roll,
+									href: `${member.id}.webp`,
+									teams: member.teams.map(teamID => {
+										const team = teams[teamID.toLowerCase()];
+										if (teamID === teamID.toUpperCase()) return { name: team.name, icon: team.icon + '-head' };
+										return team;
+									})
+								});
 							}
-							ctx[key][member.roll.slice(0, 2)].push(output = {
-								name: member.name,
-								roll: member.roll,
-								href: `${member.id}.webp`,
-								teams: member.teams.map(teamID => {
-									const team = teams[teamID.toLowerCase()];
-									if (teamID === teamID.toUpperCase()) return { name: team.name, icon: team.icon + '-head' };
-									return team;
-								})
-							});
 						});
 						res.renderFile('members-2022.njk', { members: ctx });
 						break;
