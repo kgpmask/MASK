@@ -94,89 +94,36 @@ function handler (app, env) {
 				break;
 			}
 			case 'members': {
-				switch (args[1]) {
-					case "2020": {
-						const members = require("./member20.json");
-						const teams = {
-							AMV: { name: "AMV", icon: "amv" },
-							Creative: { name: "Creative", icon: "design" },
-							Quiz: { name: "Quiz", icon: "quiz" },
-							WebDev: { name: "WebDev", icon: "webdev" }
-						};
-						const ctx = { 'Governors' : [], '3rd' : [], '2nd' : []};
-						members.forEach(member => {
-							ctx[member.gov || ['2nd', '3rd'][19 - parseInt(member.roll.slice(0,2))]].push({
-								name: member.name,
-								roll: member.roll,
-								href : (member.id[0] != 'X') ? `members/${member.id}.webp` : `logo.jpeg`,
-								teams : member.teams.map( teamID => {
-									if (teamID) return teams[teamID]; 
-								})
-							})
+				const membersData = require('./members.json');
+				const {
+					name,
+					baseYear,
+					teams,
+					members
+				} = args[1] ? membersData.find(year => [year.name, year.baseYear].includes(args[1])) : membersData[0];
+				const ctx = { 'Governors': [], 'Former Members': [] };
+				members.forEach(member => {
+					let target;
+					if (member.gov) target = 'Governors';
+					else if (member.inactive) target = 'Former Members';
+					else target = `Batch of 20${member.roll.substr(0, 2)}`;
+					if (!ctx[target]) ctx[target] = [];
+					ctx[target].push({
+						name: member.name,
+						roll: member.roll,
+						href: member.id.startsWith('X') ? 'blank.webp' : `${member.id}.webp`,
+						teams: member.teams.map(teamID => {
+							const team = teams[teamID.toLowerCase()];
+							if (teamID === teamID.toUpperCase()) return { name: team.name, icon: team.icon + '-head' };
+							return team;
 						})
-						res.renderFile('members-2020.njk', { members: ctx });
-						break;
-					}
-					case "2021": {
-						const members = require('./member21.json');
-						const ctx = { 'Governors': [], '5th': [], '4th': [], '3rd': [], '2nd': [], '1st': [] };
-						members.forEach(member => {
-							ctx[member.gov || ['0th', '1st', '2nd', '3rd', '4th', '5th'][member.year]].push({
-								name: member.name,
-								roll: member.roll,
-								href: `${member.id}.webp` ,
-								teams: [
-									{ name: 'AMV', icon: 'amv'}, 
-									{ name: 'Design & Arts', icon: 'design'},
-									{name: 'Music', icon: 'music'}, 
-									{name: 'Quiz', icon: 'quiz'}, 
-									{ name: 'WebDev', icon: 'webdev'}
-								].filter((_, index) => member.teams[index])
-							});
-						});
-						res.renderFile('members-2021.njk', { members: ctx });
-						break;
-					}
-					case '2022': default: {
-						const members = require('./member22.json');
-						const ctx = {
-							'Governors': {
-								'20': []
-							},
-							'Active Members': {
-								'19': [],
-								'20': [],
-								'21': []
-							}
-						};
-						const teams = {
-							a: { name: "AMV", icon: "amv" },
-							d: { name: "Design & Arts", icon: "design" },
-							n: { name: "Newsletter", icon: "newsletter" },
-							q: { name: "Quiz", icon: "quiz" },
-							w: { name: "WebDev", icon: "webdev" }
-						};
-						members.forEach(member => {
-							let key;
-							if (member.active) {
-								if (member.gov) key = 'Governors';
-								else key = 'Active Members';
-								ctx[key][member.roll.slice(0, 2)].push(output = {
-									name: member.name,
-									roll: member.roll,
-									href: `${member.id}.webp`,
-									teams: member.teams.map(teamID => {
-										const team = teams[teamID.toLowerCase()];
-										if (teamID === teamID.toUpperCase()) return { name: team.name, icon: team.icon + '-head' };
-										return team;
-									})
-								});
-							}
-						});
-						res.renderFile('members-2022.njk', { members: ctx });
-						break;
-					}
-				}
+					});
+				});
+				const keys = ['Governors', ...Object.keys(ctx).filter(key => key.startsWith('Batch of ')).sort(), 'Former Members'];
+				res.renderFile('members.njk', {
+					members: Object.fromEntries(keys.map(key => [key, ctx[key]])),
+					membersTitle: name === membersData[0].name ? 'Our Members' : name
+				});
 				break;
 			}
 			case 'newsletters': {
