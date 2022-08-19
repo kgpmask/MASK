@@ -1,6 +1,27 @@
 const fs = require('fs');
 const path = require('path');
 
+const aliases = {
+	d: 'dev',
+	l: 'local',
+	p: 'prod',
+	u: 'userless'
+};
+const validParams = ['dev', 'local', 'prod', 'userless'];
+
+if (!global.PARAMS) {
+	const shorts = new Set();
+	const entries = process.argv.slice(2).map(arg => {
+		if (!validParams.includes(arg)) {
+			arg.split('').forEach(a => shorts.add(a));
+			return false;
+		}
+		return [arg, true];
+	}).filter(entry => entry);
+	shorts.forEach(a => entries.push([aliases[a] || a, true]));
+	global.PARAMS = Object.fromEntries(entries);
+}
+
 exports.init = () => {
 	if (PARAMS.dev && PARAMS.prod) {
 		console.log('Production access is disabled with dev mode. Please use the testing DB instead.');
