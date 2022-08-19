@@ -1,4 +1,3 @@
-if (!global.PARAMS) global.PARAMS = Object.fromEntries(process.argv.slice(2).map(arg => [arg, true]));
 require('./env.js').init();
 
 

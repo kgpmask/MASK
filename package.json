@@ -5,6 +5,7 @@
   "main": "./src/index.js",
   "scripts": {
     "dev": "npx nodemon src/mask.js dev",
+    "du": "npx nodemon src/mask.js du",
     "lint": "npx eslint . --config .eslintrc.json --ext .js",
     "start": "node src/mask.js",
     "test": "npm run lint && npx mocha && echo \"Passing all tests.\" && exit 0"
