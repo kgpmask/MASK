@@ -2,7 +2,7 @@
 The website for the Manga and Anime Society Kharagpur
 
 ## Contributing
-=== This has been updated! ===
+
 The owner of this repository is @PartMan7, who also runs the server. He's also running the server cost (at the time of writing he's in his final year, but it'll carry on even after graduation).
 
 All non-trivial changes are done through PULL REQUESTS ONLY. The WebDev Team Head is responsible for testing and merging all PRs. Feel free to pester them to look at the changes you've prepared.
@@ -26,7 +26,7 @@ There are multiple ways to run the server. The vast majority of the time, you wi
 
 In order to start the server, you will require a credentials.json file - contact your WebDev Team Head for this file, and do NOT share it. The only exception to this is the userless flag - it is recommended to use `npm run dev userless` (or `npm run du`) for any page that does not involve a logged-in user.
 
-Note: Since the college firewall is batshit terrible, you will NOT be able to connect to a remote MongoDB server for user-based testing. In this case, you will have to leverage either the planned user file, a local MongoDB server, or a VPN that allows you access.
+Note: Since the college firewall is batshit terrible, you will NOT be able to connect to a remote MongoDB server for user-based testing while on campus. In this case, you will have to leverage either the planned user file, a local MongoDB server, or a VPN that allows you access.
 
 
 ## Guidelines
