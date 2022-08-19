@@ -94,42 +94,89 @@ function handler (app, env) {
 				break;
 			}
 			case 'members': {
-				const members = require('./members.json');
-				const ctx = {
-					'Governors': {
-						'20':[]
-					},
-					'Active Members':{
-						'19':[],
-						'20':[],
-						'21':[]
-					}
-				};
-				const teams = {
-					a: { name: "AMV", icon: "amv" },
-					d: { name: "Design & Arts", icon: "design" },
-					n: { name: "Newsletter", icon: "newsletter" },
-					q: { name: "Quiz", icon: "quiz" },
-					w: { name: "WebDev", icon: "webdev" }
-				};
-				members.forEach(member => {
-					let key;
-					if (member.active) {
-						if (member.gov) key = 'Governors';
-						else key = 'Active Members';
-					}
-					ctx[key][member.roll.slice(0,2)].push(output = {
-						name: member.name,
-						roll: member.roll,
-						href: `${member.id}.webp`,
-						teams: member.teams.map(teamID => {
-							const team = teams[teamID.toLowerCase()];
-							if (teamID === teamID.toUpperCase()) return { name: team.name, icon: team.icon + '-head' };
-							return team;
+				switch (args[1]) {
+					case "2020": {
+						const members = require("./member20.json");
+						const teams = {
+							AMV: { name: "AMV", icon: "amv" },
+							Creative: { name: "Creative", icon: "design" },
+							Quiz: { name: "Quiz", icon: "quiz" },
+							WebDev: { name: "WebDev", icon: "webdev" }
+						};
+						const ctx = { 'Governors' : [], '3rd' : [], '2nd' : []};
+						members.forEach(member => {
+							ctx[member.gov || ['2nd', '3rd'][19 - parseInt(member.roll.slice(0,2))]].push({
+								name: member.name,
+								roll: member.roll,
+								href : (member.id[0] != 'X') ? `members/${member.id}.webp` : `logo.jpeg`,
+								teams : member.teams.map( teamID => {
+									if (teamID) return teams[teamID]; 
+								})
+							})
 						})
-					});
-				});
-				res.renderFile('members.njk', { members: ctx });
+						res.renderFile('members-2020.njk', { members: ctx });
+						break;
+					}
+					case "2021": {
+						const members = require('./member21.json');
+						const ctx = { 'Governors': [], '5th': [], '4th': [], '3rd': [], '2nd': [], '1st': [] };
+						members.forEach(member => {
+							ctx[member.gov || ['0th', '1st', '2nd', '3rd', '4th', '5th'][member.year]].push({
+								name: member.name,
+								roll: member.roll,
+								href: `${member.id}.webp` ,
+								teams: [
+									{ name: 'AMV', icon: 'amv'}, 
+									{ name: 'Design & Arts', icon: 'design'},
+									{name: 'Music', icon: 'music'}, 
+									{name: 'Quiz', icon: 'quiz'}, 
+									{ name: 'WebDev', icon: 'webdev'}
+								].filter((_, index) => member.teams[index])
+							});
+						});
+						res.renderFile('members-2021.njk', { members: ctx });
+						break;
+					}
+					case '2022': default: {
+						const members = require('./member22.json');
+						const ctx = {
+							'Governors': {
+								'20': []
+							},
+							'Active Members': {
+								'19': [],
+								'20': [],
+								'21': []
+							}
+						};
+						const teams = {
+							a: { name: "AMV", icon: "amv" },
+							d: { name: "Design & Arts", icon: "design" },
+							n: { name: "Newsletter", icon: "newsletter" },
+							q: { name: "Quiz", icon: "quiz" },
+							w: { name: "WebDev", icon: "webdev" }
+						};
+						members.forEach(member => {
+							let key;
+							if (member.active) {
+								if (member.gov) key = 'Governors';
+								else key = 'Active Members';
+								ctx[key][member.roll.slice(0, 2)].push(output = {
+									name: member.name,
+									roll: member.roll,
+									href: `${member.id}.webp`,
+									teams: member.teams.map(teamID => {
+										const team = teams[teamID.toLowerCase()];
+										if (teamID === teamID.toUpperCase()) return { name: team.name, icon: team.icon + '-head' };
+										return team;
+									})
+								});
+							}
+						});
+						res.renderFile('members-2022.njk', { members: ctx });
+						break;
+					}
+				}
 				break;
 			}
 			case 'newsletters': {
@@ -232,7 +279,7 @@ function handler (app, env) {
 					const rand = Tools.fakeRandom(req.user._id);
 					function shuffle (array) {
 						for (let i = array.length - 1; i > 0; i--) {
-							let j = Math.floor(rand() * (i + 1));
+							const j = Math.floor(rand() * (i + 1));
 							[array[i], array[j]] = [array[j], array[i]];
 						}
 						return array;
@@ -300,18 +347,18 @@ function handler (app, env) {
 		switch (args[0]) {
 			case "checker": {
 				const checker = require('./checker.js');
-				const correct = checker.compare(args[2], args[1], req.body); //req.data
+				const correct = checker.compare(args[2], args[1], req.body); // req.data
 				switch (correct) {
 					case true: {
-						return res.send("correct");
+						res.send("correct");
 						break;
 					}
 					case false: {
-						return res.send("");
+						res.send("");
 						break;
 					}
 					default: {
-						return res.send(correct);
+						res.send(correct);
 						break;
 					}
 				}
@@ -322,7 +369,7 @@ function handler (app, env) {
 				const rand = Tools.fakeRandom(req.user._id);
 				function shuffle (array) {
 					for (let i = array.length - 1; i > 0; i--) {
-						let j = Math.floor(rand() * (i + 1));
+						const j = Math.floor(rand() * (i + 1));
 						[array[i], array[j]] = [array[j], array[i]];
 					}
 					return array;
@@ -337,7 +384,7 @@ function handler (app, env) {
 					solutions.push(...keys.map(key => QUIZ.questions[randDef.from[key]].solution));
 				});
 				shuffle(solutions);
-				const answers = Array.from({ length: solutions.length }).map((_, i) => ~~(req.body[`answer-${i + 1}`]));
+				const answers = Array.from({ length: solutions.length }).map((_, i) => ~~req.body[`answer-${i + 1}`]);
 				const points = [answers.filter((ans, i) => ~~ans === ~~solutions[i]).length, solutions.length];
 				res.renderFile('quiz_success.njk', { score: points[0], totalScore: points[1] });
 				const dbh = require('../database/database_handler');

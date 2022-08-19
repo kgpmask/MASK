@@ -1,0 +1,370 @@
+[
+	{
+		"id": "19_parth",
+		"name": "Parth Mane",
+		"roll": "19MF10022",
+		"active": true,
+		"gov": false,
+		"teams": ["a", "n", "W"]
+	},
+	{
+		"id": "20_abhibhu",
+		"name": "Abhibhu Prakash",
+		"roll": "20CS10002",
+		"active": true,
+		"gov": true,
+		"teams": ["a", "n", "q"]
+	},
+	{
+		"id": "21_abhinav",
+		"name": "Abhinav Prakash",
+		"roll": "21CH10001",
+		"active": true,
+		"gov": false,
+		"teams": ["a", "d", "q"]
+	},
+	{
+		"id": "21_abhinav_v",
+		"name": "Abhinav V Pillai",
+		"roll": "21ME10004",
+		"active": true,
+		"gov": false,
+		"teams": ["a"]
+	},
+	{
+		"id": "20_aniruddha",
+		"name": "Aniruddha Panda",
+		"roll": "20MI10008",
+		"active": true,
+		"gov": true,
+		"teams": ["a", "n"]
+	},
+	{
+		"id": "21_anwesha",
+		"name": "Anwesha Das",
+		"roll": "21CS30007",
+		"active": true,
+		"gov": false,
+		"teams": ["d"]
+	},
+	{
+		"id": "21_arghadeep",
+		"name": "Arghadeep Biswas",
+		"roll": "21CH10008",
+		"active": true,
+		"gov": false,
+		"teams": ["a", "q"]
+	},
+	{
+		"id": "20_arjit",
+		"name": "Arjit Lohia",
+		"roll": "20EC30006",
+		"active": true,
+		"gov": false,
+		"teams": ["d", "Q"]
+	},
+	{
+		"id": "20_ayush",
+		"name": "Ayush Kumar",
+		"roll": "20HS20012",
+		"active": true,
+		"gov": false,
+		"teams": ["A"]
+	},
+	{
+		"id": "21_ayush",
+		"name": "Ayush Kumar",
+		"roll": "21AG10008",
+		"active": true,
+		"gov": false,
+		"teams": ["d"]
+	},
+	{
+		"id": "21_ayush_parmar",
+		"name": "Ayush Parmar",
+		"roll": "21IM30005",
+		"active": true,
+		"gov": false,
+		"teams": ["q"]
+	},
+	{
+		"id": "21_bhavesh",
+		"name": "Bhavesh Mukheja",
+		"roll": "21PH10008",
+		"active": true,
+		"gov": false,
+		"teams": ["a", "q"]
+	},
+	{
+		"id": "21_chiranjeet",
+		"name": "Chiranjeet Mishra",
+		"roll": "21PH10011",
+		"active": true,
+		"gov": false,
+		"teams": ["a", "n"]
+	},
+	{
+		"id": "21_dillip",
+		"name": "Dillip Dibyajyoti Dash",
+		"roll": "21EC10020",
+		"active": true,
+		"gov": false,
+		"teams": ["n", "q"]
+	},
+	{
+		"id": "21_divyansh",
+		"name": "Divyansh Tripathi",
+		"roll": "21MF10016",
+		"active": true,
+		"gov": false,
+		"teams": ["n"]
+	},
+	{
+		"id": "21_dommeti",
+		"name": "Dommeti Chaitanya Srinivas",
+		"roll": "21EC10021",
+		"active": true,
+		"gov": false,
+		"teams": ["a", "d"]
+	},
+	{
+		"id": "21_lohitakshay",
+		"name": "G Lohitakshay",
+		"roll": "21CY10015",
+		"active": true,
+		"gov": false,
+		"teams": ["a"]
+	},
+	{
+		"id": "20_akshith",
+		"name": "G Akshith",
+		"roll": "20BT30009",
+		"active": true,
+		"gov": true,
+		"teams": ["D"]
+	},
+	{
+		"id": "20_ganji",
+		"name": "Ganji Sanjeev Raj",
+		"roll": "20EC10029",
+		"active": true,
+		"gov": false,
+		"teams": ["d"]
+	},
+	{
+		"id": "20_hrishabh",
+		"name": "Hrishabh Kumar Tundwar",
+		"roll": "20MI10020",
+		"active": true,
+		"gov": false,
+		"teams": ["a", "d", "N"]
+	},
+	{
+		"id": "21_karan",
+		"name": "Karan Nag",
+		"roll": "21ME30038",
+		"active": true,
+		"gov": false,
+		"teams": ["d"]
+	},
+	{
+		"id": "21_karthikeya",
+		"name": "Karthikeya S M Yelisetty",
+		"roll": "21CS30060",
+		"active": true,
+		"gov": false,
+		"teams": ["a", "w"]
+	},
+	{
+		"id": "21_maloth",
+		"name": "Maloth Maniteja",
+		"roll": "21PH20002",
+		"active": true,
+		"gov": false,
+		"teams": ["d"]
+	},
+	{
+		"id": "21_manasvi",
+		"name": "Manasvi Rathore",
+		"roll": "21HS10025",
+		"active": true,
+		"gov": false,
+		"teams": ["d"]
+	},
+	{
+		"id": "21_mohit",
+		"name": "Mohit Kumar Meena",
+		"roll": "21CE10035",
+		"active": true,
+		"gov": false,
+		"teams": ["a"]
+	},
+	{
+		"id": "21_nikhith",
+		"name": "Nikhith Mathai Manoj",
+		"roll": "21AE10027",
+		"active": true,
+		"gov": false,
+		"teams": ["a", "n"]
+	},
+	{
+		"id": "21_nischay",
+		"name": "Nischay Gururani",
+		"roll": "21AG30026",
+		"active": true,
+		"gov": false,
+		"teams": ["a"]
+	},
+	{
+		"id": "21_pranay",
+		"name": "Pranay Bhaskar",
+		"roll": "21MI33015",
+		"active": true,
+		"gov": false,
+		"teams": ["q"]
+	},
+	{
+		"id": "21_purba",
+		"name": "Purba Saren",
+		"roll": "21IE10030",
+		"active": true,
+		"gov": false,
+		"teams": ["d"]
+	},
+	{
+		"id": "21_rishabh",
+		"name": "Rishabh Mishra",
+		"roll": "21CH30026",
+		"active": false,
+		"gov": false,
+		"teams": ["a"]
+	},
+	{
+		"id": "21_rishabh_prasad",
+		"name": "Rishabh Prasad",
+		"roll": "21XX00000",
+		"active": true,
+		"gov": false,
+		"teams": ["d"]
+	},
+	{
+		"id": "21_ritesah",
+		"name": "Ritesah M",
+		"roll": "21CS30042",
+		"active": true,
+		"gov": false,
+		"teams": ["a", "d"]
+	},
+	{
+		"id": "20_saumyadip",
+		"name": "Saumyadip Nandy",
+		"roll": "20EC10072",
+		"active": true,
+		"gov": false,
+		"teams": ["w"]
+	},
+	{
+		"id": "21_shreya",
+		"name": "Shreya Rajvanshi",
+		"roll": "21PP00064",
+		"active": true,
+		"gov": false,
+		"teams": ["a", "d"]
+	},
+	{
+		"id": "21_shubham",
+		"name": "Shubham Dilawar",
+		"roll": "21AR10031",
+		"active": true,
+		"gov": false,
+		"teams": ["a", "d", "n"]
+	},
+	{
+		"id": "20_soham",
+		"name": "Soham Sen",
+		"roll": "20MF10038",
+		"active": true,
+		"gov": false,
+		"teams": ["w"]
+	},
+	{
+		"id": "20_spandan",
+		"name": "Spandan Halder",
+		"roll": "20CS10063",
+		"active": true,
+		"gov": true,
+		"teams": ["a", "n", "w"]
+	},
+	{
+		"id": "20_srijan",
+		"name": "Srijan Srivastava",
+		"roll": "20EC30051",
+		"active": true,
+		"gov": false,
+		"teams": ["q"]
+	},
+	{
+		"id": "21_suraj",
+		"name": "Suraj Pati",
+		"roll": "21EC30050",
+		"active": true,
+		"gov": false,
+		"teams": ["a"]
+	},
+	{
+		"id": "21_suvojit",
+		"name": "Suvojit Das",
+		"roll": "21EE30029",
+		"active": true,
+		"gov": false,
+		"teams": ["d"]
+	},
+	{
+		"id": "21_tussar",
+		"name": "Tussar Roy",
+		"roll": "21EC10083",
+		"active": true,
+		"gov": false,
+		"teams": ["a", "n"]
+	},
+	{
+		"id": "21_venkatsai",
+		"name": "Venkatsai Mokshith",
+		"roll": "21CS10050",
+		"active": true,
+		"gov": false,
+		"teams": ["w"]
+	},
+	{
+		"id": "20_vidhu",
+		"name": "Vidhu Vikas Singh",
+		"roll": "20AG30039",
+		"active": true,
+		"gov": true,
+		"teams": ["n", "q"]
+	},
+	{
+		"id": "21_vidunram",
+		"name": "Vidunram",
+		"roll": "21EE30033",
+		"active": true,
+		"gov": false,
+		"teams": ["q", "w"]
+	},
+	{
+		"id": "20_vishesh",
+		"name": "Vishesh Gupta",
+		"roll": "20EE10080",
+		"active": true,
+		"gov": false,
+		"teams": ["w"]
+	},
+	{
+		"id": "21_yaman",
+		"name": "Yaman Meena",
+		"roll": "21IE10044",
+		"active": true,
+		"gov": false,
+		"teams": ["a"]
+	}
+]

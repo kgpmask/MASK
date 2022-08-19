@@ -7,12 +7,31 @@
 		"ecmaVersion": 2020
 	},
 	"rules": {
+		"arrow-spacing": "error",
+		"block-spacing": "error",
+		"brace-style": "error",
+		"camelcase": "error",
+		"comma-dangle": ["error", "never"],
+		"comma-spacing": "error",
+		"dot-location": ["error", "property"],
 		"eol-last": ["error", "always"],
+		"eqeqeq": "error",
+		"func-call-spacing": "error",
 		"indent": ["error", "tab", {
 			"SwitchCase": 1
 		}],
+		"key-spacing": "error",
+		"keyword-spacing": "error",
 		"max-len": ["error", 135],
+		"no-extra-semi": "error",
+		"no-extra-parens": "error",
+		"no-mixed-spaces-and-tabs": "error",
 		"no-tabs": 0,
+		"no-trailing-spaces": "error",
+		"no-unreachable": 2,
+		"no-unused-expressions": "error",
+		"no-var": "error",
+		"prefer-const": "error",
 		"semi": ["error", "always"],
 		"semi-spacing": [
 			"error",
@@ -20,6 +39,10 @@
 				"before": false,
 				"after": true
 			}
-		]
+		],
+		"space-before-function-paren": ["error", "always"],
+		"space-in-parens": "error",
+		"spaced-comment": ["error", "always", { "exceptions": ["*"] }],
+		"yoda": ["error", "never"]
 	}
 }
