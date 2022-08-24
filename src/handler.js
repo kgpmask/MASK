@@ -95,12 +95,13 @@ function handler (app, env) {
 			}
 			case 'members': {
 				const membersData = require('./members.json');
+				if (!args[1]) args[1] = membersData[0].name;
 				const {
 					name,
 					baseYear,
 					teams,
 					members
-				} = args[1] ? membersData.find(year => [year.name, year.baseYear].includes(args[1])) : membersData[0];
+				} = membersData.find(year => [year.name, year.baseYear].includes(args[1]));
 				const ctx = { 'Governors': [], 'Former Members': [] };
 				members.forEach(member => {
 					let target;
@@ -122,7 +123,9 @@ function handler (app, env) {
 				const keys = ['Governors', ...Object.keys(ctx).filter(key => key.startsWith('Batch of ')).sort(), 'Former Members'];
 				res.renderFile('members.njk', {
 					members: Object.fromEntries(keys.map(key => [key, ctx[key]])),
-					membersTitle: name === membersData[0].name ? 'Our Members' : name
+					membersTitle: name === membersData[0].name ? 'Our Members' : name,
+					prev: (membersData.find(year => (parseInt(args[1].slice(-2))-2) == year.baseYear )) ? `20${(parseInt(args[1].slice(-2))-2)}-${(parseInt(args[1].slice(-2))-1)}` : undefined,
+					next: (membersData.find(year => (parseInt(args[1].slice(-2))) == year.baseYear )) ? `20${args[1].slice(-2)}-${(parseInt(args[1].slice(-2))+1)}` : undefined,
 				});
 				break;
 			}
