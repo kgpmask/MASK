@@ -124,8 +124,8 @@ function handler (app, env) {
 				res.renderFile('members.njk', {
 					members: Object.fromEntries(keys.map(key => [key, ctx[key]])),
 					membersTitle: name === membersData[0].name ? 'Our Members' : name,
-					prev: (membersData.find(year => (parseInt(args[1].slice(-2))-2) == year.baseYear )) ? `20${(parseInt(args[1].slice(-2))-2)}-${(parseInt(args[1].slice(-2))-1)}` : undefined,
-					next: (membersData.find(year => (parseInt(args[1].slice(-2))) == year.baseYear )) ? `20${args[1].slice(-2)}-${(parseInt(args[1].slice(-2))+1)}` : undefined,
+					prev: membersData.find(year => (parseInt(args[1].slice(-2))-2) === parseInt(year.baseYear)) ? `20${parseInt(args[1].slice(-2))-2}-${parseInt(args[1].slice(-2))-1}` : undefined,
+					next: membersData.find(year => (parseInt(args[1].slice(-2))) === parseInt(year.baseYear)) ? `20${args[1].slice(-2)}-${parseInt(args[1].slice(-2))+1}` : undefined
 				});
 				break;
 			}
