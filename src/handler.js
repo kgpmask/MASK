@@ -96,7 +96,7 @@ function handler (app, env) {
 			case 'members': {
 				const membersData = require('./members.json');
 				if (!args[1]) args[1] = membersData[0].name;
-				const yearIndex = membersData.indexOf(year => [year.name, year.baseYear].includes(args[1]));
+				const yearIndex = membersData.findIndex(year => [year.name, year.baseYear].includes(args[1]));
 				if (yearIndex === -1) return notFound();
 				const {
 					name,
