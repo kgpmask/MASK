@@ -96,12 +96,14 @@ function handler (app, env) {
 			case 'members': {
 				const membersData = require('./members.json');
 				if (!args[1]) args[1] = membersData[0].name;
+				const yearIndex = membersData.findIndex(year => [year.name, year.baseYear].includes(args[1]));
+				if (yearIndex === -1) return notFound();
 				const {
 					name,
 					baseYear,
 					teams,
 					members
-				} = membersData.find(year => [year.name, year.baseYear].includes(args[1]));
+				} = membersData[yearIndex];
 				const ctx = { 'Governors': [], 'Former Members': [] };
 				members.forEach(member => {
 					let target;
@@ -120,6 +122,7 @@ function handler (app, env) {
 						})
 					});
 				});
+				//const prev = yearIndex !== 0, next = yearIndex !== membersData.length - 1;
 				const keys = ['Governors', ...Object.keys(ctx).filter(key => key.startsWith('Batch of ')).sort(), 'Former Members'];
 				let prev, next,link;
 				if (membersData.find(year => parseInt(args[1].slice(-2)) - 2 === parseInt(year.baseYear))) {
@@ -128,13 +131,11 @@ function handler (app, env) {
 				if (membersData.find(year => parseInt(args[1].slice(-2)) === parseInt(year.baseYear))) {
 					next = `20${args[1].slice(-2)}-${parseInt(args[1].slice(-2)) + 1}`;
 				}
-				//link=document.URL;
 				res.renderFile('members.njk', {
 					members: Object.fromEntries(keys.map(key => [key, ctx[key]])),
 					membersTitle: name === membersData[0].name ? 'Our Members' : name,
 					prev,
-					next,
-					link
+					next
 				});
 				break;
 			}
