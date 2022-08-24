@@ -125,7 +125,7 @@ function handler (app, env) {
 				if (membersData.find(year => parseInt(args[1].slice(-2))-2 === parseInt(year.baseYear))) {
 					prev = `20${parseInt(args[1].slice(-2))-2}-${parseInt(args[1].slice(-2))-1}`;
 				}
-				if (membersData.find(year => (parseInt(args[1].slice(-2))) === parseInt(year.baseYear))) {
+				if (membersData.find(year => parseInt(args[1].slice(-2)) === parseInt(year.baseYear))) {
 					next = `20${args[1].slice(-2)}-${parseInt(args[1].slice(-2))+1}`;
 				}
 				res.renderFile('members.njk', {
