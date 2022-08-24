@@ -30,7 +30,8 @@
 			{% endif %}
 		{% endfor %}
 		<!--Mokshith will add the hyperlink over here.-->
-		{{prev}} | {{next}}
+		{{page.url}}
+		<a href="/members/{{prev}}">{{prev}}</a> | <a href="/members/{{next}}">{{next}}</a>
 	</div>
 	<div id="unloaded">
 		Loading! ^-^

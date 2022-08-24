@@ -121,18 +121,20 @@ function handler (app, env) {
 					});
 				});
 				const keys = ['Governors', ...Object.keys(ctx).filter(key => key.startsWith('Batch of ')).sort(), 'Former Members'];
-				let prev, next;
+				let prev, next,link;
 				if (membersData.find(year => parseInt(args[1].slice(-2)) - 2 === parseInt(year.baseYear))) {
 					prev = `20${parseInt(args[1].slice(-2))-2}-${parseInt(args[1].slice(-2)) - 1}`;
 				}
 				if (membersData.find(year => parseInt(args[1].slice(-2)) === parseInt(year.baseYear))) {
 					next = `20${args[1].slice(-2)}-${parseInt(args[1].slice(-2)) + 1}`;
 				}
+				//link=document.URL;
 				res.renderFile('members.njk', {
 					members: Object.fromEntries(keys.map(key => [key, ctx[key]])),
 					membersTitle: name === membersData[0].name ? 'Our Members' : name,
 					prev,
-					next
+					next,
+					link
 				});
 				break;
 			}
