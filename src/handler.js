@@ -122,17 +122,17 @@ function handler (app, env) {
 				});
 				const keys = ['Governors', ...Object.keys(ctx).filter(key => key.startsWith('Batch of ')).sort(), 'Former Members'];
 				let prev, next;
-				if (membersData.find(year => parseInt(args[1].slice(-2))-2 === parseInt(year.baseYear))) {
-					prev = `20${parseInt(args[1].slice(-2))-2}-${parseInt(args[1].slice(-2))-1}`;
+				if (membersData.find(year => parseInt(args[1].slice(-2)) - 2 === parseInt(year.baseYear))) {
+					prev = `20${parseInt(args[1].slice(-2))-2}-${parseInt(args[1].slice(-2)) - 1}`;
 				}
 				if (membersData.find(year => parseInt(args[1].slice(-2)) === parseInt(year.baseYear))) {
-					next = `20${args[1].slice(-2)}-${parseInt(args[1].slice(-2))+1}`;
+					next = `20${args[1].slice(-2)}-${parseInt(args[1].slice(-2)) + 1}`;
 				}
 				res.renderFile('members.njk', {
 					members: Object.fromEntries(keys.map(key => [key, ctx[key]])),
 					membersTitle: name === membersData[0].name ? 'Our Members' : name,
-					prev: prev,
-					next: next
+					prev,
+					next
 				});
 				break;
 			}
