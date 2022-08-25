@@ -122,11 +122,11 @@ function handler (app, env) {
 						})
 					});
 				});
-				//const prev = yearIndex !== 0, next = yearIndex !== membersData.length - 1;
+				// const prev = yearIndex !== 0, next = yearIndex !== membersData.length - 1;
 				const keys = ['Governors', ...Object.keys(ctx).filter(key => key.startsWith('Batch of ')).sort(), 'Former Members'];
-				let prev, next,link;
+				let prev, next, link;
 				if (membersData.find(year => parseInt(args[1].slice(-2)) - 2 === parseInt(year.baseYear))) {
-					prev = `20${parseInt(args[1].slice(-2))-2}-${parseInt(args[1].slice(-2)) - 1}`;
+					prev = `20${parseInt(args[1].slice(-2)) - 2}-${parseInt(args[1].slice(-2)) - 1}`;
 				}
 				if (membersData.find(year => parseInt(args[1].slice(-2)) === parseInt(year.baseYear))) {
 					next = `20${args[1].slice(-2)}-${parseInt(args[1].slice(-2)) + 1}`;
