@@ -29,9 +29,12 @@
 				</div>
 			{% endif %}
 		{% endfor %}
-		<!--Mokshith will add the hyperlink over here.-->
-		{{page.url}}
-		<a href="/members/{{prev}}">{{prev}}</a> | <a href="/members/{{next}}">{{next}}</a>
+		{% if prev %}
+			<a href="/members/{{ prev }}"><button class="year-button">{{ prev }}</button></a>
+		{% endif %}
+		{% if next %}
+			<a href="/members/{{ next }}"><button class="year-button">{{ next }}</button></a>
+		{% endif %}
 	</div>
 	<div id="unloaded">
 		Loading! ^-^
@@ -97,6 +100,20 @@
 		#unloaded {
 			margin-top: 10%;
 			font-size: 2em;
+		}
+		.year-button {
+			border: 2px solid var(--off-white);
+			border-radius: 9px;
+			background: var(--tinted-gray);
+			padding: 20px;
+			color: var(--white);
+			transition: 0.4s;
+			cursor: pointer;
+			font-size: 1.1em;
+			margin: 0 5px 30px;
+		}
+		.year-button:hover {
+			background-color: var(--middle-gray);
 		}
 	</style>
 {% endblock %}
