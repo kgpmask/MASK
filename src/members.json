@@ -678,7 +678,7 @@
 				"teams": ["q"]
 			},
 			{
-				"id": "X19_ansari",
+				"id": "19_saad",
 				"name": "Ansari Saad",
 				"roll": "19EE10007",
 				"teams": ["c", "q"]
@@ -758,9 +758,9 @@
 				"teams": ["c"]
 			},
 			{
-				"id": "X18_moto",
+				"id": "18_moto",
 				"name": "Moto Mohor",
-				"roll": "18xxddddd",
+				"roll": "18CE36007",
 				"teams": ["c"]
 			},
 			{
