@@ -39,6 +39,9 @@
 	content: "☑";
 	font-size: 1.3em;
 }
+.icon-music:before {
+	content: "\e911";
+}
 
 .icon-design-head:before {
 	content: "\e900";
@@ -61,7 +64,6 @@
 	content: "\ea80";
 	color: #e8ce3d;
 }
-
 
 .icon-download:before {
 	content: "\e933";

@@ -5,36 +5,36 @@
 
 {% block pagecontent %}
 	<div id="loaded" style="display:none">
-		<h1><u>Our Members</u></h1>
-		{% for status, state in members %}
-			<div class="status">
-				<h2><u>{{status}}</u></h2>
-				{% for year, list in state %}
-					{% if list | length %}
-						<div class="yearbox">
-							{% if status != 'Governors'%}
-							<h3>Batch of 20{{year}}</h3>
-							<br/><hr class="div-line"/>
-							{% endif %}
-							<div class="list">
-								{% for person in list %}
-									<div class="member">
-										<img src="/assets/members/{{ person.href }}" alt="{{ person.name }}" class="member-icon" height="80px" width="80px"/>
-										<div class="div-line">&nbsp;</div>
-										<div class="member-desc">{{ person.name }}<br/></div>
-										<div class="teamlist">
-											{% for team in person.teams %}
-												<span class="icon-{{ team.icon }}" title="{{ team.name }}"></span>
-											{% endfor %}
-										</div>
+		<h1><u>{{ membersTitle }}</u></h1>
+		{% for status, list in members %}
+			{% if list | length %}
+				<div class="status">
+					<h2><u>{{ status }}</u></h2>
+					<div class="yearbox">
+						<div class="list">
+							{% for person in list %}
+								<div class="member">
+									<img src="/assets/members/{{ person.href }}" alt="{{ person.name }}" class="member-icon"/>
+									<div class="div-line">&nbsp;</div>
+									<div class="member-desc">{{ person.name }}<br/></div>
+									<div class="teamlist">
+										{% for team in person.teams %}
+											<span class="icon-{{ team.icon }}" title="{{ team.name }}"></span>
+										{% endfor %}
 									</div>
-								{% endfor %}
-							</div>
+								</div>
+							{% endfor %}
 						</div>
-					{% endif %}
-				{% endfor %}
-			</div>
+					</div>
+				</div>
+			{% endif %}
 		{% endfor %}
+		{% if prev %}
+			<a href="/members/{{ prev }}"><button class="year-button">{{ prev }}</button></a>
+		{% endif %}
+		{% if next %}
+			<a href="/members/{{ next }}"><button class="year-button">{{ next }}</button></a>
+		{% endif %}
 	</div>
 	<div id="unloaded">
 		Loading! ^-^
@@ -82,6 +82,8 @@
 			border-radius: 15px;
 			margin-bottom: 10px;
 			font-size: 60%;
+			height: 80px;
+			width: 80px;
 		}
 		.member-desc {
 			margin-top: 10px;
@@ -98,6 +100,20 @@
 		#unloaded {
 			margin-top: 10%;
 			font-size: 2em;
+		}
+		.year-button {
+			border: 2px solid var(--off-white);
+			border-radius: 9px;
+			background: var(--tinted-gray);
+			padding: 20px;
+			color: var(--white);
+			transition: 0.4s;
+			cursor: pointer;
+			font-size: 1.1em;
+			margin: 0 5px 30px;
+		}
+		.year-button:hover {
+			background-color: var(--middle-gray);
 		}
 	</style>
 {% endblock %}
