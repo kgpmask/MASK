@@ -94,34 +94,27 @@ function handler (app, env) {
 				break;
 			}
 			case 'members': {
-				const members = require('./members.json');
-				const ctx = {
-					'Governors': {
-						'20': []
-					},
-					'Active Members': {
-						'19': [],
-						'20': [],
-						'21': []
-					}
-				};
-				const teams = {
-					a: { name: "AMV", icon: "amv" },
-					d: { name: "Design & Arts", icon: "design" },
-					n: { name: "Newsletter", icon: "newsletter" },
-					q: { name: "Quiz", icon: "quiz" },
-					w: { name: "WebDev", icon: "webdev" }
-				};
+				const membersData = require('./members.json');
+				if (!args[1]) args[1] = membersData[0].name;
+				const yearIndex = membersData.findIndex(year => [year.name, year.baseYear].includes(args[1]));
+				if (yearIndex === -1) return notFound();
+				const {
+					name,
+					baseYear,
+					teams,
+					members
+				} = membersData[yearIndex];
+				const ctx = { 'Governors': [], 'Former Members': [] };
 				members.forEach(member => {
-					let key;
-					if (member.active) {
-						if (member.gov) key = 'Governors';
-						else key = 'Active Members';
-					}
-					ctx[key][member.roll.slice(0, 2)].push(output = {
+					let target;
+					if (member.gov) target = 'Governors';
+					else if (member.inactive) target = 'Former Members';
+					else target = `Batch of 20${member.roll.substr(0, 2)}`;
+					if (!ctx[target]) ctx[target] = [];
+					ctx[target].push({
 						name: member.name,
 						roll: member.roll,
-						href: `${member.id}.webp`,
+						href: member.id.startsWith('X') ? 'blank.webp' : `${member.id}.webp`,
 						teams: member.teams.map(teamID => {
 							const team = teams[teamID.toLowerCase()];
 							if (teamID === teamID.toUpperCase()) return { name: team.name, icon: team.icon + '-head' };
@@ -129,7 +122,14 @@ function handler (app, env) {
 						})
 					});
 				});
-				res.renderFile('members.njk', { members: ctx });
+				const prev = membersData[yearIndex + 1]?.name, next = membersData[yearIndex - 1]?.name;
+				const keys = ['Governors', ...Object.keys(ctx).filter(key => key.startsWith('Batch of ')).sort(), 'Former Members'];
+				res.renderFile('members.njk', {
+					members: Object.fromEntries(keys.map(key => [key, ctx[key]])),
+					membersTitle: name === membersData[0].name ? 'Our Members' : name,
+					prev,
+					next
+				});
 				break;
 			}
 			case 'newsletters': {
