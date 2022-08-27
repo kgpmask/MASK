@@ -122,7 +122,7 @@ function handler (app, env) {
 						})
 					});
 				});
-				const prev = membersData[yearIndex - 1]?.name, next = membersData[yearIndex + 1]?.name;
+				const prev = membersData[yearIndex + 1]?.name, next = membersData[yearIndex - 1]?.name;
 				const keys = ['Governors', ...Object.keys(ctx).filter(key => key.startsWith('Batch of ')).sort(), 'Former Members'];
 				res.renderFile('members.njk', {
 					members: Object.fromEntries(keys.map(key => [key, ctx[key]])),
