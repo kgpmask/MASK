@@ -11,7 +11,6 @@ const nunjucks = require('nunjucks');
 global.passport = require('passport');
 const path = require('path');
 global.Tools = require('./tools.js');
-const webpush = require('web-push');
 const DB = require("../database/database.js");
 const { PORT } = require('./config.js');
 const appHandler = require('./handler.js');
