@@ -203,12 +203,6 @@
 				"teams": ["d"]
 			},
 			{
-				"id": "21_rishabh",
-				"name": "Rishabh Mishra",
-				"roll": "21CH30026",
-				"teams": ["a"]
-			},
-			{
 				"id": "21_rishabh_prasad",
 				"name": "Rishabh Prasad",
 				"roll": "21XX00000",
@@ -255,7 +249,7 @@
 				"id": "20_srijan",
 				"name": "Srijan Srivastava",
 				"roll": "20EC30051",
-				"teams": ["q"]
+				"teams": ["N", "q"]
 			},
 			{
 				"id": "21_suraj",
