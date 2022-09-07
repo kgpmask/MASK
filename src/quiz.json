@@ -7,7 +7,7 @@
 				"options": [
 					[{ "val": "Marionette Master", "type": "text" }],
 					[{ "val": "Puppeteer", "type": "text" }],
-					[{ "val" : "Harlequin Lord", "type": "text" }],
+					[{ "val": "Harlequin Lord", "type": "text" }],
 					[{ "val": "Marionette Lord", "type": "text" }]
 				],
 				"solution": 2
@@ -17,7 +17,7 @@
 				"options": [
 					[{ "val": "Veldanava (Oldest Dragon)", "type": "text" }],
 					[{ "val": "Velgrynd (Oldest Dragon)", "type": "text" }],
-					[{ "val" : "Velzard (Second Oldest Dragon)", "type": "text" }],
+					[{ "val": "Velzard (Second Oldest Dragon)", "type": "text" }],
 					[{ "val": "Veldanava (Second Oldest Dragon)", "type": "text" }]
 				],
 				"solution": 1
@@ -27,7 +27,7 @@
 				"options": [
 					[{ "val": "Magisteel", "type": "text" }],
 					[{ "val": "Duplicates of Kaijin's Sword", "type": "text" }],
-					[{ "val" : "Leather", "type": "text" }],
+					[{ "val": "Leather", "type": "text" }],
 					[{ "val": "Full Potion", "type": "text" }]
 				],
 				"solution": 4
@@ -36,7 +36,7 @@
 				"q": [{ "val": "Tensei Shitara Slime Datta Ken", "type": "title" }, { "val": "Which was the first species that showed hostility towards Rimuru and his followers? ", "type": "text" }],
 				"options": [
 					[{ "val": "Wolves", "type": "text" }],
-					[{ "val" : "Humans", "type": "text" }],
+					[{ "val": "Humans", "type": "text" }],
 					[{ "val": "Majin", "type": "text" }],
 					[{ "val": "Orcs", "type": "text" }]
 				],
@@ -47,7 +47,7 @@
 				"options": [
 					[{ "val": "n % I = W", "type": "text" }],
 					[{ "val": "p % l = W", "type": "text" }],
-					[{ "val" : "m % W = I", "type": "text" }],
+					[{ "val": "m % W = I", "type": "text" }],
 					[{ "val": "W / m = I", "type": "text" }]
 				],
 				"solution": 1
@@ -57,7 +57,7 @@
 				"options": [
 					[{ "val": "Divinity", "type": "text" }],
 					[{ "val": "Wisdom", "type": "text" }],
-					[{ "val" : "Taboo", "type": "text" }],
+					[{ "val": "Taboo", "type": "text" }],
 					[{ "val": "Divine Eyes", "type": "text" }]
 				],
 				"solution": 3
@@ -67,7 +67,7 @@
 				"options": [
 					[{ "val": "Shieldfreeden", "type": "text" }],
 					[{ "val": "Siltvelt", "type": "text" }],
-					[{ "val" : "Zeltoble", "type": "text" }],
+					[{ "val": "Zeltoble", "type": "text" }],
 					[{ "val": "Faubrey", "type": "text" }]
 				],
 				"solution": 2
@@ -77,7 +77,7 @@
 				"options": [
 					[{ "val": "They were called upon by a divine messenger", "type": "text" }],
 					[{ "val": "They were summoned as they were about to die", "type": "text" }],
-					[{ "val" : "They were summoned by an artifact/object of the world", "type": "text" }],
+					[{ "val": "They were summoned by an artifact/object of the world", "type": "text" }],
 					[{ "val": "All of the above", "type": "text" }]
 				],
 				"solution": 2
@@ -86,7 +86,7 @@
 				"q": [{ "val": "The Rising of The Shield Hero", "type": "title" }, { "val": "Who among the following is not from Glass' world?", "type": "text" }],
 				"options": [
 					[{ "val": "Atla", "type": "text" }],
-					[{ "val" : "Therese", "type": "text" }],
+					[{ "val": "Therese", "type": "text" }],
 					[{ "val": "L'Arc", "type": "text" }],
 					[{ "val": "Kyo", "type": "text" }]
 				],
@@ -97,7 +97,7 @@
 				"options": [
 					[{ "val": "I’ve Been Killing Slimes for 300 Years", "type": "text" }],
 					[{ "val": "Konosuba", "type": "text" }],
-					[{ "val" : "That Time I was Reincarnated as a Slime", "type": "text" }],
+					[{ "val": "That Time I was Reincarnated as a Slime", "type": "text" }],
 					[{ "val": "By the Grace of the Gods", "type": "text" }]
 				],
 				"solution": 4
@@ -107,7 +107,7 @@
 				"options": [
 					[{ "val": "The Rising of the Shield Hero", "type": "text" }],
 					[{ "val": "Konosuba", "type": "text" }],
-					[{ "val" : "Kenja no Majo", "type": "text" }],
+					[{ "val": "Kenja no Majo", "type": "text" }],
 					[{ "val": "All three have exactly similar cities", "type": "text" }]
 				],
 				"solution": 3
@@ -117,7 +117,7 @@
 				"options": [
 					[{ "val": "Six (Combatants will be Dispatched)", "type": "text" }],
 					[{ "val": "Akatsuki Ousawa (Aesthetica of a Rogue Hero)", "type": "text" }],
-					[{ "val" : "Hajime Nagumo (Arifureta)", "type": "text" }],
+					[{ "val": "Hajime Nagumo (Arifureta)", "type": "text" }],
 					[{ "val": "Toujou Basara (The Testament of Sister New Devil)", "type": "text" }]
 				],
 				"solution": 1
@@ -137,7 +137,7 @@
 				"options": [
 					[{ "val": "https://i.postimg.cc/DZ3ZcsgR/20220319-5-1.png", "type": "image", "style": "" }],
 					[{ "val": "https://i.postimg.cc/YqCS8t62/20220319-5-2.png", "type": "image", "style": "" }],
-					[{ "val" : "https://i.postimg.cc/tCv4M8k3/20220319-5-3.png", "type": "image", "style": "" }],
+					[{ "val": "https://i.postimg.cc/tCv4M8k3/20220319-5-3.png", "type": "image", "style": "" }],
 					[{ "val": "https://i.postimg.cc/SxwNy8wj/20220319-5-4.png", "type": "image", "style": "" }]
 				],
 				"solution": 2
@@ -147,7 +147,7 @@
 				"options": [
 					[{ "val": "https://i.postimg.cc/MGVZXHS5/20220319-6-1.png", "type": "image", "style": "" }],
 					[{ "val": "https://i.postimg.cc/hj0SbYh7/20220319-6-2.png", "type": "image", "style": "" }],
-					[{ "val" : "https://i.postimg.cc/0j29tCJX/20220319-6-3.png", "type": "image", "style": "" }],
+					[{ "val": "https://i.postimg.cc/0j29tCJX/20220319-6-3.png", "type": "image", "style": "" }],
 					[{ "val": "https://i.postimg.cc/J7PrsS9f/20220319-6-4.png", "type": "image", "style": "" }]
 				],
 				"solution": 4
@@ -157,7 +157,7 @@
 				"options": [
 					[{ "val": "Tio (Arifureta)", "type": "text" }],
 					[{ "val": "Veldora (Tensura)", "type": "text" }],
-					[{ "val" : "Shen (Tsukimichi)", "type": "text" }],
+					[{ "val": "Shen (Tsukimichi)", "type": "text" }],
 					[{ "val": "Fredrika (Hitsugi no Chaika)", "type": "text" }]
 				],
 				"solution": 2
@@ -167,7 +167,7 @@
 				"options": [
 					[{ "val": "Petelguese (Re:Zero)", "type": "text" }],
 					[{ "val": "Ainz Ooal Gown (Overlord)", "type": "text" }],
-					[{ "val" : "Kirei Kotomine (Fate)", "type": "text" }],
+					[{ "val": "Kirei Kotomine (Fate)", "type": "text" }],
 					[{ "val": "Kazuma (Konosuba)", "type": "text" }]
 				],
 				"solution": 1
@@ -177,7 +177,7 @@
 				"options": [
 					[{ "val": "Kumoko (So I'm a Spider, So What?)", "type": "text" }],
 					[{ "val": "Daki (Demon Slayer)", "type": "text" }],
-					[{ "val" : "Mio (Moonlit Fantasy)", "type": "text" }],
+					[{ "val": "Mio (Moonlit Fantasy)", "type": "text" }],
 					[{ "val": "None of these", "type": "text" }]
 				],
 				"solution": 3
@@ -187,7 +187,7 @@
 				"options": [
 					[{ "val": "https://i.postimg.cc/ZKWSCnPN/20220319-10-1.png", "type": "image", "style": "" }],
 					[{ "val": "https://i.postimg.cc/VsGwfnt1/20220319-10-2.png", "type": "image", "style": "" }],
-					[{ "val" : "https://i.postimg.cc/qq5H1Hrg/20220319-10-3.png", "type": "image", "style": "" }],
+					[{ "val": "https://i.postimg.cc/qq5H1Hrg/20220319-10-3.png", "type": "image", "style": "" }],
 					[{ "val": "https://i.postimg.cc/kXLd8Cwp/20220319-10-4.png", "type": "image", "style": "" }]
 				],
 				"solution": 4
@@ -197,7 +197,7 @@
 				"options": [
 					[{ "val": "https://i.postimg.cc/x1HV3Z4T/20220319-11-1.png", "type": "image", "style": "" }],
 					[{ "val": "https://i.postimg.cc/R0B5sTk1/20220319-11-2.png", "type": "image", "style": "" }],
-					[{ "val" : "https://i.postimg.cc/N0khWHt3/20220319-11-3.png", "type": "image", "style": "" }],
+					[{ "val": "https://i.postimg.cc/N0khWHt3/20220319-11-3.png", "type": "image", "style": "" }],
 					[{ "val": "https://i.postimg.cc/V6sy1kLd/20220319-11-4.png", "type": "image", "style": "" }]
 				],
 				"solution": 3
