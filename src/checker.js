@@ -6,5 +6,5 @@ exports.compare = function compare (puzzleType, date, obj) {
 		if (!puzzles.hasOwnProperty(puzzleType)) throw reject("Puzzle without a type... sus");
 		if (puzzleType.startsWith('quiz')) return resolve(puzzles[puzzleType][obj.index]);
 		resolve(Tools.deepEquals(puzzles[puzzleType], obj));
-	})
+	});
 };
