@@ -300,21 +300,22 @@ function handler (app, env) {
 		switch (args[0]) {
 			case "checker": {
 				const checker = require('./checker.js');
-				const correct = checker.compare(args[2], args[1], req.body); // req.data
-				switch (correct) {
-					case true: {
-						res.send("correct");
-						break;
+				checker.compare(args[2], args[1], req.body).then(response => {
+					switch (response) {
+						case true: {
+							res.send("correct");
+							break;
+						}
+						case false: {
+							res.send("");
+							break;
+						}
+						default: {
+							res.send(response);
+							break;
+						}
 					}
-					case false: {
-						res.send("");
-						break;
-					}
-					default: {
-						res.send(correct);
-						break;
-					}
-				}
+				}).catch(err => {console.log(err);}); // req.data
 				break;
 			}
 			case 'quizzes': {
