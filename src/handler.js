@@ -315,9 +315,7 @@ function handler (app, env) {
 							break;
 						}
 					}
-				}).catch(err => {
-					console.log(err);
-				}); // req.data
+				}).catch(err => console.log(err)); // req.data
 				break;
 			}
 			case 'quizzes': {
