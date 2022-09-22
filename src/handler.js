@@ -315,7 +315,7 @@ function handler (app, env) {
 							break;
 						}
 					}
-				}).catch(err => console.log(err)); // req.data
+				}).catch(err => res.status(400).send(err.message));
 				break;
 			}
 			case 'quizzes': {
