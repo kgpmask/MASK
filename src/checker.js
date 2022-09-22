@@ -1,8 +1,10 @@
 exports.compare = function compare (puzzleType, date, obj) {
-	const solutions = require('./solutions.json');
-	if (!solutions.hasOwnProperty(date)) return -1;
-	const puzzles = solutions[date];
-	if (!puzzles.hasOwnProperty(puzzle_type)) return -1; // use Promises!
-	if (puzzleType.startsWith('quiz')) return puzzles[puzzleType][obj.index];
-	return Tools.deepEquals(puzzles[puzzleType], obj);
+	return new Promise((resolve, reject) => {
+		const solutions = require('./solutions.json');
+		if (!solutions.hasOwnProperty(date)) return reject(new Error("No date in the puzzle."));
+		const puzzles = solutions[date];
+		if (!puzzles.hasOwnProperty(puzzleType)) return reject(new Error("Puzzle without a type... sus"));
+		if (puzzleType.startsWith('quiz')) return resolve(puzzles[puzzleType][obj.index]);
+		resolve(Tools.deepEquals(puzzles[puzzleType], obj));
+	});
 };
