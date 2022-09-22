@@ -93,3 +93,15 @@ The default newsletter template is:
 ```
 
 Take a look at existing articles for the various classes and where they're used.
+
+
+Credits:
+
+Parth Mane (Lead)
+Anjani Kumar (Contributor)
+Vidunram A R (Contributor)
+Venkatsai Mokshith (Contributor)
+Karthikeya Y M (Contributor)
+Soham Sen (Contributor)
+Saumyadeep Nandy (Contributor)
+Vishesh Gupta (Contributor)
