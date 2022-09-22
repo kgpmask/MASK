@@ -302,18 +302,9 @@ function handler (app, env) {
 				const checker = require('./checker.js');
 				checker.compare(args[2], args[1], req.body).then(response => {
 					switch (response) {
-						case true: {
-							res.send("correct");
-							break;
-						}
-						case false: {
-							res.send("");
-							break;
-						}
-						default: {
-							res.send(response);
-							break;
-						}
+						case true: return res.send("correct");
+						case false: return res.send("");
+						default: return res.send(response);
 					}
 				}).catch(err => res.status(400).send(err.message));
 				break;
