@@ -97,11 +97,11 @@ Take a look at existing articles for the various classes and where they're used.
 
 Credits:
 
-Parth Mane (Lead) <a href="https://github.com/PartMan7" target="_blank">Github_ID</a>
-Anjani Kumar (Contributor) <a href="https://github.com/anjaniit23" target="_blank">Github_ID</a>
-Vidunram A R (Contributor) <a href="https://github.com/Goose-Of-War" target="_blank">Github_ID</a>
-Venkatsai Mokshith (Contributor) <a href="https://github.com/mokshith25" target="_blank">Github_ID</a>
-Karthikeya Y M (Contributor) <a href="https://github.com/lurkingryuu" target="_blank">Github_ID</a>
-Soham Sen (Contributor) <a href="https://github.com/Yureien" target="_blank">Github_ID</a>
-Saumyadeep Nandy (Contributor) <a href="https://github.com/Pagol1" target="_blank">Github_ID</a>
-Vishesh Gupta (Contributor) <a href="https://github.com/shiroyasha263" target="_blank">Github_ID</a>
+<a href="https://github.com/PartMan7" target="_blank">Parth Mane</a> (Lead)
+<a href="https://github.com/anjaniit23" target="_blank">Anjani Kumar</a> (Contributor) 
+<a href="https://github.com/Goose-Of-War" target="_blank">Vidunram A R </a> (Contributor)
+<a href="https://github.com/mokshith25" target="_blank">Venkatsai Mokshith</a> (Contributor)
+<a href="https://github.com/lurkingryuu" target="_blank">Karthikeya Y M</a> (Contributor) 
+<a href="https://github.com/Yureien" target="_blank">Soham Sen</a> (Contributor) 
+<a href="https://github.com/Pagol1" target="_blank">Saumyadeep Nandy</a> (Contributor) 
+<a href="https://github.com/shiroyasha263" target="_blank">Vishesh Gupta</a> (Contributor) 
