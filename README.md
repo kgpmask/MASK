@@ -97,11 +97,11 @@ Take a look at existing articles for the various classes and where they're used.
 
 Credits:
 
-Parth Mane (Lead)
-Anjani Kumar (Contributor)
-Vidunram A R (Contributor)
-Venkatsai Mokshith (Contributor)
-Karthikeya Y M (Contributor)
-Soham Sen (Contributor)
-Saumyadeep Nandy (Contributor)
-Vishesh Gupta (Contributor)
+Parth Mane (Lead) <a href="https://github.com/PartMan7" target="_blank">Github_ID</a>
+Anjani Kumar (Contributor) <a href="https://github.com/anjaniit23" target="_blank">Github_ID</a>
+Vidunram A R (Contributor) <a href="https://github.com/Goose-Of-War" target="_blank">Github_ID</a>
+Venkatsai Mokshith (Contributor) <a href="https://github.com/mokshith25" target="_blank">Github_ID</a>
+Karthikeya Y M (Contributor) <a href="https://github.com/lurkingryuu" target="_blank">Github_ID</a>
+Soham Sen (Contributor) <a href="https://github.com/Yureien" target="_blank">Github_ID</a>
+Saumyadeep Nandy (Contributor) <a href="https://github.com/Pagol1" target="_blank">Github_ID</a>
+Vishesh Gupta (Contributor) <a href="https://github.com/shiroyasha263" target="_blank">Github_ID</a>
