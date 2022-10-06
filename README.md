@@ -103,5 +103,5 @@ Credits:
 <a href="https://github.com/mokshith25" target="_blank">Venkatsai Mokshith</a> (Contributor)  <br />
 <a href="https://github.com/lurkingryuu" target="_blank">Karthikeya Y M</a> (Contributor)  <br />
 <a href="https://github.com/Yureien" target="_blank">Soham Sen</a> (Contributor)  <br />
-<a href="https://github.com/Pagol1" target="_blank">Saumyadeep Nandy</a> (Contributor)  <br />
+<a href="https://github.com/Pagol1" target="_blank">Saumyadip Nandy</a> (Contributor)  <br />
 <a href="https://github.com/shiroyasha263" target="_blank">Vishesh Gupta</a> (Contributor)  <br />
