@@ -3,31 +3,15 @@ const Tools = require('../src/tools.js');
 
 describe('Tools.deepEquals', () => {
 	it('should equate correctly', () => Tools.deepEquals({
-		a: [
-			{
-				a: ['1', 1]
-			}
-		]
+		a: [{ a: ['1', 1] }]
 	}, {
-		a: [
-			{
-				a: ['1', 1]
-			}
-		]
+		a: [{ a: ['1', 1] }]
 	}));
 
 	it('should inequate correctly', () => Tools.deepEquals({
-		a: [
-			{
-				a: ['1', 1]
-			}
-		]
+		a: [{ a: ['1', 1] }]
 	}, {
-		a: [
-			{
-				a: [1, '1']
-			}
-		]
+		a: [{ a: [1, '1'] }]
 	}));
 });
 
