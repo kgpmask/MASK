@@ -1,5 +1,6 @@
 const User = require('./schemas/User');
 const Quiz = require('./schemas/Quiz');
+const Questions = require('./schemas/Questions');
 
 // Handle newly registered user or normal login
 async function createNewUser (profile) {
@@ -34,5 +35,10 @@ async function getUser (userId) {
 	else return updateUserQuizRecord({ userId });
 }
 
+async function getQuizzes () {
+	const qns = await Questions.find();
+	if (qns) return qns;
+	else return ":xnate:";
+}
 
-module.exports = { createNewUser, logoutUser, updateUserQuizRecord, getUser };
+module.exports = { createNewUser, logoutUser, updateUserQuizRecord, getUser, getQuizzes };
