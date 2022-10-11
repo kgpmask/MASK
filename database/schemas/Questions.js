@@ -20,7 +20,11 @@ const questionsSchema = new mongoose.Schema({
 			required: true
 		},
 		solution: {type: Number, required: true, min: 1, max: 4}
-	}], required: true}
+	}], required: true},
+	random: {type: [{
+		amount: {type: Number, required: true},
+		from: {type: [Number], required: true}
+	}]}
 });
 
 questionsSchema.set('collection', 'quizQuestions');
