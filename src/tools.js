@@ -2,7 +2,6 @@ exports.deepClone = function deepClone (aObject) {
 	if (!aObject) return aObject;
 	const bObject = Array.isArray(aObject) ? [] : {};
 	for (const k in aObject) {
-		if (!['0', '1', '2', '3', 'val', 'type', 'q', 'options', 'solution'].find(elm => elm === k)) continue;
 		const v = aObject[k];
 		bObject[k] = typeof v === "object" ? exports.deepClone(v) : v;
 	}
