@@ -22,10 +22,12 @@ const questionsSchema = new mongoose.Schema({
 		// PS: Change this if Phantom asks for not-so-MCQ questions ;-;
 		solution: { type: Number, required: true, min: 1, max: 4 }
 	}], required: true },
-	random: {type: [{
-		amount: { type: Number, required: true },
-		from: { type: [Number], required: true }
-	}]}
+	random: {
+		type: [{
+			amount: { type: Number, required: true },
+			from: { type: [Number], required: true }
+		}]
+	}
 });
 
 questionsSchema.set('collection', 'quizquestions');
