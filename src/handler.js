@@ -193,67 +193,72 @@ function handler (app, env) {
 				}
 				dbh.getUser(req.user._id).then(user => {
 					const quizzed = Object.keys(user.quizData || {});
-					const QUIZZES = require('./quiz.json');
-					const months = [
-						'-', 'January', 'February', 'March', 'April', 'May', 'June',
-						'July', 'August', 'September', 'October', 'November', 'December'
-					];
-					const quizzes = Object.keys(QUIZZES);
-					const years = {};
-					quizzes.sort();
-					quizzes.forEach(quiz => {
-						const [year, month, date] = quiz.split('-');
-						if (!years[year]) years[year] = { title: year, months: {} };
-						if (!years[year].months[~~month]) years[year].months[~~month] = { title: months[~~month], issues: [] };
-						years[year].months[~~month].issues.push({
-							title: `${Tools.nth(~~date)} ${months[~~month]}`,
-							href: quiz
+					dbh.getQuizzes().then(qzs => {
+						const QUIZZES = {};
+						qzs.forEach(qz => QUIZZES[qz.unlock.slice(0, 10)] = qz); // TODO Mokshith: Add a quizId field
+						const months = [
+							'-', 'January', 'February', 'March', 'April', 'May', 'June',
+							'July', 'August', 'September', 'October', 'November', 'December'
+						];
+						const quizzes = Object.keys(QUIZZES);
+						const years = {};
+						quizzes.sort();
+						quizzes.forEach(quiz => {
+							const [year, month, date] = quiz.split('-');
+							if (!years[year]) years[year] = { title: year, months: {} };
+							if (!years[year].months[~~month]) years[year].months[~~month] = { title: months[~~month], issues: [] };
+							years[year].months[~~month].issues.push({
+								title: `${Tools.nth(~~date)} ${months[~~month]}`,
+								href: quiz
+							});
 						});
-					});
-					const renderYears = Object.values(years);
-					renderYears.forEach(year => year.months = Object.values(year.months).reverse());
-					if (!args[1]) {
-						const now = Date.now();
-						return res.renderFile('events.njk', {
-							quizzed,
-							years: renderYears.reverse(),
-							locked: Object.entries(QUIZZES).filter(([_, quiz]) => new Date(quiz.unlock).getTime() > now).map(k => k[0])
-						});
-					}
-					const index = quizzes.indexOf(args[1]);
-					if (index === -1) return notFound('quizzes_404.njk', { years: renderYears.reverse() });
-					if (quizzed.includes(args[1])) return res.renderFile('quiz_attempted.njk');
-					const adjs = [quizzes[index - 1], quizzes[index + 1], quizzes[index]];
-					const QUIZ = QUIZZES[args[1]];
-					const quizDate = new Date(QUIZ.unlock).getTime();
-					if (quizDate > Date.now()) return res.renderFile('quiz_countdown.njk', {
-						timeLeft: quizDate - Date.now() + 1000
-					});
-					const rand = Tools.fakeRandom(req.user._id);
-					function shuffle (array) {
-						for (let i = array.length - 1; i > 0; i--) {
-							const j = Math.floor(rand() * (i + 1));
-							[array[i], array[j]] = [array[j], array[i]];
+						const renderYears = Object.values(years);
+						renderYears.forEach(year => year.months = Object.values(year.months).reverse());
+						if (!args[1]) {
+							const now = Date.now();
+							return res.renderFile('events.njk', {
+								quizzed,
+								years: renderYears.reverse(),
+								locked: Object.entries(QUIZZES).filter(
+									([_, quiz]) => new Date(quiz.unlock).getTime() > now
+								).map(k => k[0])
+							});
 						}
-						return array;
-					}
-					const questions = [];
-					QUIZ.random.forEach(randDef => {
-						const keys = shuffle(Object.keys(randDef.from)).slice(0, randDef.amount);
-						questions.push(...keys.map(key => randDef.from[key]).map(key => {
-							const q = Tools.deepClone(QUIZ.questions[key]);
-							delete q.solution;
-							return q;
-						}));
+						const index = quizzes.indexOf(args[1]);
+						if (index === -1) return notFound('quizzes_404.njk', { years: renderYears.reverse() });
+						if (quizzed.includes(args[1])) return res.renderFile('quiz_attempted.njk');
+						const adjs = [quizzes[index - 1], quizzes[index + 1], quizzes[index]];
+						const QUIZ = QUIZZES[args[1]];
+						const quizDate = new Date(QUIZ.unlock).getTime();
+						if (quizDate > Date.now()) return res.renderFile('quiz_countdown.njk', {
+							timeLeft: quizDate - Date.now() + 1000
+						});
+						const rand = Tools.fakeRandom(req.user._id);
+						function shuffle (array) {
+							for (let i = array.length - 1; i > 0; i--) {
+								const j = Math.floor(rand() * (i + 1));
+								[array[i], array[j]] = [array[j], array[i]];
+							}
+							return array;
+						}
+						const questions = [];
+						QUIZ.random.forEach(randDef => {
+							const keys = shuffle(Object.keys(randDef.from)).slice(0, randDef.amount);
+							questions.push(...keys.map(key => randDef.from[key]).map(key => {
+								const q = Tools.deepClone(QUIZ.questions[key]);
+								delete q.solution;
+								return q;
+							}));
+						});
+						shuffle(questions);
+						return res.renderFile('_quiz.njk', {
+							adjs,
+							questions: JSON.stringify(questions),
+							qAmt: questions.length,
+							id: args[1]
+						});
 					});
-					shuffle(questions);
-					return res.renderFile('_quiz.njk', {
-						adjs,
-						questions: JSON.stringify(questions),
-						qAmt: questions.length,
-						id: args[1]
-					});
-				});
+				}).catch(err => console.log(err));
 				break;
 			}
 			case 'rebuild': {
@@ -321,19 +326,22 @@ function handler (app, env) {
 				}
 				const quizId = req.body.quizId;
 				const solutions = [];
-				const QUIZZES = require('./quiz.json');
-				if (!QUIZZES.hasOwnProperty(quizId)) return res.status(400).send('Invalid Quiz ID');
-				const QUIZ = QUIZZES[quizId];
-				QUIZ.random.forEach(randDef => {
-					const keys = shuffle(Object.keys(randDef.from)).slice(0, randDef.amount);
-					solutions.push(...keys.map(key => QUIZ.questions[randDef.from[key]].solution));
-				});
-				shuffle(solutions);
-				const answers = Array.from({ length: solutions.length }).map((_, i) => ~~req.body[`answer-${i + 1}`]);
-				const points = [answers.filter((ans, i) => ~~ans === ~~solutions[i]).length, solutions.length];
-				res.renderFile('quiz_success.njk', { score: points[0], totalScore: points[1] });
-				const dbh = require('../database/database_handler');
-				dbh.updateUserQuizRecord({ userId: req.user._id, quizId, score: points[0], time: Date.now() });
+				dbh.getQuizzes().then(qzs => {
+					const QUIZZES = {};
+					qzs.forEach(qz => QUIZZES[qz.unlock.slice(0, 10)] = qz);
+					if (!QUIZZES.hasOwnProperty(quizId)) return res.status(400).send('Invalid Quiz ID');
+					const QUIZ = QUIZZES[quizId];
+					QUIZ.random.forEach(randDef => {
+						const keys = shuffle(Object.keys(randDef.from)).slice(0, randDef.amount);
+						solutions.push(...keys.map(key => QUIZ.questions[randDef.from[key]].solution));
+					});
+					shuffle(solutions);
+					const answers = Array.from({ length: solutions.length }).map((_, i) => ~~req.body[`answer-${i + 1}`]);
+					const points = [answers.filter((ans, i) => ~~ans === ~~solutions[i]).length, solutions.length];
+					res.renderFile('quiz_success.njk', { score: points[0], totalScore: points[1] });
+					const dbh = require('../database/database_handler');
+					dbh.updateUserQuizRecord({ userId: req.user._id, quizId, score: points[0], time: Date.now() });
+				}).catch(err => console.log(err));
 				break;
 			}
 			default:
