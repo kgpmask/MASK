@@ -195,7 +195,7 @@ function handler (app, env) {
 					const quizzed = Object.keys(user.quizData || {});
 					dbh.getQuizzes().then(qzs => {
 						const QUIZZES = {};
-						qzs.forEach(qz => QUIZZES[qz.unlock.slice(0, 10)] = qz);
+						qzs.forEach(qz => QUIZZES[qz.unlock.slice(0, 10)] = qz); // TODO Mokshith: Add a quizId field
 						const months = [
 							'-', 'January', 'February', 'March', 'April', 'May', 'June',
 							'July', 'August', 'September', 'October', 'November', 'December'
