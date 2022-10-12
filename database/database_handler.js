@@ -35,10 +35,8 @@ async function getUser (userId) {
 	else return updateUserQuizRecord({ userId });
 }
 
-async function getQuizzes () {
-	const qns = await Questions.find();
-	if (qns) return qns;
-	else return ":xnate:";
+function getQuizzes () {
+	return Questions.find().lean();
 }
 
 module.exports = { createNewUser, logoutUser, updateUserQuizRecord, getUser, getQuizzes };

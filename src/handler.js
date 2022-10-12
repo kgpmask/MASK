@@ -193,7 +193,7 @@ function handler (app, env) {
 				}
 				dbh.getUser(req.user._id).then(user => {
 					const quizzed = Object.keys(user.quizData || {});
-					const qzzs = dbh.getQuizzes().then(qzs => {
+					dbh.getQuizzes().then(qzs => {
 						const QUIZZES = {};
 						qzs.forEach(qz => QUIZZES[qz.unlock.slice(0, 10)] = qz);
 						const months = [
@@ -326,19 +326,22 @@ function handler (app, env) {
 				}
 				const quizId = req.body.quizId;
 				const solutions = [];
-				const QUIZZES = require('./quiz.json');
-				if (!QUIZZES.hasOwnProperty(quizId)) return res.status(400).send('Invalid Quiz ID');
-				const QUIZ = QUIZZES[quizId];
-				QUIZ.random.forEach(randDef => {
-					const keys = shuffle(Object.keys(randDef.from)).slice(0, randDef.amount);
-					solutions.push(...keys.map(key => QUIZ.questions[randDef.from[key]].solution));
-				});
-				shuffle(solutions);
-				const answers = Array.from({ length: solutions.length }).map((_, i) => ~~req.body[`answer-${i + 1}`]);
-				const points = [answers.filter((ans, i) => ~~ans === ~~solutions[i]).length, solutions.length];
-				res.renderFile('quiz_success.njk', { score: points[0], totalScore: points[1] });
-				const dbh = require('../database/database_handler');
-				dbh.updateUserQuizRecord({ userId: req.user._id, quizId, score: points[0], time: Date.now() });
+				dbh.getQuizzes().then(qzs => {
+					const QUIZZES = {};
+					qzs.forEach(qz => QUIZZES[qz.unlock.slice(0, 10)] = qz);
+					if (!QUIZZES.hasOwnProperty(quizId)) return res.status(400).send('Invalid Quiz ID');
+					const QUIZ = QUIZZES[quizId];
+					QUIZ.random.forEach(randDef => {
+						const keys = shuffle(Object.keys(randDef.from)).slice(0, randDef.amount);
+						solutions.push(...keys.map(key => QUIZ.questions[randDef.from[key]].solution));
+					});
+					shuffle(solutions);
+					const answers = Array.from({ length: solutions.length }).map((_, i) => ~~req.body[`answer-${i + 1}`]);
+					const points = [answers.filter((ans, i) => ~~ans === ~~solutions[i]).length, solutions.length];
+					res.renderFile('quiz_success.njk', { score: points[0], totalScore: points[1] });
+					const dbh = require('../database/database_handler');
+					dbh.updateUserQuizRecord({ userId: req.user._id, quizId, score: points[0], time: Date.now() });
+				}).catch(err => console.log(err));
 				break;
 			}
 			default:
