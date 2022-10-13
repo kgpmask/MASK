@@ -7,6 +7,7 @@ const dbh = PARAMS.userless ? {} : require('../database/database_handler.js');
 
 if (!PARAMS.userless) login.init();
 
+// TODO Use actual express routing
 function handler (app, env) {
 
 	// Pre-routing
