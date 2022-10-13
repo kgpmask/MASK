@@ -31,7 +31,6 @@
     "csurf": "^1.11.0",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
-    "mongodb": "^4.8.0",
     "mongoose": "^6.2.4",
     "nunjucks": "^3.2.3",
     "passport": "^0.5.2",
