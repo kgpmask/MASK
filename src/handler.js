@@ -303,7 +303,7 @@ function handler (app, env) {
 						]
 					}
 				];
-				dbh.logoutUser(req.user._id).then(user => {
+				dbh.getUser(req.user._id).then(user => {
 					if (user.permission === 'participant') {
 						const questions = [];
 						QUIZ.forEach(qn => questions.push(Tools.deepClone(qn.options)));
