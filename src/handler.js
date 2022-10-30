@@ -251,6 +251,7 @@ function handler (app, env) {
 								return q;
 							}));
 						});
+						console.dir(questions[0], { depth: null });
 						shuffle(questions);
 						return res.renderFile('_quiz.njk', {
 							adjs,
@@ -260,6 +261,38 @@ function handler (app, env) {
 						});
 					});
 				}).catch(err => console.log(err));
+				break;
+			}
+			case 'live': {
+				if (true) return res.renderFile('_live.njk', {
+					questions: JSON.stringify([{
+						q: [
+							{ val: 'Anime: The Rising of the Shield Hero', type: 'title' },
+							{ val: 'Who has support and healing infinity?', type: 'text' }
+						],
+						options: [
+							[{ val: 'Princess Malty', type: 'text' }],
+							[{ val: 'Naofumi', type: 'text' }],
+							[{ val: 'Motoyasu', type: 'text' }],
+							[{ val: 'Ren', type: 'text' }]
+						]
+					},
+					{
+						q: [
+							{ val: 'Anime: Pokemon', type: 'title' },
+							{ val: 'What is Ash\'s exclusive Z-Move?', type: 'text' }
+						],
+						options: [
+							[{ val: 'God of Lightning', type: 'text' }],
+							[{ val: '10 Million Volts', type: 'text' }],
+							[{ val: 'Advent of Thunder', type: 'text' }],
+							[{ val: 'Static Overdrive', type: 'text' }]
+						]
+					}
+					]),
+					qAmt: 2,
+					id: "live"
+				});
 				break;
 			}
 			case 'rebuild': {
