@@ -6,7 +6,12 @@ const Questions = require('./schemas/Questions');
 async function createNewUser (profile) {
 	const user = await User.findById(profile.id);
 	if (user) return user;
-	const newUser = new User({ _id: profile.id, name: profile.displayName, picture: profile.photos[0].value });
+	const newUser = new User({
+		_id: profile.id,
+		name: profile.displayName,
+		picture: profile.photos[0].value,
+		permission: 'participant'
+	});
 	return newUser.save();
 }
 
