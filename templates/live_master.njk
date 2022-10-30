@@ -82,6 +82,8 @@
 		let currentQ = 0;
 		let countLeftPerQs = 30;
 		let currentTimer;
+		var secondsLeft = 15;
+		var time = setInterval(timer, 1000);
 		const qAmt = {{ qAmt }};
 		const qs = {{ questions | safe }};
 		function generateHTML (components) {
@@ -101,7 +103,12 @@
 			document.getElementById('qbox-1').style.display = 'block';
 		}
 		function timer () {
-			// timer code ;-;
+			document.getElementById('timer').innerHTML = secondsLeft + "seconds left";
+			secondsLeft--;
+			if (secondsLeft == -1) {
+				clearInterval(time);
+				alert("Time out!!");
+			}
 		}
 		function nextQ () {
 			document.getElementById(`qbox-${currentQ + 1}`).style.display = "none";
