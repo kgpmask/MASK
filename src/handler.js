@@ -308,12 +308,12 @@ function handler (app, env) {
 						{ val: 'Guess the Anime', type: 'title' },
 						{ val: "https://i.postimg.cc/QdVHNjCY/20220319-1-0.png", type: "image" }
 					]
-				]
+				];
 				res.renderFile('live_master.njk', {
-					questions,
+					questions: JSON.stringify(questions),
 					qAmt: questions.length,
 					id: "live"
-				})
+				});
 				break;
 			}
 			case 'rebuild': {

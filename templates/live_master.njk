@@ -6,13 +6,17 @@
 {% block pagecontent %}
 	<div class="quiz-container">
 		<div class="countDown">
-			<button onclick="prevQ()" class="rel prevQ">Prev</button>
-			<button onclick="nextQ()" class="rel nextQ">Next</button>
+			<div id="count"></div>
 			<br/><br/>
 		</div>
 		<br/>
+		<div class="button-container">
+			<button onclick="prevQ()" class="rel prevQ">Prev</button>
+			<button onclick="startQ()" class="rel startQ">Start</button>
+			<button onclick="nextQ()" class="rel nextQ">Next</button>
+		</div>
+		<br/>
 		<div class="question-zone">
-			<div id="count"></div>
 			<br/>
 			<form id="quiz" class="quizzes">
 				<input type="hidden" name="quizId" value="{{ id }}"/>
@@ -20,19 +24,11 @@
 					<div id="qbox-{{ q }}" style="display:none">
 						<div id="question-{{ q }}"></div>
 						<br/>
-						{% for i in range(1, 5) %}
-							<div class="option">
-								<input type="radio" id="answer-{{ q }}-{{ i }}" name="answer-{{ q }}" value="{{ i }}"/>
-								<label id="option-{{ q }}-{{ i }}" for="answer-{{ q }}-{{ i }}"></label><br/>
-							</div>
-						{% endfor %}
 					</div>
 				{% endfor %}
 			</form>
 		</div>
 		<br/><br/><br/>
-			<button onclick="prevQ()" class="rel prevQ">Prev</button>
-			<button onclick="nextQ()" class="rel nextQ">Next</button>
 	</div>
 	<br/><br/>
 {% endblock %}
@@ -77,6 +73,7 @@
 			background: rgba(0, 0, 0, 0.5);
 			padding: 25px;
 		}
+		button.start {}
 	</style>
 {% endblock %}
 
@@ -84,6 +81,7 @@
 	<script>
 		let currentQ = 0;
 		let countLeftPerQs = 30;
+		let currentTimer;
 		const qAmt = {{ qAmt }};
 		const qs = {{ questions | safe }};
 		function generateHTML (components) {
@@ -98,14 +96,20 @@
 		}
 		window.onload = () => {
 			qs.forEach((question, q) => {
-				document.getElementById(`question-${q + 1}`).innerHTML = generateHTML(question.q);
-				for (let i = 1; i <= 4; i++) document.getElementById(`option-${q + 1}-${i}`).innerHTML = generateHTML(question.options[i - 1]);
+				document.getElementById(`question-${q + 1}`).innerHTML = generateHTML(question);
 			});
+			document.getElementById('qbox-1').style.display = 'block';
+		}
+		function timer () {
+			// timer code ;-;
 		}
 		function nextQ () {
 			document.getElementById(`qbox-${currentQ + 1}`).style.display = "none";
 			if (currentQ < qAmt-1) currentQ++;
 			document.getElementById(`qbox-${currentQ + 1}`).style.display = "block";
+		}
+		function startQ () {
+			// Starts the timer (or will it send a signal for the others to start their timers?)
 		}
 		function prevQ () {
 			document.getElementById(`qbox-${currentQ + 1}`).style.display = "none";
