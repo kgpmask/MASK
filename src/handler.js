@@ -295,6 +295,9 @@ function handler (app, env) {
 				});
 				break;
 			}
+			case 'success':{
+				return res.renderFile('quiz_success.njk');
+			}
 			case 'rebuild': {
 				env.loaders.forEach(loader => loader.cache = {});
 				['./members.json', './posts.json'].forEach(cache => delete require.cache[require.resolve(cache)]);

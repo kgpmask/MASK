@@ -7,20 +7,20 @@
 	<div class="quiz-container">
 		<div class="countDown">
 			<button id="startQuiz" onclick="startQuiz()" class="rel">Start</button>
-			<button onclick="nextQ()" style="display:none" class="rel nextQ">Next</button>
 			<br/><br/>
 		</div>
 		<br/>
 		<div class="question-zone">
 			<div id="count"></div>
 			<br/>
-			<form id="quiz" class="quizzes" method="POST" action="/quizzes">
+			<form id="quiz" class="quizzes" method="POST" action="/success">
 				<input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
 				<input type="hidden" name="quizId" value="{{ id }}"/>
 				{% for q in range(1, qAmt + 1) %}
 					<div id="qbox-{{ q }}" style="display:none">
 						<div id="question-{{ q }}"></div>
 						<br/>
+						<div id = "waiting-{{ q }}" style = "display : none"><h2>Waiting for the next question</h2></div>
 						{% for i in range(1, 5) %}
 							<div class="option">
 								<input type="radio" id="answer-{{ q }}-{{ i }}" name="answer-{{ q }}" value="{{ i }}"/>
@@ -106,11 +106,11 @@
 			});
 			startQuiz();
 		}
-		function timer () {
+		function timer (num=30) {
 			const c = currentQ;
 			document.getElementById(`qbox-${c + 1}`).style.display = 'block';
 			if (c) document.getElementById(`qbox-${c}`).style.display = 'none';
-			timeVal = qs[c].time || 30;
+			timeVal = qs[c].time || num;
 			let cancel = false;
 			function endTimer () {
 				cancel = true;
@@ -133,12 +133,21 @@
 			currentTimer = timer();
 		}
 		function nextQ () {
-			if (currentTimer) currentTimer();
-			currentQ++;
-			const c = currentQ;
-			if (c >= qAmt) {
-				document.getElementById('quiz').submit();
-			} else currentTimer = timer();
+			if(timeVal>0){
+				document.getElementById(`qbox-${c}`).style.display = 'none';
+				document.getElementById(`waiting-${c}`).style.display = 'block';
+				currentTimer = timer(timeVal);
+			}
+			else{
+				currentQ++;
+				const c = currentQ;
+				if (c >= qAmt) {
+					document.getElementById('quiz').submit();
+				} else currentTimer = timer();
+			}
+		}
+		function wait(){
+			
 		}
 	</script>
 {% endblock %}
