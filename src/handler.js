@@ -264,7 +264,7 @@ function handler (app, env) {
 				break;
 			}
 			case 'live': {
-				if (true) return res.renderFile('_live.njk', {
+				if (true) return res.renderFile('live_participant.njk', {
 					questions: JSON.stringify([{
 						q: [
 							{ val: 'Anime: The Rising of the Shield Hero', type: 'title' },

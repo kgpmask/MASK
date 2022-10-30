@@ -1,7 +1,7 @@
 {% extends "_base.njk" %}
 
-{% set thispage = 'events' %}
-{% set pagetitle = 'Events' %}
+{% set thispage = 'quiz' %}
+{% set pagetitle = 'Live Quiz' %}
 
 {% block pagecontent %}
 	<div class="quiz-container">
@@ -130,6 +130,7 @@
 			for (button of document.getElementsByClassName('nextQ')) {
 				button.style.display = 'inline';
 			}
+			currentTimer = timer();
 		}
 		function nextQ () {
 			if (currentTimer) currentTimer();
