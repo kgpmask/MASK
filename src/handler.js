@@ -283,7 +283,7 @@ function handler (app, env) {
 						q: [
 							{ val: 'Anime: Pokemon', type: 'title' },
 							{ val: 'What is Ash\'s exclusive Z-Move?', type: 'text' }
-						], 
+						],
 						options: [
 							[{ val: 'C', type: 'text' }],
 							[{ val: 'D', type: 'text' }],
