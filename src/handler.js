@@ -258,7 +258,69 @@ function handler (app, env) {
 							qAmt: questions.length,
 							id: args[1]
 						});
-					});
+					}).catch(err => console.log(err));
+				}).catch(err => console.log(err));
+				break;
+			}
+			case 'live': {
+				if (!loggedIn) {
+					if (!PARAMS.userless) req.session.returnTo = req.url;
+					return res.renderFile('quiz_login.njk');
+				}
+				const QUIZ = [
+					{
+						q: [
+							{ val: 'Anime: The Rising of the Shield Hero', type: 'title' },
+							{ val: 'Who has support and healing infinity?', type: 'text' }
+						],
+						options: [
+							[{ val: 'Princess Malty', type: 'text' }],
+							[{ val: 'Naofumi', type: 'text' }],
+							[{ val: 'Motoyasu', type: 'text' }],
+							[{ val: 'Ren', type: 'text' }]
+						]
+					}, {
+						q: [
+							{ val: 'Anime: Pokemon', type: 'title' },
+							{ val: 'What is Ash\'s exclusive Z-Move?', type: 'text' }
+						], 
+						options: [
+							[{ val: 'C', type: 'text' }],
+							[{ val: 'D', type: 'text' }],
+							[{ val: 'B', type: 'text' }],
+							[{ val: 'A', type: 'text' }]
+						]
+					}, {
+						q: [
+							{ val: 'Guess the Anime', type: 'title' },
+							{ val: "https://i.postimg.cc/QdVHNjCY/20220319-1-0.png", type: "image" }
+						],
+						options: [
+							[{ val: 'Ans 1', type: 'text' }],
+							[{ val: 'Ans 2', type: 'text' }],
+							[{ val: 'Ans 3', type: 'text' }],
+							[{ val: 'Ans 4', type: 'text' }]
+						]
+					}
+				];
+				dbh.logoutUser(req.user._id).then(user => {
+					if (user.permission === 'participant') {
+						const questions = [];
+						QUIZ.forEach(qn => questions.push(Tools.deepClone(qn.options)));
+						res.renderFile("live_participant.njk", {
+							questions: JSON.stringify(questions),
+							qAmt: questions.length,
+							id: 'live'
+						});
+					} else {
+						const questions = [];
+						QUIZ.forEach(qn => questions.push(Tools.deepClone(qn.q)));
+						res.renderFile("live_master.njk", {
+							questions: JSON.stringify(questions),
+							qAmt: questions.length,
+							id: 'live'
+						});
+					}
 				}).catch(err => console.log(err));
 				break;
 			}
