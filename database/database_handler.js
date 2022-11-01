@@ -10,7 +10,7 @@ async function createNewUser (profile) {
 		_id: profile.id,
 		name: profile.displayName,
 		picture: profile.photos[0].value,
-		permission: 'participant'
+		permissions: []
 	});
 	return newUser.save();
 }
