@@ -34,7 +34,7 @@ async function updateUserQuizRecord (stats) { // {userId, quizId, time, score}
 }
 
 // User statistics
-async function getUser (userId) {
+async function getUserStats (userId) {
 	const user = await Quiz.findOne({ userId });
 	if (user) return user;
 	else return updateUserQuizRecord({ userId });
@@ -44,4 +44,4 @@ function getQuizzes () {
 	return Questions.find().lean();
 }
 
-module.exports = { createNewUser, getUser, updateUserQuizRecord, getUser, getQuizzes };
+module.exports = { createNewUser, getUser, updateUserQuizRecord, getUser, getQuizzes, getUserStats };

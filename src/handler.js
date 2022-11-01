@@ -170,7 +170,8 @@ function handler (app, env) {
 			}
 			case 'profile': {
 				if (!loggedIn) return res.redirect('/');
-				dbh.getUser(req.user._id).then(user => {
+				dbh.getUserStats(req.user._id).then(user => {
+					console.log(req.user);
 					return res.renderFile('profile.njk', {
 						name: req.user.name,
 						picture: req.user.picture,
