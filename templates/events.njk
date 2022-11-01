@@ -11,6 +11,9 @@
 	</div> #}
 	<br/><br/>
 	<h1>Quizzes</h1>
+	<div id="live-quiz">
+		<a href = "/live" class="livequiz"><button class="live-quiz">Live Quiz</button></a>
+	</div>
 	<div id="accordion-container">
 	{% for year in years %}
 		<button class="accordion">&nbsp;&nbsp;&nbsp;{{ year.title }}</button>
@@ -120,6 +123,23 @@
 		a.disabled, a.disabled:visited {
 			pointer-events: none;
 			color: var(--light-gray);
+		}
+		.live-quiz{
+			background-color: var(--middle-gray);
+			color: var(--off-white);
+			cursor: pointer;
+			padding: 18px;
+			width: 60%;
+			border: none;
+			text-align: center;
+			outline: none;
+			font-weight: bold;
+			font-size: 1.6em;
+		}
+		.live-quiz:hover{
+			background-color: var(--grey);
+			color: red;
+			transition: 1s;
 		}
 	</style>
 {% endblock %}

@@ -251,6 +251,7 @@ function handler (app, env) {
 								return q;
 							}));
 						});
+						console.dir(questions[0], { depth: null });
 						shuffle(questions);
 						return res.renderFile('_quiz.njk', {
 							adjs,
@@ -322,6 +323,62 @@ function handler (app, env) {
 						});
 					}
 				}).catch(err => console.log(err));
+				break;
+			}
+			case 'live': {
+				if (true) return res.renderFile('live_participant.njk', {
+					questions: JSON.stringify([{
+						q: [
+							{ val: 'Anime: The Rising of the Shield Hero', type: 'title' },
+							{ val: 'Who has support and healing infinity?', type: 'text' }
+						],
+						options: [
+							[{ val: 'Princess Malty', type: 'text' }],
+							[{ val: 'Naofumi', type: 'text' }],
+							[{ val: 'Motoyasu', type: 'text' }],
+							[{ val: 'Ren', type: 'text' }]
+						]
+					},
+					{
+						q: [
+							{ val: 'Anime: Pokemon', type: 'title' },
+							{ val: 'What is Ash\'s exclusive Z-Move?', type: 'text' }
+						],
+						options: [
+							[{ val: 'God of Lightning', type: 'text' }],
+							[{ val: '10 Million Volts', type: 'text' }],
+							[{ val: 'Advent of Thunder', type: 'text' }],
+							[{ val: 'Static Overdrive', type: 'text' }]
+						]
+					}
+					]),
+					qAmt: 2,
+					id: "live"
+				});
+				break;
+			}
+			case 'success':{
+				return res.renderFile('quiz_success.njk');
+			}
+			case 'live-master' : {
+				// We're gonna merge this one and the one above into one based on user perms ;-;
+				const questions = [
+					[
+						{ val: 'Anime: The Rising of the Shield Hero', type: 'title' },
+						{ val: 'Who has support and healing infinity?', type: 'text' }
+					], [
+						{ val: 'Anime: Pokemon', type: 'title' },
+						{ val: 'What is Ash\'s exclusive Z-Move?', type: 'text' }
+					], [
+						{ val: 'Guess the Anime', type: 'title' },
+						{ val: "https://i.postimg.cc/QdVHNjCY/20220319-1-0.png", type: "image" }
+					]
+				];
+				res.renderFile('live_master.njk', {
+					questions: JSON.stringify(questions),
+					qAmt: questions.length,
+					id: "live"
+				});
 				break;
 			}
 			case 'rebuild': {

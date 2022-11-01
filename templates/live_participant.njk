@@ -1,0 +1,154 @@
+{% extends "_base.njk" %}
+
+{% set thispage = 'live' %}
+{% set pagetitle = 'Live Quiz' %}
+
+{% block pagecontent %}
+	<div class="quiz-container">
+		<div class="countDown">
+			<button id="startQuiz" onclick="startQuiz()" class="rel">Start</button>
+			<br/><br/>
+		</div>
+		<br/>
+		<div class="question-zone">
+			<div id="count"></div>
+			<br/>
+			<form id="quiz" class="quizzes" method="POST" action="/success">
+				<input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
+				<input type="hidden" name="quizId" value="{{ id }}"/>
+				{% for q in range(1, qAmt + 1) %}
+					<div id="qbox-{{ q }}" style="display:none">
+						<div id="question-{{ q }}"></div>
+						<br/>
+						<div id = "waiting-{{ q }}" style = "display : none"><h2>Waiting for the next question</h2></div>
+						{% for i in range(1, 5) %}
+							<div class="option">
+								<input type="radio" id="answer-{{ q }}-{{ i }}" name="answer-{{ q }}" value="{{ i }}"/>
+								<label id="option-{{ q }}-{{ i }}" for="answer-{{ q }}-{{ i }}"></label><br/>
+							</div>
+						{% endfor %}
+					</div>
+				{% endfor %}
+			</form>
+		</div>
+		<br/><br/><br/>
+		<button onclick="nextQ()" style="display:none" class="rel nextQ">Next</button>
+	</div>
+	<br/><br/>
+{% endblock %}
+
+
+{% block customcss %}
+	<link rel="stylesheet" type="text/css" href="/assets/styles/icons.css"/>
+	<style>
+		.quiz-container {
+			width: 80%;
+			margin: auto;
+		}
+		button.rel {
+			width: 100px;
+			height: 30px;
+			background-color: var(--gray);
+			color: var(--off-white);
+			border: 2px solid var(--ghost-gray);
+			border-radius: 5px;
+			cursor: pointer;
+		}
+		button.rel:disabled {
+			background-color: var(--tinted-gray);
+			border: 1px solid var(--gray);
+			color: var(--ghost-gray);
+			cursor: default;
+		}
+		button.rel:not(:disabled):hover {
+			background-color: var(--middle-gray);
+		}
+		h3 {
+			margin: 10px;
+		}
+		.option {
+			margin: 8px;
+		}
+		.option-image {
+			margin: 10px;
+		}
+		.question-zone {
+			border-radius: 10px;
+			background: rgba(0, 0, 0, 0.5);
+			padding: 25px;
+		}
+	</style>
+{% endblock %}
+
+{% block customjs %}
+	<script>
+		let currentQ = 0;
+		let timeVal = 0;
+		let countLeftPerQs = 30;
+		let next = false;
+		let currentTimer;
+		const qAmt = {{ qAmt }};
+		const qs = {{ questions | safe }};
+		function generateHTML (components) {
+			return components.map(component => {
+				switch (component.type) {
+					case 'image': return `<img src="${component.val}" class="option-image" style="${component.style || ''}"/>`;
+					case 'mp3': return `<audio src="${component.val}" type="audio/mpeg"> </audio>`;
+					case 'title': return `<h3>${component.val}</h3>`;
+					default: return component.val;
+				}
+			}).join('<br/>');
+		}
+		window.onload = () => {
+			qs.forEach((question, q) => {
+				document.getElementById(`question-${q + 1}`).innerHTML = generateHTML(question.q);
+				for (let i = 1; i <= 4; i++) document.getElementById(`option-${q + 1}-${i}`).innerHTML = generateHTML(question.options[i - 1]);
+			});
+		}
+		function timer (num=30) {
+			const c = currentQ;
+			document.getElementById(`qbox-${c + 1}`).style.display = 'block';
+			if (c) document.getElementById(`qbox-${c}`).style.display = 'none';
+			timeVal = qs[c].time || num;
+			let cancel = false;
+			function endTimer () {
+				cancel = true;
+			}
+			function decrement () {
+				if (cancel) return;
+				document.getElementById('count').innerHTML = timeVal;
+				timeVal--;
+				if (timeVal >= 0) setTimeout(decrement, 1000);
+				else nextQ();
+			}
+			decrement();
+			return endTimer;
+		}
+		function startQuiz () {
+			document.getElementById('startQuiz').style.display = 'none';
+			for (button of document.getElementsByClassName('nextQ')) {
+				button.style.display = 'inline';
+			}
+			currentTimer = timer();
+		}
+		function nextQ () {
+			if(timeVal>0){
+				document.getElementById(`qbox-${c}`).style.display = 'none';
+				document.getElementById(`waiting-${c}`).style.display = 'block';
+				currentTimer = timer(timeVal);
+			}
+			else{
+				currentQ++;
+				const c = currentQ;
+				if (c >= qAmt) {
+					document.getElementById('quiz').submit();
+				} else currentTimer = timer();
+			}
+		}
+		function wait(){
+			
+		}
+	</script>
+{% endblock %}
+
+{% set scripts = ['https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'] %}

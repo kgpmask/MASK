@@ -4,7 +4,8 @@
 {% set pagetitle = 'Submitted!' %}
 
 {% block pagecontent %}
-	<h4>You have submitted your quiz successfully! Your score was: {{ score }} / {{ totalScore }}.</h4>
+	<h4>You have submitted your quiz successfully!.</h4>
+	<!-- TODO: Add in an optional score parameter instead of removing it entirely-->
 	<br/><br/>
 	<a href="/quizzes"><button class="rel">Back to quizzes</button></a>
 {% endblock %}
