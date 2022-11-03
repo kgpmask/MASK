@@ -15,7 +15,7 @@ async function createNewUser (profile) {
 	return newUser.save();
 }
 
-// Logout User
+// Get User
 async function getUser (id) {
 	return User.findById(id);
 }
@@ -44,4 +44,4 @@ function getQuizzes () {
 	return Questions.find().lean();
 }
 
-module.exports = { createNewUser, getUser, updateUserQuizRecord, getUser, getQuizzes, getUserStats };
+module.exports = { createNewUser, getUser, updateUserQuizRecord, getQuizzes, getUserStats };

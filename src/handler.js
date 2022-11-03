@@ -171,7 +171,6 @@ function handler (app, env) {
 			case 'profile': {
 				if (!loggedIn) return res.redirect('/');
 				dbh.getUserStats(req.user._id).then(user => {
-					console.log(req.user);
 					return res.renderFile('profile.njk', {
 						name: req.user.name,
 						picture: req.user.picture,
@@ -307,7 +306,7 @@ function handler (app, env) {
 					}
 				];
 				dbh.getUser(req.user._id).then(user => {
-					if (user.permissions.find(perm => perm === "quizmaster")){
+					if (user.permissions.find(perm => perm === "quizmaster")) {
 						const questions = [];
 						QUIZ.forEach(qn => questions.push(Tools.deepClone(qn.q)));
 						res.renderFile("live_master.njk", {
