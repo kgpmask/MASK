@@ -170,7 +170,7 @@ function handler (app, env) {
 			}
 			case 'profile': {
 				if (!loggedIn) return res.redirect('/');
-				dbh.getUser(req.user._id).then(user => {
+				dbh.getUserStats(req.user._id).then(user => {
 					return res.renderFile('profile.njk', {
 						name: req.user.name,
 						picture: req.user.picture,
@@ -259,13 +259,18 @@ function handler (app, env) {
 							qAmt: questions.length,
 							id: args[1]
 						});
-					});
+					}).catch(err => console.log(err));
 				}).catch(err => console.log(err));
 				break;
 			}
 			case 'live': {
-				if (true) return res.renderFile('live_participant.njk', {
-					questions: JSON.stringify([{
+				if (!loggedIn) {
+					if (!PARAMS.userless) req.session.returnTo = req.url;
+					return res.renderFile('quiz_login.njk');
+				}
+				// random quiz questions ;-;
+				const QUIZ = [
+					{
 						q: [
 							{ val: 'Anime: The Rising of the Shield Hero', type: 'title' },
 							{ val: 'Who has support and healing infinity?', type: 'text' }
@@ -276,48 +281,53 @@ function handler (app, env) {
 							[{ val: 'Motoyasu', type: 'text' }],
 							[{ val: 'Ren', type: 'text' }]
 						]
-					},
-					{
+					}, {
 						q: [
 							{ val: 'Anime: Pokemon', type: 'title' },
 							{ val: 'What is Ash\'s exclusive Z-Move?', type: 'text' }
 						],
 						options: [
-							[{ val: 'God of Lightning', type: 'text' }],
-							[{ val: '10 Million Volts', type: 'text' }],
-							[{ val: 'Advent of Thunder', type: 'text' }],
-							[{ val: 'Static Overdrive', type: 'text' }]
+							[{ val: 'C', type: 'text' }],
+							[{ val: 'D', type: 'text' }],
+							[{ val: 'B', type: 'text' }],
+							[{ val: 'A', type: 'text' }]
+						]
+					}, {
+						q: [
+							{ val: 'Guess the Anime', type: 'title' },
+							{ val: "https://i.postimg.cc/QdVHNjCY/20220319-1-0.png", type: "image" }
+						],
+						options: [
+							[{ val: 'Ans 1', type: 'text' }],
+							[{ val: 'Ans 2', type: 'text' }],
+							[{ val: 'Ans 3', type: 'text' }],
+							[{ val: 'Ans 4', type: 'text' }]
 						]
 					}
-					]),
-					qAmt: 2,
-					id: "live"
-				});
+				];
+				dbh.getUser(req.user._id).then(user => {
+					if (user.permissions.find(perm => perm === "quizmaster")) {
+						const questions = [];
+						QUIZ.forEach(qn => questions.push(Tools.deepClone(qn.q)));
+						res.renderFile("live_master.njk", {
+							questions: JSON.stringify(questions),
+							qAmt: questions.length,
+							id: 'live'
+						});
+					} else {
+						const questions = [];
+						QUIZ.forEach(qn => questions.push(Tools.deepClone(qn.options)));
+						res.renderFile("live_participant.njk", {
+							questions: JSON.stringify(questions),
+							qAmt: questions.length,
+							id: 'live'
+						});
+					}
+				}).catch(err => console.log(err));
 				break;
 			}
 			case 'success':{
 				return res.renderFile('quiz_success.njk');
-			}
-			case 'live-master' : {
-				// We're gonna merge this one and the one above into one based on user perms ;-;
-				const questions = [
-					[
-						{ val: 'Anime: The Rising of the Shield Hero', type: 'title' },
-						{ val: 'Who has support and healing infinity?', type: 'text' }
-					], [
-						{ val: 'Anime: Pokemon', type: 'title' },
-						{ val: 'What is Ash\'s exclusive Z-Move?', type: 'text' }
-					], [
-						{ val: 'Guess the Anime', type: 'title' },
-						{ val: "https://i.postimg.cc/QdVHNjCY/20220319-1-0.png", type: "image" }
-					]
-				];
-				res.renderFile('live_master.njk', {
-					questions: JSON.stringify(questions),
-					qAmt: questions.length,
-					id: "live"
-				});
-				break;
 			}
 			case 'rebuild': {
 				env.loaders.forEach(loader => loader.cache = {});
@@ -333,8 +343,6 @@ function handler (app, env) {
 				res.renderFile('videos.njk', { youtubeVids, instaVids });
 				break;
 			}
-
-
 			case 'corsProxy': {
 				const base64Url = req.query.base64Url;
 				const url = atob(base64Url);

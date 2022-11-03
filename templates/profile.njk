@@ -10,6 +10,7 @@
 				<img src="{{ picture }}" height="100" width="100" style="display:inline-block"/>
 				<span style="font-weight:bold;font-size:1.5em;">{{ name }}</span>
 			</div>
+			<h3>Name: {{ name }}</h3><br/>
 			<h3>Points: {{ points }}</h3>
 			<br/><br/>
 			<div>Quizzes attempted: {{ quizzes | join(', ') if quizzes | length else '-' }}</div>

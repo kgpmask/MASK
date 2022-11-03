@@ -6,12 +6,17 @@ const Questions = require('./schemas/Questions');
 async function createNewUser (profile) {
 	const user = await User.findById(profile.id);
 	if (user) return user;
-	const newUser = new User({ _id: profile.id, name: profile.displayName, picture: profile.photos[0].value });
+	const newUser = new User({
+		_id: profile.id,
+		name: profile.displayName,
+		picture: profile.photos[0].value,
+		permissions: []
+	});
 	return newUser.save();
 }
 
-// Logout User
-async function logoutUser (id) {
+// Get User
+async function getUser (id) {
 	return User.findById(id);
 }
 
@@ -29,7 +34,7 @@ async function updateUserQuizRecord (stats) { // {userId, quizId, time, score}
 }
 
 // User statistics
-async function getUser (userId) {
+async function getUserStats (userId) {
 	const user = await Quiz.findOne({ userId });
 	if (user) return user;
 	else return updateUserQuizRecord({ userId });
@@ -39,4 +44,4 @@ function getQuizzes () {
 	return Questions.find().lean();
 }
 
-module.exports = { createNewUser, logoutUser, updateUserQuizRecord, getUser, getQuizzes };
+module.exports = { createNewUser, getUser, updateUserQuizRecord, getQuizzes, getUserStats };
