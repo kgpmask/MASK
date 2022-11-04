@@ -326,6 +326,10 @@ function handler (app, env) {
 				}).catch(err => console.log(err));
 				break;
 			}
+			case 'live-test': {
+				res.renderFile('live_participant.njk');
+				break;
+			}
 			case 'success':{
 				return res.renderFile('quiz_success.njk');
 			}
