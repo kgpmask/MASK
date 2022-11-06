@@ -120,7 +120,7 @@
 			// Disable the button if there's no next?
 		}
 		function startQ () {
-			axios.post('/live-event', { options: quiz[currentQ].options });
+			axios.post('/live-event', { options: quiz[currentQ].options, currentQ });
 		}
 		function prevQ () {
 			document.getElementById(`qbox-${currentQ + 1}`).style.display = "none";

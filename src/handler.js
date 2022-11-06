@@ -275,6 +275,7 @@ function handler (app, env) {
 							{ val: 'Anime: The Rising of the Shield Hero', type: 'title' },
 							{ val: 'Who has support and healing infinity?', type: 'text' }
 						],
+						points: 10,
 						options: {
 							type: 'mcq',
 							value: [
@@ -287,30 +288,20 @@ function handler (app, env) {
 					}, {
 						q: [
 							{ val: 'Anime: Pokemon', type: 'title' },
-							{ val: 'What is Ash\'s exclusive Z-Move?', type: 'text' }
+							{ val: 'Ash-Pikachu\'s exclusive Z-Move is __ Million Volt Thunderbolt', type: 'text' }
 						],
+						points: 5,
 						options: {
-							type: 'mcq',
-							value: [
-								[{ val: 'C', type: 'text' }],
-								[{ val: 'D', type: 'text' }],
-								[{ val: 'B', type: 'text' }],
-								[{ val: 'A', type: 'text' }]
-							]
+							type: 'number'
 						}
 					}, {
 						q: [
 							{ val: 'Guess the Anime', type: 'title' },
 							{ val: "https://i.postimg.cc/QdVHNjCY/20220319-1-0.png", type: "image" }
 						],
+						points: 3,
 						options: {
-							type: 'mcq',
-							value: [
-								[{ val: 'Ans 1', type: 'text' }],
-								[{ val: 'Ans 2', type: 'text' }],
-								[{ val: 'Ans 3', type: 'text' }],
-								[{ val: 'Ans 4', type: 'text' }]
-							]
+							type: 'text'
 						}
 					}
 				];
@@ -433,7 +424,71 @@ function handler (app, env) {
 				dbh.getUser(req.user._id).then(user => {
 					if (user.permissions?.includes("quizmaster")) {
 						io.sockets.in('waiting-for-live-quiz').emit('question', options);
-					} else res.redirect('/live');
+					} else {
+						// assuming answer, timeLeft and currentQ is all I need
+						// import data info from database, for now, using sample data
+						const currentQ = 0, answer = 1, timeLeft = 16;
+						let points;
+						const QUIZ = [
+							{
+								q: [
+									{ val: 'Anime: The Rising of the Shield Hero', type: 'title' },
+									{ val: 'Who has support and healing infinity?', type: 'text' }
+								],
+								points: 10,
+								options: {
+									type: 'mcq',
+									value: [
+										[{ val: 'Princess Malty', type: 'text' }],
+										[{ val: 'Naofumi', type: 'text' }],
+										[{ val: 'Motoyasu', type: 'text' }],
+										[{ val: 'Ren', type: 'text' }]
+									]
+								}
+							}, {
+								q: [
+									{ val: 'Anime: Pokemon', type: 'title' },
+									{ val: 'Ash-Pikachu\'s exclusive Z-Move is __ Million Volt Thunderbolt', type: 'text' }
+								],
+								points: 5,
+								options: {
+									type: 'number'
+								}
+							}, {
+								q: [
+									{ val: 'Guess the Anime', type: 'title' },
+									{ val: "https://i.postimg.cc/QdVHNjCY/20220319-1-0.png", type: "image" }
+								],
+								points: 3,
+								options: {
+									type: 'text'
+								}
+							}
+						];
+						if (answer /* correct condition */) {
+							switch (QUIZ[currentQ].points) {
+								case 10: {
+									if (timeLeft >= 27) points = 10;
+									else if (timeLeft >= 19) points = timeLeft - 17;
+									else points = 1;
+									break;
+								}
+								case 5: {
+									if (timeLeft >= 12) points = 5;
+									else if (timeLeft >= 5) points = Math.floor(timeLeft / 2) - 9;
+									else points = 1;
+									break;
+								}
+								case 3: {
+									if (timeLeft >= 9) points = 3;
+									else if (timeLeft >= 3) points = Math.floor(timeLeft / 3) - 6;
+									else points = 1;
+									break;
+								}
+							}
+							// insert commit to db part
+						}
+					}
 				}).catch(err => console.log(err));
 				break;
 			}
