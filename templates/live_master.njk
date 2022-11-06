@@ -84,9 +84,10 @@
 		let currentQ = 0;
 		let countLeftPerQs = 30;
 		let currentTimer;
-		var secondsLeft = 15;
-		var time = setInterval(timer, 1000);
+		let secondsLeft = 15;
+		let time = setInterval(timer, 1000);
 		const qAmt = {{ qAmt }};
+		const quiz = {{ quiz | safe }};
 		const qs = {{ questions | safe }};
 		function generateHTML (components) {
 			return components.map(component => {
@@ -114,22 +115,18 @@
 		}
 		function nextQ () {
 			document.getElementById(`qbox-${currentQ + 1}`).style.display = "none";
-			if (currentQ < qAmt-1) currentQ++;
+			if (currentQ < qAmt - 1) currentQ++;
 			document.getElementById(`qbox-${currentQ + 1}`).style.display = "block";
+			// Disable the button if there's no next?
 		}
 		function startQ () {
-			// I am not sure about any of this, also, courtesy- PartMan
-			socket.on('connect', () => {
-				setTimeout(() => {
-					socket.emit('data',/* data we wish to emit, but what do we wish to */);
-				},5_000);
-				socket.emit('ping');
-			});
+			axios.post('/live-event', { options: quiz[currentQ].options });
 		}
 		function prevQ () {
 			document.getElementById(`qbox-${currentQ + 1}`).style.display = "none";
 			if (currentQ) currentQ--;
 			document.getElementById(`qbox-${currentQ + 1}`).style.display = "block";
+			// Disable the button if there's no previous
 		}
 	</script>
 {% endblock %}
