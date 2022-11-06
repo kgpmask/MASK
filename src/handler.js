@@ -298,6 +298,9 @@ function handler (app, env) {
 			case 'success':{
 				return res.renderFile('quiz_success.njk');
 			}
+			case 'results':{
+				return res.renderFile('results.njk');
+			}
 			case 'live-master' : {
 				// We're gonna merge this one and the one above into one based on user perms ;-;
 				const questions = [
