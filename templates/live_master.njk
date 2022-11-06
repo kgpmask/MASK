@@ -79,6 +79,8 @@
 
 {% block customjs %}
 	<script>
+		import {io} from "socket.io-client";
+		const socket = io('http://livehost:6969');
 		let currentQ = 0;
 		let countLeftPerQs = 30;
 		let currentTimer;
@@ -116,7 +118,13 @@
 			document.getElementById(`qbox-${currentQ + 1}`).style.display = "block";
 		}
 		function startQ () {
-			// Starts the timer (or will it send a signal for the others to start their timers?)
+			// I am not sure about any of this, also, courtesy- PartMan
+			socket.on('connect', () => {
+				setTimeout(() => {
+					socket.emit('data',/* data we wish to emit, but what do we wish to */);
+				},5_000);
+				socket.emit('ping');
+			});
 		}
 		function prevQ () {
 			document.getElementById(`qbox-${currentQ + 1}`).style.display = "none";

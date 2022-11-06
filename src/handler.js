@@ -4,6 +4,7 @@ const path = require('path');
 
 const login = require('./login.js');
 const dbh = PARAMS.userless ? {} : require('../database/database_handler.js');
+const server_socket = require('./server_socket.js');
 
 if (!PARAMS.userless) login.init();
 
