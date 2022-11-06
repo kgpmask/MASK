@@ -85,6 +85,34 @@
 
 		const socket = io();
 
+		socket.on('queestions', options => {
+			// socket integration here
+
+			/*
+			{
+				type: 'mcq',
+				value: [
+					[{ val: 'Ans 1', type: 'text' }],
+					[{ val: 'Ans 2', type: 'text' }],
+					[{ val: 'Ans 3', type: 'text' }],
+					[{ val: 'Ans 4', type: 'text' }]
+				]
+			}
+
+			or maybe
+
+			{
+				type: 'text'
+			}
+
+			or
+
+			{
+				type: 'number'
+			}
+			*/
+		});
+
 		let currentQ = 0;
 		let timeVal = 0;
 		let countLeftPerQs = 30;
@@ -107,7 +135,6 @@
 				// document.getElementById(`question-${q + 1}`).innerHTML = generateHTML(question.q);
 				// for (let i = 1; i <= 4; i++) document.getElementById(`option-${q + 1}-${i}`).innerHTML = generateHTML(question.options[i - 1]);
 			});
-			// socket integration
 		}
 		function timer (num=30) {
 			const c = currentQ;
