@@ -79,12 +79,15 @@
 
 {% block customjs %}
 	<script>
+		import {io} from "socket.io-client";
+		const socket = io('http://livehost:6969');
 		let currentQ = 0;
 		let countLeftPerQs = 30;
 		let currentTimer;
-		var secondsLeft = 15;
-		var time = setInterval(timer, 1000);
+		let secondsLeft = 15;
+		let time = setInterval(timer, 1000);
 		const qAmt = {{ qAmt }};
+		const quiz = {{ quiz | safe }};
 		const qs = {{ questions | safe }};
 		function generateHTML (components) {
 			return components.map(component => {
@@ -112,16 +115,18 @@
 		}
 		function nextQ () {
 			document.getElementById(`qbox-${currentQ + 1}`).style.display = "none";
-			if (currentQ < qAmt-1) currentQ++;
+			if (currentQ < qAmt - 1) currentQ++;
 			document.getElementById(`qbox-${currentQ + 1}`).style.display = "block";
+			// Disable the button if there's no next?
 		}
 		function startQ () {
-			// Starts the timer (or will it send a signal for the others to start their timers?)
+			axios.post('/live-event', { options: quiz[currentQ].options });
 		}
 		function prevQ () {
 			document.getElementById(`qbox-${currentQ + 1}`).style.display = "none";
 			if (currentQ) currentQ--;
 			document.getElementById(`qbox-${currentQ + 1}`).style.display = "block";
+			// Disable the button if there's no previous
 		}
 	</script>
 {% endblock %}

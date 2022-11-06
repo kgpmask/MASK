@@ -83,6 +83,37 @@
 
 {% block customjs %}
 	<script>
+
+		const socket = io();
+
+		socket.on('queestions', options => {
+			// socket integration here
+
+			/*
+			{
+				type: 'mcq',
+				value: [
+					[{ val: 'Ans 1', type: 'text' }],
+					[{ val: 'Ans 2', type: 'text' }],
+					[{ val: 'Ans 3', type: 'text' }],
+					[{ val: 'Ans 4', type: 'text' }]
+				]
+			}
+
+			or maybe
+
+			{
+				type: 'text'
+			}
+
+			or
+
+			{
+				type: 'number'
+			}
+			*/
+		});
+
 		let currentQ = 0;
 		let state = "waiting";
 		let timeLeft = 0;
@@ -98,7 +129,7 @@
 			}).join('<br/>');
 		}
 
-		function showMessage(message) {
+		function showMessage (message) {
 			document.getElementById('q-box').style.display = 'none';
 			document.getElementById('message').style.display = 'block';
 			document.getElementById('message').innerHTML = message;
@@ -153,4 +184,4 @@
 	</script>
 {% endblock %}
 
-{% set scripts = ['https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'] %}
+{% set scripts = ['https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js', '/socket.io/socket.io.js'] %}

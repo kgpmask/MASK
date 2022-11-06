@@ -275,42 +275,50 @@ function handler (app, env) {
 							{ val: 'Anime: The Rising of the Shield Hero', type: 'title' },
 							{ val: 'Who has support and healing infinity?', type: 'text' }
 						],
-						options: [
-							[{ val: 'Princess Malty', type: 'text' }],
-							[{ val: 'Naofumi', type: 'text' }],
-							[{ val: 'Motoyasu', type: 'text' }],
-							[{ val: 'Ren', type: 'text' }]
-						]
+						options: {
+							type: 'mcq',
+							value: [
+								[{ val: 'Princess Malty', type: 'text' }],
+								[{ val: 'Naofumi', type: 'text' }],
+								[{ val: 'Motoyasu', type: 'text' }],
+								[{ val: 'Ren', type: 'text' }]
+							]
+						}
 					}, {
 						q: [
 							{ val: 'Anime: Pokemon', type: 'title' },
 							{ val: 'What is Ash\'s exclusive Z-Move?', type: 'text' }
 						],
-						options: [
-							[{ val: 'C', type: 'text' }],
-							[{ val: 'D', type: 'text' }],
-							[{ val: 'B', type: 'text' }],
-							[{ val: 'A', type: 'text' }]
-						]
+						options: {
+							type: 'mcq',
+							value: [
+								[{ val: 'C', type: 'text' }],
+								[{ val: 'D', type: 'text' }],
+								[{ val: 'B', type: 'text' }],
+								[{ val: 'A', type: 'text' }]
+							]
+						}
 					}, {
 						q: [
 							{ val: 'Guess the Anime', type: 'title' },
 							{ val: "https://i.postimg.cc/QdVHNjCY/20220319-1-0.png", type: "image" }
 						],
-						options: [
-							[{ val: 'Ans 1', type: 'text' }],
-							[{ val: 'Ans 2', type: 'text' }],
-							[{ val: 'Ans 3', type: 'text' }],
-							[{ val: 'Ans 4', type: 'text' }]
-						]
+						options: {
+							type: 'mcq',
+							value: [
+								[{ val: 'Ans 1', type: 'text' }],
+								[{ val: 'Ans 2', type: 'text' }],
+								[{ val: 'Ans 3', type: 'text' }],
+								[{ val: 'Ans 4', type: 'text' }]
+							]
+						}
 					}
 				];
 				dbh.getUser(req.user._id).then(user => {
-					if (user.permissions?.find(perm => perm === "quizmaster")) {
-						const questions = [];
-						QUIZ.forEach(qn => questions.push(Tools.deepClone(qn.q)));
+					if (user.permissions?.includes("quizmaster")) {
 						res.renderFile("live_master.njk", {
-							questions: JSON.stringify(questions),
+							quiz: JSON.stringify(QUIZ),
+							questions: JSON.stringify(QUIZ.map(q => q.q)),
 							qAmt: questions.length,
 							id: 'live'
 						});
@@ -371,6 +379,7 @@ function handler (app, env) {
 	function post (req, res) {
 		const args = req.url.split('/');
 		args.shift();
+		const loggedIn = res.locals.loggedIn = Boolean(req.user);
 
 		switch (args[0]) {
 			case "checker": {
@@ -411,6 +420,20 @@ function handler (app, env) {
 					res.renderFile('quiz_success.njk', { score: points[0], totalScore: points[1] });
 					const dbh = require('../database/database_handler');
 					dbh.updateUserQuizRecord({ userId: req.user._id, quizId, score: points[0], time: Date.now() });
+				}).catch(err => console.log(err));
+				break;
+			}
+			case 'live-events': {
+				// Emit event to start next question
+				if (!loggedIn) {
+					if (!PARAMS.userless) req.session.returnTo = req.url;
+					return res.renderFile('quiz_login.njk');
+				}
+				const options = req.body.options;
+				dbh.getUser(req.user._id).then(user => {
+					if (user.permissions?.includes("quizmaster")) {
+						io.sockets.in('waiting-for-live-quiz').emit('question', options);
+					} else res.redirect('/live');
 				}).catch(err => console.log(err));
 				break;
 			}
