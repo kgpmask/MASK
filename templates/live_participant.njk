@@ -82,6 +82,9 @@
 
 {% block customjs %}
 	<script>
+
+		const socket = io();
+
 		let currentQ = 0;
 		let timeVal = 0;
 		let countLeftPerQs = 30;
@@ -101,9 +104,10 @@
 		}
 		window.onload = () => {
 			qs.forEach((question, q) => {
-				document.getElementById(`question-${q + 1}`).innerHTML = generateHTML(question.q);
-				for (let i = 1; i <= 4; i++) document.getElementById(`option-${q + 1}-${i}`).innerHTML = generateHTML(question.options[i - 1]);
+				// document.getElementById(`question-${q + 1}`).innerHTML = generateHTML(question.q);
+				// for (let i = 1; i <= 4; i++) document.getElementById(`option-${q + 1}-${i}`).innerHTML = generateHTML(question.options[i - 1]);
 			});
+			// socket integration
 		}
 		function timer (num=30) {
 			const c = currentQ;
@@ -151,4 +155,4 @@
 	</script>
 {% endblock %}
 
-{% set scripts = ['https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'] %}
+{% set scripts = ['https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js', '/socket.io/socket.io.js'] %}
