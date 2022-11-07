@@ -11,7 +11,7 @@
 		<br/>
 		<div class="question-zone">
 			<br/>
-			<form id="quiz" class="quizzes" method="POST" action="javascript: ()=> console.log('Submitting')">
+			<form id="quiz" class="quizzes" method="POST" action="javascript: () => console.log('Submitting')">
 				<input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
 				<input type="hidden" name="quizId" value="{{ id }}"/>
 				<div id="q-box" style="display: none">
@@ -31,11 +31,9 @@
 					<br/>
 					<button id="submit-button" class="rel" onclick="submitAnswer()">Submit</button>
 				</div>
-				<div id = "message" style="display: none"><h3>Waiting for the quizmaster ;-;</h3></div>
+				<div id="message" style="display: none"><h3>Waiting for the quizmaster ;-;</h3></div>
 			</form>
 		</div>
-		<br/><br/><br/>
-		<button onclick="nextQ()" style="" class="rel nextQ">Next</button>
 	</div>
 	<br/><br/>
 {% endblock %}
@@ -86,16 +84,17 @@
 {% block customjs %}
 	<script>
 		axios.defaults.withCredentials = true;
+		axios.defaults.headers.common['X-CSRF-TOKEN'] = '{{ csrfToken }}';
 
 		const userId = '{{ userId }}';
-		const socket = io({
-			query: `userId=${userId}`
-		});
+		const socket = io();
 
 		let currentQ = 0;
-		let state = "waiting";
+		let state = 'waiting';
 		let timeLeft = 0;
-		
+
+		const waitingMsg = "Waiting for the quizmaster...";
+
 		function generateHTML(components) {
 			return components.map(component => {
 				switch (component.type) {
@@ -113,14 +112,14 @@
 			document.getElementById('message').innerHTML = message;
 		}
 		
-		function timer(time) {
+		function timer (time) {
 			timeLeft = time;
 			function tick() {
 				if (state === 'waiting' || state === 'submitted') return;
 				document.getElementById('count').innerHTML = timeLeft--;
 				if (timeLeft >= 0) setTimeout(tick, 1000);
 				else {
-					console.log("Done");
+					console.log('Done');
 					switch (state) {
 						case 'running': {
 							state = 'time-out';
@@ -132,7 +131,7 @@
 						// any other case as per requirement will be added here
 						default: {
 							state = 'waiting';
-							document.getElementById('count').innerHTML = "";
+							document.getElementById('count').innerHTML = '';
 							showMessage('Waiting for the quizmaster ;-;');
 							break;
 						}
@@ -142,11 +141,11 @@
 			tick();
 		}
 
-		function showQuestion(options, time) {
+		function showQuestion (options, time) {
 			document.getElementById('count').style.display = 'block';
 			document.getElementById('message').style.display = 'none';
 			document.getElementById('q-box').style.display = 'block';
-			if (options.type === "mcq") {
+			if (options.type === 'mcq') {
 				for (let i=1; i<=4; i++) document.getElementById(`option-${i}`).innerHTML = generateHTML(options.value[i-1]);
 				document.getElementById('answer-text-container').style.display = 'none';
 				document.getElementById('options-container').style.display = 'block';
@@ -154,45 +153,43 @@
 				document.getElementById('answer-text-container').style.display = 'block';
 				document.getElementById('options-container').style.display = 'none';
 			}
-			state = "running";
+			state = 'running';
 			timer(time);
 		}
 
-		socket.on('questions', req => {
+		socket.on('question', req => {
 			currentQ = req.currentQ;
 			showQuestion(req.options, req.time);
 		});
 
 		socket.on('answer', req => {
-			state = "showing-answer"
+			state = 'showing-answer'
 			showMessage(`The answer is ${req.answer}`);
 			timer(5);
 		})
 
-		window.onload = () => showMessage('Waiting for the quizmaster ;-;');
+		window.onload = () => showMessage(waitingMsg);
 
-		function submitAnswer (timeout=false) {
+		function submitAnswer (timeout = false) {
 			// needs fixing
 			let answer;
-			if (document.getElementById('answer-text-container').style.display === "block") {
+			if (document.getElementById('answer-text-container').style.display === 'block') {
 				answer = document.getElementById('answer-text-field').value;
 			} else {
-				for (let i=1; i<=4; i++) {
+				for (let i = 1; i <= 4; i++) {
 					if (document.getElementById(`answer-${i}`).checked) { 
 						document.getElementById(`answer-${i}`).checked = false;
 						answer = document.getElementById(`answer-${i}`).value;
 						break;
-
 					}
 				}
 			}
 			console.log(answer);
-			document.getElementById('count').style.display = "none";
+			document.getElementById('count').style.display = 'none';
 			if (timeout) return;
-			state = "submitted";
-			showMessage("Your response is submitted.");
-			setTimeout(() => showMessage("Waiting for the quizmaster ;-;"), 5000);
-			// Now, 
+			state = 'submitted';
+			showMessage('Your response is submitted.');
+			setTimeout(() => showMessage(waitingMsg), 5000);
 		}
 	</script>
 {% endblock %}

@@ -368,12 +368,12 @@ function handler (app, env) {
 		const loggedIn = res.locals.loggedIn = Boolean(req.user);
 
 		switch (args[0]) {
-			case "checker": {
+			case 'checker': {
 				const checker = require('./checker.js');
 				checker.compare(args[2], args[1], req.body).then(response => {
 					switch (response) {
-						case true: return res.send("correct");
-						case false: return res.send("");
+						case true: return res.send('correct');
+						case false: return res.send('');
 						default: return res.send(response);
 					}
 				}).catch(err => res.status(400).send(err.message));
@@ -455,15 +455,20 @@ function handler (app, env) {
 					}
 				];
 				dbh.getUser(req.user._id).then(user => {
-					if (user.permissions?.includes("quizmaster")) {
+					if (user.permissions?.includes('quizmaster')) {
+						const quizTime = { '10': 20, '5': 15, '3': 12 }[QUIZ[req.body.currentQ].points];
 						io.sockets.in('waiting-for-live-quiz').emit('question', {
 							currentQ: req.body.currentQ,
 							options: req.body.options,
-							time: { "10": 20, "5": 15, "3": 12 }[QUIZ[req.body.currentQ].points]
+							time: quizTime
 						});
-						setTimeout(io.sockets.in('waiting-for-live-quiz').emit('answer', {
-							answer: QUIZ[req.body.currentQ].solution
-						}), 1000 * (2 + { "10": 20, "5": 15, "3": 12 }[QUIZ[req.body.currentQ].points]));
+						setTimeout(() => {
+							// TODO: Disable receiving answers using some sort of flag
+							setTimeout(() => io.sockets.in('waiting-for-live-quiz').emit('answer', {
+								answer: QUIZ[req.body.currentQ].solution
+							}), 2000); // Emit the actual event 3s after
+						}, 1000 * (quizTime + 1)); // Extra second to account for lag
+						res.send('Done');
 					} else {
 						// assuming answer, timeLeft and currentQ is all I need
 						// import data info from database, for now, using sample data

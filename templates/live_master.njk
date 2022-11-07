@@ -79,6 +79,9 @@
 
 {% block customjs %}
 	<script>
+		axios.defaults.withCredentials = true;
+		axios.defaults.headers.common['X-CSRF-TOKEN'] = '{{ csrfToken }}';
+
 		let currentQ = 0;
 		let countLeftPerQs = 30;
 		let currentTimer;
@@ -112,7 +115,7 @@
 
 		function startQ () {
 			// Why is POST bugging me so much ;-;
-			axios.post('/live-events', { options: quiz[currentQ].options, currentQ });
+			axios.post('/live-events', { options: quiz[currentQ].options, currentQ }).then(console.log);
 		}
 
 		function prevQ () {
