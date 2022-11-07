@@ -79,8 +79,6 @@
 
 {% block customjs %}
 	<script>
-		import {io} from "socket.io-client";
-		const socket = io('http://livehost:6969');
 		let currentQ = 0;
 		let countLeftPerQs = 30;
 		let currentTimer;
