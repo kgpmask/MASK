@@ -85,7 +85,11 @@
 
 {% block customjs %}
 	<script>
-		const socket = io();
+
+		const userId = '{{ userId }}';
+		const socket = io({
+			query: `userId=${userId}`
+		});
 
 		let currentQ = 0;
 		let state = "waiting";

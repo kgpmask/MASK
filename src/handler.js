@@ -319,7 +319,8 @@ function handler (app, env) {
 						res.renderFile("live_participant.njk", {
 							questions: JSON.stringify(questions),
 							qAmt: questions.length,
-							id: 'live'
+							id: 'live',
+							userId: req.user._id
 						});
 					}
 				}).catch(err => console.log(err));
