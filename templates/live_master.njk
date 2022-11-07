@@ -83,10 +83,9 @@
 		let countLeftPerQs = 30;
 		let currentTimer;
 		let secondsLeft = 15;
-		let time = setInterval(timer, 1000);
 		const qAmt = {{ qAmt }};
 		const quiz = {{ quiz | safe }};
-		const qs = {{ questions | safe }};
+		const qs = quiz.map(que => que.q);
 		function generateHTML (components) {
 			return components.map(component => {
 				switch (component.type) {
@@ -103,23 +102,19 @@
 			});
 			document.getElementById('qbox-1').style.display = 'block';
 		}
-		function timer () {
-			document.getElementById('count').innerHTML = secondsLeft + " seconds left";
-			secondsLeft--;
-			if (secondsLeft == -1) {
-				clearInterval(time);
-				alert("Time out!!");
-			}
-		}
+
 		function nextQ () {
 			document.getElementById(`qbox-${currentQ + 1}`).style.display = "none";
 			if (currentQ < qAmt - 1) currentQ++;
 			document.getElementById(`qbox-${currentQ + 1}`).style.display = "block";
 			// Disable the button if there's no next?
 		}
+
 		function startQ () {
-			axios.post('/live-event', { options: quiz[currentQ].options, currentQ });
+			// Why is POST bugging me so much ;-;
+			axios.post('/live-events', { options: quiz[currentQ].options, currentQ });
 		}
+
 		function prevQ () {
 			document.getElementById(`qbox-${currentQ + 1}`).style.display = "none";
 			if (currentQ) currentQ--;
