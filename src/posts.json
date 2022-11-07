@@ -1,4 +1,10 @@
 [{
+	"name": "<b>Live Quiz, Saturday!</b>",
+	"link": "/events",
+	"type": "letter",
+	"date": "5th Nov, 2022",
+	"hype": true
+}, {
 	"name": "AMV - Unstoppable",
 	"link": "https://www.youtube.com/watch?v=jYNqbGxeb6g",
 	"type": "video",

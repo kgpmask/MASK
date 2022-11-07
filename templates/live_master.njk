@@ -86,6 +86,11 @@
 		let countLeftPerQs = 30;
 		let currentTimer;
 		let secondsLeft = 15;
+
+		const startedQs = [];
+
+		let startButton;
+
 		const qAmt = {{ qAmt }};
 		const quiz = {{ quiz | safe }};
 		const qs = quiz.map(que => que.q);
@@ -100,6 +105,7 @@
 			}).join('<br/>');
 		}
 		window.onload = () => {
+			startButton = document.getElementById('startQ');
 			qs.forEach((question, q) => {
 				document.getElementById(`question-${q + 1}`).innerHTML = generateHTML(question);
 			});
@@ -112,21 +118,26 @@
 			document.getElementById(`qbox-${currentQ + 1}`).style.display = "none";
 			if (currentQ < qAmt - 1) currentQ++;
 			document.getElementById(`qbox-${currentQ + 1}`).style.display = "block";
-			document.getElementById('nextQ').style.display = currentQ < qAmt - 1 ? "" : "none";
-			document.getElementById('prevQ').style.display = "";
+			document.getElementById('nextQ').disabled = !(currentQ < qAmt - 1);
+			document.getElementById('prevQ').disabled = false;
+			if (startedQs.includes(currentQ)) startButton.disabled = true;
+			else startButton.disabled = false;
 		}
 
 		function startQ () {
-			// Why is POST bugging me so much ;-;
-			axios.post('/live-events', { options: quiz[currentQ].options, currentQ }).then(console.log);
+			// Timer!
+			startButton.disabled = true;
+			axios.post('/live-events', { options: quiz[currentQ].options, currentQ }).then(() => startedQs.push(currentQ));
 		}
 
 		function prevQ () {
 			document.getElementById(`qbox-${currentQ + 1}`).style.display = "none";
 			if (currentQ) currentQ--;
 			document.getElementById(`qbox-${currentQ + 1}`).style.display = "block";
-			document.getElementById('prevQ').style.display = currentQ > 0 ? "" : "none";
-			document.getElementById('nextQ').style.display = "";
+			document.getElementById('prevQ').disabled = !(currentQ > 0);
+			document.getElementById('nextQ').disabled = false;
+			if (startedQs.includes(currentQ)) startButton.disabled = true;
+			else startButton.disabled = false;
 		}
 	</script>
 {% endblock %}
