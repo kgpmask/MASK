@@ -310,7 +310,7 @@ function handler (app, env) {
 						res.renderFile("live_master.njk", {
 							quiz: JSON.stringify(QUIZ),
 							questions: JSON.stringify(QUIZ.map(q => q.q)),
-							qAmt: questions.length,
+							qAmt: QUIZ.length,
 							id: 'live'
 						});
 					} else {

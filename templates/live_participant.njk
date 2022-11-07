@@ -11,7 +11,7 @@
 		<br/>
 		<div class="question-zone">
 			<br/>
-			<form id="quiz" class="quizzes" method="POST">
+			<form id="quiz" class="quizzes" method="POST" action="javascript: ()=> console.log('Submitting')">
 				<input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
 				<input type="hidden" name="quizId" value="{{ id }}"/>
 				<div id="q-box" style="display: none">
@@ -26,7 +26,7 @@
 						{% endfor %}
 					</div>
 					<div id="answer-text-container" style="display: none">
-						<input type="text" name="answer">
+						<input type="text" name="answer" id='answer-text-field'>
 					</div>
 					<br/>
 					<button id="submit-button" class="rel" onclick="submitAnswer()">Submit</button>
@@ -109,9 +109,9 @@
 		}
 		
 		function timer(time) {
-			if (state === 'waiting' || state === 'submitted') return;
 			timeLeft = time;
 			function tick() {
+				if (state === 'waiting' || state === 'submitted') return;
 				document.getElementById('count').innerHTML = timeLeft--;
 				if (timeLeft >= 0) setTimeout(tick, 1000);
 				else {
@@ -119,7 +119,8 @@
 					switch (state) {
 						case 'running': {
 							state = 'time-out';
-							showMessage('The time is up. Your response is stored in the database.');
+							submitAnswer();
+							showMessage('The time is up. Your response is submitted.');
 							timer(5);
 							break;
 						}
@@ -152,30 +153,32 @@
 			timer(30);
 		}
 
-		socket.on('questions', options => {
-			// socket integration here
-			document.getElementById('count').style.display = 'block';
-			document.getElementById('message').style.display = 'none';
-			document.getElementById('q-box').style.display = 'block';
-			if (options.type === "mcq") {
-				for (let i=1; i<=4; i++) document.getElementById(`option-${i}`).innerHTML = generateHTML(options.value[i-1]);
-				document.getElementById('answer-text-container').style.display = 'none';
-				document.getElementById('options-container').style.display = 'block';
-			} else {
-				document.getElementById('answer-text-container').style.display = 'block';
-				document.getElementById('options-container').style.display = 'none';
-			}
-			state = "running";
-			timer(30);
-		});
+		socket.on('questions', options => showQuestion(options));
 
 		window.onload = () => showMessage('Waiting for the quizmaster ;-;');
 
-		function submitAnswer () {
+		function submitAnswer (timeout=false) {
 			// needs fixing
-			const answer = findSelection("answer") | 2;
+			let answer;
+			if (document.getElementById('answer-text-container').style.display === "block") {
+				answer = document.getElementById('answer-text-field').value;
+			} else {
+				for (let i=1; i<=4; i++) {
+					if (document.getElementById(`answer-${i}`).checked) { 
+						document.getElementById(`answer-${i}`).checked = false;
+						answer = document.getElementById(`answer-${i}`).value;
+						break;
+
+					}
+				}
+			}
 			console.log(answer);
-			axios.post('/live-event', {currentQ, answer, timeLeft});
+			document.getElementById('count').style.display = "none";
+			if (timeout) return;
+			state = "submitted";
+			showMessage("Your response is submitted.");
+			setTimeout(() => showMessage("Waiting for the quizmaster ;-;"), 5000);
+			// Now, 
 		}
 	</script>
 {% endblock %}
