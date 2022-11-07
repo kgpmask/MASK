@@ -464,15 +464,17 @@ function handler (app, env) {
 						});
 						setTimeout(() => {
 							// TODO: Disable receiving answers using some sort of flag
+							const type = QUIZ[req.body.currentQ].options.type;
 							setTimeout(() => io.sockets.in('waiting-for-live-quiz').emit('answer', {
-								answer: QUIZ[req.body.currentQ].solution
+								answer: type === "mcq" ? QUIZ[req.body.currentQ].options.value[QUIZ[req.body.currentQ].answer-1] : QUIZ[req.body.currentQ].answer,
+								type
 							}), 2000); // Emit the actual event 3s after
 						}, 1000 * (quizTime + 1)); // Extra second to account for lag
 						res.send('Done');
 					} else {
 						// assuming answer, timeLeft and currentQ is all I need
 						// import data info from database, for now, using sample data
-						const currentQ = 0, answer = 1, timeLeft = 16;
+						const { currentQ, answer, timeLeft } = req.body;
 						let points;
 						// point distribution based on the time taken
 						switch (QUIZ[currentQ].points) {

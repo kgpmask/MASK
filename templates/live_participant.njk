@@ -119,20 +119,19 @@
 				document.getElementById('count').innerHTML = timeLeft--;
 				if (timeLeft >= 0) setTimeout(tick, 1000);
 				else {
-					console.log('Done');
 					switch (state) {
 						case 'running': {
 							state = 'time-out';
 							submitAnswer();
 							showMessage('The time is up. Your response is submitted.');
-							timer(5);
+							timer(3);
 							break;
 						}
 						// any other case as per requirement will be added here
 						default: {
 							state = 'waiting';
 							document.getElementById('count').innerHTML = '';
-							showMessage('Waiting for the quizmaster ;-;');
+							showMessage(waitingMsg);
 							break;
 						}
 					}
@@ -164,7 +163,7 @@
 
 		socket.on('answer', req => {
 			state = 'showing-answer'
-			showMessage(`The answer is ${req.answer}`);
+			showMessage(`The answer is ${req.type === 'mcq' ? generateHTML(req.answer) : req.answer}`);
 			timer(5);
 		})
 
@@ -175,6 +174,7 @@
 			let answer;
 			if (document.getElementById('answer-text-container').style.display === 'block') {
 				answer = document.getElementById('answer-text-field').value;
+				document.getElementById('answer-text-field').value = "";
 			} else {
 				for (let i = 1; i <= 4; i++) {
 					if (document.getElementById(`answer-${i}`).checked) { 
@@ -189,7 +189,12 @@
 			if (timeout) return;
 			state = 'submitted';
 			showMessage('Your response is submitted.');
-			setTimeout(() => showMessage(waitingMsg), 5000);
+			setTimeout(() => showMessage(waitingMsg), 3000);
+			axios.post("/live-events", {
+				currentQ,
+				answer,
+				timeLeft
+			})
 		}
 	</script>
 {% endblock %}

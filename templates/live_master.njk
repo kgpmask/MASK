@@ -11,9 +11,9 @@
 		</div>
 		<br/>
 		<div class="button-container">
-			<button onclick="prevQ()" class="rel prevQ">Prev</button>
-			<button onclick="startQ()" class="rel startQ">Start</button>
-			<button onclick="nextQ()" class="rel nextQ">Next</button>
+			<button onclick="prevQ()" class="rel prevQ" id="prevQ">Prev</button>
+			<button onclick="startQ()" class="rel startQ" id="startQ">Start</button>
+			<button onclick="nextQ()" class="rel nextQ" id="nextQ">Next</button>
 		</div>
 		<br/>
 		<div class="question-zone">
@@ -104,13 +104,16 @@
 				document.getElementById(`question-${q + 1}`).innerHTML = generateHTML(question);
 			});
 			document.getElementById('qbox-1').style.display = 'block';
+			nextQ();
+			prevQ();
 		}
 
 		function nextQ () {
 			document.getElementById(`qbox-${currentQ + 1}`).style.display = "none";
 			if (currentQ < qAmt - 1) currentQ++;
 			document.getElementById(`qbox-${currentQ + 1}`).style.display = "block";
-			// Disable the button if there's no next?
+			document.getElementById('nextQ').style.display = currentQ < qAmt - 1 ? "" : "none";
+			document.getElementById('prevQ').style.display = "";
 		}
 
 		function startQ () {
@@ -122,7 +125,8 @@
 			document.getElementById(`qbox-${currentQ + 1}`).style.display = "none";
 			if (currentQ) currentQ--;
 			document.getElementById(`qbox-${currentQ + 1}`).style.display = "block";
-			// Disable the button if there's no previous
+			document.getElementById('prevQ').style.display = currentQ > 0 ? "" : "none";
+			document.getElementById('nextQ').style.display = "";
 		}
 	</script>
 {% endblock %}
