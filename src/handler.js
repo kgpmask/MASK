@@ -444,7 +444,8 @@ function handler (app, env) {
 										[{ val: 'Motoyasu', type: 'text' }],
 										[{ val: 'Ren', type: 'text' }]
 									]
-								}
+								},
+								answer: 1
 							}, {
 								q: [
 									{ val: 'Anime: Pokemon', type: 'title' },
@@ -453,7 +454,8 @@ function handler (app, env) {
 								points: 5,
 								options: {
 									type: 'number'
-								}
+								},
+								answer: 10
 							}, {
 								q: [
 									{ val: 'Guess the Anime', type: 'title' },
@@ -462,32 +464,49 @@ function handler (app, env) {
 								points: 3,
 								options: {
 									type: 'text'
-								}
+								},
+								answer: "By the Grace of the Gods"
 							}
 						];
-						if (answer /* correct condition */) {
-							switch (QUIZ[currentQ].points) {
-								case 10: {
-									if (timeLeft >= 27) points = 10;
-									else if (timeLeft >= 19) points = timeLeft - 17;
-									else points = 1;
-									break;
-								}
-								case 5: {
-									if (timeLeft >= 12) points = 5;
-									else if (timeLeft >= 5) points = Math.floor(timeLeft / 2) - 9;
-									else points = 1;
-									break;
-								}
-								case 3: {
-									if (timeLeft >= 9) points = 3;
-									else if (timeLeft >= 3) points = Math.floor(timeLeft / 3) - 6;
-									else points = 1;
-									break;
-								}
+						// point distribution based on the time taken
+						switch (QUIZ[currentQ].points) {
+							case 10: {
+								if (timeLeft >= 27) points = 10;
+								else if (timeLeft >= 19) points = timeLeft - 17;
+								else points = 1;
+								break;
 							}
-							// insert commit to db part
+							case 5: {
+								if (timeLeft >= 12) points = 5;
+								else if (timeLeft >= 5) points = Math.floor(timeLeft / 2) - 1;
+								else points = 1;
+								break;
+							}
+							case 3: {
+								if (timeLeft >= 9) points = 3;
+								else if (timeLeft >= 3) points = Math.floor(timeLeft / 3);
+								else points = 1;
+								break;
+							}
 						}
+						// points based on the accuracy of the answer
+						switch (QUIZ[currentQ].options.type) {
+							case 'mcq': {
+								points = answer === QUIZ[currentQ].solution ? points : 0;
+								break;
+							}
+							case 'text': {
+								const tools = require('./tools');
+								if (tools.levenshteinDistance(answer, QUIZ[currentQ].solution) > 5) points = 0;
+								break;
+							}
+							case 'number': {
+								// not sure about the accuracy so here's a placeholder
+								if (Math.abs(~~answer - QUIZ[currentQ].solution) > 1) points = 0;
+								break;
+							}
+						}
+						// insert commit to db part
 					}
 				}).catch(err => console.log(err));
 				break;
