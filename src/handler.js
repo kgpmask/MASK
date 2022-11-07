@@ -465,8 +465,11 @@ function handler (app, env) {
 						setTimeout(() => {
 							// TODO: Disable receiving answers using some sort of flag
 							const type = QUIZ[req.body.currentQ].options.type;
+							let answer;
+							if (type === "mcq") answer = QUIZ[req.body.currentQ].options.value[QUIZ[req.body.currentQ].answer - 1];
+							else answer = QUIZ[req.body.currentQ].answer;
 							setTimeout(() => io.sockets.in('waiting-for-live-quiz').emit('answer', {
-								answer: type === "mcq" ? QUIZ[req.body.currentQ].options.value[QUIZ[req.body.currentQ].answer-1] : QUIZ[req.body.currentQ].answer,
+								answer,
 								type
 							}), 2000); // Emit the actual event 3s after
 						}, 1000 * (quizTime + 1)); // Extra second to account for lag
