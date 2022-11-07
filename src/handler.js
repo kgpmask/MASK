@@ -507,8 +507,7 @@ function handler (app, env) {
 								break;
 							}
 							case 'text': {
-								const tools = require('./tools');
-								if (tools.levenshteinDistance(answer, QUIZ[currentQ].solution) > 5) points = 0;
+								if (Tools.levenshteinDistance(answer, QUIZ[currentQ].solution) > 5) points = 0;
 								break;
 							}
 							case 'number': {
