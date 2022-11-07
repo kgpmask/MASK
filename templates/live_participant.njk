@@ -85,6 +85,7 @@
 
 {% block customjs %}
 	<script>
+		axios.defaults.withCredentials = true;
 
 		const userId = '{{ userId }}';
 		const socket = io({
