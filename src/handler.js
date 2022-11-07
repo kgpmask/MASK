@@ -90,8 +90,7 @@ function handler (app, env) {
 			}
 			case 'logout': {
 				if (!loggedIn) return res.redirect('/login');
-				req.logout();
-				res.redirect('/');
+				req.logout(() => res.redirect('/'));
 				break;
 			}
 			case 'members': {
