@@ -4,10 +4,11 @@ const path = require('path');
 const aliases = {
 	d: 'dev',
 	l: 'local',
-	p: 'prod',
+	p: 'production',
+	prod: 'production',
 	u: 'userless'
 };
-const validParams = ['dev', 'local', 'prod', 'userless'];
+const validParams = ['dev', 'local', 'production', 'userless'];
 
 if (!global.PARAMS) {
 	const shorts = new Set();
@@ -23,7 +24,7 @@ if (!global.PARAMS) {
 }
 
 exports.init = () => {
-	if (PARAMS.dev && PARAMS.prod) {
+	if (PARAMS.dev && PARAMS.production) {
 		console.log('Production access is disabled with dev mode. Please use the testing DB instead.');
 		process.exit(1);
 	}
@@ -36,7 +37,9 @@ exports.init = () => {
 				process.env[key] = env[key];
 			}
 		}
-		if (!PARAMS.prod) [process.env.MONGO_URL, process.env.MONGO_TEST_URL] = [process.env.MONGO_TEST_URL, process.env.MONGO_URL];
+		if (!PARAMS.production) {
+			[process.env.MONGO_URL, process.env.MONGO_TEST_URL] = [process.env.MONGO_TEST_URL, process.env.MONGO_URL];
+		}
 		if (PARAMS.local) process.env.MONGO_URL = 'mongodb://127.0.0.1/mask';
 	} catch (e) {
 		console.log('[!] Unable to load credentials.json');

@@ -20,7 +20,7 @@ There are multiple ways to run the server. The vast majority of the time, you wi
 
 * `dev` (d): An internal flag that does the same as `npm run dev`, except you lose access to nodemon. Just use `npm run dev` instead.
 * `local` (l): Uses a local database (mongodb://127.0.0.1/mask) instead of the designated test database. Overwrites all other DB flags.
-* `prod` (p): Connects directly to the production database. Do NOT use this flag lightly; it can break many, many things if you mess up and the testing database should serve your purposes. Cannot be used in conjuction with dev mode, for security reasons.
+* `production` (p): Connects directly to the production database. Do NOT use this flag lightly; it can break many, many things if you mess up and the testing database should serve your purposes. Cannot be used in conjuction with dev mode, for security reasons.
 * `userless` (u): Runs the server without a database connection. All user-based pages cannot be loaded. A planned feature is to have a dummy user with a modifiable JSON file, but as of now no user exists.
 
 
