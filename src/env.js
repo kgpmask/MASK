@@ -4,13 +4,13 @@ const path = require('path');
 const aliases = {
 	d: 'dev',
 	l: 'local',
-	p: 'production',
-	prod: 'production',
+	p: 'prod',
 	u: 'userless'
 };
 const validParams = ['dev', 'local', 'production', 'userless'];
 
 if (!global.PARAMS) {
+	if (process.env['NODE_ENV'] === 'production') process.env.prod = true;
 	const shorts = new Set();
 	const entries = process.argv.slice(2).map(arg => {
 		if (!validParams.includes(arg)) {
@@ -24,7 +24,7 @@ if (!global.PARAMS) {
 }
 
 exports.init = () => {
-	if (PARAMS.dev && PARAMS.production) {
+	if (PARAMS.dev && PARAMS.prod) {
 		console.log('Production access is disabled with dev mode. Please use the testing DB instead.');
 		process.exit(1);
 	}
@@ -37,7 +37,7 @@ exports.init = () => {
 				process.env[key] = env[key];
 			}
 		}
-		if (!PARAMS.production) {
+		if (!PARAMS.prod) {
 			[process.env.MONGO_URL, process.env.MONGO_TEST_URL] = [process.env.MONGO_TEST_URL, process.env.MONGO_URL];
 		}
 		if (PARAMS.local) process.env.MONGO_URL = 'mongodb://127.0.0.1/mask';
