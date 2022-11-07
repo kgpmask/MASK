@@ -157,7 +157,8 @@
 			timer(30);
 		}
 
-		socket.on('questions', options => showQuestion(options));
+		socket.on('question', options => showQuestion(options));
+		socket.on('answer', ans => showAnswer(ans)); // TODO: add this
 
 		window.onload = () => showMessage('Waiting for the quizmaster ;-;');
 
