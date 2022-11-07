@@ -31,6 +31,21 @@ const questionsSchema = new mongoose.Schema({
 	}], required: true }
 });
 
-questionsSchema.set('collection', 'livequizzes');
+const resultSchema = new mongoose.Schema({
+	_id: { type: String, required: true },
+	title: { type: String, required: true },
+	result: { type: [{
+		type: [{
+			id: { type: String, required: true },
+			points: { type: Number, required: true }
+		}], required: true
+	}], required: true }
+});
 
-module.exports = mongoose.model('Questions', questionsSchema);
+questionsSchema.set('collection', 'livequizzes');
+resultSchema.set('collection', 'livequizresults');
+
+module.exports = {
+	LiveQuiz: mongoose.model('LiveQuiz', questionsSchema),
+	LiveResult: mongoose.model('LiveResult', resultSchema)
+};

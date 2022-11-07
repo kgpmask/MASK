@@ -268,59 +268,23 @@ function handler (app, env) {
 					return res.renderFile('quiz_login.njk');
 				}
 				// random quiz questions ;-;
-				const QUIZ = [
-					{
-						q: [
-							{ val: 'Anime: The Rising of the Shield Hero', type: 'title' },
-							{ val: 'Who has support and healing infinity?', type: 'text' }
-						],
-						points: 10,
-						options: {
-							type: 'mcq',
-							value: [
-								[{ val: 'Princess Malty', type: 'text' }],
-								[{ val: 'Naofumi', type: 'text' }],
-								[{ val: 'Motoyasu', type: 'text' }],
-								[{ val: 'Ren', type: 'text' }]
-							]
+				dbh.getLiveQuiz().then(quiz => {
+					if (!quiz) njk.renderFile('quizzes_404.njk');
+					const QUIZ = quiz.questions;
+					dbh.getUser(req.user._id).then(user => {
+						if (user.permissions?.includes("quizmaster")) {
+							res.renderFile("live_master.njk", {
+								quiz: JSON.stringify(QUIZ),
+								qAmt: QUIZ.length,
+								id: 'live'
+							});
+						} else {
+							res.renderFile("live_participant.njk", {
+								id: 'live',
+								userId: req.user._id
+							});
 						}
-					}, {
-						q: [
-							{ val: 'Anime: Pokemon', type: 'title' },
-							{ val: 'Ash-Pikachu\'s exclusive Z-Move is __ Million Volt Thunderbolt', type: 'text' }
-						],
-						points: 5,
-						options: {
-							type: 'number'
-						}
-					}, {
-						q: [
-							{ val: 'Guess the Anime', type: 'title' },
-							{ val: "https://i.postimg.cc/QdVHNjCY/20220319-1-0.png", type: "image" }
-						],
-						points: 3,
-						options: {
-							type: 'text'
-						}
-					}
-				];
-				dbh.getUser(req.user._id).then(user => {
-					if (user.permissions?.includes("quizmaster")) {
-						res.renderFile("live_master.njk", {
-							quiz: JSON.stringify(QUIZ),
-							qAmt: QUIZ.length,
-							id: 'live'
-						});
-					} else {
-						const questions = [];
-						QUIZ.forEach(qn => questions.push(Tools.deepClone(qn.options)));
-						res.renderFile("live_participant.njk", {
-							questions: JSON.stringify(questions),
-							qAmt: questions.length,
-							id: 'live',
-							userId: req.user._id
-						});
-					}
+					}).catch(err => console.log(err));
 				}).catch(err => console.log(err));
 				break;
 			}
@@ -370,13 +334,59 @@ function handler (app, env) {
 		switch (args[0]) {
 			case 'checker': {
 				const checker = require('./checker.js');
-				checker.compare(args[2], args[1], req.body).then(response => {
-					switch (response) {
-						case true: return res.send('correct');
-						case false: return res.send('');
-						default: return res.send(response);
+				if (req.body.live) dbh.getLiveQuiz.then(quiz => {
+					const QUIZ = quiz.questions;
+					const { currentQ, answer, timeLeft } = req.body;
+					let points;
+					// point distribution based on the time taken
+					switch (QUIZ[currentQ].points) {
+						case 10: {
+							if (timeLeft >= 27) points = 10;
+							else if (timeLeft >= 19) points = timeLeft - 17;
+							else points = 1;
+							break;
+						}
+						case 5: {
+							if (timeLeft >= 12) points = 5;
+							else if (timeLeft >= 5) points = Math.floor(timeLeft / 2) - 1;
+							else points = 1;
+							break;
+						}
+						case 3: {
+							if (timeLeft >= 9) points = 3;
+							else if (timeLeft >= 3) points = Math.floor(timeLeft / 3);
+							else points = 1;
+							break;
+						}
 					}
-				}).catch(err => res.status(400).send(err.message));
+					// points based on the accuracy of the answer
+					switch (QUIZ[currentQ].options.type) {
+						case 'mcq': {
+							points = answer === QUIZ[currentQ].solution ? points : 0;
+							break;
+						}
+						case 'text': {
+							if (Tools.levenshteinDistance(answer, QUIZ[currentQ].solution) > 5) points = 0;
+							break;
+						}
+						case 'number': {
+							// not sure about the accuracy so here's a placeholder
+							if (~~answer === QUIZ[currentQ].solution) points = 0;
+							break;
+						}
+					}
+					dbh.updateLiveResult(currentQ, req.user.id, points).then(res => console.log("Success")
+					).catch(err => console.log(err));
+				}).catch(err => console.log(err));
+				else {
+					checker.compare(args[2], args[1], req.body).then(response => {
+						switch (response) {
+							case true: return res.send('correct');
+							case false: return res.send('');
+							default: return res.send(response);
+						}
+					}).catch(err => res.status(400).send(err.message));
+				}
 				break;
 			}
 			case 'quizzes': {
@@ -415,109 +425,73 @@ function handler (app, env) {
 					if (!PARAMS.userless) req.session.returnTo = req.url;
 					return res.renderFile('quiz_login.njk');
 				}
-				const QUIZ = [
-					{
-						q: [
-							{ val: 'Anime: The Rising of the Shield Hero', type: 'title' },
-							{ val: 'Who has support and healing infinity?', type: 'text' }
-						],
-						points: 10,
-						options: {
-							type: 'mcq',
-							value: [
-								[{ val: 'Princess Malty', type: 'text' }],
-								[{ val: 'Naofumi', type: 'text' }],
-								[{ val: 'Motoyasu', type: 'text' }],
-								[{ val: 'Ren', type: 'text' }]
-							]
-						},
-						answer: 1
-					}, {
-						q: [
-							{ val: 'Anime: Pokemon', type: 'title' },
-							{ val: 'Ash-Pikachu\'s exclusive Z-Move is __ Million Volt Thunderbolt', type: 'text' }
-						],
-						points: 5,
-						options: {
-							type: 'number'
-						},
-						answer: 10
-					}, {
-						q: [
-							{ val: 'Guess the Anime', type: 'title' },
-							{ val: "https://i.postimg.cc/QdVHNjCY/20220319-1-0.png", type: "image" }
-						],
-						points: 3,
-						options: {
-							type: 'text'
-						},
-						answer: "By the Grace of the Gods"
-					}
-				];
-				dbh.getUser(req.user._id).then(user => {
-					if (user.permissions?.includes('quizmaster')) {
-						const quizTime = { '10': 20, '5': 15, '3': 12 }[QUIZ[req.body.currentQ].points];
-						io.sockets.in('waiting-for-live-quiz').emit('question', {
-							currentQ: req.body.currentQ,
-							options: req.body.options,
-							time: quizTime
-						});
-						setTimeout(() => {
-							// TODO: Disable receiving answers using some sort of flag
-							const type = QUIZ[req.body.currentQ].options.type;
-							let answer;
-							if (type === "mcq") answer = QUIZ[req.body.currentQ].options.value[QUIZ[req.body.currentQ].answer - 1];
-							else answer = QUIZ[req.body.currentQ].answer;
-							setTimeout(() => io.sockets.in('waiting-for-live-quiz').emit('answer', {
-								answer,
-								type
-							}), 2000); // Emit the actual event 3s after
-						}, 1000 * (quizTime + 1)); // Extra second to account for lag
-						res.send('Done');
-					} else {
-						// assuming answer, timeLeft and currentQ is all I need
-						// import data info from database, for now, using sample data
-						const { currentQ, answer, timeLeft } = req.body;
-						let points;
-						// point distribution based on the time taken
-						switch (QUIZ[currentQ].points) {
-							case 10: {
-								if (timeLeft >= 27) points = 10;
-								else if (timeLeft >= 19) points = timeLeft - 17;
-								else points = 1;
-								break;
+				dbh.getLiveQuiz().then(quiz => {
+					const QUIZ = quiz.questions;
+					dbh.getUser(req.user._id).then(user => {
+						if (user.permissions?.includes('quizmaster')) {
+							const quizTime = { '10': 20, '5': 15, '3': 12 }[QUIZ[req.body.currentQ].points];
+							io.sockets.in('waiting-for-live-quiz').emit('question', {
+								currentQ: req.body.currentQ,
+								options: req.body.options,
+								time: quizTime
+							});
+							setTimeout(() => {
+								// TODO: Disable receiving answers using some sort of flag
+								const type = QUIZ[req.body.currentQ].options.type;
+								let answer;
+								if (type === "mcq") answer = QUIZ[req.body.currentQ].options.value[QUIZ[req.body.currentQ].answer - 1];
+								else answer = QUIZ[req.body.currentQ].answer;
+								setTimeout(() => io.sockets.in('waiting-for-live-quiz').emit('answer', {
+									answer,
+									type
+								}), 2000); // Emit the actual event 3s after
+							}, 1000 * (quizTime + 1)); // Extra second to account for lag
+							res.send('Done');
+						} else {
+							// assuming answer, timeLeft and currentQ is all I need
+							// import data info from database, for now, using sample data
+							const { currentQ, answer, timeLeft } = req.body;
+							let points;
+							// point distribution based on the time taken
+							switch (QUIZ[currentQ].points) {
+								case 10: {
+									if (timeLeft >= 27) points = 10;
+									else if (timeLeft >= 19) points = timeLeft - 17;
+									else points = 1;
+									break;
+								}
+								case 5: {
+									if (timeLeft >= 12) points = 5;
+									else if (timeLeft >= 5) points = Math.floor(timeLeft / 2) - 1;
+									else points = 1;
+									break;
+								}
+								case 3: {
+									if (timeLeft >= 9) points = 3;
+									else if (timeLeft >= 3) points = Math.floor(timeLeft / 3);
+									else points = 1;
+									break;
+								}
 							}
-							case 5: {
-								if (timeLeft >= 12) points = 5;
-								else if (timeLeft >= 5) points = Math.floor(timeLeft / 2) - 1;
-								else points = 1;
-								break;
+							// points based on the accuracy of the answer
+							switch (QUIZ[currentQ].options.type) {
+								case 'mcq': {
+									points = answer === QUIZ[currentQ].solution ? points : 0;
+									break;
+								}
+								case 'text': {
+									if (Tools.levenshteinDistance(answer, QUIZ[currentQ].solution) > 5) points = 0;
+									break;
+								}
+								case 'number': {
+									// not sure about the accuracy so here's a placeholder
+									if (Math.abs(~~answer - QUIZ[currentQ].solution) > 1) points = 0;
+									break;
+								}
 							}
-							case 3: {
-								if (timeLeft >= 9) points = 3;
-								else if (timeLeft >= 3) points = Math.floor(timeLeft / 3);
-								else points = 1;
-								break;
-							}
+							// insert commit to db part
 						}
-						// points based on the accuracy of the answer
-						switch (QUIZ[currentQ].options.type) {
-							case 'mcq': {
-								points = answer === QUIZ[currentQ].solution ? points : 0;
-								break;
-							}
-							case 'text': {
-								if (Tools.levenshteinDistance(answer, QUIZ[currentQ].solution) > 5) points = 0;
-								break;
-							}
-							case 'number': {
-								// not sure about the accuracy so here's a placeholder
-								if (Math.abs(~~answer - QUIZ[currentQ].solution) > 1) points = 0;
-								break;
-							}
-						}
-						// insert commit to db part
-					}
+					}).catch(err => console.log(err));
 				}).catch(err => console.log(err));
 				break;
 			}

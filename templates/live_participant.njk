@@ -190,7 +190,8 @@
 			state = 'submitted';
 			showMessage('Your response is submitted.');
 			setTimeout(() => showMessage(waitingMsg), 3000);
-			axios.post("/live-events", {
+			axios.post("/checker", {
+				live: true,
 				currentQ,
 				answer,
 				timeLeft
