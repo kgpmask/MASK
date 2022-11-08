@@ -7,14 +7,17 @@ const csrf = require('csurf');
 const express = require('express');
 const session = require('express-session');
 const fs = require('fs').promises;
+const http = require('http');
 const nunjucks = require('nunjucks');
 global.passport = require('passport');
 const path = require('path');
+
 global.Tools = require('./tools.js');
 const DB = require("../database/database.js");
 const { PORT } = require('./config.js');
 const appHandler = require('./handler.js');
 const MongoStore = require('connect-mongo');
+const socketio = require('socket.io')();
 
 global.app = express();
 if (!PARAMS.userless) DB.init();
@@ -46,7 +49,13 @@ if (!PARAMS.userless) {
 
 appHandler(app, env);
 
-const server = app.listen(PORT, () => {
+const server = require('http').createServer(app);
+const io = socketio.listen(server);
+global.io = io;
+
+require('./socket.js');
+
+server.listen(PORT, () => {
 	console.log(`The MASK server's up at http://localhost:${PORT}/`);
 });
 

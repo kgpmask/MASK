@@ -11,9 +11,9 @@
 		</div>
 		<br/>
 		<div class="button-container">
-			<button onclick="prevQ()" class="rel prevQ">Prev</button>
-			<button onclick="startQ()" class="rel startQ">Start</button>
-			<button onclick="nextQ()" class="rel nextQ">Next</button>
+			<button onclick="prevQ()" class="rel prevQ" id="prevQ">Prev</button>
+			<button onclick="startQ()" class="rel startQ" id="startQ">Start</button>
+			<button onclick="nextQ()" class="rel nextQ" id="nextQ">Next</button>
 		</div>
 		<br/>
 		<div class="question-zone">
@@ -79,13 +79,21 @@
 
 {% block customjs %}
 	<script>
+		axios.defaults.withCredentials = true;
+		axios.defaults.headers.common['X-CSRF-TOKEN'] = '{{ csrfToken }}';
+
 		let currentQ = 0;
 		let countLeftPerQs = 30;
 		let currentTimer;
-		var secondsLeft = 15;
-		var time = setInterval(timer, 1000);
+		let secondsLeft = 15;
+
+		const startedQs = [];
+
+		let startButton;
+
 		const qAmt = {{ qAmt }};
-		const qs = {{ questions | safe }};
+		const quiz = {{ quiz | safe }};
+		const qs = quiz.map(que => que.q);
 		function generateHTML (components) {
 			return components.map(component => {
 				switch (component.type) {
@@ -97,31 +105,39 @@
 			}).join('<br/>');
 		}
 		window.onload = () => {
+			startButton = document.getElementById('startQ');
 			qs.forEach((question, q) => {
 				document.getElementById(`question-${q + 1}`).innerHTML = generateHTML(question);
 			});
 			document.getElementById('qbox-1').style.display = 'block';
+			nextQ();
+			prevQ();
 		}
-		function timer () {
-			document.getElementById('timer').innerHTML = secondsLeft + "seconds left";
-			secondsLeft--;
-			if (secondsLeft == -1) {
-				clearInterval(time);
-				alert("Time out!!");
-			}
-		}
+
 		function nextQ () {
 			document.getElementById(`qbox-${currentQ + 1}`).style.display = "none";
-			if (currentQ < qAmt-1) currentQ++;
+			if (currentQ < qAmt - 1) currentQ++;
 			document.getElementById(`qbox-${currentQ + 1}`).style.display = "block";
+			document.getElementById('nextQ').disabled = !(currentQ < qAmt - 1);
+			document.getElementById('prevQ').disabled = false;
+			if (startedQs.includes(currentQ)) startButton.disabled = true;
+			else startButton.disabled = false;
 		}
+
 		function startQ () {
-			// Starts the timer (or will it send a signal for the others to start their timers?)
+			// Timer!
+			startButton.disabled = true;
+			axios.post('/live-events', { options: quiz[currentQ].options, currentQ }).then(() => startedQs.push(currentQ));
 		}
+
 		function prevQ () {
 			document.getElementById(`qbox-${currentQ + 1}`).style.display = "none";
 			if (currentQ) currentQ--;
 			document.getElementById(`qbox-${currentQ + 1}`).style.display = "block";
+			document.getElementById('prevQ').disabled = !(currentQ > 0);
+			document.getElementById('nextQ').disabled = false;
+			if (startedQs.includes(currentQ)) startButton.disabled = true;
+			else startButton.disabled = false;
 		}
 	</script>
 {% endblock %}

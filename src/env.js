@@ -10,6 +10,7 @@ const aliases = {
 const validParams = ['dev', 'local', 'prod', 'userless'];
 
 if (!global.PARAMS) {
+	if (process.env['NODE_ENV'] === 'production') process.env.prod = true;
 	const shorts = new Set();
 	const entries = process.argv.slice(2).map(arg => {
 		if (!validParams.includes(arg)) {
@@ -36,7 +37,9 @@ exports.init = () => {
 				process.env[key] = env[key];
 			}
 		}
-		if (!PARAMS.prod) [process.env.MONGO_URL, process.env.MONGO_TEST_URL] = [process.env.MONGO_TEST_URL, process.env.MONGO_URL];
+		if (!PARAMS.prod) {
+			[process.env.MONGO_URL, process.env.MONGO_TEST_URL] = [process.env.MONGO_TEST_URL, process.env.MONGO_URL];
+		}
 		if (PARAMS.local) process.env.MONGO_URL = 'mongodb://127.0.0.1/mask';
 	} catch (e) {
 		console.log('[!] Unable to load credentials.json');
