@@ -24,8 +24,7 @@ const questionsSchema = new mongoose.Schema({
 					val: { type: String, required: true },
 					type: { type: String, enum: ["text", "image"], required: true }
 				}]
-			},
-			required: true
+			}
 		},
 		solution: { type: [String, Number], required: true }
 	}], required: true }
