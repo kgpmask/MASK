@@ -125,7 +125,9 @@
 		}
 
 		function startQ () {
-			// Timer!
+			// TODO: Add the timer!
+			// Make sure to disable navigation buttons while the timer is active
+			// Re-enable navigation buttons 2s AFTER timer ends
 			startButton.disabled = true;
 			axios.post('/live', { options: quiz[currentQ].options, currentQ }).then(() => startedQs.push(currentQ));
 		}
