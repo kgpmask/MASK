@@ -58,7 +58,7 @@ async function getLiveQuiz () {
 async function getLiveResult () {
 	const date = new Date().toISOString().slice(0, 10);
 	const results = await LiveResult.findOne({ title: date });
-	return results ? results : undefined;
+	return results;
 }
 
 async function updateLiveResult (currentQ, userId, points) {

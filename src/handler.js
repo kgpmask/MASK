@@ -214,18 +214,19 @@ function handler (app, env) {
 						});
 						const renderYears = Object.values(years);
 						renderYears.forEach(year => year.months = Object.values(year.months).reverse());
+						const now = Date.now();
+						const locked = Object.entries(QUIZZES).filter(
+							([_, quiz]) => new Date(quiz.unlock).getTime() > now
+						).map(k => k[0]);
 						if (!args[1]) {
-							const now = Date.now();
 							return res.renderFile('events.njk', {
 								quizzed,
 								years: renderYears.reverse(),
-								locked: Object.entries(QUIZZES).filter(
-									([_, quiz]) => new Date(quiz.unlock).getTime() > now
-								).map(k => k[0])
+								locked
 							});
 						}
 						const index = quizzes.indexOf(args[1]);
-						if (index === -1) return notFound('quizzes_404.njk', { years: renderYears.reverse() });
+						if (index === -1) return notFound('quizzes_404.njk', { years: renderYears.reverse(), quizzed, locked });
 						if (quizzed.includes(args[1])) return res.renderFile('quiz_attempted.njk');
 						const adjs = [quizzes[index - 1], quizzes[index + 1], quizzes[index]];
 						const QUIZ = QUIZZES[args[1]];
@@ -250,7 +251,6 @@ function handler (app, env) {
 								return q;
 							}));
 						});
-						console.dir(questions[0], { depth: null });
 						shuffle(questions);
 						return res.renderFile('_quiz.njk', {
 							adjs,
@@ -269,7 +269,7 @@ function handler (app, env) {
 				}
 				// random quiz questions ;-;
 				dbh.getLiveQuiz().then(quiz => {
-					if (!quiz) njk.renderFile('quizzes_404.njk');
+					if (!quiz) return res.renderFile('quizzes_404.njk', { message: `The quiz hasn't started, yet!` });
 					const QUIZ = quiz.questions;
 					dbh.getUser(req.user._id).then(user => {
 						if (user.permissions?.includes("quizmaster")) {
@@ -404,8 +404,9 @@ function handler (app, env) {
 							break;
 						}
 					}
-					dbh.updateLiveResult(currentQ, req.user.id, points).then(res => console.log("Success")
-					).catch(err => console.log(err));
+					dbh.updateLiveResult(currentQ, req.user.id, points).then(dt => {
+						console.log(dt);
+					}).catch(err => console.log(err));
 				}).catch(err => console.log(err));
 				else {
 					checker.compare(args[2], args[1], req.body).then(response => {

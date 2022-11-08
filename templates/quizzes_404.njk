@@ -4,6 +4,6 @@
 
 {% block extrainfo %}
 	<div style="background-color:var(--red);color:var(--off-white);opacity:0.8" class="text">
-		Unable to find that quiz!
+		{{ message if message else 'Unable to find that quiz!' }}
 	</div>
 {% endblock %}
