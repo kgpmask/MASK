@@ -292,19 +292,35 @@ function handler (app, env) {
 				return res.renderFile('quiz_success.njk');
 			}
 			case 'results':{
-				let results = [
-					{ name: "Person 1", points: 40, rank: 5 },
-					{ name: "Person 2", points: 80, rank: 2 },
-					{ name: "Person 3", points: 60, rank: 3 },
-					{ name: "Person 4", points: 60, rank: 3 },
-					{ name: "Person 5", points: 100, rank: 1 }
-				];
-				results = results.sort((a, b) => {
-					if (a.rank < b.rank) return -1;
-				});
-				return res.renderFile('results.njk', {
-					results
-				});
+				dbh.getLiveResult().then(res => {
+					if (!res) res.renderFile('404.njk');
+					const results = [];
+					res.result.forEach(RES => {
+						RES.forEach(obj => {
+							if (!results.find(elm => elm?.id === obj.id)) results.push({
+								id: obj.id,
+								points: 0
+							});
+							results.find(elm => elm.id === obj.id).points += obj.points;
+						});
+					});
+					results.sort((a, b) => -(a.points > b.points));
+					dbh.getAllUsers().then(users => {
+						let i = 1, j = 1;
+						for (let record = 0; record < records.length; record++) {
+							if (record[i].points === record[i - 1]?.points) j++;
+							else {
+								i += j;
+								j = 1;
+							}
+							record[i].rank = i;
+							record[i].name = users.find(user => user.id === record[i].id).name;
+							delete record[i].id;
+						}
+						return res.renderFile('results.njk', { results });
+					}).catch(err => console.log(err));
+				}).catch(err => console.log(err));
+				break;
 			}
 			case 'rebuild': {
 				env.loaders.forEach(loader => loader.cache = {});
@@ -328,8 +344,6 @@ function handler (app, env) {
 				});
 				break;
 			}
-
-
 			default: {
 				while (!args[args.length - 1]) args.pop();
 				const isAsset = /\.(?:js|ico)$/.test(args[args.length - 1]);

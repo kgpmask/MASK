@@ -21,6 +21,10 @@ async function getUser (id) {
 	return User.findById(id);
 }
 
+function getAllUsers (id) {
+	return User.find().lean();
+}
+
 // Add new record to database
 async function updateUserQuizRecord (stats) { // {userId, quizId, time, score}
 	const user = await Quiz.findOne({ userId: stats.userId });
@@ -62,7 +66,7 @@ async function updateLiveResult (currentQ, userId, points) {
 	let results = await LiveResult.findOne({ title: date });
 	if (!results) results = new LiveResult({
 		title: date,
-		results: []
+		result: []
 	});
 	if (!results.result[currentQ]) results.result[currentQ] = [];
 	results.result[currentQ].push({ id: userId, points });
@@ -72,6 +76,7 @@ async function updateLiveResult (currentQ, userId, points) {
 module.exports = {
 	createNewUser,
 	getUser,
+	getAllUsers,
 	updateUserQuizRecord,
 	getQuizzes,
 	getUserStats,
