@@ -144,7 +144,7 @@
 			document.getElementById('message').style.display = 'none';
 			document.getElementById('q-box').style.display = 'block';
 			if (options.type === 'mcq') {
-				// MCQ rendering is to be addressed
+				// TODO: MCQ rendering is to be addressed [M]
 				for (let i = 1; i <= 4; i++) {
 					document.getElementById(`option-${i}`).innerHTML = generateHTML(options.value[i - d1]);
 				}
@@ -165,6 +165,10 @@
 
 		socket.on('answer', req => {
 			// TODO: show answer comparison as well [M]
+			// Comparison here meaning just their answer + solution(s)
+			// Note that answer is likely to be an array of potential solutions
+			// I'd recommend something like forcing everything to be an array
+			// Tag me if you run into issues with this
 			if (submittedAnswer !== null) {}
 			state = 'showing-answer';
 			showMessage(`The answer is ${req.type === 'mcq' ? generateHTML(req.answer) : req.answer}`);
