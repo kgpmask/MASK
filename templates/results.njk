@@ -2,50 +2,35 @@
 
 {% set thispage = 'events' %}
 {% set pagetitle = 'Results' %}
-{%block pagecontent%}
-    <h1>Leaderboard</h1>
-    <div class = "table">
-        <table style="width:70%">
-            <tr style="height:30px">
-                <th style="width:15%">S.No</th>
-                <th style="width:50%">Name</th>
-                <th style="width:20%">Points</th>
-                <th style="width:15%">Rank</th>
-            </tr>
-            {%for i in range(1,n+1)%}
-                <tr>
-                    <td id="sn-{{i}}"></td>
-                    <td id="name-{{i}}"></td>
-                    <td id="points-{{i}}"></td>
-                    <td id="rank-{{i}}"></td>
-                </tr>
-            {%endfor%}
-        </table>
-    </div>
-{%endblock%}
-{%block customcss%}
-    <style>
-        table{
-            margin-left: 15%;
-        }
-        th,td{
-            border: 1px solid white;
-            border-radius: 10px;
-            background-color: black;
-        }
-    </style>
-{%endblock%}
-{%block customjs%}
-    <script>
-        const resu = {{ results | safe }}
-        window.onload = () => {
-            resu.forEach((result,i)=>{
-                document.getElementById(`sn-${i+1}`).innerHTML=i+1;
-                document.getElementById(`name-${i+1}`).innerHTML=result.name;
-                document.getElementById(`points-${i+1}`).innerHTML=result.points;
-                document.getElementById(`rank-${i+1}`).innerHTML=result.rank;
-                i=i+1;
-            });
-        }
-    </script>
-{%endblock%}
+{% block pagecontent %}
+	<h1>Leaderboard</h1>
+	<div class = "table">
+		<table style="width:70%">
+			<tr style="height:30px">
+				<!--<th style="width:15%">S.No</th>-->
+				<th style="width:15%">Rank</th>
+				<th style="width:50%">Name</th>
+				<th style="width:20%">Points</th>
+			</tr>
+			{% for userinfo in results %}
+				<tr>
+					<td>{{ userinfo.rank }}</td>
+					<td>{{ userinfo.name }}</td>
+					<td>{{ userinfo.points }}</td>
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
+{% endblock %}
+{% block customcss %}
+	<style>
+		table{
+			margin-left: 15%;
+		}
+		th,td{
+			border: 1px solid white;
+			border-radius: 7px;
+			background-color: black;
+		}
+	</style>
+{% endblock %}

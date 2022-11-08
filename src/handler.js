@@ -299,21 +299,19 @@ function handler (app, env) {
 				return res.renderFile('quiz_success.njk');
 			}
 			case 'results':{
-				let results=[
-					{ name: "Person 1", points: 100, rank: 5 },
+				let results = [
+					{ name: "Person 1", points: 40, rank: 5 },
 					{ name: "Person 2", points: 80, rank: 2 },
-					{ name: "Person 3", points: 60, rank: 4 },
+					{ name: "Person 3", points: 60, rank: 3 },
 					{ name: "Person 4", points: 60, rank: 3 },
-					{ name: "Person 5", points: 40, rank: 1 }
+					{ name: "Person 5", points: 100, rank: 1 }
 				];
-				results=results.sort((a,b)=>{
-					if(a.rank<b.rank) return -1;
-				})
-				return res.renderFile('results.njk', {
-					results: JSON.stringify(results),
-					n:5
+				results = results.sort((a, b) => {
+					if (a.rank < b.rank) return -1;
 				});
-				
+				return res.renderFile('results.njk', {
+					results
+				});
 			}
 			case 'live-master' : {
 				// We're gonna merge this one and the one above into one based on user perms ;-;
