@@ -157,14 +157,14 @@
 			state = 'running';
 			timer(time);
 		}
-		socket.on('question', req => { // WHO HAD PUT IN FOUR SPACES AT THE START OF THIS LINE\nI WILL DRINK YOUR BLOOD
+		socket.on('question', req => {
 			currentQ = req.currentQ;
 			showQuestion(req.options, req.time);
 			submittedAnswer = null;
 		});
 
 		socket.on('answer', req => {
-			// TODO: show answer comparison as well
+			// TODO: show answer comparison as well [M]
 			if (submittedAnswer !== null) {}
 			state = 'showing-answer';
 			showMessage(`The answer is ${req.type === 'mcq' ? generateHTML(req.answer) : req.answer}`);
@@ -175,6 +175,7 @@
 
 		function submitAnswer (timeout = false) {
 			// needs fixing
+			// TODO: Confirm this needs fixing? I think you left this comment [M]
 			let answer;
 			if (document.getElementById('answer-text-container').style.display === 'block') {
 				answer = document.getElementById('answer-text-field').value;

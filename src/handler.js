@@ -301,7 +301,7 @@ function handler (app, env) {
 				return res.renderFile('quiz_success.njk');
 			}
 			case 'results':{
-				// TODO: This needs to be rewritten; getLiveResult is different now
+				// TODO: This needs to be rewritten; getLiveResult is different now [V]
 				dbh.getAllLiveResults().then(res => {
 					if (!res) res.renderFile('404.njk');
 					const results = [];
@@ -339,7 +339,7 @@ function handler (app, env) {
 					{ name: 'Prize 3', img: '', points: 100 },
 					{ name: 'Prize 4', img: '', points: 80 },
 					{ name: 'Prize 5', img: '', points: 60 }
-				];
+				]; // TODO: Update prize information [M]
 				return res.renderFile('prizes.njk', { prizes });
 			}
 			case 'rebuild': {
