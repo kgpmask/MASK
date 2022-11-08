@@ -375,7 +375,7 @@ function handler (app, env) {
 		switch (args[0]) {
 			case 'checker': {
 				const checker = require('./checker.js');
-				if (req.body.live) dbh.getLiveQuiz.then(quiz => {
+				if (req.body.live) dbh.getLiveQuiz().then(quiz => {
 					const QUIZ = quiz.questions;
 					const { currentQ, answer, timeLeft } = req.body;
 					let points;
