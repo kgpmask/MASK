@@ -12,6 +12,14 @@
                 <th style="width:20%">Points</th>
                 <th style="width:15%">Rank</th>
             </tr>
+            {%for i in range(1,n+1)%}
+                <tr>
+                    <td>{{i}}</td>
+                    <td id="name-{{i}}"></td>
+                    <td id="points-{{i}}"></td>
+                    <td id="rank-{{i}}"></td>
+                </tr>
+            {%endfor%}
         </table>
     </div>
 {%endblock%}
@@ -26,4 +34,17 @@
             background-color: black;
         }
     </style>
+{%endblock%}
+{%block customjs%}
+    <script>
+        const resu = {{ results | safe }}
+        window.onload = () => {
+            resu.forEach((result,i)=>{
+                document.getElementById(`name-${i+1}`).innerHTML=result.name;
+                document.getElementById(`points-${i+1}`).innerHTML=result.points;
+                document.getElementById(`rank-${i+1}`).innerHTML=result.rank;
+                i=i+1;
+            });
+        }
+    </script>
 {%endblock%}

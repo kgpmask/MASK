@@ -306,7 +306,8 @@ function handler (app, env) {
 						{ name: "Person 3", points: 60, rank: 3 },
 						{ name: "Person 4", points: 60, rank: 3 },
 						{ name: "Person 5", points: 40, rank: 5 }
-					])
+					]),
+					n:5
 				});
 				
 			}
