@@ -32,6 +32,11 @@ function handler (app, env) {
 	});
 
 	app.use((req, res, next) => {
+		res.error = err => res.status(400).send(err?.message || err);
+		next();
+	});
+
+	app.use((req, res, next) => {
 		res.locals.userless = PARAMS.userless;
 		next();
 	});
@@ -262,8 +267,8 @@ function handler (app, env) {
 							qAmt: questions.length,
 							id: args[1]
 						});
-					}).catch(err => console.log(err));
-				}).catch(err => console.log(err));
+					}).catch(res.error);
+				}).catch(res.error);
 				break;
 			}
 			case 'live': {
@@ -288,8 +293,8 @@ function handler (app, env) {
 								userId: req.user._id
 							});
 						}
-					}).catch(err => console.log(err));
-				}).catch(err => console.log(err));
+					}).catch(res.error);
+				}).catch(res.error);
 				break;
 			}
 			case 'success':{
@@ -322,8 +327,8 @@ function handler (app, env) {
 							delete record[i].id;
 						}
 						return res.renderFile('results.njk', { results });
-					}).catch(err => console.log(err));
-				}).catch(err => console.log(err));
+					}).catch(res.error);
+				}).catch(res.error);
 				break;
 			}
 			case 'prizes': {
@@ -420,8 +425,8 @@ function handler (app, env) {
 					}
 					dbh.updateLiveResult(currentQ, req.user.id, points).then(dt => {
 						console.log(dt);
-					}).catch(err => console.log(err));
-				}).catch(err => console.log(err));
+					}).catch(res.error);
+				}).catch(res.error);
 				else {
 					checker.compare(args[2], args[1], req.body).then(response => {
 						switch (response) {
@@ -429,7 +434,7 @@ function handler (app, env) {
 							case false: return res.send('');
 							default: return res.send(response);
 						}
-					}).catch(err => res.status(400).send(err.message));
+					}).catch(err => res.error(err));
 				}
 				break;
 			}
@@ -460,10 +465,12 @@ function handler (app, env) {
 					res.renderFile('quiz_success.njk', { score: points[0], totalScore: points[1] });
 					const dbh = require('../database/database_handler');
 					dbh.updateUserQuizRecord({ userId: req.user._id, quizId, score: points[0], time: Date.now() });
-				}).catch(err => console.log(err));
+				}).catch(res.error);
 				break;
 			}
 			case 'live-events': {
+				if (!handlerContext.liveQuiz) handlerContext.liveQuiz = {};
+				const LQ = handlerContext.liveQuiz;
 				// Emit event to start next question
 				if (!loggedIn) {
 					if (!PARAMS.userless) req.session.returnTo = req.url;
@@ -492,22 +499,26 @@ function handler (app, env) {
 								}), 2000); // Emit the actual event 3s after
 							}, 1000 * (quizTime + 1)); // Extra second to account for lag
 							// TODO: set variables endTime and currentQ
+							LQ.currentQ = req.body.currentQ;
+							LQ.endTime = Date.now() + 1000 * (quizTime + 1);
 							res.send('Done');
 						} else {
-							// assuming answer, timeLeft and currentQ is all I need
-							// import data info from database, for now, using sample data
-							const { currentQ, answer, timeLeft } = req.body;
+							const { answer } = req.body;
 							// TODO: Time should NOT be taken from the client
+							const currentQ = LQ.currentQ || -1;
 							const Q = QUIZ[currentQ];
 							if (!Q) throw new Error('currentQ out of bounds');
+							const timeLeft = Math.round((LQ.endTime - Date.now()) / 1000);
+							if (timeLeft < 0) throw new Error('Too late!');
+							// TODO: Check if user has submitted before
 							checker.checkLiveQuiz(answer, Q.solution, Q.options.type, Q.points, timeLeft).then(points => {
 								// Do stuff here
 								console.log(points);
 								res.send(points);
-							}).catch(err => console.log(err));
+							}).catch(res.error);
 						}
-					}).catch(err => console.log(err));
-				}).catch(err => console.log(err));
+					}).catch(res.error);
+				}).catch(res.error);
 				break;
 			}
 			default:
