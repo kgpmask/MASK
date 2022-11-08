@@ -309,7 +309,6 @@ function handler (app, env) {
 				results=results.sort((a,b)=>{
 					if(a.rank<b.rank) return -1;
 				})
-				console.log(results);
 				return res.renderFile('results.njk', {
 					results: JSON.stringify(results),
 					n:5
