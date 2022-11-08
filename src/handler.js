@@ -381,60 +381,13 @@ function handler (app, env) {
 
 		switch (args[0]) {
 			case 'checker': {
-				if (req.body.live) dbh.getLiveQuiz().then(quiz => {
-					const QUIZ = quiz.questions;
-					const { currentQ, answer, timeLeft } = req.body;
-					let points;
-					// point distribution based on the time taken
-					switch (QUIZ[currentQ].points) {
-						case 10: {
-							if (timeLeft >= 27) points = 10;
-							else if (timeLeft >= 19) points = timeLeft - 17;
-							else points = 1;
-							break;
-						}
-						case 5: {
-							if (timeLeft >= 12) points = 5;
-							else if (timeLeft >= 5) points = Math.floor(timeLeft / 2) - 1;
-							else points = 1;
-							break;
-						}
-						case 3: {
-							if (timeLeft >= 9) points = 3;
-							else if (timeLeft >= 3) points = Math.floor(timeLeft / 3);
-							else points = 1;
-							break;
-						}
+				checker.compare(args[2], args[1], req.body).then(response => {
+					switch (response) {
+						case true: return res.send('correct');
+						case false: return res.send('');
+						default: return res.send(response);
 					}
-					// points based on the accuracy of the answer
-					switch (QUIZ[currentQ].options.type) {
-						case 'mcq': {
-							points = answer === QUIZ[currentQ].solution ? points : 0;
-							break;
-						}
-						case 'text': {
-							if (Tools.levenshteinDistance(answer, QUIZ[currentQ].solution) > 5) points = 0;
-							break;
-						}
-						case 'number': {
-							// not sure about the accuracy so here's a placeholder
-							if (~~answer === QUIZ[currentQ].solution) points = 0;
-							break;
-						}
-					}
-					dbh.updateLiveResult(currentQ, req.user.id, points).then(dt => {
-						console.log(dt);
-					}).catch(res.error);
-				}).catch(res.error);
-				else {
-					checker.compare(args[2], args[1], req.body).then(response => {
-						switch (response) {
-							case true: return res.send('correct');
-							case false: return res.send('');
-							default: return res.send(response);
-						}
-					}).catch(err => res.error(err));
-				}
+				}).catch(err => res.error(err));
 				break;
 			}
 			case 'quizzes': {
@@ -486,10 +439,11 @@ function handler (app, env) {
 								time: quizTime
 							});
 							setTimeout(() => {
-								// TODO: Disable receiving answers using some sort of flag
+								// ONCETODO: Disable receiving answers using some sort of flag
+								// should be done with LQ endTime
 								const type = QUIZ[req.body.currentQ].options.type;
 								let answer;
-								if (type === "mcq") {
+								if (type === 'mcq') {
 									answer = QUIZ[req.body.currentQ].options.value[QUIZ[req.body.currentQ].answer - 1];
 								} else answer = QUIZ[req.body.currentQ].answer;
 								setTimeout(() => io.sockets.in('waiting-for-live-quiz').emit('answer', {
@@ -511,9 +465,9 @@ function handler (app, env) {
 							if (timeLeft < 0) throw new Error('Too late!');
 							// TODO: Check if user has submitted before
 							checker.checkLiveQuiz(answer, Q.solution, Q.options.type, Q.points, timeLeft).then(points => {
-								// Do stuff here
+								// TODO: Store user's submission
 								console.log(points);
-								res.send(points);
+								res.send('Submitted');
 							}).catch(res.error);
 						}
 					}).catch(res.error);
