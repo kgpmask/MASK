@@ -61,7 +61,7 @@ exports.fakeRandom = function fakeRandom (seed) {
 	};
 };
 
-exports.levenshteinDistance = function levenshteinDistance (str1, str2) {
+exports.levenshtein = function levenshtein (str1, str2) {
 	// needs some maintenance
 	if (!str1.length) return t.length;
 	if (!str2.length) return str1.length;

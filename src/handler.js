@@ -3,8 +3,11 @@ const { render } = require('nunjucks');
 const fs = require('fs').promises;
 const path = require('path');
 
+const checker = require('./checker.js');
 const login = require('./login.js');
 const dbh = PARAMS.userless ? {} : require('../database/database_handler.js');
+
+const handlerContext = {}; // Store cross-request context here
 
 if (!PARAMS.userless) login.init();
 
@@ -374,7 +377,6 @@ function handler (app, env) {
 
 		switch (args[0]) {
 			case 'checker': {
-				const checker = require('./checker.js');
 				if (req.body.live) dbh.getLiveQuiz().then(quiz => {
 					const QUIZ = quiz.questions;
 					const { currentQ, answer, timeLeft } = req.body;
@@ -481,57 +483,28 @@ function handler (app, env) {
 								// TODO: Disable receiving answers using some sort of flag
 								const type = QUIZ[req.body.currentQ].options.type;
 								let answer;
-								if (type === "mcq") answer = QUIZ[req.body.currentQ].options.value[QUIZ[req.body.currentQ].answer - 1];
-								else answer = QUIZ[req.body.currentQ].answer;
+								if (type === "mcq") {
+									answer = QUIZ[req.body.currentQ].options.value[QUIZ[req.body.currentQ].answer - 1];
+								} else answer = QUIZ[req.body.currentQ].answer;
 								setTimeout(() => io.sockets.in('waiting-for-live-quiz').emit('answer', {
 									answer,
 									type
 								}), 2000); // Emit the actual event 3s after
 							}, 1000 * (quizTime + 1)); // Extra second to account for lag
+							// TODO: set variables endTime and currentQ
 							res.send('Done');
 						} else {
 							// assuming answer, timeLeft and currentQ is all I need
 							// import data info from database, for now, using sample data
 							const { currentQ, answer, timeLeft } = req.body;
-							let points;
-							// point distribution based on the time taken
-							switch (QUIZ[currentQ].points) {
-								case 10: {
-									if (timeLeft >= 27) points = 10;
-									else if (timeLeft >= 19) points = timeLeft - 17;
-									else points = 1;
-									break;
-								}
-								case 5: {
-									if (timeLeft >= 12) points = 5;
-									else if (timeLeft >= 5) points = Math.floor(timeLeft / 2) - 1;
-									else points = 1;
-									break;
-								}
-								case 3: {
-									if (timeLeft >= 9) points = 3;
-									else if (timeLeft >= 3) points = Math.floor(timeLeft / 3);
-									else points = 1;
-									break;
-								}
-							}
-							// points based on the accuracy of the answer
-							switch (QUIZ[currentQ].options.type) {
-								case 'mcq': {
-									points = answer === QUIZ[currentQ].solution ? points : 0;
-									break;
-								}
-								case 'text': {
-									if (Tools.levenshteinDistance(answer, QUIZ[currentQ].solution) > 5) points = 0;
-									break;
-								}
-								case 'number': {
-									// not sure about the accuracy so here's a placeholder
-									if (Math.abs(~~answer - QUIZ[currentQ].solution) > 1) points = 0;
-									break;
-								}
-							}
-							// insert commit to db part
+							// TODO: Time should NOT be taken from the client
+							const Q = QUIZ[currentQ];
+							if (!Q) throw new Error('currentQ out of bounds');
+							checker.checkLiveQuiz(answer, Q.solution, Q.options.type, Q.points, timeLeft).then(points => {
+								// Do stuff here
+								console.log(points);
+								res.send(points);
+							}).catch(err => console.log(err));
 						}
 					}).catch(err => console.log(err));
 				}).catch(err => console.log(err));

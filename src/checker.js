@@ -8,3 +8,50 @@ exports.compare = function compare (puzzleType, date, obj) {
 		resolve(Tools.deepEquals(puzzles[puzzleType], obj));
 	});
 };
+
+exports.checkLiveQuiz = function check (answer, solution, questionType, basePoints, timeLeft) {
+	return new Promise((resolve, reject) => {
+		if (typeof solution === 'number') answer = parseInt(answer);
+		if (typeof solution !== typeof answer) throw new TypeError('Type mismatch between answer and solution');
+		let points = 0;
+		switch (basePoints) {
+			case 10: {
+				if (timeLeft >= 27) points = 10;
+				else if (timeLeft >= 19) points = timeLeft - 17;
+				else points = 1;
+				break;
+			}
+			case 5: {
+				if (timeLeft >= 12) points = 5;
+				else if (timeLeft >= 5) points = Math.floor(timeLeft / 2) - 1;
+				else points = 1;
+				break;
+			}
+			case 3: default: {
+				if (timeLeft >= 9) points = 3;
+				else if (timeLeft >= 3) points = Math.floor(timeLeft / 3);
+				else points = 1;
+				break;
+			}
+		}
+		// points based on the accuracy of the answer
+		switch (questionType) {
+			case 'mcq': {
+				if (answer !== solution) points = 0;
+				break;
+			}
+			case 'text': {
+				if (Tools.levenshtein(answer, solution) > 5) points = 0;
+				break;
+			}
+			case 'number': {
+				if (answer !== solution) points = 0;
+				break;
+			}
+			default: {
+				if (answer !== solution) points = 0;
+			}
+		}
+		return points;
+	});
+};
