@@ -1,6 +1,6 @@
 {% extends "_base.njk" %}
 
-{% set thispage = 'live' %}
+{% set thispage = 'events' %}
 {% set pagetitle = 'Live Quiz' %}
 
 {% block pagecontent %}
@@ -15,7 +15,6 @@
 				<input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
 				<input type="hidden" name="quizId" value="{{ id }}"/>
 				<div id="q-box" style="display: none">
-					<!--<div id="question" style="display: none">Question div</div>-->
 					<br/>
 					<div id="options-container" style="display: none">
 						{% for i in range(1, 5) %}
@@ -111,7 +110,7 @@
 			document.getElementById('message').style.display = 'block';
 			document.getElementById('message').innerHTML = message;
 		}
-		
+
 		function timer (time) {
 			timeLeft = time;
 			function tick() {
@@ -155,8 +154,7 @@
 			state = 'running';
 			timer(time);
 		}
-
-		socket.on('question', req => {
+    socket.on('question', req => {
 			currentQ = req.currentQ;
 			showQuestion(req.options, req.time);
 		});
