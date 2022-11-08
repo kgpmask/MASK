@@ -127,7 +127,7 @@
 		function startQ () {
 			// Timer!
 			startButton.disabled = true;
-			axios.post('/live-events', { options: quiz[currentQ].options, currentQ }).then(() => startedQs.push(currentQ));
+			axios.post('/live', { options: quiz[currentQ].options, currentQ }).then(() => startedQs.push(currentQ));
 		}
 
 		function prevQ () {

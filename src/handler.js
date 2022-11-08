@@ -420,7 +420,7 @@ function handler (app, env) {
 				}).catch(res.error);
 				break;
 			}
-			case 'live-events': {
+			case 'live': {
 				if (!handlerContext.liveQuiz) handlerContext.liveQuiz = {};
 				const LQ = handlerContext.liveQuiz;
 				if (!loggedIn) {
@@ -450,7 +450,6 @@ function handler (app, env) {
 									type
 								}), 2000); // Emit the actual event 3s after
 							}, 1000 * (quizTime + 1)); // Extra second to account for lag
-							// TODO: set variables endTime and currentQ
 							LQ.currentQ = req.body.currentQ;
 							LQ.endTime = Date.now() + 1000 * (quizTime + 1);
 							res.send('Done');
@@ -463,11 +462,11 @@ function handler (app, env) {
 							if (timeLeft < 0) throw new Error('Too late!');
 							dbh.getLiveResult(user._id, quiz._id, currentQ).then(alreadySubmitted => {
 								if (alreadySubmitted) throw new Error('Already attempted this question!');
+								console.log(answer, Q.solution, Q.options.type, Q.points, timeLeft);
 								checker.checkLiveQuiz(answer, Q.solution, Q.options.type, Q.points, timeLeft).then(points => {
 									const result = points
 										? points < Q.points ? 'partial' : 'correct'
 										: 'incorrect';
-									console.log(points);
 									dbh.addLiveResult(user._id, quiz._id, currentQ, points, answer, result);
 									res.send('Submitted');
 								}).catch(res.error);

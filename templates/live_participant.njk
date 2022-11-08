@@ -84,13 +84,13 @@
 	<script>
 		axios.defaults.withCredentials = true;
 		axios.defaults.headers.common['X-CSRF-TOKEN'] = '{{ csrfToken }}';
-
-		const userId = '{{ userId }}';
 		const socket = io();
 
 		let currentQ = 0;
 		let state = 'waiting';
 		let timeLeft = 0;
+
+		let submittedAnswer = null;
 
 		const waitingMsg = "Waiting for the quizmaster...";
 
@@ -144,7 +144,10 @@
 			document.getElementById('message').style.display = 'none';
 			document.getElementById('q-box').style.display = 'block';
 			if (options.type === 'mcq') {
-				for (let i=1; i<=4; i++) document.getElementById(`option-${i}`).innerHTML = generateHTML(options.value[i-1]);
+				// MCQ rendering is to be addressed
+				for (let i = 1; i <= 4; i++) {
+					document.getElementById(`option-${i}`).innerHTML = generateHTML(options.value[i - d1]);
+				}
 				document.getElementById('answer-text-container').style.display = 'none';
 				document.getElementById('options-container').style.display = 'block';
 			} else {
@@ -154,16 +157,19 @@
 			state = 'running';
 			timer(time);
 		}
-    socket.on('question', req => {
+		socket.on('question', req => { // WHO HAD PUT IN FOUR SPACES AT THE START OF THIS LINE\nI WILL DRINK YOUR BLOOD
 			currentQ = req.currentQ;
 			showQuestion(req.options, req.time);
+			submittedAnswer = null;
 		});
 
 		socket.on('answer', req => {
-			state = 'showing-answer'
+			// TODO: show answer comparison as well
+			if (submittedAnswer !== null) {}
+			state = 'showing-answer';
 			showMessage(`The answer is ${req.type === 'mcq' ? generateHTML(req.answer) : req.answer}`);
 			timer(5);
-		})
+		});
 
 		window.onload = () => showMessage(waitingMsg);
 
@@ -182,18 +188,13 @@
 					}
 				}
 			}
-			console.log(answer);
 			document.getElementById('count').style.display = 'none';
 			if (timeout) return;
 			state = 'submitted';
+			submittedAnswer = answer;
 			showMessage('Your response is submitted.');
 			setTimeout(() => showMessage(waitingMsg), 3000);
-			axios.post("/checker", {
-				live: true,
-				currentQ,
-				answer,
-				timeLeft
-			})
+			axios.post('/live', { answer }).then(console.log);
 		}
 	</script>
 {% endblock %}
