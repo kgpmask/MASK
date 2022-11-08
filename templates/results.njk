@@ -14,7 +14,7 @@
             </tr>
             {%for i in range(1,n+1)%}
                 <tr>
-                    <td>{{i}}</td>
+                    <td id="sn-{{i}}"></td>
                     <td id="name-{{i}}"></td>
                     <td id="points-{{i}}"></td>
                     <td id="rank-{{i}}"></td>
@@ -40,6 +40,7 @@
         const resu = {{ results | safe }}
         window.onload = () => {
             resu.forEach((result,i)=>{
+                document.getElementById(`sn-${i+1}`).innerHTML=i+1;
                 document.getElementById(`name-${i+1}`).innerHTML=result.name;
                 document.getElementById(`points-${i+1}`).innerHTML=result.points;
                 document.getElementById(`rank-${i+1}`).innerHTML=result.rank;
