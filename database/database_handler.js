@@ -60,9 +60,13 @@ async function getLiveResult (userId, quizId, currentQ) {
 	if (res) return res.toObject();
 }
 
+async function getAllLiveResults (quizId) {
+	const res = await LiveResult.find({ quizId }).lean();
+	return res;
+}
+
 async function addLiveResult (userId, quizId, currentQ, points, answer, result) {
 	const user = await getUser(userId);
-	console.log(user);
 	const results = new LiveResult({
 		userId,
 		username: user.name,
@@ -72,9 +76,7 @@ async function addLiveResult (userId, quizId, currentQ, points, answer, result) 
 		answer,
 		result
 	});
-	console.log(results);
 	await results.save();
-	console.log(123);
 	return results.toObject();
 }
 
@@ -87,5 +89,6 @@ module.exports = {
 	getUserStats,
 	getLiveQuiz,
 	getLiveResult,
+	getAllLiveResults,
 	addLiveResult
 };

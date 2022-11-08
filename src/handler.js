@@ -301,8 +301,8 @@ function handler (app, env) {
 				return res.renderFile('quiz_success.njk');
 			}
 			case 'results':{
-				// TODO: This needs to be rewritten
-				dbh.getLiveResult().then(res => {
+				// TODO: This needs to be rewritten; getLiveResult is different now
+				dbh.getAllLiveResults().then(res => {
 					if (!res) res.renderFile('404.njk');
 					const results = [];
 					res.result.forEach(RES => {
