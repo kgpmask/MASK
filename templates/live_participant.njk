@@ -1,38 +1,38 @@
 {% extends "_base.njk" %}
 
-{% set thispage = 'live' %}
+{% set thispage = 'events' %}
 {% set pagetitle = 'Live Quiz' %}
 
 {% block pagecontent %}
 	<div class="quiz-container">
 		<div class="countDown">
-			<button id="startQuiz" onclick="startQuiz()" class="rel">Start</button>
-			<br/><br/>
+			<br/><div id="count"></div><br/>
 		</div>
 		<br/>
 		<div class="question-zone">
-			<div id="count"></div>
 			<br/>
-			<form id="quiz" class="quizzes" method="POST" action="/success">
+			<form id="quiz" class="quizzes" method="POST" action="javascript: () => console.log('Submitting')">
 				<input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
 				<input type="hidden" name="quizId" value="{{ id }}"/>
-				{% for q in range(1, qAmt + 1) %}
-					<div id="qbox-{{ q }}" style="display:none">
-						<div id="question-{{ q }}"></div>
-						<br/>
-						<div id = "waiting-{{ q }}" style = "display : none"><h2>Waiting for the next question</h2></div>
+				<div id="q-box" style="display: none">
+					<br/>
+					<div id="options-container" style="display: none">
 						{% for i in range(1, 5) %}
 							<div class="option">
-								<input type="radio" id="answer-{{ q }}-{{ i }}" name="answer-{{ q }}" value="{{ i }}"/>
-								<label id="option-{{ q }}-{{ i }}" for="answer-{{ q }}-{{ i }}"></label><br/>
+								<input type="radio" id="answer-{{ i }}" name="answer" value="{{ i }}"/>
+								<label id="option-{{ i }}" for="answer-{{ i }}">Option {{ i }}</label><br/>
 							</div>
 						{% endfor %}
 					</div>
-				{% endfor %}
+					<div id="answer-text-container" style="display: none">
+						<input type="text" name="answer" id='answer-text-field'>
+					</div>
+					<br/>
+					<button id="submit-button" class="rel" onclick="submitAnswer()">Submit</button>
+				</div>
+				<div id="message" style="display: none"><h3>Waiting for the quizmaster ;-;</h3></div>
 			</form>
 		</div>
-		<br/><br/><br/>
-		<button onclick="nextQ()" style="display:none" class="rel nextQ">Next</button>
 	</div>
 	<br/><br/>
 {% endblock %}
@@ -82,14 +82,19 @@
 
 {% block customjs %}
 	<script>
+		axios.defaults.withCredentials = true;
+		axios.defaults.headers.common['X-CSRF-TOKEN'] = '{{ csrfToken }}';
+
+		const userId = '{{ userId }}';
+		const socket = io();
+
 		let currentQ = 0;
-		let timeVal = 0;
-		let countLeftPerQs = 30;
-		let next = false;
-		let currentTimer;
-		const qAmt = {{ qAmt }};
-		const qs = {{ questions | safe }};
-		function generateHTML (components) {
+		let state = 'waiting';
+		let timeLeft = 0;
+
+		const waitingMsg = "Waiting for the quizmaster...";
+
+		function generateHTML(components) {
 			return components.map(component => {
 				switch (component.type) {
 					case 'image': return `<img src="${component.val}" class="option-image" style="${component.style || ''}"/>`;
@@ -99,56 +104,98 @@
 				}
 			}).join('<br/>');
 		}
-		window.onload = () => {
-			qs.forEach((question, q) => {
-				document.getElementById(`question-${q + 1}`).innerHTML = generateHTML(question.q);
-				for (let i = 1; i <= 4; i++) document.getElementById(`option-${q + 1}-${i}`).innerHTML = generateHTML(question.options[i - 1]);
-			});
+
+		function showMessage (message) {
+			document.getElementById('q-box').style.display = 'none';
+			document.getElementById('message').style.display = 'block';
+			document.getElementById('message').innerHTML = message;
 		}
-		function timer (num=30) {
-			const c = currentQ;
-			document.getElementById(`qbox-${c + 1}`).style.display = 'block';
-			if (c) document.getElementById(`qbox-${c}`).style.display = 'none';
-			timeVal = qs[c].time || num;
-			let cancel = false;
-			function endTimer () {
-				cancel = true;
+
+		function timer (time) {
+			timeLeft = time;
+			function tick() {
+				if (state === 'waiting' || state === 'submitted') return;
+				document.getElementById('count').innerHTML = timeLeft--;
+				if (timeLeft >= 0) setTimeout(tick, 1000);
+				else {
+					switch (state) {
+						case 'running': {
+							state = 'time-out';
+							submitAnswer();
+							showMessage('The time is up. Your response is submitted.');
+							timer(3);
+							break;
+						}
+						// any other case as per requirement will be added here
+						default: {
+							state = 'waiting';
+							document.getElementById('count').innerHTML = '';
+							showMessage(waitingMsg);
+							break;
+						}
+					}
+				}
 			}
-			function decrement () {
-				if (cancel) return;
-				document.getElementById('count').innerHTML = timeVal;
-				timeVal--;
-				if (timeVal >= 0) setTimeout(decrement, 1000);
-				else nextQ();
-			}
-			decrement();
-			return endTimer;
+			tick();
 		}
-		function startQuiz () {
-			document.getElementById('startQuiz').style.display = 'none';
-			for (button of document.getElementsByClassName('nextQ')) {
-				button.style.display = 'inline';
+
+		function showQuestion (options, time) {
+			document.getElementById('count').style.display = 'block';
+			document.getElementById('message').style.display = 'none';
+			document.getElementById('q-box').style.display = 'block';
+			if (options.type === 'mcq') {
+				for (let i=1; i<=4; i++) document.getElementById(`option-${i}`).innerHTML = generateHTML(options.value[i-1]);
+				document.getElementById('answer-text-container').style.display = 'none';
+				document.getElementById('options-container').style.display = 'block';
+			} else {
+				document.getElementById('answer-text-container').style.display = 'block';
+				document.getElementById('options-container').style.display = 'none';
 			}
-			currentTimer = timer();
+			state = 'running';
+			timer(time);
 		}
-		function nextQ () {
-			if(timeVal>0){
-				document.getElementById(`qbox-${c}`).style.display = 'none';
-				document.getElementById(`waiting-${c}`).style.display = 'block';
-				currentTimer = timer(timeVal);
+    socket.on('question', req => {
+			currentQ = req.currentQ;
+			showQuestion(req.options, req.time);
+		});
+
+		socket.on('answer', req => {
+			state = 'showing-answer'
+			showMessage(`The answer is ${req.type === 'mcq' ? generateHTML(req.answer) : req.answer}`);
+			timer(5);
+		})
+
+		window.onload = () => showMessage(waitingMsg);
+
+		function submitAnswer (timeout = false) {
+			// needs fixing
+			let answer;
+			if (document.getElementById('answer-text-container').style.display === 'block') {
+				answer = document.getElementById('answer-text-field').value;
+				document.getElementById('answer-text-field').value = "";
+			} else {
+				for (let i = 1; i <= 4; i++) {
+					if (document.getElementById(`answer-${i}`).checked) { 
+						document.getElementById(`answer-${i}`).checked = false;
+						answer = document.getElementById(`answer-${i}`).value;
+						break;
+					}
+				}
 			}
-			else{
-				currentQ++;
-				const c = currentQ;
-				if (c >= qAmt) {
-					document.getElementById('quiz').submit();
-				} else currentTimer = timer();
-			}
-		}
-		function wait(){
-			
+			console.log(answer);
+			document.getElementById('count').style.display = 'none';
+			if (timeout) return;
+			state = 'submitted';
+			showMessage('Your response is submitted.');
+			setTimeout(() => showMessage(waitingMsg), 3000);
+			axios.post("/checker", {
+				live: true,
+				currentQ,
+				answer,
+				timeLeft
+			})
 		}
 	</script>
 {% endblock %}
 
-{% set scripts = ['https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'] %}
+{% set scripts = ['https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js', '/socket.io/socket.io.js'] %}

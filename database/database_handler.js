@@ -1,6 +1,7 @@
 const User = require('./schemas/User');
 const Quiz = require('./schemas/Quiz');
 const Questions = require('./schemas/Questions');
+const { LiveQuiz, LiveResult } = require('./schemas/LiveQuiz');
 
 // Handle newly registered user or normal login
 async function createNewUser (profile) {
@@ -18,6 +19,10 @@ async function createNewUser (profile) {
 // Get User
 async function getUser (id) {
 	return User.findById(id);
+}
+
+function getAllUsers (id) {
+	return User.find().lean();
 }
 
 // Add new record to database
@@ -44,4 +49,38 @@ function getQuizzes () {
 	return Questions.find().lean();
 }
 
-module.exports = { createNewUser, getUser, updateUserQuizRecord, getQuizzes, getUserStats };
+async function getLiveQuiz () {
+	const date = new Date().toISOString().slice(0, 10);
+	const quiz = await LiveQuiz.findOne({ title: date });
+	if (quiz) return quiz.lean();
+}
+
+async function getLiveResult () {
+	const date = new Date().toISOString().slice(0, 10);
+	const results = await LiveResult.findOne({ title: date });
+	return results ? results : undefined;
+}
+
+async function updateLiveResult (currentQ, userId, points) {
+	const date = new Date().toISOString().slice(0, 10);
+	let results = await LiveResult.findOne({ title: date });
+	if (!results) results = new LiveResult({
+		title: date,
+		result: []
+	});
+	if (!results.result[currentQ]) results.result[currentQ] = [];
+	results.result[currentQ].push({ id: userId, points });
+	results.save();
+}
+
+module.exports = {
+	createNewUser,
+	getUser,
+	getAllUsers,
+	updateUserQuizRecord,
+	getQuizzes,
+	getUserStats,
+	getLiveQuiz,
+	getLiveResult,
+	updateLiveResult
+};

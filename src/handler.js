@@ -90,8 +90,7 @@ function handler (app, env) {
 			}
 			case 'logout': {
 				if (!loggedIn) return res.redirect('/login');
-				req.logout();
-				res.redirect('/');
+				req.logout(() => res.redirect('/'));
 				break;
 			}
 			case 'members': {
@@ -269,65 +268,59 @@ function handler (app, env) {
 					return res.renderFile('quiz_login.njk');
 				}
 				// random quiz questions ;-;
-				const QUIZ = [
-					{
-						q: [
-							{ val: 'Anime: The Rising of the Shield Hero', type: 'title' },
-							{ val: 'Who has support and healing infinity?', type: 'text' }
-						],
-						options: [
-							[{ val: 'Princess Malty', type: 'text' }],
-							[{ val: 'Naofumi', type: 'text' }],
-							[{ val: 'Motoyasu', type: 'text' }],
-							[{ val: 'Ren', type: 'text' }]
-						]
-					}, {
-						q: [
-							{ val: 'Anime: Pokemon', type: 'title' },
-							{ val: 'What is Ash\'s exclusive Z-Move?', type: 'text' }
-						],
-						options: [
-							[{ val: 'C', type: 'text' }],
-							[{ val: 'D', type: 'text' }],
-							[{ val: 'B', type: 'text' }],
-							[{ val: 'A', type: 'text' }]
-						]
-					}, {
-						q: [
-							{ val: 'Guess the Anime', type: 'title' },
-							{ val: "https://i.postimg.cc/QdVHNjCY/20220319-1-0.png", type: "image" }
-						],
-						options: [
-							[{ val: 'Ans 1', type: 'text' }],
-							[{ val: 'Ans 2', type: 'text' }],
-							[{ val: 'Ans 3', type: 'text' }],
-							[{ val: 'Ans 4', type: 'text' }]
-						]
-					}
-				];
-				dbh.getUser(req.user._id).then(user => {
-					if (user.permissions?.find(perm => perm === "quizmaster")) {
-						const questions = [];
-						QUIZ.forEach(qn => questions.push(Tools.deepClone(qn.q)));
-						res.renderFile("live_master.njk", {
-							questions: JSON.stringify(questions),
-							qAmt: questions.length,
-							id: 'live'
-						});
-					} else {
-						const questions = [];
-						QUIZ.forEach(qn => questions.push(Tools.deepClone(qn.options)));
-						res.renderFile("live_participant.njk", {
-							questions: JSON.stringify(questions),
-							qAmt: questions.length,
-							id: 'live'
-						});
-					}
+				dbh.getLiveQuiz().then(quiz => {
+					if (!quiz) njk.renderFile('quizzes_404.njk');
+					const QUIZ = quiz.questions;
+					dbh.getUser(req.user._id).then(user => {
+						if (user.permissions?.includes("quizmaster")) {
+							res.renderFile("live_master.njk", {
+								quiz: JSON.stringify(QUIZ),
+								qAmt: QUIZ.length,
+								id: 'live'
+							});
+						} else {
+							res.renderFile("live_participant.njk", {
+								id: 'live',
+								userId: req.user._id
+							});
+						}
+					}).catch(err => console.log(err));
 				}).catch(err => console.log(err));
 				break;
 			}
 			case 'success':{
 				return res.renderFile('quiz_success.njk');
+			}
+			case 'results':{
+				dbh.getLiveResult().then(res => {
+					if (!res) res.renderFile('404.njk');
+					const results = [];
+					res.result.forEach(RES => {
+						RES.forEach(obj => {
+							if (!results.find(elm => elm?.id === obj.id)) results.push({
+								id: obj.id,
+								points: 0
+							});
+							results.find(elm => elm.id === obj.id).points += obj.points;
+						});
+					});
+					results.sort((a, b) => -(a.points > b.points));
+					dbh.getAllUsers().then(users => {
+						let i = 1, j = 1;
+						for (let record = 0; record < records.length; record++) {
+							if (record[i].points === record[i - 1]?.points) j++;
+							else {
+								i += j;
+								j = 1;
+							}
+							record[i].rank = i;
+							record[i].name = users.find(user => user.id === record[i].id).name;
+							delete record[i].id;
+						}
+						return res.renderFile('results.njk', { results });
+					}).catch(err => console.log(err));
+				}).catch(err => console.log(err));
+				break;
 			}
 			case 'rebuild': {
 				env.loaders.forEach(loader => loader.cache = {});
@@ -351,8 +344,6 @@ function handler (app, env) {
 				});
 				break;
 			}
-
-
 			default: {
 				while (!args[args.length - 1]) args.pop();
 				const isAsset = /\.(?:js|ico)$/.test(args[args.length - 1]);
@@ -367,17 +358,64 @@ function handler (app, env) {
 	function post (req, res) {
 		const args = req.url.split('/');
 		args.shift();
+		const loggedIn = res.locals.loggedIn = Boolean(req.user);
 
 		switch (args[0]) {
-			case "checker": {
+			case 'checker': {
 				const checker = require('./checker.js');
-				checker.compare(args[2], args[1], req.body).then(response => {
-					switch (response) {
-						case true: return res.send("correct");
-						case false: return res.send("");
-						default: return res.send(response);
+				if (req.body.live) dbh.getLiveQuiz.then(quiz => {
+					const QUIZ = quiz.questions;
+					const { currentQ, answer, timeLeft } = req.body;
+					let points;
+					// point distribution based on the time taken
+					switch (QUIZ[currentQ].points) {
+						case 10: {
+							if (timeLeft >= 27) points = 10;
+							else if (timeLeft >= 19) points = timeLeft - 17;
+							else points = 1;
+							break;
+						}
+						case 5: {
+							if (timeLeft >= 12) points = 5;
+							else if (timeLeft >= 5) points = Math.floor(timeLeft / 2) - 1;
+							else points = 1;
+							break;
+						}
+						case 3: {
+							if (timeLeft >= 9) points = 3;
+							else if (timeLeft >= 3) points = Math.floor(timeLeft / 3);
+							else points = 1;
+							break;
+						}
 					}
-				}).catch(err => res.status(400).send(err.message));
+					// points based on the accuracy of the answer
+					switch (QUIZ[currentQ].options.type) {
+						case 'mcq': {
+							points = answer === QUIZ[currentQ].solution ? points : 0;
+							break;
+						}
+						case 'text': {
+							if (Tools.levenshteinDistance(answer, QUIZ[currentQ].solution) > 5) points = 0;
+							break;
+						}
+						case 'number': {
+							// not sure about the accuracy so here's a placeholder
+							if (~~answer === QUIZ[currentQ].solution) points = 0;
+							break;
+						}
+					}
+					dbh.updateLiveResult(currentQ, req.user.id, points).then(res => console.log("Success")
+					).catch(err => console.log(err));
+				}).catch(err => console.log(err));
+				else {
+					checker.compare(args[2], args[1], req.body).then(response => {
+						switch (response) {
+							case true: return res.send('correct');
+							case false: return res.send('');
+							default: return res.send(response);
+						}
+					}).catch(err => res.status(400).send(err.message));
+				}
 				break;
 			}
 			case 'quizzes': {
@@ -407,6 +445,82 @@ function handler (app, env) {
 					res.renderFile('quiz_success.njk', { score: points[0], totalScore: points[1] });
 					const dbh = require('../database/database_handler');
 					dbh.updateUserQuizRecord({ userId: req.user._id, quizId, score: points[0], time: Date.now() });
+				}).catch(err => console.log(err));
+				break;
+			}
+			case 'live-events': {
+				// Emit event to start next question
+				if (!loggedIn) {
+					if (!PARAMS.userless) req.session.returnTo = req.url;
+					return res.renderFile('quiz_login.njk');
+				}
+				dbh.getLiveQuiz().then(quiz => {
+					const QUIZ = quiz.questions;
+					dbh.getUser(req.user._id).then(user => {
+						if (user.permissions?.includes('quizmaster')) {
+							const quizTime = { '10': 20, '5': 15, '3': 12 }[QUIZ[req.body.currentQ].points];
+							io.sockets.in('waiting-for-live-quiz').emit('question', {
+								currentQ: req.body.currentQ,
+								options: req.body.options,
+								time: quizTime
+							});
+							setTimeout(() => {
+								// TODO: Disable receiving answers using some sort of flag
+								const type = QUIZ[req.body.currentQ].options.type;
+								let answer;
+								if (type === "mcq") answer = QUIZ[req.body.currentQ].options.value[QUIZ[req.body.currentQ].answer - 1];
+								else answer = QUIZ[req.body.currentQ].answer;
+								setTimeout(() => io.sockets.in('waiting-for-live-quiz').emit('answer', {
+									answer,
+									type
+								}), 2000); // Emit the actual event 3s after
+							}, 1000 * (quizTime + 1)); // Extra second to account for lag
+							res.send('Done');
+						} else {
+							// assuming answer, timeLeft and currentQ is all I need
+							// import data info from database, for now, using sample data
+							const { currentQ, answer, timeLeft } = req.body;
+							let points;
+							// point distribution based on the time taken
+							switch (QUIZ[currentQ].points) {
+								case 10: {
+									if (timeLeft >= 27) points = 10;
+									else if (timeLeft >= 19) points = timeLeft - 17;
+									else points = 1;
+									break;
+								}
+								case 5: {
+									if (timeLeft >= 12) points = 5;
+									else if (timeLeft >= 5) points = Math.floor(timeLeft / 2) - 1;
+									else points = 1;
+									break;
+								}
+								case 3: {
+									if (timeLeft >= 9) points = 3;
+									else if (timeLeft >= 3) points = Math.floor(timeLeft / 3);
+									else points = 1;
+									break;
+								}
+							}
+							// points based on the accuracy of the answer
+							switch (QUIZ[currentQ].options.type) {
+								case 'mcq': {
+									points = answer === QUIZ[currentQ].solution ? points : 0;
+									break;
+								}
+								case 'text': {
+									if (Tools.levenshteinDistance(answer, QUIZ[currentQ].solution) > 5) points = 0;
+									break;
+								}
+								case 'number': {
+									// not sure about the accuracy so here's a placeholder
+									if (Math.abs(~~answer - QUIZ[currentQ].solution) > 1) points = 0;
+									break;
+								}
+							}
+							// insert commit to db part
+						}
+					}).catch(err => console.log(err));
 				}).catch(err => console.log(err));
 				break;
 			}

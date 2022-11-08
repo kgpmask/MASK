@@ -34,9 +34,10 @@
     "mongodb": "^4.8.0",
     "mongoose": "^6.2.4",
     "nunjucks": "^3.2.3",
-    "passport": "^0.5.2",
+    "passport": "^0.6.0",
     "passport-google-oauth20": "^2.0.0",
-    "sass": "^1.38.1"
+    "sass": "^1.38.1",
+    "socket.io": "^4.5.3"
   },
   "devDependencies": {
     "eslint": "^7.32.0",

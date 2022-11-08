@@ -4,22 +4,25 @@
 {% set pagetitle = 'Submitted!' %}
 
 {% block pagecontent %}
-	<h4>You have submitted your quiz successfully!.</h4>
+	<h1>You have submitted your quiz successfully!.</h1>
 	<!-- TODO: Add in an optional score parameter instead of removing it entirely-->
+	<h2>Click here to view the reults</h2><a href="/results"><br/><button class="res">Results</button></a>
 	<br/><br/>
+	<h2>Click here to go back to quizzes</h2><br/>
 	<a href="/quizzes"><button class="rel">Back to quizzes</button></a>
 {% endblock %}
 
 {% block customcss %}
 	<style>
 		button.rel {
-			width: 100px;
-			height: 30px;
+			width: 110px;
+			height: 35px;
 			background-color: var(--gray);
 			color: var(--off-white);
 			border: 2px solid var(--ghost-gray);
 			border-radius: 5px;
 			cursor: pointer;
+			font-weight: bold;
 		}
 		button.rel:disabled {
 			background-color: var(--tinted-gray);
@@ -28,6 +31,19 @@
 			cursor: default;
 		}
 		button.rel:not(:disabled):hover {
+			background-color: var(--middle-gray);
+		}
+		button.res{
+			width: 75px;
+			height: 35px;
+			font-weight: bold;
+			background-color: var(--gray);
+			color: var(--off-white);
+			cursor: pointer;
+			border: 2px solid var(--ghost-gray);
+			border-radius: 5px;
+		}
+		button.res:not(:disabled):hover {
 			background-color: var(--middle-gray);
 		}
 	</style>
