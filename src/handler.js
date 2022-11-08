@@ -456,7 +456,6 @@ function handler (app, env) {
 							res.send('Done');
 						} else {
 							const { answer } = req.body;
-							// TODO: Time should NOT be taken from the client
 							const currentQ = LQ.currentQ || -1;
 							const Q = QUIZ[currentQ];
 							if (!Q) throw new Error('currentQ out of bounds');
