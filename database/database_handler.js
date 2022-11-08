@@ -55,22 +55,24 @@ async function getLiveQuiz () {
 	if (quiz) return quiz.toObject();
 }
 
-async function getLiveResult () {
-	const date = new Date().toISOString().slice(0, 10);
-	const results = await LiveResult.findOne({ title: date });
-	return results;
+async function getLiveResult (userId, quizId, currentQ) {
+	const res = await LiveResult.findOne({ userId, quizId, question: currentQ });
+	if (res) return res.toObject();
 }
 
-async function updateLiveResult (currentQ, userId, points) {
-	const date = new Date().toISOString().slice(0, 10);
-	let results = await LiveResult.findOne({ title: date });
-	if (!results) results = new LiveResult({
-		title: date,
-		result: []
+async function addLiveResult (userId, quizId, currentQ, points, answer, result) {
+	const user = await getUser(userId);
+	const results = new LiveResult({
+		userId,
+		username: user.name,
+		quizId,
+		question: currentQ,
+		points,
+		answer,
+		result
 	});
-	if (!results.result[currentQ]) results.result[currentQ] = [];
-	results.result[currentQ].push({ id: userId, points });
-	results.save();
+	await results.save();
+	return results.toObject();
 }
 
 module.exports = {
@@ -82,5 +84,5 @@ module.exports = {
 	getUserStats,
 	getLiveQuiz,
 	getLiveResult,
-	updateLiveResult
+	addLiveResult
 };

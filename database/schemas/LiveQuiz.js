@@ -34,8 +34,10 @@ const resultSchema = new mongoose.Schema({
 	userId: { type: String, required: true },
 	username: { type: String, required: true },
 	quizId: { type: String, required: true },
-	result: { type: String, required: true, enum: ['correct', 'partial', 'incorrect'] },
-	answer: { type: String, required: true }
+	question: { type: Number, required: true },
+	points: { type: Number, required: true },
+	answer: { type: String, required: true },
+	result: { type: String, required: true, enum: ['correct', 'partial', 'incorrect'] }
 });
 
 questionsSchema.set('collection', 'livequizzes');

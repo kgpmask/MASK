@@ -301,6 +301,7 @@ function handler (app, env) {
 				return res.renderFile('quiz_success.njk');
 			}
 			case 'results':{
+				// TODO: This needs to be rewritten
 				dbh.getLiveResult().then(res => {
 					if (!res) res.renderFile('404.njk');
 					const results = [];
@@ -415,7 +416,6 @@ function handler (app, env) {
 					const answers = Array.from({ length: solutions.length }).map((_, i) => ~~req.body[`answer-${i + 1}`]);
 					const points = [answers.filter((ans, i) => ~~ans === ~~solutions[i]).length, solutions.length];
 					res.renderFile('quiz_success.njk', { score: points[0], totalScore: points[1] });
-					const dbh = require('../database/database_handler');
 					dbh.updateUserQuizRecord({ userId: req.user._id, quizId, score: points[0], time: Date.now() });
 				}).catch(res.error);
 				break;
@@ -423,7 +423,6 @@ function handler (app, env) {
 			case 'live-events': {
 				if (!handlerContext.liveQuiz) handlerContext.liveQuiz = {};
 				const LQ = handlerContext.liveQuiz;
-				// Emit event to start next question
 				if (!loggedIn) {
 					if (!PARAMS.userless) req.session.returnTo = req.url;
 					return res.renderFile('quiz_login.njk');
@@ -440,7 +439,7 @@ function handler (app, env) {
 							});
 							setTimeout(() => {
 								// ONCETODO: Disable receiving answers using some sort of flag
-								// should be done with LQ endTime
+								// Resolved: Should be done with LQ endTime
 								const type = QUIZ[req.body.currentQ].options.type;
 								let answer;
 								if (type === 'mcq') {
@@ -463,11 +462,16 @@ function handler (app, env) {
 							if (!Q) throw new Error('currentQ out of bounds');
 							const timeLeft = Math.round((LQ.endTime - Date.now()) / 1000);
 							if (timeLeft < 0) throw new Error('Too late!');
-							// TODO: Check if user has submitted before
-							checker.checkLiveQuiz(answer, Q.solution, Q.options.type, Q.points, timeLeft).then(points => {
-								// TODO: Store user's submission
-								console.log(points);
-								res.send('Submitted');
+							dbh.getLiveResult(user._id, quiz._id, currentQ).then(alreadySubmitted => {
+								if (alreadySubmitted) throw new Error('Already attempted this question!');
+								checker.checkLiveQuiz(answer, Q.solution, Q.options.type, Q.points, timeLeft).then(points => {
+									const result = points
+										? points < Q.points ? 'partial' : 'correct'
+										: 'incorrect';
+									console.log(points);
+									dbh.addLiveResult(user._id, quiz._id, currentQ, points, answer, result);
+									res.send('Submitted');
+								}).catch(res.error);
 							}).catch(res.error);
 						}
 					}).catch(res.error);
