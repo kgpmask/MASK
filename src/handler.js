@@ -302,33 +302,31 @@ function handler (app, env) {
 			}
 			case 'results':{
 				// TODO: This needs to be rewritten; getLiveResult is different now [V]
-				dbh.getAllLiveResults().then(res => {
-					if (!res) res.renderFile('404.njk');
+				dbh.getAllLiveResults(new Date().toISOString().slice(0, 10)).then(RES => {
+					if (!RES) res.renderFile('404.njk');
+					console.log(RES);
 					const results = [];
-					res.result.forEach(RES => {
-						RES.forEach(obj => {
-							if (!results.find(elm => elm?.id === obj.id)) results.push({
-								id: obj.id,
-								points: 0
-							});
-							results.find(elm => elm.id === obj.id).points += obj.points;
+					RES.forEach(_RES => {
+						if (!results.find(res => res.id === _RES.userId)) results.push({
+							id: _RES.userId,
+							name: _RES.username,
+							points: 0
 						});
+						console.log(results.find(res => res.id === _RES.userId));
+						results.find(res => res.id === _RES.userId).points += _RES.points;
 					});
 					results.sort((a, b) => -(a.points > b.points));
-					dbh.getAllUsers().then(users => {
-						let i = 1, j = 1;
-						for (let record = 0; record < records.length; record++) {
-							if (record[i].points === record[i - 1]?.points) j++;
-							else {
-								i += j;
-								j = 1;
-							}
-							record[i].rank = i;
-							record[i].name = users.find(user => user.id === record[i].id).name;
-							delete record[i].id;
+					let i = 1, j = 1;
+					for (let result = 0; result < results.length; result++) {
+						if (results[result].points === results[result]?.points) j++;
+						else {
+							i += j;
+							j = 1;
 						}
-						return res.renderFile('results.njk', { results });
-					}).catch(res.error);
+						results[result].rank = i;
+						delete results[result].id;
+					}
+					return res.renderFile('results.njk', { results });
 				}).catch(res.error);
 				break;
 			}
