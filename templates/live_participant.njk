@@ -175,6 +175,7 @@
 			if (submittedAnswer !== null) {}
 			state = 'showing-answer';
 			showMessage(`The answer is ${req.type === 'mcq' ? generateHTML(Object.values(req.answer)) : req.answer}`);
+			showMessage(`Answer you have given is ${submittedAnswer}`);
 			timer(5);
 		});
 

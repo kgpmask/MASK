@@ -86,7 +86,7 @@
 		let countLeftPerQs = 30;
 		let currentTimer;
 		let secondsLeft = 15;
-
+		let timeVal=0;
 		const startedQs = [];
 
 		let startButton;
@@ -113,21 +113,42 @@
 			nextQ();
 			prevQ();
 		}
+		function timer (num=30) {
+			const c = currentQ;
+			timeVal = qs[c].time || num;
+			let cancel = false;
+			function endTimer () {
+				cancel = true;
+			}
+			function decrement () {
+				if (cancel) return;
+				document.getElementById('count').innerHTML = timeVal;
+				timeVal--;
+				if (timeVal >= 0) setTimeout(decrement, 1000);
+				else nextQ();
+			}
+			decrement();
+			return endTimer;
+		}
 
 		function nextQ () {
-			document.getElementById(`qbox-${currentQ + 1}`).style.display = "none";
-			if (currentQ < qAmt - 1) currentQ++;
-			document.getElementById(`qbox-${currentQ + 1}`).style.display = "block";
-			document.getElementById('nextQ').disabled = !(currentQ < qAmt - 1);
-			document.getElementById('prevQ').disabled = false;
-			if (startedQs.includes(currentQ)) startButton.disabled = true;
-			else startButton.disabled = false;
+			if(timeVal==0){
+				document.getElementById(`qbox-${currentQ + 1}`).style.display = "none";
+				if (currentQ < qAmt - 1) currentQ++;
+				document.getElementById(`qbox-${currentQ + 1}`).style.display = "block";
+				document.getElementById('nextQ').disabled = !(currentQ < qAmt - 1);
+				document.getElementById('prevQ').disabled = false;
+				if (startedQs.includes(currentQ)) startButton.disabled = true;
+				else startButton.disabled = false;
+				currentTimer=timer();
+			}
 		}
 
 		function startQ () {
 			// TODO: Add the timer! [M]
 			// Make sure to disable navigation buttons while the timer is active
 			// Re-enable navigation buttons 2s AFTER timer ends
+			currentTimer=timer();
 			startButton.disabled = true;
 			axios.post('/live', { options: quiz[currentQ].options, currentQ }).then(() => startedQs.push(currentQ));
 		}
