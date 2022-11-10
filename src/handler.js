@@ -454,7 +454,7 @@ function handler (app, env) {
 							res.send('Done');
 						} else {
 							const { answer } = req.body;
-							const currentQ = (LQ.currentQ + 1 || 0) - 1;
+							const currentQ = LQ.currentQ ?? - 1;
 							const Q = QUIZ[currentQ];
 							if (!Q) throw new Error('currentQ out of bounds');
 							const timeLeft = Math.round((LQ.endTime - Date.now()) / 1000);
