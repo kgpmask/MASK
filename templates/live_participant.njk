@@ -95,14 +95,16 @@
 		const waitingMsg = "Waiting for the quizmaster...";
 
 		function generateHTML(components) {
+			console.log(components);
 			return components.map(component => {
 				switch (component.type) {
 					case 'image': return `<img src="${component.val}" class="option-image" style="${component.style || ''}"/>`;
 					case 'mp3': return `<audio src="${component.val}" type="audio/mpeg"> </audio>`;
 					case 'title': return `<h3>${component.val}</h3>`;
+					case undefined: break;
 					default: return component.val;
 				}
-			}).join('<br/>');
+			}).filter(elm => elm).join('<br/>');
 		}
 
 		function showMessage (message) {
@@ -146,7 +148,8 @@
 			if (options.type === 'mcq') {
 				// TODO: MCQ rendering is to be addressed [M]
 				for (let i = 1; i <= 4; i++) {
-					document.getElementById(`option-${i}`).innerHTML = generateHTML(options.value[i - d1]);
+					if (!Array.isArray(options.value[i-1])) options.value[i-1] = Object.values(options.value[i-1]);
+					document.getElementById(`option-${i}`).innerHTML = generateHTML(options.value[i - 1]);
 				}
 				document.getElementById('answer-text-container').style.display = 'none';
 				document.getElementById('options-container').style.display = 'block';
@@ -171,7 +174,7 @@
 			// Tag me if you run into issues with this
 			if (submittedAnswer !== null) {}
 			state = 'showing-answer';
-			showMessage(`The answer is ${req.type === 'mcq' ? generateHTML(req.answer) : req.answer}`);
+			showMessage(`The answer is ${req.type === 'mcq' ? generateHTML(Object.values(req.answer)) : req.answer}`);
 			timer(5);
 		});
 
@@ -198,7 +201,6 @@
 			state = 'submitted';
 			submittedAnswer = answer;
 			showMessage('Your response is submitted.');
-			setTimeout(() => showMessage(waitingMsg), 3000);
 			axios.post('/live', { answer }).then(console.log);
 		}
 	</script>

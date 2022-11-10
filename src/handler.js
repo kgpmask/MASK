@@ -302,8 +302,9 @@ function handler (app, env) {
 			}
 			case 'results': {
 				// TODO: This needs to be rewritten; getLiveResult is different now [V]
-				dbh.getAllLiveResults(new Date().toISOString().slice(0, 10)).then(RES => {
-					if (!RES) res.renderFile('404.njk');
+				const quizId = '2022-11-09' || new Date().toISOString().slice(0, 10);
+				dbh.getAllLiveResults(quizId).then(RES => {
+					if (!RES) res.notFound();
 					console.log(RES);
 					const results = [];
 					RES.forEach(_RES => {
@@ -441,8 +442,8 @@ function handler (app, env) {
 								const type = QUIZ[req.body.currentQ].options.type;
 								let answer;
 								if (type === 'mcq') {
-									answer = QUIZ[req.body.currentQ].options.value[QUIZ[req.body.currentQ].answer - 1];
-								} else answer = QUIZ[req.body.currentQ].answer;
+									answer = QUIZ[req.body.currentQ].options.value[QUIZ[req.body.currentQ].solution - 1];
+								} else answer = QUIZ[req.body.currentQ].solution;
 								setTimeout(() => io.sockets.in('waiting-for-live-quiz').emit('answer', {
 									answer,
 									type

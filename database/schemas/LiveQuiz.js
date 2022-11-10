@@ -28,7 +28,7 @@ const questionsSchema = new mongoose.Schema({
 		},
 		solution: { type: [String, Number], required: true }
 	}], required: true }
-});
+}, { _id: false });
 
 const resultSchema = new mongoose.Schema({
 	userId: { type: String, required: true },
