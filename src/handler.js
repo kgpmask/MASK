@@ -454,19 +454,19 @@ function handler (app, env) {
 							res.send('Done');
 						} else {
 							const { answer } = req.body;
-							const currentQ = LQ.currentQ || -1;
+							const currentQ = (LQ.currentQ + 1 || 0) - 1;
 							const Q = QUIZ[currentQ];
 							if (!Q) throw new Error('currentQ out of bounds');
 							const timeLeft = Math.round((LQ.endTime - Date.now()) / 1000);
 							if (timeLeft < 0) throw new Error('Too late!');
 							dbh.getLiveResult(user._id, quiz._id, currentQ).then(alreadySubmitted => {
 								if (alreadySubmitted) throw new Error('Already attempted this question!');
-								console.log(answer, Q.solution, Q.options.type, Q.points, timeLeft);
+								// console.log(answer, Q.solution, Q.options.type, Q.points, timeLeft);
 								checker.checkLiveQuiz(answer, Q.solution, Q.options.type, Q.points, timeLeft).then(points => {
 									const result = points
 										? points < Q.points ? 'partial' : 'correct'
 										: 'incorrect';
-									dbh.addLiveResult(user._id, quiz._id, currentQ, points, answer, result);
+									dbh.addLiveResult(user._id, quiz.title, currentQ, points, answer, result);
 									res.send('Submitted');
 								}).catch(res.error);
 							}).catch(res.error);
