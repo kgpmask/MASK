@@ -300,7 +300,7 @@ function handler (app, env) {
 			case 'success': {
 				return res.renderFile('quiz_success.njk');
 			}
-			case 'results': {
+			case 'live-results': {
 				// TODO: This needs to be rewritten; getLiveResult is different now [V]
 				const quizId = '2022-11-09' || new Date().toISOString().slice(0, 10);
 				dbh.getAllLiveResults(quizId).then(RES => {
@@ -474,6 +474,13 @@ function handler (app, env) {
 					}).catch(res.error);
 				}).catch(res.error);
 				break;
+			}
+			case 'live-end': {
+				dbh.getUser(req.user._id).then(user => {
+					if (!user.permissions.find(perm => perm === 'quizmaster')) throw new Error('Not enough permission');
+					io.sockets.in('waiting-for-live-quiz').emit('end-quiz');
+					res.redirect('/live-results');
+				}).catch(err => console.log(err));
 			}
 			default:
 				res.redirect(`/${args.join('/')}`);

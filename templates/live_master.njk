@@ -7,7 +7,7 @@
 	<div class="quiz-container">
 		<div class="countDown">
 			<div id="count"></div>
-			<br/><br/>
+			<br/>
 		</div>
 		<br/>
 		<div class="button-container">
@@ -25,11 +25,12 @@
 						<div id="question-{{ q }}"></div>
 						<br/>
 					</div>
-					<div>
-						<button href="/results" class="{%if q==qAmt%}enabled{%endif%}{%if q<qAmt%}disabled{%endif%}"></button>
-					</div>
 				{% endfor %}
 			</form>
+		</div>
+		<br/>
+		<div class="button-container">
+			<button class="rel" onclick="endQuiz()"> End Quiz </button>
 		</div>
 		<br/><br/><br/>
 	</div>
@@ -105,10 +106,10 @@
 		let countLeftPerQs = 30;
 		let currentTimer;
 		let secondsLeft = 15;
-		let timeVal=0;
+		let timeLeft=0;
 		const startedQs = [];
 
-		let startButton;
+		let startButton, nextButton, prevButton;
 
 		const qAmt = {{ qAmt }};
 		const quiz = {{ quiz | safe }};
@@ -125,6 +126,8 @@
 		}
 		window.onload = () => {
 			startButton = document.getElementById('startQ');
+			nextButton = document.getElementById('nextQ');
+			prevButton = document.getElementById('prevQ');
 			qs.forEach((question, q) => {
 				document.getElementById(`question-${q + 1}`).innerHTML = generateHTML(question);
 			});
@@ -132,42 +135,44 @@
 			nextQ();
 			prevQ();
 		}
-		function timer (num=30) {
+
+		function timer (time=30) {
 			const c = currentQ;
-			timeVal = qs[c].time || num;
-			let cancel = false;
-			function endTimer () {
-				cancel = true;
-			}
+			timeLeft = time;
+			document.getElementById('count').style.display = "block";
+			nextButton.disabled = true;
+			prevButton.disabled = true;
 			function decrement () {
-				if (cancel) return;
-				document.getElementById('count').innerHTML = timeVal;
-				timeVal--;
-				if (timeVal >= 0) setTimeout(decrement, 1000);
-				else nextQ();
+				document.getElementById('count').innerHTML = timeLeft;
+				timeLeft--;
+				if (timeLeft >= 0) {
+					setTimeout(decrement, 1000);
+				}
+				else {
+					nextButton.disabled = false;
+					prevButton.disabled = false;
+					document.getElementById('count').style.display = "none";
+				}
 			}
 			decrement();
-			return endTimer;
 		}
 
 		function nextQ () {
-			if(timeVal==0){
-				document.getElementById(`qbox-${currentQ + 1}`).style.display = "none";
-				if (currentQ < qAmt - 1) currentQ++;
-				document.getElementById(`qbox-${currentQ + 1}`).style.display = "block";
-				document.getElementById('nextQ').disabled = !(currentQ < qAmt - 1);
-				document.getElementById('prevQ').disabled = false;
-				if (startedQs.includes(currentQ)) startButton.disabled = true;
-				else startButton.disabled = false;
-				currentTimer=timer();
-			}
+			document.getElementById(`qbox-${currentQ + 1}`).style.display = "none";
+			if (currentQ < qAmt - 1) currentQ++;
+			document.getElementById(`qbox-${currentQ + 1}`).style.display = "block";
+			nextButton.disabled = !(currentQ < qAmt - 1);
+			prevButton.disabled = false;
+			if (startedQs.includes(currentQ)) startButton.disabled = true;
+			else startButton.disabled = false;
 		}
 
 		function startQ () {
 			// TODO: Add the timer! [M]
 			// Make sure to disable navigation buttons while the timer is active
 			// Re-enable navigation buttons 2s AFTER timer ends
-			currentTimer=timer();
+			const quizTime = { '10': 20, '5': 15, '3': 12 }[quiz[currentQ].points];
+			timer(quizTime);
 			startButton.disabled = true;
 			axios.post('/live', { options: quiz[currentQ].options, currentQ }).then(() => startedQs.push(currentQ));
 		}
@@ -176,10 +181,14 @@
 			document.getElementById(`qbox-${currentQ + 1}`).style.display = "none";
 			if (currentQ) currentQ--;
 			document.getElementById(`qbox-${currentQ + 1}`).style.display = "block";
-			document.getElementById('prevQ').disabled = !(currentQ > 0);
-			document.getElementById('nextQ').disabled = false;
+			prevButton.disabled = !(currentQ > 0);
+			nextButton.disabled = false;
 			if (startedQs.includes(currentQ)) startButton.disabled = true;
 			else startButton.disabled = false;
+		}
+
+		function endQuiz () {
+			axios.post('/live-end');
 		}
 	</script>
 {% endblock %}

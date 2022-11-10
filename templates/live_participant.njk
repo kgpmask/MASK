@@ -179,6 +179,8 @@
 			timer(5);
 		});
 
+		socket.on('end-quiz', () => axios.get('/live-results'));
+
 		window.onload = () => showMessage(waitingMsg);
 
 		function submitAnswer (timeout = false) {
