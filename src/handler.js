@@ -297,10 +297,10 @@ function handler (app, env) {
 				}).catch(res.error);
 				break;
 			}
-			case 'success':{
+			case 'success': {
 				return res.renderFile('quiz_success.njk');
 			}
-			case 'results':{
+			case 'results': {
 				// TODO: This needs to be rewritten; getLiveResult is different now [V]
 				dbh.getAllLiveResults(new Date().toISOString().slice(0, 10)).then(RES => {
 					if (!RES) res.renderFile('404.njk');
