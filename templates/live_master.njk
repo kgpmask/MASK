@@ -25,6 +25,9 @@
 						<div id="question-{{ q }}"></div>
 						<br/>
 					</div>
+					<div>
+						<button href="/results" class="{%if q==qAmt%}enabled{%endif%}{%if q<qAmt%}disabled{%endif%}"></button>
+					</div>
 				{% endfor %}
 			</form>
 		</div>
@@ -72,6 +75,22 @@
 			border-radius: 10px;
 			background: rgba(0, 0, 0, 0.5);
 			padding: 25px;
+		}
+		button.disabled{
+			width: 0px;
+			height: 0px;
+		}
+		button.enabled{
+			width: 100px;
+			height: 30px;
+			background-color: var(--gray);
+			color: var(--off-white);
+			border: 2px solid var(--ghost-gray);
+			border-radius: 5px;
+			cursor: pointer;
+		}
+		button.enabled:hover{
+			background-color: var(--middle-gray);
 		}
 		button.start {}
 	</style>
