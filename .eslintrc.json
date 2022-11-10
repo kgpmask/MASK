@@ -41,6 +41,7 @@
 				"after": true
 			}
 		],
+		"space-before-blocks": ["error"],
 		"space-before-function-paren": ["error", "always"],
 		"space-in-parens": "error",
 		"space-infix-ops": "error",
