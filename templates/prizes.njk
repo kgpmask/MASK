@@ -6,11 +6,12 @@
 {% block pagecontent %}
 	<h1>Prizes</h1><br/>
 	{%for name,list in prizes%}
-		<div class="name">
+		<div class="name{% if(name=="Attack On Titan" or name=="Dragon Ball Z" or name=="Demon Slayer" or name=="Naruto" or name=="One Piece" or name=="Haikyuu" or name=="Jujutsu Kaisen") %}{{name}}{%endif%}">
 			<h2>{{name}}</h2>
+			<br>
 			<div id="prizes-container">
 				{% for prize in list %}
-					<div class="prize-container">
+					<div class="prize-container{% if(name=="Attack On Titan" or name=="Dragon Ball Z" or name=="Demon Slayer" or name=="Naruto" or name=="One Piece" or name=="Haikyuu" or name=="Jujutsu Kaisen") %}prize-{{name}}{%endif%}">
 						<img class="prize-image" src="{{ prize.link }}" alt="{{ prize.name }}"/>
 						<div class="prize-name">{{ prize.name }}</div>
 						<div class="prize-points">{{ prize.cost }} points</div>
@@ -24,7 +25,7 @@
 {% block customcss %}
 	<style>
 		.name{
-			height: 500px;
+			height: 700px;
 		}
 		#prizes-container {
 			display: flex;
@@ -34,7 +35,7 @@
 			margin: 0% 10%;
 			border-radius: 10px;
 			background-color: var(--tinted-gray);
-			height: 90%;
+			height: 85%;
 		}
 
 		.prize-container {
@@ -42,7 +43,6 @@
 			flex-direction: column;
 			justify-content: center;
 			margin: 10px;
-			height: 100%;
 			overflow: hidden;
 		}
 
@@ -50,8 +50,8 @@
 			display: block;
 			min-width: 80px;
 			min-height: 80px;
-			max-height: 150px;
-			max-width: 100px;
+			max-height: 350px;
+			max-width: 260px;
 			margin: 5px;
 		}
 	</style>
