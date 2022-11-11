@@ -1,6 +1,6 @@
 [
     {
-        "aot": [
+        "Attack On Titan": [
             {
                 "name": "aot_1",
                 "link": "./assets/art/prizes/aot_1.webp",
@@ -37,7 +37,7 @@
                 "cost": 0
             }
         ],
-        "bleach": [
+        "Bleach": [
             {
                 "name": "bleach_1",
                 "link": "./assets/art/prizes/bleach_1.webp",
@@ -49,7 +49,7 @@
                 "cost": 0
             }
         ],
-        "db": [
+        "Dragon Ball Z": [
             {
                 "name": "db_1",
                 "link": "./assets/art/prizes/db_1.webp",
@@ -101,7 +101,7 @@
                 "cost": 0
             }
         ],
-        "deathnote": [
+        "Death Note": [
             {
                 "name": "deathnote_1",
                 "link": "./assets/art/prizes/deathnote_1.webp",
@@ -113,7 +113,7 @@
                 "cost": 0
             }
         ],
-        "ds": [
+        "Demon Slayer": [
             {
                 "name": "ds_1",
                 "link": "./assets/art/prizes/ds_1.webp",
@@ -145,14 +145,14 @@
                 "cost": 0
             }
         ],
-        "asilentvoice": [
+        "A Silent Voice": [
             {
                 "name": "asilentvoice_1",
                 "link": "./assets/art/prizes/asilentvoice_1.webp",
                 "cost": 0
             }
         ],
-        "naruto": [
+        "Naruto": [
             {
                 "name": "naruto_1",
                 "link": "./assets/art/prizes/naruto_1.webp",
@@ -194,7 +194,7 @@
                 "cost": 0
             }
         ],
-        "onepiece": [
+        "One Piece": [
             {
                 "name": "onepiece_1",
                 "link": "./assets/art/prizes/onepiece_1.webp",
@@ -241,7 +241,7 @@
                 "cost": 0
             }
         ],
-        "tokyoghoul": [
+        "Tokyo Ghoul": [
             {
                 "name": "tokyoghoul_1",
                 "link": "./assets/art/prizes/tokyoghoul_1.webp",
@@ -253,7 +253,7 @@
                 "cost": 0
             }
         ],
-        "tokyorevengers": [
+        "Tokyo Revengers": [
             {
                 "name": "tokyorevengers_1",
                 "link": "./assets/art/prizes/tokyorevengers_1.webp",
@@ -275,14 +275,14 @@
                 "cost": 0
             }
         ],
-        "yourname": [
+        "Your Name": [
             {
                 "name": "yourname_1",
                 "link": "./assets/art/prizes/yourname_1.webp",
                 "cost": 0
             }
         ],
-        "haikyuu": [
+        "Haikyuu": [
             {
                 "name": "haikyuu_1",
                 "link": "./assets/art/prizes/haikyuu_1.webp",
@@ -309,14 +309,14 @@
                 "cost": 0
             }
         ],
-        "hxh": [
+        "Hunter x Hunter": [
             {
                 "name": "hxh_1",
                 "link": "./assets/art/prizes/hxh_1.webp",
                 "cost": 0
             }
         ],
-        "jjk": [
+        "Jujutsu Kaisen": [
             {
                 "name": "jjk_1",
                 "link": "./assets/art/prizes/jjk_1.webp",
@@ -363,7 +363,7 @@
                 "cost": 0
             }
         ],
-        "jojo": [
+        "Jojo": [
             {
                 "name": "jojo_1",
                 "link": "./assets/art/prizes/jojo_1.webp",
@@ -375,7 +375,7 @@
                 "cost": 0
             }
         ],
-        "mha": [
+        "My Hero Acadamia": [
             {
                 "name": "mha_1",
                 "link": "./assets/art/prizes/mha_1.webp",
@@ -397,7 +397,7 @@
                 "cost": 0
             }
         ],
-        "mob": [
+        "MOB": [
             {
                 "name": "mob_1",
                 "link": "./assets/art/prizes/mob_1.webp",

@@ -5,11 +5,11 @@
 
 {% block pagecontent %}
 	<h1>Prizes</h1><br/>
-	{%for name in prizes%}
+	{%for name,list in prizes%}
 		<div class="name">
 			<h2>{{name}}</h2>
 			<div id="prizes-container">
-				{% for prize in name %}
+				{% for prize in list %}
 					<div class="prize-container">
 						<img class="prize-image" src="{{ prize.link }}" alt="{{ prize.name }}"/>
 						<div class="prize-name">{{ prize.name }}</div>
@@ -23,6 +23,9 @@
 
 {% block customcss %}
 	<style>
+		.name{
+			height: 350px;
+		}
 		#prizes-container {
 			display: flex;
 			flex-direction: row;
@@ -31,6 +34,7 @@
 			margin: 0% 10%;
 			border-radius: 10px;
 			background-color: var(--tinted-gray);
+			height: 90%;
 		}
 
 		.prize-container {
@@ -38,13 +42,14 @@
 			flex-direction: column;
 			justify-content: center;
 			margin: 10px;
+			height: 100%;
+			overflow: hidden;
 		}
 
 		.prize-image {
 			display: block;
 			min-width: 80px;
 			min-height: 80px;
-			max-width: 120px;
 			max-height: 120px;
 			margin: 5px;
 		}
