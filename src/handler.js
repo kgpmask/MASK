@@ -448,7 +448,7 @@ function handler (app, env) {
 							if (!Q) throw new Error('currentQ out of bounds');
 							const timeLeft = Math.round((LQ.endTime - Date.now()) / 1000);
 							if (timeLeft < 0) throw new Error('Too late!');
-							dbh.getLiveResult(user._id, quiz._id, currentQ).then(alreadySubmitted => {
+							dbh.getLiveResult(user._id, quiz.title, currentQ).then(alreadySubmitted => {
 								if (alreadySubmitted) throw new Error('Already attempted this question!');
 								checker.checkLiveQuiz(answer, Q.solution, Q.options.type, Q.points, timeLeft).then(({
 									points, timeLeft

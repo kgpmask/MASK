@@ -4,7 +4,7 @@ const questionsSchema = new mongoose.Schema({
 	_id: { type: String, required: true },
 	title: { type: String, required: true, default: () => {
 		return new Date().toISOString().slice(0, 10);
-	} },
+	}, unique: true },
 	questions: { type: [{
 		q: {
 			type: [{
