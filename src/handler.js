@@ -460,7 +460,7 @@ function handler (app, env) {
 									const result = points
 										? points < Q.points ? 'partial' : 'correct'
 										: 'incorrect';
-									dbh.addLiveResult(user._id, quiz.title, currentQ, points, answer, result);
+									dbh.addLiveResult(user._id, quiz.title, currentQ, points, answer, result).catch(res.error);
 									res.send('Submitted');
 								}).catch(res.error);
 							}).catch(res.error);
