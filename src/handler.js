@@ -319,13 +319,17 @@ function handler (app, env) {
 					results.sort((a, b) => -(a.points > b.points));
 					let i = 1, j = 1;
 					for (let result = 0; result < results.length; result++) {
-						if (results[result].points === results[result]?.points) j++;
-						else {
-							i += j;
-							j = 1;
+						if(result==0) results[result].rank = i;
+						else{
+							if (results[result].points === results[result-1].points) j++;
+							else {
+								i += j;
+								j = 1;
+							}
+							results[result].rank = i;
 						}
-						results[result].rank = i;
 						delete results[result].id;
+						console.log(results);
 					}
 					return res.renderFile('results.njk', { results });
 				}).catch(res.error);
