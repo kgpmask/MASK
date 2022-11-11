@@ -1,0 +1,418 @@
+[
+    {
+        "aot": [
+            {
+                "name": "aot_1",
+                "link": "./assets/art/prizes/aot_1.webp",
+                "cost": 0
+            },
+            {
+                "name": "aot_2",
+                "link": "./assets/art/prizes/aot_2.webp",
+                "cost": 0
+            },
+            {
+                "name": "aot_3",
+                "link": "./assets/art/prizes/aot_3.webp",
+                "cost": 0
+            },
+            {
+                "name": "aot_4",
+                "link": "./assets/art/prizes/aot_4.webp",
+                "cost": 0
+            },
+            {
+                "name": "aot_5",
+                "link": "./assets/art/prizes/aot_5.webp",
+                "cost": 0
+            },
+            {
+                "name": "aot_6",
+                "link": "./assets/art/prizes/aot_6.webp",
+                "cost": 0
+            },
+            {
+                "name": "aot_7",
+                "link": "./assets/art/prizes/aot_7.webp",
+                "cost": 0
+            }
+        ],
+        "bleach": [
+            {
+                "name": "bleach_1",
+                "link": "./assets/art/prizes/bleach_1.webp",
+                "cost": 0
+            },
+            {
+                "name": "bleach_2",
+                "link": "./assets/art/prizes/bleach_2.webp",
+                "cost": 0
+            }
+        ],
+        "db": [
+            {
+                "name": "db_1",
+                "link": "./assets/art/prizes/db_1.webp",
+                "cost": 0
+            },
+            {
+                "name": "db_10",
+                "link": "./assets/art/prizes/db_10.webp",
+                "cost": 0
+            },
+            {
+                "name": "db_2",
+                "link": "./assets/art/prizes/db_2.webp",
+                "cost": 0
+            },
+            {
+                "name": "db_3",
+                "link": "./assets/art/prizes/db_3.webp",
+                "cost": 0
+            },
+            {
+                "name": "db_4",
+                "link": "./assets/art/prizes/db_4.webp",
+                "cost": 0
+            },
+            {
+                "name": "db_5",
+                "link": "./assets/art/prizes/db_5.webp",
+                "cost": 0
+            },
+            {
+                "name": "db_6",
+                "link": "./assets/art/prizes/db_6.webp",
+                "cost": 0
+            },
+            {
+                "name": "db_7",
+                "link": "./assets/art/prizes/db_7.webp",
+                "cost": 0
+            },
+            {
+                "name": "db_8",
+                "link": "./assets/art/prizes/db_8.webp",
+                "cost": 0
+            },
+            {
+                "name": "db_9",
+                "link": "./assets/art/prizes/db_9.webp",
+                "cost": 0
+            }
+        ],
+        "deathnote": [
+            {
+                "name": "deathnote_1",
+                "link": "./assets/art/prizes/deathnote_1.webp",
+                "cost": 0
+            },
+            {
+                "name": "deathnote_2",
+                "link": "./assets/art/prizes/deathnote_2.webp",
+                "cost": 0
+            }
+        ],
+        "ds": [
+            {
+                "name": "ds_1",
+                "link": "./assets/art/prizes/ds_1.webp",
+                "cost": 0
+            },
+            {
+                "name": "ds_2",
+                "link": "./assets/art/prizes/ds_2.webp",
+                "cost": 0
+            },
+            {
+                "name": "ds_3",
+                "link": "./assets/art/prizes/ds_3.webp",
+                "cost": 0
+            },
+            {
+                "name": "ds_4",
+                "link": "./assets/art/prizes/ds_4.webp",
+                "cost": 0
+            },
+            {
+                "name": "ds_5",
+                "link": "./assets/art/prizes/ds_5.webp",
+                "cost": 0
+            },
+            {
+                "name": "ds_6",
+                "link": "./assets/art/prizes/ds_6.webp",
+                "cost": 0
+            }
+        ],
+        "asilentvoice": [
+            {
+                "name": "asilentvoice_1",
+                "link": "./assets/art/prizes/asilentvoice_1.webp",
+                "cost": 0
+            }
+        ],
+        "naruto": [
+            {
+                "name": "naruto_1",
+                "link": "./assets/art/prizes/naruto_1.webp",
+                "cost": 0
+            },
+            {
+                "name": "naruto_2",
+                "link": "./assets/art/prizes/naruto_2.webp",
+                "cost": 0
+            },
+            {
+                "name": "naruto_3",
+                "link": "./assets/art/prizes/naruto_3.webp",
+                "cost": 0
+            },
+            {
+                "name": "naruto_4",
+                "link": "./assets/art/prizes/naruto_4.webp",
+                "cost": 0
+            },
+            {
+                "name": "naruto_5",
+                "link": "./assets/art/prizes/naruto_5.webp",
+                "cost": 0
+            },
+            {
+                "name": "naruto_6",
+                "link": "./assets/art/prizes/naruto_6.webp",
+                "cost": 0
+            },
+            {
+                "name": "naruto_7",
+                "link": "./assets/art/prizes/naruto_7.webp",
+                "cost": 0
+            },
+            {
+                "name": "naruto_8",
+                "link": "./assets/art/prizes/naruto_8.webp",
+                "cost": 0
+            }
+        ],
+        "onepiece": [
+            {
+                "name": "onepiece_1",
+                "link": "./assets/art/prizes/onepiece_1.webp",
+                "cost": 0
+            },
+            {
+                "name": "onepiece_2",
+                "link": "./assets/art/prizes/onepiece_2.webp",
+                "cost": 0
+            },
+            {
+                "name": "onepiece_3",
+                "link": "./assets/art/prizes/onepiece_3.webp",
+                "cost": 0
+            },
+            {
+                "name": "onepiece_4",
+                "link": "./assets/art/prizes/onepiece_4.webp",
+                "cost": 0
+            },
+            {
+                "name": "onepiece_5",
+                "link": "./assets/art/prizes/onepiece_5.webp",
+                "cost": 0
+            },
+            {
+                "name": "onepiece_6",
+                "link": "./assets/art/prizes/onepiece_6.webp",
+                "cost": 0
+            },
+            {
+                "name": "onepiece_7",
+                "link": "./assets/art/prizes/onepiece_7.webp",
+                "cost": 0
+            },
+            {
+                "name": "onepiece_8",
+                "link": "./assets/art/prizes/onepiece_8.webp",
+                "cost": 0
+            },
+            {
+                "name": "onepiece_9",
+                "link": "./assets/art/prizes/onepiece_9.webp",
+                "cost": 0
+            }
+        ],
+        "tokyoghoul": [
+            {
+                "name": "tokyoghoul_1",
+                "link": "./assets/art/prizes/tokyoghoul_1.webp",
+                "cost": 0
+            },
+            {
+                "name": "tokyoghoul_2",
+                "link": "./assets/art/prizes/tokyoghoul_2.webp",
+                "cost": 0
+            }
+        ],
+        "tokyorevengers": [
+            {
+                "name": "tokyorevengers_1",
+                "link": "./assets/art/prizes/tokyorevengers_1.webp",
+                "cost": 0
+            },
+            {
+                "name": "tokyorevengers_2",
+                "link": "./assets/art/prizes/tokyorevengers_2.webp",
+                "cost": 0
+            },
+            {
+                "name": "tokyorevengers_3",
+                "link": "./assets/art/prizes/tokyorevengers_3.webp",
+                "cost": 0
+            },
+            {
+                "name": "tokyorevengers_4",
+                "link": "./assets/art/prizes/tokyorevengers_4.webp",
+                "cost": 0
+            }
+        ],
+        "yourname": [
+            {
+                "name": "yourname_1",
+                "link": "./assets/art/prizes/yourname_1.webp",
+                "cost": 0
+            }
+        ],
+        "haikyuu": [
+            {
+                "name": "haikyuu_1",
+                "link": "./assets/art/prizes/haikyuu_1.webp",
+                "cost": 0
+            },
+            {
+                "name": "haikyuu_2",
+                "link": "./assets/art/prizes/haikyuu_2.webp",
+                "cost": 0
+            },
+            {
+                "name": "haikyuu_3",
+                "link": "./assets/art/prizes/haikyuu_3.webp",
+                "cost": 0
+            },
+            {
+                "name": "haikyuu_4",
+                "link": "./assets/art/prizes/haikyuu_4.webp",
+                "cost": 0
+            },
+            {
+                "name": "haikyuu_5",
+                "link": "./assets/art/prizes/haikyuu_5.webp",
+                "cost": 0
+            }
+        ],
+        "hxh": [
+            {
+                "name": "hxh_1",
+                "link": "./assets/art/prizes/hxh_1.webp",
+                "cost": 0
+            }
+        ],
+        "jjk": [
+            {
+                "name": "jjk_1",
+                "link": "./assets/art/prizes/jjk_1.webp",
+                "cost": 0
+            },
+            {
+                "name": "jjk_2",
+                "link": "./assets/art/prizes/jjk_2.webp",
+                "cost": 0
+            },
+            {
+                "name": "jjk_3",
+                "link": "./assets/art/prizes/jjk_3.webp",
+                "cost": 0
+            },
+            {
+                "name": "jjk_4",
+                "link": "./assets/art/prizes/jjk_4.webp",
+                "cost": 0
+            },
+            {
+                "name": "jjk_5",
+                "link": "./assets/art/prizes/jjk_5.webp",
+                "cost": 0
+            },
+            {
+                "name": "jjk_6",
+                "link": "./assets/art/prizes/jjk_6.webp",
+                "cost": 0
+            },
+            {
+                "name": "jjk_7",
+                "link": "./assets/art/prizes/jjk_7.webp",
+                "cost": 0
+            },
+            {
+                "name": "jjk_8",
+                "link": "./assets/art/prizes/jjk_8.webp",
+                "cost": 0
+            },
+            {
+                "name": "jjk_9",
+                "link": "./assets/art/prizes/jjk_9.webp",
+                "cost": 0
+            }
+        ],
+        "jojo": [
+            {
+                "name": "jojo_1",
+                "link": "./assets/art/prizes/jojo_1.webp",
+                "cost": 0
+            },
+            {
+                "name": "jojo_2",
+                "link": "./assets/art/prizes/jojo_2.webp",
+                "cost": 0
+            }
+        ],
+        "mha": [
+            {
+                "name": "mha_1",
+                "link": "./assets/art/prizes/mha_1.webp",
+                "cost": 0
+            },
+            {
+                "name": "mha_2",
+                "link": "./assets/art/prizes/mha_2.webp",
+                "cost": 0
+            },
+            {
+                "name": "mha_3",
+                "link": "./assets/art/prizes/mha_3.webp",
+                "cost": 0
+            },
+            {
+                "name": "mha_4",
+                "link": "./assets/art/prizes/mha_4.webp",
+                "cost": 0
+            }
+        ],
+        "mob": [
+            {
+                "name": "mob_1",
+                "link": "./assets/art/prizes/mob_1.webp",
+                "cost": 0
+            },
+            {
+                "name": "mob_2",
+                "link": "./assets/art/prizes/mob_2.webp",
+                "cost": 0
+            },
+            {
+                "name": "mob_3",
+                "link": "./assets/art/prizes/mob_3.webp",
+                "cost": 0
+            }
+        ]
+    }
+]
