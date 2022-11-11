@@ -5,15 +5,22 @@
 
 {% block pagecontent %}
 	<h1>Prizes</h1><br/>
-	<div id="prizes-container">
-		{% for prize in prizes %}
-			<div class="prize-container">
-				<img class="prize-image" src="{{ prize.img }}" alt="{{ prize.name }}"/>
-				<div class="prize-name">{{ prize.name }}</div>
-				<div class="prize-points">{{ prize.points }} points</div>
+	{% for name,list in prizes %}
+		<div class="name">
+			<h2>{{name}}</h2>
+			<br>
+			<div id="prizes-container">
+				{% for prize in list %}
+					<div class="prize-container">
+						<img class="prize-image" src="{{ prize.link }}" alt="{{ prize.name }}"/>
+						<div class="prize-name">{{ prize.name }}</div>
+						<div class="prize-points">{{ prize.cost }} points</div>
+					</div>
+				{% endfor %}
 			</div>
-		{% endfor %}
-	</div>
+		</div>
+		<br/><br/><br/>
+	{% endfor %}
 {% endblock %}
 
 {% block customcss %}
@@ -39,8 +46,8 @@
 			display: block;
 			min-width: 80px;
 			min-height: 80px;
-			max-width: 120px;
-			max-height: 120px;
+			max-height: 350px;
+			max-width: 260px;
 			margin: 5px;
 		}
 	</style>

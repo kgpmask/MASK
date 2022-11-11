@@ -336,13 +336,7 @@ function handler (app, env) {
 				break;
 			}
 			case 'prizes': {
-				const prizes = [
-					{ name: 'Prize 1', img: '', points: 200 },
-					{ name: 'Prize 2', img: '', points: 150 },
-					{ name: 'Prize 3', img: '', points: 100 },
-					{ name: 'Prize 4', img: '', points: 80 },
-					{ name: 'Prize 5', img: '', points: 60 }
-				]; // TODO: Update prize information [M]
+				const prizes = require('./rewards.json');
 				return res.renderFile('prizes.njk', { prizes });
 			}
 			case 'rebuild': {
