@@ -115,12 +115,13 @@
 
 		function timer (time) {
 			timeLeft = time;
-			function tick() {
+			function tick () {
 				if (state === 'waiting' || state === 'submitted') return;
 				document.getElementById('count').innerHTML = timeLeft--;
 				if (timeLeft >= 0) setTimeout(tick, 1000);
 				else {
 					switch (state) {
+
 						// case 'running': {
 						// 	state = 'time-out';
 						// 	if (submitAnswer() === false) showMessage('Time is up!');
@@ -130,7 +131,6 @@
 						// }
 						// Some issues with this; we'll disable it for now
 
-						// any other case as per requirement will be added here
 						default: {
 							state = 'waiting';
 							document.getElementById('count').innerHTML = '';
@@ -150,7 +150,7 @@
 			if (options.type === 'mcq') {
 				// TODO: MCQ rendering is to be addressed [M]
 				for (let i = 1; i <= 4; i++) {
-					if (!Array.isArray(options.value[i-1])) options.value[i-1] = Object.values(options.value[i-1]);
+					if (!Array.isArray(options.value[i - 1])) options.value[i - 1] = Object.values(options.value[i - 1]);
 					document.getElementById(`option-${i}`).innerHTML = generateHTML(options.value[i - 1]);
 				}
 				document.getElementById('answer-text-container').style.display = 'none';
@@ -169,15 +169,12 @@
 		});
 
 		socket.on('answer', req => {
-			// TODO: show answer comparison as well [M]
-			// Comparison here meaning just their answer + solution(s)
-			// Note that answer is likely to be an array of potential solutions
-			// I'd recommend something like forcing everything to be an array
-			// Tag me if you run into issues with this
-			if (submittedAnswer !== null) {}
 			state = 'showing-answer';
-			showMessage(`The answer is ${req.type === 'mcq' ? generateHTML(Object.values(req.answer)) : req.answer}`);
-			showMessage(`Your submitted answer was: ${submittedAnswer}`);
+			let html = `The correct answer was ${req.type === 'mcq' ? '_ABCDEF'.charAt(req.answer) : req.answer}.`;
+			if (submittedAnswer !== null) {
+				html += `<br/>Your submitted answer was ${req.type === 'mcq' ? '_ABCDEF'.charAt(submittedAnswer) : submittedAnswer}.`;
+			}
+			showMessage(html);
 			timer(5);
 		});
 
@@ -188,8 +185,6 @@
 		window.onload = () => showMessage(waitingMsg);
 
 		function submitAnswer (timeout = false) {
-			// needs fixing
-			// TODO: Confirm this needs fixing? I think you left this comment [M]
 			let answer = null;
 			if (document.getElementById('answer-text-container').style.display === 'block') {
 				answer = document.getElementById('answer-text-field').value;
@@ -207,9 +202,8 @@
 			document.getElementById('count').style.display = 'none';
 			if (timeout) return;
 			state = 'submitted';
-			submittedAnswer = answer;
-			showMessage('Your response is submitted.');
-			axios.post('/live', { answer }).then(console.log);
+			showMessage('Your response has been submitted.');
+			axios.post('/live', { answer }).then(() => submittedAnswer = answer).catch(() => {});
 			return true;
 		}
 	</script>
