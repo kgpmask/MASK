@@ -65,7 +65,7 @@ async function getAllLiveResults (quizId) {
 	return res;
 }
 
-async function addLiveResult (userId, quizId, currentQ, points, answer, result) {
+async function addLiveResult (userId, quizId, currentQ, points, answer, timeLeft, result) {
 	const user = await getUser(userId);
 	const results = new LiveResult({
 		userId,
@@ -74,6 +74,7 @@ async function addLiveResult (userId, quizId, currentQ, points, answer, result) 
 		question: currentQ,
 		points,
 		answer,
+		timeLeft,
 		result
 	});
 	await results.save();

@@ -40,6 +40,7 @@ const resultSchema = new mongoose.Schema({
 	question: { type: Number, required: true },
 	points: { type: Number, required: true },
 	answer: { type: String, required: true },
+	timeLeft: { type: Number, required: true },
 	result: { type: String, required: true, enum: ['correct', 'partial', 'incorrect'] }
 });
 

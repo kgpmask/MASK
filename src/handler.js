@@ -303,7 +303,6 @@ function handler (app, env) {
 				const quizId = '2022-11-09' || new Date().toISOString().slice(0, 10);
 				dbh.getAllLiveResults(quizId).then(RES => {
 					if (!RES) res.notFound();
-					console.log(RES);
 					const results = [];
 					RES.forEach(_RES => {
 						if (!results.find(res => res.id === _RES.userId)) results.push({
@@ -311,7 +310,6 @@ function handler (app, env) {
 							name: _RES.username,
 							points: 0
 						});
-						console.log(results.find(res => res.id === _RES.userId));
 						results.find(res => res.id === _RES.userId).points += _RES.points;
 					});
 					results.sort((a, b) => -(a.points > b.points));
@@ -327,7 +325,6 @@ function handler (app, env) {
 							results[result].rank = i;
 						}
 						delete results[result].id;
-						console.log(results);
 					}
 					return res.renderFile('results.njk', { results });
 				}).catch(res.error);
@@ -453,11 +450,14 @@ function handler (app, env) {
 							if (timeLeft < 0) throw new Error('Too late!');
 							dbh.getLiveResult(user._id, quiz._id, currentQ).then(alreadySubmitted => {
 								if (alreadySubmitted) throw new Error('Already attempted this question!');
-								checker.checkLiveQuiz(answer, Q.solution, Q.options.type, Q.points, timeLeft).then(points => {
+								checker.checkLiveQuiz(answer, Q.solution, Q.options.type, Q.points, timeLeft).then(({
+									points, timeLeft
+								}) => {
 									const result = points
 										? points < Q.points ? 'partial' : 'correct'
 										: 'incorrect';
-									dbh.addLiveResult(user._id, quiz.title, currentQ, points, answer, result).catch(res.error);
+									const functionArgs = [user._id, quiz.title, currentQ, points, answer, timeLeft, result];
+									dbh.addLiveResult(...functionArgs).catch(res.error);
 									res.send('Submitted');
 								}).catch(res.error);
 							}).catch(res.error);
@@ -470,8 +470,9 @@ function handler (app, env) {
 				dbh.getUser(req.user._id).then(user => {
 					if (!user.permissions.find(perm => perm === 'quizmaster')) throw new Error('Access denied');
 					io.sockets.in('waiting-for-live-quiz').emit('end-quiz');
-					res.send('Ended!');
+					return res.send('Ended!');
 				}).catch(res.error);
+				break;
 			}
 			default:
 				res.redirect(`/${args.join('/')}`);

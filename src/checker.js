@@ -60,6 +60,6 @@ exports.checkLiveQuiz = function check (answer, solutions, questionType, basePoi
 			}
 			return points;
 		}));
-		return resolve(finalPoints);
+		return resolve({ points: finalPoints, timeLeft });
 	});
 };
