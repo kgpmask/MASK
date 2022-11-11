@@ -380,7 +380,7 @@ function handler (app, env) {
 						case false: return res.send('');
 						default: return res.send(response);
 					}
-				}).catch(err => res.error(err));
+				}).catch(res.error);
 				break;
 			}
 			case 'quizzes': {
