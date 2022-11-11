@@ -136,7 +136,7 @@
 			prevQ();
 		}
 
-		function timer (time=30) {
+		function timer (time = 30) {
 			const c = currentQ;
 			timeLeft = time;
 			document.getElementById('count').style.display = "block";
@@ -188,7 +188,9 @@
 		}
 
 		function endQuiz () {
-			axios.post('/live-end');
+			axios.post('/live-end').then(() => {
+				window.location.href = '/live-results';
+			});
 		}
 	</script>
 {% endblock %}

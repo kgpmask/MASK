@@ -11,7 +11,7 @@
 		<br/>
 		<div class="question-zone">
 			<br/>
-			<form id="quiz" class="quizzes" method="POST" action="javascript: () => console.log('Submitting')">
+			<form id="quiz" class="quizzes" onsubmit="return false">
 				<input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
 				<input type="hidden" name="quizId" value="{{ id }}"/>
 				<div id="q-box" style="display: none">
@@ -30,7 +30,7 @@
 					<br/>
 					<button id="submit-button" class="rel" onclick="submitAnswer()">Submit</button>
 				</div>
-				<div id="message" style="display: none"><h3>Waiting for the quizmaster ;-;</h3></div>
+				<div id="message" style="display: none"><h3>Waiting for the quizmaster...</h3></div>
 			</form>
 		</div>
 	</div>
@@ -121,13 +121,15 @@
 				if (timeLeft >= 0) setTimeout(tick, 1000);
 				else {
 					switch (state) {
-						case 'running': {
-							state = 'time-out';
-							submitAnswer();
-							showMessage('The time is up. Your response is submitted.');
-							timer(3);
-							break;
-						}
+						// case 'running': {
+						// 	state = 'time-out';
+						// 	if (submitAnswer() === false) showMessage('Time is up!');
+						// 	else showMessage('Time is up! Your response has been submitted.');
+						// 	timer(3);
+						// 	break;
+						// }
+						// Some issues with this; we'll disable it for now
+
 						// any other case as per requirement will be added here
 						default: {
 							state = 'waiting';
@@ -175,18 +177,20 @@
 			if (submittedAnswer !== null) {}
 			state = 'showing-answer';
 			showMessage(`The answer is ${req.type === 'mcq' ? generateHTML(Object.values(req.answer)) : req.answer}`);
-			showMessage(`Answer you have given is ${submittedAnswer}`);
+			showMessage(`Your submitted answer was: ${submittedAnswer}`);
 			timer(5);
 		});
 
-		socket.on('end-quiz', () => axios.get('/live-results'));
+		socket.on('end-quiz', () => {
+			window.location.href = '/live-results';
+		});
 
 		window.onload = () => showMessage(waitingMsg);
 
 		function submitAnswer (timeout = false) {
 			// needs fixing
 			// TODO: Confirm this needs fixing? I think you left this comment [M]
-			let answer;
+			let answer = null;
 			if (document.getElementById('answer-text-container').style.display === 'block') {
 				answer = document.getElementById('answer-text-field').value;
 				document.getElementById('answer-text-field').value = "";
@@ -199,12 +203,14 @@
 					}
 				}
 			}
+			if (answer === null) return false;
 			document.getElementById('count').style.display = 'none';
 			if (timeout) return;
 			state = 'submitted';
 			submittedAnswer = answer;
 			showMessage('Your response is submitted.');
 			axios.post('/live', { answer }).then(console.log);
+			return true;
 		}
 	</script>
 {% endblock %}

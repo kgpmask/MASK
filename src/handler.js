@@ -477,9 +477,9 @@ function handler (app, env) {
 			}
 			case 'live-end': {
 				dbh.getUser(req.user._id).then(user => {
-					if (!user.permissions.find(perm => perm === 'quizmaster')) throw new Error('Not enough permission');
+					if (!user.permissions.find(perm => perm === 'quizmaster')) throw new Error('Access denied');
 					io.sockets.in('waiting-for-live-quiz').emit('end-quiz');
-					res.redirect('/live-results');
+					res.send('Ended!');
 				}).catch(err => console.log(err));
 			}
 			default:
