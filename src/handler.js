@@ -319,7 +319,7 @@ function handler (app, env) {
 					results.sort((a, b) => -(a.points > b.points));
 					let i = 1, j = 1;
 					for (let result = 0; result < results.length; result++) {
-						if(result==0) results[result].rank = i;
+						if(!result) results[result].rank = i;
 						else{
 							if (results[result].points === results[result-1].points) j++;
 							else {
