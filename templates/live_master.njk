@@ -172,9 +172,11 @@
 			// Make sure to disable navigation buttons while the timer is active
 			// Re-enable navigation buttons 2s AFTER timer ends
 			const quizTime = { '10': 20, '5': 15, '3': 12 }[quiz[currentQ].points];
-			timer(quizTime);
 			startButton.disabled = true;
-			axios.post('/live', { options: quiz[currentQ].options, currentQ }).then(() => startedQs.push(currentQ));
+			axios.post('/live', { options: quiz[currentQ].options, currentQ }).then(() => {
+				timer(quizTime);
+				startedQs.push(currentQ);
+			});
 		}
 
 		function prevQ () {
