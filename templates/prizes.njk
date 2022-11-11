@@ -3,17 +3,15 @@
 {% set thispage = 'events' %}
 {% set pagetitle = 'Prizes' %}
 
-{% set mangalist = ["Attack On Titan", "Dragon Ball Z", "Demon Slayer", "Naruto", "One Piece", "Haikyuu", "Jujutsu Kaisen"] %}
-
 {% block pagecontent %}
 	<h1>Prizes</h1><br/>
 	{% for name,list in prizes %}
-		<div class="name{{ name if name in mangalist }}">
+		<div class="name">
 			<h2>{{name}}</h2>
 			<br>
 			<div id="prizes-container">
 				{% for prize in list %}
-					<div class="prize-container{% if name in mangalist %}prize-{{ name }}{% endif %}">
+					<div class="prize-container">
 						<img class="prize-image" src="{{ prize.link }}" alt="{{ prize.name }}"/>
 						<div class="prize-name">{{ prize.name }}</div>
 						<div class="prize-points">{{ prize.cost }} points</div>
@@ -21,14 +19,12 @@
 				{% endfor %}
 			</div>
 		</div>
+		<br/><br/><br/>
 	{% endfor %}
 {% endblock %}
 
 {% block customcss %}
 	<style>
-		.name{
-			height: 700px;
-		}
 		#prizes-container {
 			display: flex;
 			flex-direction: row;
@@ -37,7 +33,6 @@
 			margin: 0% 10%;
 			border-radius: 10px;
 			background-color: var(--tinted-gray);
-			height: 85%;
 		}
 
 		.prize-container {
@@ -45,7 +40,6 @@
 			flex-direction: column;
 			justify-content: center;
 			margin: 10px;
-			overflow: hidden;
 		}
 
 		.prize-image {
