@@ -26,7 +26,10 @@ const questionsSchema = new mongoose.Schema({
 				}]
 			}
 		},
-		solution: { type: [String, Number], required: true }
+		solution: {
+			type: [String, Number, [{ type: [String, Number], _id: false }]],
+			required: true
+		}
 	}], required: true }
 }, { _id: false });
 

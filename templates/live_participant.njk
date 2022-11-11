@@ -95,7 +95,6 @@
 		const waitingMsg = "Waiting for the quizmaster...";
 
 		function generateHTML(components) {
-			console.log(components);
 			return components.map(component => {
 				switch (component.type) {
 					case 'image': return `<img src="${component.val}" class="option-image" style="${component.style || ''}"/>`;
@@ -143,6 +142,13 @@
 			tick();
 		}
 
+		let answerText, optionsContainer, answerTextField;
+		window.addEventListener('load', () => {
+			answerText = document.getElementById('answer-text-container');
+			optionsContainer = document.getElementById('options-container');
+			answerTextField = document.getElementById('answer-text-field');
+		});
+
 		function showQuestion (options, time) {
 			document.getElementById('count').style.display = 'block';
 			document.getElementById('message').style.display = 'none';
@@ -153,11 +159,13 @@
 					if (!Array.isArray(options.value[i - 1])) options.value[i - 1] = Object.values(options.value[i - 1]);
 					document.getElementById(`option-${i}`).innerHTML = generateHTML(options.value[i - 1]);
 				}
-				document.getElementById('answer-text-container').style.display = 'none';
-				document.getElementById('options-container').style.display = 'block';
+				answerText.style.display = 'none';
+				optionsContainer.style.display = 'block';
+				answerTextField.required = false;
 			} else {
-				document.getElementById('answer-text-container').style.display = 'block';
-				document.getElementById('options-container').style.display = 'none';
+				answerText.style.display = 'block';
+				optionsContainer.style.display = 'none';
+				answerTextField.required = true;
 			}
 			state = 'running';
 			timer(time);
@@ -170,7 +178,7 @@
 
 		socket.on('answer', req => {
 			state = 'showing-answer';
-			let html = `The correct answer was ${req.type === 'mcq' ? '_ABCDEF'.charAt(req.answer) : req.answer}.`;
+			let html = `The correct answer was ${req.type === 'mcq' ? '_ABCDEF'.charAt(req.answer?.[0] ?? req.answer) : req.answer}.`;
 			if (submittedAnswer !== null) {
 				html += `<br/>Your submitted answer was ${req.type === 'mcq' ? '_ABCDEF'.charAt(submittedAnswer) : submittedAnswer}.`;
 			}
@@ -182,13 +190,14 @@
 			window.location.href = '/live-results';
 		});
 
-		window.onload = () => showMessage(waitingMsg);
+		window.addEventListener('load', () => showMessage(waitingMsg));
 
 		function submitAnswer (timeout = false) {
 			let answer = null;
-			if (document.getElementById('answer-text-container').style.display === 'block') {
+			if (answerText.style.display === 'block') {
 				answer = document.getElementById('answer-text-field').value;
-				document.getElementById('answer-text-field').value = "";
+				if (!answer) answer = null;
+				else document.getElementById('answer-text-field').value = '';
 			} else {
 				for (let i = 1; i <= 4; i++) {
 					if (document.getElementById(`answer-${i}`).checked) { 

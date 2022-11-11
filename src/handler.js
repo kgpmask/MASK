@@ -435,13 +435,8 @@ function handler (app, env) {
 								time: quizTime
 							});
 							setTimeout(() => {
-								// ONCETODO: Disable receiving answers using some sort of flag
-								// Resolved: Should be done with LQ endTime
 								const type = QUIZ[req.body.currentQ].options.type;
-								let answer;
-								if (type === 'mcq') {
-									answer = QUIZ[req.body.currentQ].options.value[QUIZ[req.body.currentQ].solution - 1];
-								} else answer = QUIZ[req.body.currentQ].solution;
+								const answer = QUIZ[req.body.currentQ].solution;
 								setTimeout(() => io.sockets.in('waiting-for-live-quiz').emit('answer', {
 									answer,
 									type
@@ -452,6 +447,7 @@ function handler (app, env) {
 							res.send('Done');
 						} else {
 							const { answer } = req.body;
+							if (answer === '') throw new Error('Missing answer');
 							const currentQ = LQ.currentQ ?? - 1;
 							const Q = QUIZ[currentQ];
 							if (!Q) throw new Error('currentQ out of bounds');

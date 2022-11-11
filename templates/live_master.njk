@@ -149,8 +149,8 @@
 					setTimeout(decrement, 1000);
 				}
 				else {
-					nextButton.disabled = false;
-					prevButton.disabled = false;
+					nextButton.disabled = !(currentQ < qAmt - 1);
+					prevButton.disabled = !(currentQ > 0);
 					document.getElementById('count').style.display = "none";
 				}
 			}
@@ -190,6 +190,7 @@
 		}
 
 		function endQuiz () {
+			if (!confirm('End the quiz?')) return;
 			axios.post('/live-end').then(() => {
 				window.location.href = '/live-results';
 			});
