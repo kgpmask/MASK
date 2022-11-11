@@ -276,7 +276,6 @@ function handler (app, env) {
 					if (!PARAMS.userless) req.session.returnTo = req.url;
 					return res.renderFile('quiz_login.njk');
 				}
-				// random quiz questions ;-;
 				dbh.getLiveQuiz().then(quiz => {
 					if (!quiz) return res.renderFile('quizzes_404.njk', { message: `The quiz hasn't started, yet!` });
 					const QUIZ = quiz.questions;
@@ -301,7 +300,6 @@ function handler (app, env) {
 				return res.renderFile('quiz_success.njk');
 			}
 			case 'live-results': {
-				// TODO: This needs to be rewritten; getLiveResult is different now [V]
 				const quizId = '2022-11-09' || new Date().toISOString().slice(0, 10);
 				dbh.getAllLiveResults(quizId).then(RES => {
 					if (!RES) res.notFound();
@@ -455,7 +453,6 @@ function handler (app, env) {
 							if (timeLeft < 0) throw new Error('Too late!');
 							dbh.getLiveResult(user._id, quiz._id, currentQ).then(alreadySubmitted => {
 								if (alreadySubmitted) throw new Error('Already attempted this question!');
-								// console.log(answer, Q.solution, Q.options.type, Q.points, timeLeft);
 								checker.checkLiveQuiz(answer, Q.solution, Q.options.type, Q.points, timeLeft).then(points => {
 									const result = points
 										? points < Q.points ? 'partial' : 'correct'
@@ -474,7 +471,7 @@ function handler (app, env) {
 					if (!user.permissions.find(perm => perm === 'quizmaster')) throw new Error('Access denied');
 					io.sockets.in('waiting-for-live-quiz').emit('end-quiz');
 					res.send('Ended!');
-				}).catch(err => console.log(err));
+				}).catch(res.error);
 			}
 			default:
 				res.redirect(`/${args.join('/')}`);
