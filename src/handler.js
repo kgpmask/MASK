@@ -330,9 +330,9 @@ function handler (app, env) {
 				}).catch(res.error);
 				break;
 			}
-			case 'prizes': { // TODO: Update prize information [M]
-				const prizes=require('./rewards.json');
-				return res.renderFile('prizes.njk', {prizes});
+			case 'prizes': {
+				const prizes = require('./rewards.json');
+				return res.renderFile('prizes.njk', { prizes });
 			}
 			case 'rebuild': {
 				env.loaders.forEach(loader => loader.cache = {});

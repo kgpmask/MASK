@@ -3,15 +3,17 @@
 {% set thispage = 'events' %}
 {% set pagetitle = 'Prizes' %}
 
+{% set mangalist = ["Attack On Titan", "Dragon Ball Z", "Demon Slayer", "Naruto", "One Piece", "Haikyuu", "Jujutsu Kaisen"] %}
+
 {% block pagecontent %}
 	<h1>Prizes</h1><br/>
-	{%for name,list in prizes%}
-		<div class="name{% if(name=="Attack On Titan" or name=="Dragon Ball Z" or name=="Demon Slayer" or name=="Naruto" or name=="One Piece" or name=="Haikyuu" or name=="Jujutsu Kaisen") %}{{name}}{%endif%}">
+	{% for name,list in prizes %}
+		<div class="name{{ name if name in mangalist }}">
 			<h2>{{name}}</h2>
 			<br>
 			<div id="prizes-container">
 				{% for prize in list %}
-					<div class="prize-container{% if(name=="Attack On Titan" or name=="Dragon Ball Z" or name=="Demon Slayer" or name=="Naruto" or name=="One Piece" or name=="Haikyuu" or name=="Jujutsu Kaisen") %}prize-{{name}}{%endif%}">
+					<div class="prize-container{% if name in mangalist %}prize-{{ name }}{% endif %}">
 						<img class="prize-image" src="{{ prize.link }}" alt="{{ prize.name }}"/>
 						<div class="prize-name">{{ prize.name }}</div>
 						<div class="prize-points">{{ prize.cost }} points</div>
@@ -19,7 +21,7 @@
 				{% endfor %}
 			</div>
 		</div>
-	{%endfor%}
+	{% endfor %}
 {% endblock %}
 
 {% block customcss %}
