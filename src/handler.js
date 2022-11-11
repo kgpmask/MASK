@@ -331,8 +331,7 @@ function handler (app, env) {
 				break;
 			}
 			case 'prizes': { // TODO: Update prize information [M]
-				const prize=require('./rewards.json');
-				const prizes=prize[0];
+				const prizes=require('./rewards.json');
 				return res.renderFile('prizes.njk', {prizes});
 			}
 			case 'rebuild': {
