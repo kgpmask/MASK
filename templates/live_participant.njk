@@ -15,6 +15,7 @@
 				<input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
 				<input type="hidden" name="quizId" value="{{ id }}"/>
 				<div id="q-box" style="display: none">
+				<div id="question-no"></div>
 					<br/>
 					<div id="options-container" style="display: none">
 						{% for i in range(1, 5) %}
@@ -121,14 +122,12 @@
 				else {
 					switch (state) {
 
-						// case 'running': {
-						// 	state = 'time-out';
-						// 	if (submitAnswer() === false) showMessage('Time is up!');
-						// 	else showMessage('Time is up! Your response has been submitted.');
-						// 	timer(3);
-						// 	break;
-						// }
-						// Some issues with this; we'll disable it for now
+						case 'running': {
+							state = 'time-out';
+							if (submitAnswer() === false) showMessage('Time is up!');
+							else showMessage('Time is up! Your response has been submitted.');
+							break;
+						}
 
 						default: {
 							state = 'waiting';
@@ -149,15 +148,16 @@
 			answerTextField = document.getElementById('answer-text-field');
 		});
 
-		function showQuestion (options, time) {
+		function showQuestion (options, time, currentQ) {
+			document.getElementById('question-no').innerHTML = `Question #${currentQ + 1}`;
 			document.getElementById('count').style.display = 'block';
 			document.getElementById('message').style.display = 'none';
 			document.getElementById('q-box').style.display = 'block';
 			if (options.type === 'mcq') {
 				// TODO: MCQ rendering is to be addressed [M]
 				for (let i = 1; i <= 4; i++) {
-					if (!Array.isArray(options.value[i - 1])) options.value[i - 1] = Object.values(options.value[i - 1]);
-					document.getElementById(`option-${i}`).innerHTML = generateHTML(options.value[i - 1]);
+					// if (!Array.isArray(options.value[i - 1])) options.value[i - 1] = Object.values(options.value[i - 1]);
+					document.getElementById(`option-${i}`).innerHTML = generateHTML([options.value[i - 1]]);
 				}
 				answerText.style.display = 'none';
 				optionsContainer.style.display = 'block';
@@ -172,7 +172,7 @@
 		}
 		socket.on('question', req => {
 			currentQ = req.currentQ;
-			showQuestion(req.options, req.time);
+			showQuestion(req.options, req.time, currentQ);
 			submittedAnswer = null;
 		});
 
@@ -181,7 +181,7 @@
 			let html = `The correct answer was ${req.type === 'mcq' ? '_ABCDEF'.charAt(req.answer?.[0] ?? req.answer) : req.answer}.`;
 			if (submittedAnswer !== null) {
 				html += `<br/>Your submitted answer was ${req.type === 'mcq' ? '_ABCDEF'.charAt(submittedAnswer) : submittedAnswer}.`;
-			}
+			} else html += `<br/>You did not submit an answer for this question.`;
 			showMessage(html);
 			timer(5);
 		});

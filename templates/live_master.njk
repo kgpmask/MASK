@@ -22,6 +22,7 @@
 				<input type="hidden" name="quizId" value="{{ id }}"/>
 				{% for q in range(1, qAmt + 1) %}
 					<div id="qbox-{{ q }}" style="display:none">
+						<div>Question #{{ q }}</div>
 						<div id="question-{{ q }}"></div>
 						<br/>
 					</div>
@@ -133,13 +134,14 @@
 			});
 			document.getElementById('qbox-1').style.display = 'block';
 			nextQ();
+			console.log(startButton);
 			prevQ();
 		}
 
 		function timer (time = 30) {
 			const c = currentQ;
 			timeLeft = time;
-			document.getElementById('count').style.display = "block";
+			document.getElementById('count').style.display = 'block';
 			nextButton.disabled = true;
 			prevButton.disabled = true;
 			function decrement () {
@@ -151,16 +153,16 @@
 				else {
 					nextButton.disabled = !(currentQ < qAmt - 1);
 					prevButton.disabled = !(currentQ > 0);
-					document.getElementById('count').style.display = "none";
+					document.getElementById('count').style.display = 'none';
 				}
 			}
 			decrement();
 		}
 
 		function nextQ () {
-			document.getElementById(`qbox-${currentQ + 1}`).style.display = "none";
+			document.getElementById(`qbox-${currentQ + 1}`).style.display = 'none';
 			if (currentQ < qAmt - 1) currentQ++;
-			document.getElementById(`qbox-${currentQ + 1}`).style.display = "block";
+			document.getElementById(`qbox-${currentQ + 1}`).style.display = 'block';
 			nextButton.disabled = !(currentQ < qAmt - 1);
 			prevButton.disabled = false;
 			if (startedQs.includes(currentQ)) startButton.disabled = true;
@@ -180,9 +182,9 @@
 		}
 
 		function prevQ () {
-			document.getElementById(`qbox-${currentQ + 1}`).style.display = "none";
+			document.getElementById(`qbox-${currentQ + 1}`).style.display = 'none';
 			if (currentQ) currentQ--;
-			document.getElementById(`qbox-${currentQ + 1}`).style.display = "block";
+			document.getElementById(`qbox-${currentQ + 1}`).style.display = 'block';
 			prevButton.disabled = !(currentQ > 0);
 			nextButton.disabled = false;
 			if (startedQs.includes(currentQ)) startButton.disabled = true;

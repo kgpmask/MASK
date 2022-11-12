@@ -22,8 +22,8 @@ exports.checkLiveQuiz = function check (answer, solutions, questionType, basePoi
 			let points = 0;
 			switch (basePoints) {
 				case 10: {
-					if (timeLeft >= 27) points = 10;
-					else if (timeLeft >= 19) points = timeLeft - 17;
+					if (timeLeft >= 17) points = 10;
+					else if (timeLeft >= 9) points = timeLeft - 7;
 					else points = 1;
 					break;
 				}
