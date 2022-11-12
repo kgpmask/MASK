@@ -14,7 +14,7 @@
 					<div class="prize-container">
 						<img class="prize-image" src="{{ prize.link }}" alt="{{ prize.name }}"/>
 						<div class="prize-name">{{ prize.name }}</div>
-						<div class="prize-points">{{ prize.cost }} points</div>
+						{# <div class="prize-points">{{ prize.cost }} points</div> #}
 					</div>
 				{% endfor %}
 			</div>
@@ -40,6 +40,8 @@
 			flex-direction: column;
 			justify-content: center;
 			margin: 10px;
+			border: 2px solid var(--light-gray);
+			border-radius: 10px;
 		}
 
 		.prize-image {
