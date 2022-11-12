@@ -1,416 +1,475 @@
 {
-	"Attack On Titan": [
+	"posters": {
+		"Attack On Titan": [
 		{
 			"name": "Attack On Titan #1",
-			"link": "./assets/art/prizes/aot_1.webp",
+			"link": "aot_1.webp",
 			"cost": 0
 		},
 		{
 			"name": "Attack On Titan #2",
-			"link": "./assets/art/prizes/aot_2.webp",
+			"link": "aot_2.webp",
 			"cost": 0
 		},
 		{
 			"name": "Attack On Titan #3",
-			"link": "./assets/art/prizes/aot_3.webp",
+			"link": "aot_3.webp",
 			"cost": 0
 		},
 		{
 			"name": "Attack On Titan #4",
-			"link": "./assets/art/prizes/aot_4.webp",
+			"link": "aot_4.webp",
 			"cost": 0
 		},
 		{
 			"name": "Attack On Titan #5",
-			"link": "./assets/art/prizes/aot_5.webp",
+			"link": "aot_5.webp",
 			"cost": 0
 		},
 		{
 			"name": "Attack On Titan #6",
-			"link": "./assets/art/prizes/aot_6.webp",
+			"link": "aot_6.webp",
 			"cost": 0
 		},
 		{
 			"name": "Attack On Titan #7",
-			"link": "./assets/art/prizes/aot_7.webp",
+			"link": "aot_7.webp",
 			"cost": 0
-		}
-	],
-	"Bleach": [
+		}],
+		"Bleach": [
 		{
 			"name": "Bleach #1",
-			"link": "./assets/art/prizes/bleach_1.webp",
+			"link": "bleach_1.webp",
 			"cost": 0
 		},
 		{
 			"name": "Bleach #2",
-			"link": "./assets/art/prizes/bleach_2.webp",
+			"link": "bleach_2.webp",
 			"cost": 0
-		}
-	],
-	"Dragon Ball Z": [
+		}],
+		"Dragon Ball Z": [
 		{
 			"name": "Dragon Ball Z #1",
-			"link": "./assets/art/prizes/db_1.webp",
+			"link": "db_1.webp",
 			"cost": 0
 		},
 		{
 			"name": "Dragon Ball Z #10",
-			"link": "./assets/art/prizes/db_10.webp",
+			"link": "db_10.webp",
 			"cost": 0
 		},
 		{
 			"name": "Dragon Ball Z #2",
-			"link": "./assets/art/prizes/db_2.webp",
+			"link": "db_2.webp",
 			"cost": 0
 		},
 		{
 			"name": "Dragon Ball Z #3",
-			"link": "./assets/art/prizes/db_3.webp",
+			"link": "db_3.webp",
 			"cost": 0
 		},
 		{
 			"name": "Dragon Ball Z #4",
-			"link": "./assets/art/prizes/db_4.webp",
+			"link": "db_4.webp",
 			"cost": 0
 		},
 		{
 			"name": "Dragon Ball Z #5",
-			"link": "./assets/art/prizes/db_5.webp",
+			"link": "db_5.webp",
 			"cost": 0
 		},
 		{
 			"name": "Dragon Ball Z #6",
-			"link": "./assets/art/prizes/db_6.webp",
+			"link": "db_6.webp",
 			"cost": 0
 		},
 		{
 			"name": "Dragon Ball Z #7",
-			"link": "./assets/art/prizes/db_7.webp",
+			"link": "db_7.webp",
 			"cost": 0
 		},
 		{
 			"name": "Dragon Ball Z #8",
-			"link": "./assets/art/prizes/db_8.webp",
+			"link": "db_8.webp",
 			"cost": 0
 		},
 		{
 			"name": "Dragon Ball Z #9",
-			"link": "./assets/art/prizes/db_9.webp",
+			"link": "db_9.webp",
 			"cost": 0
-		}
-	],
-	"Death Note": [
+		}],
+		"Death Note": [
 		{
 			"name": "Death Note #1",
-			"link": "./assets/art/prizes/deathnote_1.webp",
+			"link": "deathnote_1.webp",
 			"cost": 0
 		},
 		{
 			"name": "Death Note #2",
-			"link": "./assets/art/prizes/deathnote_2.webp",
+			"link": "deathnote_2.webp",
 			"cost": 0
-		}
-	],
-	"Demon Slayer": [
+		}],
+		"Demon Slayer": [
 		{
 			"name": "Demon Slayer #1",
-			"link": "./assets/art/prizes/ds_1.webp",
+			"link": "ds_1.webp",
 			"cost": 0
 		},
 		{
 			"name": "Demon Slayer #2",
-			"link": "./assets/art/prizes/ds_2.webp",
+			"link": "ds_2.webp",
 			"cost": 0
 		},
 		{
 			"name": "Demon Slayer #3",
-			"link": "./assets/art/prizes/ds_3.webp",
+			"link": "ds_3.webp",
 			"cost": 0
 		},
 		{
 			"name": "Demon Slayer #4",
-			"link": "./assets/art/prizes/ds_4.webp",
+			"link": "ds_4.webp",
 			"cost": 0
 		},
 		{
 			"name": "Demon Slayer #5",
-			"link": "./assets/art/prizes/ds_5.webp",
+			"link": "ds_5.webp",
 			"cost": 0
 		},
 		{
 			"name": "Demon Slayer #6",
-			"link": "./assets/art/prizes/ds_6.webp",
+			"link": "ds_6.webp",
 			"cost": 0
-		}
-	],
-	"A Silent Voice": [
+		}],
+		"A Silent Voice": [
 		{
 			"name": "A Silent Voice #1",
-			"link": "./assets/art/prizes/asilentvoice_1.webp",
+			"link": "asilentvoice_1.webp",
 			"cost": 0
-		}
-	],
-	"Naruto": [
+		}],
+		"Naruto": [
 		{
 			"name": "Naruto #1",
-			"link": "./assets/art/prizes/naruto_1.webp",
+			"link": "naruto_1.webp",
 			"cost": 0
 		},
 		{
 			"name": "Naruto #2",
-			"link": "./assets/art/prizes/naruto_2.webp",
+			"link": "naruto_2.webp",
 			"cost": 0
 		},
 		{
 			"name": "Naruto #3",
-			"link": "./assets/art/prizes/naruto_3.webp",
+			"link": "naruto_3.webp",
 			"cost": 0
 		},
 		{
 			"name": "Naruto #4",
-			"link": "./assets/art/prizes/naruto_4.webp",
+			"link": "naruto_4.webp",
 			"cost": 0
 		},
 		{
 			"name": "Naruto #5",
-			"link": "./assets/art/prizes/naruto_5.webp",
+			"link": "naruto_5.webp",
 			"cost": 0
 		},
 		{
 			"name": "Naruto #6",
-			"link": "./assets/art/prizes/naruto_6.webp",
+			"link": "naruto_6.webp",
 			"cost": 0
 		},
 		{
 			"name": "Naruto #7",
-			"link": "./assets/art/prizes/naruto_7.webp",
+			"link": "naruto_7.webp",
 			"cost": 0
 		},
 		{
 			"name": "Naruto #8",
-			"link": "./assets/art/prizes/naruto_8.webp",
+			"link": "naruto_8.webp",
 			"cost": 0
-		}
-	],
-	"One Piece": [
+		}],
+		"One Piece": [
 		{
 			"name": "One Piece #1",
-			"link": "./assets/art/prizes/onepiece_1.webp",
+			"link": "onepiece_1.webp",
 			"cost": 0
 		},
 		{
 			"name": "One Piece #2",
-			"link": "./assets/art/prizes/onepiece_2.webp",
+			"link": "onepiece_2.webp",
 			"cost": 0
 		},
 		{
 			"name": "One Piece #3",
-			"link": "./assets/art/prizes/onepiece_3.webp",
+			"link": "onepiece_3.webp",
 			"cost": 0
 		},
 		{
 			"name": "One Piece #4",
-			"link": "./assets/art/prizes/onepiece_4.webp",
+			"link": "onepiece_4.webp",
 			"cost": 0
 		},
 		{
 			"name": "One Piece #5",
-			"link": "./assets/art/prizes/onepiece_5.webp",
+			"link": "onepiece_5.webp",
 			"cost": 0
 		},
 		{
 			"name": "One Piece #6",
-			"link": "./assets/art/prizes/onepiece_6.webp",
+			"link": "onepiece_6.webp",
 			"cost": 0
 		},
 		{
 			"name": "One Piece #7",
-			"link": "./assets/art/prizes/onepiece_7.webp",
+			"link": "onepiece_7.webp",
 			"cost": 0
 		},
 		{
 			"name": "One Piece #8",
-			"link": "./assets/art/prizes/onepiece_8.webp",
+			"link": "onepiece_8.webp",
 			"cost": 0
 		},
 		{
 			"name": "One Piece #9",
-			"link": "./assets/art/prizes/onepiece_9.webp",
+			"link": "onepiece_9.webp",
 			"cost": 0
-		}
-	],
-	"Tokyo Ghoul": [
+		}],
+		"Tokyo Ghoul": [
 		{
 			"name": "Tokyo Ghoul #1",
-			"link": "./assets/art/prizes/tokyoghoul_1.webp",
+			"link": "tokyoghoul_1.webp",
 			"cost": 0
 		},
 		{
 			"name": "Tokyo Ghoul #2",
-			"link": "./assets/art/prizes/tokyoghoul_2.webp",
+			"link": "tokyoghoul_2.webp",
 			"cost": 0
-		}
-	],
-	"Tokyo Revengers": [
+		}],
+		"Tokyo Revengers": [
 		{
 			"name": "Tokyo Revengers #1",
-			"link": "./assets/art/prizes/tokyorevengers_1.webp",
+			"link": "tokyorevengers_1.webp",
 			"cost": 0
 		},
 		{
 			"name": "Tokyo Revengers #2",
-			"link": "./assets/art/prizes/tokyorevengers_2.webp",
+			"link": "tokyorevengers_2.webp",
 			"cost": 0
 		},
 		{
 			"name": "Tokyo Revengers #3",
-			"link": "./assets/art/prizes/tokyorevengers_3.webp",
+			"link": "tokyorevengers_3.webp",
 			"cost": 0
 		},
 		{
 			"name": "Tokyo Revengers #4",
-			"link": "./assets/art/prizes/tokyorevengers_4.webp",
+			"link": "tokyorevengers_4.webp",
 			"cost": 0
-		}
-	],
-	"Your Name": [
+		}],
+		"Your Name": [
 		{
 			"name": "Your Name #1",
-			"link": "./assets/art/prizes/yourname_1.webp",
+			"link": "yourname_1.webp",
 			"cost": 0
-		}
-	],
-	"Haikyuu": [
+		}],
+		"Haikyuu": [
 		{
 			"name": "Haikyuu #1",
-			"link": "./assets/art/prizes/haikyuu_1.webp",
+			"link": "haikyuu_1.webp",
 			"cost": 0
 		},
 		{
 			"name": "Haikyuu #2",
-			"link": "./assets/art/prizes/haikyuu_2.webp",
+			"link": "haikyuu_2.webp",
 			"cost": 0
 		},
 		{
 			"name": "Haikyuu #3",
-			"link": "./assets/art/prizes/haikyuu_3.webp",
+			"link": "haikyuu_3.webp",
 			"cost": 0
 		},
 		{
 			"name": "Haikyuu #4",
-			"link": "./assets/art/prizes/haikyuu_4.webp",
+			"link": "haikyuu_4.webp",
 			"cost": 0
 		},
 		{
 			"name": "Haikyuu #5",
-			"link": "./assets/art/prizes/haikyuu_5.webp",
+			"link": "haikyuu_5.webp",
 			"cost": 0
-		}
-	],
-	"Hunter x Hunter": [
+		}],
+		"Hunter x Hunter": [
 		{
 			"name": "Hunter x Hunter #1",
-			"link": "./assets/art/prizes/hxh_1.webp",
+			"link": "hxh_1.webp",
 			"cost": 0
-		}
-	],
-	"Jujutsu Kaisen": [
+		}],
+		"Jujutsu Kaisen": [
 		{
 			"name": "Jujutsu Kaisen #1",
-			"link": "./assets/art/prizes/jjk_1.webp",
+			"link": "jjk_1.webp",
 			"cost": 0
 		},
 		{
 			"name": "Jujutsu Kaisen #2",
-			"link": "./assets/art/prizes/jjk_2.webp",
+			"link": "jjk_2.webp",
 			"cost": 0
 		},
 		{
 			"name": "Jujutsu Kaisen #3",
-			"link": "./assets/art/prizes/jjk_3.webp",
+			"link": "jjk_3.webp",
 			"cost": 0
 		},
 		{
 			"name": "Jujutsu Kaisen #4",
-			"link": "./assets/art/prizes/jjk_4.webp",
+			"link": "jjk_4.webp",
 			"cost": 0
 		},
 		{
 			"name": "Jujutsu Kaisen #5",
-			"link": "./assets/art/prizes/jjk_5.webp",
+			"link": "jjk_5.webp",
 			"cost": 0
 		},
 		{
 			"name": "Jujutsu Kaisen #6",
-			"link": "./assets/art/prizes/jjk_6.webp",
+			"link": "jjk_6.webp",
 			"cost": 0
 		},
 		{
 			"name": "Jujutsu Kaisen #7",
-			"link": "./assets/art/prizes/jjk_7.webp",
+			"link": "jjk_7.webp",
 			"cost": 0
 		},
 		{
 			"name": "Jujutsu Kaisen #8",
-			"link": "./assets/art/prizes/jjk_8.webp",
+			"link": "jjk_8.webp",
 			"cost": 0
 		},
 		{
 			"name": "Jujutsu Kaisen #9",
-			"link": "./assets/art/prizes/jjk_9.webp",
+			"link": "jjk_9.webp",
 			"cost": 0
-		}
-	],
-	"Jojo": [
+		}],
+		"Jojo": [
 		{
 			"name": "Jojo #1",
-			"link": "./assets/art/prizes/jojo_1.webp",
+			"link": "jojo_1.webp",
 			"cost": 0
 		},
 		{
 			"name": "Jojo #2",
-			"link": "./assets/art/prizes/jojo_2.webp",
+			"link": "jojo_2.webp",
 			"cost": 0
-		}
-	],
-	"My Hero Acadamia": [
+		}],
+		"My Hero Acadamia": [
 		{
 			"name": "My Hero Acadamia #1",
-			"link": "./assets/art/prizes/mha_1.webp",
+			"link": "mha_1.webp",
 			"cost": 0
 		},
 		{
 			"name": "My Hero Acadamia #2",
-			"link": "./assets/art/prizes/mha_2.webp",
+			"link": "mha_2.webp",
 			"cost": 0
 		},
 		{
 			"name": "My Hero Acadamia #3",
-			"link": "./assets/art/prizes/mha_3.webp",
+			"link": "mha_3.webp",
 			"cost": 0
 		},
 		{
 			"name": "My Hero Acadamia #4",
-			"link": "./assets/art/prizes/mha_4.webp",
+			"link": "mha_4.webp",
 			"cost": 0
-		}
-	],
-	"MOB": [
+		}],
+		"MOB": [
 		{
 			"name": "MOB #1",
-			"link": "./assets/art/prizes/mob_1.webp",
+			"link": "mob_1.webp",
 			"cost": 0
 		},
 		{
 			"name": "MOB #2",
-			"link": "./assets/art/prizes/mob_2.webp",
+			"link": "mob_2.webp",
 			"cost": 0
 		},
 		{
 			"name": "MOB #3",
-			"link": "./assets/art/prizes/mob_3.webp",
+			"link": "mob_3.webp",
 			"cost": 0
-		}
-	]
+		}]
+	},
+	"others": {
+		"Keychains": [{
+			"name": "Full Metal Alchemist",
+			"link": "keychain_full_metal_alchemist_2.webp"
+		},
+		{
+			"name": "Gintama",
+			"link": "keychain_gintama_1.webp"
+		},
+		{
+			"name": "Your Name",
+			"link": "keychain_your_name_3.webp"
+		}],
+		"Stickers": [{
+			"name": "Attack on Titan",
+			"link": "sticker_aot_16.webp"
+		},
+		{
+			"name": "Assassination Classroom",
+			"link": "sticker_assassination_classroom_21.webp"
+		},
+		{
+			"name": "My Hero Academia",
+			"link": "sticker_boku_no_hero_academia_18.webp"
+		},
+		{
+			"name": "Fairy Tail",
+			"link": "sticker_fairy_tail_20.webp"
+		},
+		{
+			"name": "Full Metal Alchemist",
+			"link": "sticker_full_metal_alchemist_19.webp"
+		},
+		{
+			"name": "Mushoku Tensei",
+			"link": "sticker_jobless_reincarnation_17.webp"
+		}],
+		"Badges": [{
+			"name": "Chainsaw Man",
+			"link": "badge_chainsawman_15.webp"
+		},
+		{
+			"name": "Haikyuu",
+			"link": "badge_haikyuu_6,7.webp"
+		},
+		{
+			"name": "Jujutsu Kaisen",
+			"link": "badge_jjk_12.webp"
+		},
+		{
+			"name": "Naruto",
+			"link": "badge_naruto_13.webp"
+		},
+		{
+			"name": "Naruto",
+			"link": "badge_naruto_4,5.webp"
+		},
+		{
+			"name": "One Piece",
+			"link": "badge_one_piece_14.webp"
+		},
+		{
+			"name": "Solo Leveling",
+			"link": "badge_solo_leveling_8,9.webp"
+		},
+		{
+			"name": "Your Name",
+			"link": "badge_your_name_10.webp"
+		},
+		{
+			"name": "Your Name",
+			"link": "badge_your_name_11.webp"
+		}]
+	}
 }
