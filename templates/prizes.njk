@@ -1,0 +1,55 @@
+{% extends '_base.njk' %}
+
+{% set thispage = 'events' %}
+{% set pagetitle = 'Prizes' %}
+
+{% block pagecontent %}
+	<h1>Prizes</h1><br/>
+	{% for name,list in prizes %}
+		<div class="name">
+			<h2>{{name}}</h2>
+			<br>
+			<div id="prizes-container">
+				{% for prize in list %}
+					<div class="prize-container">
+						<img class="prize-image" src="{{ prize.link }}" alt="{{ prize.name }}"/>
+						<div class="prize-name">{{ prize.name }}</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+		<br/><br/><br/>
+	{% endfor %}
+{% endblock %}
+
+{% block customcss %}
+	<style>
+		#prizes-container {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			justify-content: center;
+			margin: 0% 10%;
+			border-radius: 10px;
+			background-color: var(--tinted-gray);
+		}
+
+		.prize-container {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			margin: 10px;
+			border: 2px solid var(--light-gray);
+			border-radius: 10px;
+		}
+
+		.prize-image {
+			display: block;
+			min-width: 80px;
+			min-height: 80px;
+			max-height: 350px;
+			max-width: 260px;
+			margin: 5px;
+		}
+	</style>
+{% endblock %}

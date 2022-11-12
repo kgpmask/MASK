@@ -35,3 +35,34 @@ describe('Tools.fakeRandom', () => {
 	});
 	it('should maintain seed replication', () => secondRands[0] === secondRands[1] && secondRands[1] !== secondRands[2]);
 });
+
+describe('Tools.Levenshtein', () => {
+	const strs = [
+		'This is a test',
+		'This is at est',
+		'This is a test.',
+		'This is a tes',
+		'This is a tesy'
+	];
+	it('should work with indel', () => {
+		return assert(Tools.levenshtein(strs[0], strs[2]) === 1 && Tools.levenshtein(strs[0], strs[3]) === 1);
+	});
+	it('should work with switch', () => assert(Tools.levenshtein(strs[0], strs[4]) === 1));
+	it('should show swap as two operations', () => assert(Tools.levenshtein(strs[0], strs[1]) === 2));
+});
+
+describe('Tools.LevenshteinDamerau', () => {
+	const strs = [
+		'This is a test',
+		'This is at est',
+		'This is a test.',
+		'This is a tes',
+		'This is a tesy'
+	];
+	it('should work with indel', () => {
+		return assert(Tools.levenshteinDamerau(strs[0], strs[2]) === 3 && Tools.levenshteinDamerau(strs[0], strs[3]) === 3);
+	});
+	it('should work with switch', () => assert(Tools.levenshteinDamerau(strs[0], strs[4]) === 2));
+	// it('should work with swap', () => assert(Tools.levenshteinDamerau(strs[0], strs[1]) === 2));
+	// Swap is broken
+});

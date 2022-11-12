@@ -14,5 +14,5 @@ exports.init = () => {
 	}, (_, __, profile, cb) => dbh.createNewUser(profile).then(res => cb(null, res)).catch(err => cb(err))));
 
 	passport.serializeUser((user, cb) => cb(null, user._id));
-	passport.deserializeUser((id, cb) => dbh.logoutUser(id).then(res => cb(null, res)).catch(err => cb(err, false)));
+	passport.deserializeUser((id, cb) => dbh.getUser(id).then(res => cb(null, res)).catch(err => cb(err, false)));
 };

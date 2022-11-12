@@ -1,12 +1,17 @@
 const axios = require('axios');
+const { render } = require('nunjucks');
 const fs = require('fs').promises;
 const path = require('path');
 
+const checker = require('./checker.js');
 const login = require('./login.js');
 const dbh = PARAMS.userless ? {} : require('../database/database_handler.js');
 
+const handlerContext = {}; // Store cross-request context here
+
 if (!PARAMS.userless) login.init();
 
+// TODO Use actual express routing
 function handler (app, env) {
 
 	// Pre-routing
@@ -23,6 +28,11 @@ function handler (app, env) {
 			if (!Array.isArray(files)) files = [files];
 			return res.render(path.join(__dirname, '../templates', ...files), ctx);
 		};
+		next();
+	});
+
+	app.use((req, res, next) => {
+		res.error = err => res.status(400).send(err?.message || err);
 		next();
 	});
 
@@ -89,8 +99,7 @@ function handler (app, env) {
 			}
 			case 'logout': {
 				if (!loggedIn) return res.redirect('/login');
-				req.logout();
-				res.redirect('/');
+				req.logout(() => res.redirect('/'));
 				break;
 			}
 			case 'members': {
@@ -169,7 +178,7 @@ function handler (app, env) {
 			}
 			case 'profile': {
 				if (!loggedIn) return res.redirect('/');
-				dbh.getUser(req.user._id).then(user => {
+				dbh.getUserStats(req.user._id).then(user => {
 					return res.renderFile('profile.njk', {
 						name: req.user.name,
 						picture: req.user.picture,
@@ -214,18 +223,19 @@ function handler (app, env) {
 						});
 						const renderYears = Object.values(years);
 						renderYears.forEach(year => year.months = Object.values(year.months).reverse());
+						const now = Date.now();
+						const locked = Object.entries(QUIZZES).filter(
+							([_, quiz]) => new Date(quiz.unlock).getTime() > now
+						).map(k => k[0]);
 						if (!args[1]) {
-							const now = Date.now();
 							return res.renderFile('events.njk', {
 								quizzed,
 								years: renderYears.reverse(),
-								locked: Object.entries(QUIZZES).filter(
-									([_, quiz]) => new Date(quiz.unlock).getTime() > now
-								).map(k => k[0])
+								locked
 							});
 						}
 						const index = quizzes.indexOf(args[1]);
-						if (index === -1) return notFound('quizzes_404.njk', { years: renderYears.reverse() });
+						if (index === -1) return notFound('quizzes_404.njk', { years: renderYears.reverse(), quizzed, locked });
 						if (quizzed.includes(args[1])) return res.renderFile('quiz_attempted.njk');
 						const adjs = [quizzes[index - 1], quizzes[index + 1], quizzes[index]];
 						const QUIZ = QUIZZES[args[1]];
@@ -257,9 +267,72 @@ function handler (app, env) {
 							qAmt: questions.length,
 							id: args[1]
 						});
-					});
-				}).catch(err => console.log(err));
+					}).catch(res.error);
+				}).catch(res.error);
 				break;
+			}
+			case 'live': {
+				if (!loggedIn) {
+					if (!PARAMS.userless) req.session.returnTo = req.url;
+					return res.renderFile('quiz_login.njk');
+				}
+				dbh.getLiveQuiz().then(quiz => {
+					if (!quiz) return res.renderFile('quizzes_404.njk', { message: `The quiz hasn't started, yet!` });
+					const QUIZ = quiz.questions;
+					dbh.getUser(req.user._id).then(user => {
+						if (user.permissions?.includes("quizmaster")) {
+							res.renderFile("live_master.njk", {
+								quiz: JSON.stringify(QUIZ),
+								qAmt: QUIZ.length,
+								id: 'live'
+							});
+						} else {
+							res.renderFile("live_participant.njk", {
+								id: 'live',
+								userId: req.user._id
+							});
+						}
+					}).catch(res.error);
+				}).catch(res.error);
+				break;
+			}
+			case 'success': {
+				return res.renderFile('quiz_success.njk');
+			}
+			case 'live-results': {
+				const quizId = new Date().toISOString().slice(0, 10);
+				dbh.getAllLiveResults(quizId).then(RES => {
+					if (!RES) res.notFound();
+					const results = [];
+					RES.forEach(_RES => {
+						if (!results.find(res => res.id === _RES.userId)) results.push({
+							id: _RES.userId,
+							name: _RES.username,
+							points: 0
+						});
+						results.find(res => res.id === _RES.userId).points += _RES.points;
+					});
+					results.sort((a, b) => -(a.points > b.points));
+					let i = 1, j = 1;
+					for (let result = 0; result < results.length; result++) {
+						if (!result) results[result].rank = i;
+						else {
+							if (results[result].points === results[result - 1].points) j++;
+							else {
+								i += j;
+								j = 1;
+							}
+							results[result].rank = i;
+						}
+						delete results[result].id;
+					}
+					return res.renderFile('results.njk', { results });
+				}).catch(res.error);
+				break;
+			}
+			case 'prizes': {
+				const prizes = require('./rewards.json');
+				return res.renderFile('prizes.njk', { prizes });
 			}
 			case 'rebuild': {
 				env.loaders.forEach(loader => loader.cache = {});
@@ -275,8 +348,6 @@ function handler (app, env) {
 				res.renderFile('videos.njk', { youtubeVids, instaVids });
 				break;
 			}
-
-
 			case 'corsProxy': {
 				const base64Url = req.query.base64Url;
 				const url = atob(base64Url);
@@ -285,8 +356,6 @@ function handler (app, env) {
 				});
 				break;
 			}
-
-
 			default: {
 				while (!args[args.length - 1]) args.pop();
 				const isAsset = /\.(?:js|ico)$/.test(args[args.length - 1]);
@@ -301,17 +370,17 @@ function handler (app, env) {
 	function post (req, res) {
 		const args = req.url.split('/');
 		args.shift();
+		const loggedIn = res.locals.loggedIn = Boolean(req.user);
 
 		switch (args[0]) {
-			case "checker": {
-				const checker = require('./checker.js');
+			case 'checker': {
 				checker.compare(args[2], args[1], req.body).then(response => {
 					switch (response) {
-						case true: return res.send("correct");
-						case false: return res.send("");
+						case true: return res.send('correct');
+						case false: return res.send('');
 						default: return res.send(response);
 					}
-				}).catch(err => res.status(400).send(err.message));
+				}).catch(res.error);
 				break;
 			}
 			case 'quizzes': {
@@ -339,9 +408,70 @@ function handler (app, env) {
 					const answers = Array.from({ length: solutions.length }).map((_, i) => ~~req.body[`answer-${i + 1}`]);
 					const points = [answers.filter((ans, i) => ~~ans === ~~solutions[i]).length, solutions.length];
 					res.renderFile('quiz_success.njk', { score: points[0], totalScore: points[1] });
-					const dbh = require('../database/database_handler');
 					dbh.updateUserQuizRecord({ userId: req.user._id, quizId, score: points[0], time: Date.now() });
-				}).catch(err => console.log(err));
+				}).catch(res.error);
+				break;
+			}
+			case 'live': {
+				if (!handlerContext.liveQuiz) handlerContext.liveQuiz = {};
+				const LQ = handlerContext.liveQuiz;
+				if (!loggedIn) {
+					if (!PARAMS.userless) req.session.returnTo = req.url;
+					return res.renderFile('quiz_login.njk');
+				}
+				dbh.getLiveQuiz().then(quiz => {
+					const QUIZ = quiz.questions;
+					dbh.getUser(req.user._id).then(user => {
+						if (user.permissions?.includes('quizmaster')) {
+							const quizTime = { '10': 20, '5': 15, '3': 12 }[QUIZ[req.body.currentQ].points];
+							io.sockets.in('waiting-for-live-quiz').emit('question', {
+								currentQ: req.body.currentQ,
+								options: req.body.options,
+								time: quizTime
+							});
+							setTimeout(() => {
+								const type = QUIZ[req.body.currentQ].options.type;
+								const solution = QUIZ[req.body.currentQ].solution;
+								setTimeout(() => io.sockets.in('waiting-for-live-quiz').emit('answer', {
+									answer: Array.isArray(solution) ? solution.join(' / ') : solution,
+									type
+								}), 2000); // Emit the actual event 3s after
+							}, 1000 * (quizTime + 1)); // Extra second to account for lag
+							LQ.currentQ = req.body.currentQ;
+							LQ.endTime = Date.now() + 1000 * (quizTime + 1);
+							res.send('Done');
+						} else {
+							const { answer } = req.body;
+							if (answer === '') throw new Error('Missing answer');
+							const currentQ = LQ.currentQ ?? - 1;
+							const Q = QUIZ[currentQ];
+							if (!Q) throw new Error('currentQ out of bounds');
+							const timeLeft = Math.round((LQ.endTime - Date.now()) / 1000);
+							if (timeLeft < 0) throw new Error('Too late!');
+							dbh.getLiveResult(user._id, quiz.title, currentQ).then(alreadySubmitted => {
+								if (alreadySubmitted) throw new Error('Already attempted this question!');
+								checker.checkLiveQuiz(answer, Q.solution, Q.options.type, Q.points, timeLeft).then(({
+									points, timeLeft
+								}) => {
+									const result = points
+										? points < Q.points ? 'partial' : 'correct'
+										: 'incorrect';
+									const functionArgs = [user._id, quiz.title, currentQ, points, answer, timeLeft, result];
+									dbh.addLiveResult(...functionArgs).catch(res.error);
+									res.send('Submitted');
+								}).catch(res.error);
+							}).catch(res.error);
+						}
+					}).catch(res.error);
+				}).catch(res.error);
+				break;
+			}
+			case 'live-end': {
+				dbh.getUser(req.user._id).then(user => {
+					if (!user.permissions.find(perm => perm === 'quizmaster')) throw new Error('Access denied');
+					io.sockets.in('waiting-for-live-quiz').emit('end-quiz');
+					return res.send('Ended!');
+				}).catch(res.error);
 				break;
 			}
 			default:

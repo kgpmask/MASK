@@ -1,0 +1,203 @@
+{% extends "_base.njk" %}
+
+{% set thispage = 'live' %}
+{% set pagetitle = 'Live Quiz' %}
+
+{% block pagecontent %}
+	<div class="quiz-container">
+		<div class="countDown">
+			<div id="count"></div>
+			<br/>
+		</div>
+		<br/>
+		<div class="button-container">
+			<button onclick="prevQ()" class="rel prevQ" id="prevQ">Prev</button>
+			<button onclick="startQ()" class="rel startQ" id="startQ">Start</button>
+			<button onclick="nextQ()" class="rel nextQ" id="nextQ">Next</button>
+		</div>
+		<br/>
+		<div class="question-zone">
+			<br/>
+			<form id="quiz" class="quizzes">
+				<input type="hidden" name="quizId" value="{{ id }}"/>
+				{% for q in range(1, qAmt + 1) %}
+					<div id="qbox-{{ q }}" style="display:none">
+						<div>Question #{{ q }}</div>
+						<div id="question-{{ q }}"></div>
+						<br/>
+					</div>
+				{% endfor %}
+			</form>
+		</div>
+		<br/>
+		<div class="button-container">
+			<button class="rel" onclick="endQuiz()"> End Quiz </button>
+		</div>
+		<br/><br/><br/>
+	</div>
+	<br/><br/>
+{% endblock %}
+
+
+{% block customcss %}
+	<link rel="stylesheet" type="text/css" href="/assets/styles/icons.css"/>
+	<style>
+		.quiz-container {
+			width: 80%;
+			margin: auto;
+		}
+		button.rel {
+			width: 100px;
+			height: 30px;
+			background-color: var(--gray);
+			color: var(--off-white);
+			border: 2px solid var(--ghost-gray);
+			border-radius: 5px;
+			cursor: pointer;
+		}
+		button.rel:disabled {
+			background-color: var(--tinted-gray);
+			border: 1px solid var(--gray);
+			color: var(--ghost-gray);
+			cursor: default;
+		}
+		button.rel:not(:disabled):hover {
+			background-color: var(--middle-gray);
+		}
+		h3 {
+			margin: 10px;
+		}
+		.option {
+			margin: 8px;
+		}
+		.option-image {
+			margin: 10px;
+		}
+		.question-zone {
+			border-radius: 10px;
+			background: rgba(0, 0, 0, 0.5);
+			padding: 25px;
+		}
+		button.disabled {
+			width: 0px;
+			height: 0px;
+		}
+		button.enabled {
+			width: 100px;
+			height: 30px;
+			background-color: var(--gray);
+			color: var(--off-white);
+			border: 2px solid var(--ghost-gray);
+			border-radius: 5px;
+			cursor: pointer;
+		}
+		button.enabled:hover {
+			background-color: var(--middle-gray);
+		}
+		button.start {}
+	</style>
+{% endblock %}
+
+{% block customjs %}
+	<script>
+		axios.defaults.withCredentials = true;
+		axios.defaults.headers.common['X-CSRF-TOKEN'] = '{{ csrfToken }}';
+
+		let currentQ = 0;
+		let countLeftPerQs = 30;
+		let currentTimer;
+		let secondsLeft = 15;
+		let timeLeft = 0;
+		const startedQs = [];
+
+		let startButton, nextButton, prevButton;
+
+		const qAmt = {{ qAmt }};
+		const quiz = {{ quiz | safe }};
+		const qs = quiz.map(que => que.q);
+		function generateHTML (components) {
+			return components.map(component => {
+				switch (component.type) {
+					case 'image': return `<img src="${component.val}" class="option-image" style="${component.style || ''}"/>`;
+					case 'mp3': return `<audio src="${component.val}" type="audio/mpeg"> </audio>`;
+					case 'title': return `<h3>${component.val}</h3>`;
+					default: return component.val;
+				}
+			}).join('<br/>');
+		}
+		window.onload = () => {
+			startButton = document.getElementById('startQ');
+			nextButton = document.getElementById('nextQ');
+			prevButton = document.getElementById('prevQ');
+			qs.forEach((question, q) => {
+				document.getElementById(`question-${q + 1}`).innerHTML = generateHTML(question);
+			});
+			document.getElementById('qbox-1').style.display = 'block';
+			nextQ();
+			console.log(startButton);
+			prevQ();
+		}
+
+		function timer (time = 30) {
+			const c = currentQ;
+			timeLeft = time;
+			document.getElementById('count').style.display = 'block';
+			nextButton.disabled = true;
+			prevButton.disabled = true;
+			function decrement () {
+				document.getElementById('count').innerHTML = timeLeft;
+				timeLeft--;
+				if (timeLeft >= 0) {
+					setTimeout(decrement, 1000);
+				}
+				else {
+					nextButton.disabled = !(currentQ < qAmt - 1);
+					prevButton.disabled = !(currentQ > 0);
+					document.getElementById('count').style.display = 'none';
+				}
+			}
+			decrement();
+		}
+
+		function nextQ () {
+			document.getElementById(`qbox-${currentQ + 1}`).style.display = 'none';
+			if (currentQ < qAmt - 1) currentQ++;
+			document.getElementById(`qbox-${currentQ + 1}`).style.display = 'block';
+			nextButton.disabled = !(currentQ < qAmt - 1);
+			prevButton.disabled = false;
+			if (startedQs.includes(currentQ)) startButton.disabled = true;
+			else startButton.disabled = false;
+		}
+
+		function startQ () {
+			// TODO: Add the timer! [M]
+			// Make sure to disable navigation buttons while the timer is active
+			// Re-enable navigation buttons 2s AFTER timer ends
+			const quizTime = { '10': 20, '5': 15, '3': 12 }[quiz[currentQ].points];
+			startButton.disabled = true;
+			axios.post('/live', { options: quiz[currentQ].options, currentQ }).then(() => {
+				timer(quizTime);
+				startedQs.push(currentQ);
+			});
+		}
+
+		function prevQ () {
+			document.getElementById(`qbox-${currentQ + 1}`).style.display = 'none';
+			if (currentQ) currentQ--;
+			document.getElementById(`qbox-${currentQ + 1}`).style.display = 'block';
+			prevButton.disabled = !(currentQ > 0);
+			nextButton.disabled = false;
+			if (startedQs.includes(currentQ)) startButton.disabled = true;
+			else startButton.disabled = false;
+		}
+
+		function endQuiz () {
+			if (!confirm('End the quiz?')) return;
+			axios.post('/live-end').then(() => {
+				window.location.href = '/live-results';
+			});
+		}
+	</script>
+{% endblock %}
+
+{% set scripts = ['https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'] %}

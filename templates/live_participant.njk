@@ -1,0 +1,221 @@
+{% extends "_base.njk" %}
+
+{% set thispage = 'events' %}
+{% set pagetitle = 'Live Quiz' %}
+
+{% block pagecontent %}
+	<div class="quiz-container">
+		<div class="countDown">
+			<br/><div id="count"></div><br/>
+		</div>
+		<br/>
+		<div class="question-zone">
+			<br/>
+			<form id="quiz" class="quizzes" onsubmit="return false">
+				<input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
+				<input type="hidden" name="quizId" value="{{ id }}"/>
+				<div id="q-box" style="display: none">
+				<div id="question-no"></div>
+					<br/>
+					<div id="options-container" style="display: none">
+						{% for i in range(1, 5) %}
+							<div class="option">
+								<input type="radio" id="answer-{{ i }}" name="answer" value="{{ i }}"/>
+								<label id="option-{{ i }}" for="answer-{{ i }}">Option {{ i }}</label><br/>
+							</div>
+						{% endfor %}
+					</div>
+					<div id="answer-text-container" style="display: none">
+						<input type="text" name="answer" id='answer-text-field'>
+					</div>
+					<br/>
+					<button id="submit-button" class="rel" onclick="submitAnswer()">Submit</button>
+				</div>
+				<div id="message" style="display: none"><h3>Waiting for the quizmaster...</h3></div>
+			</form>
+		</div>
+	</div>
+	<br/><br/>
+{% endblock %}
+
+
+{% block customcss %}
+	<link rel="stylesheet" type="text/css" href="/assets/styles/icons.css"/>
+	<style>
+		.quiz-container {
+			width: 80%;
+			margin: auto;
+		}
+		button.rel {
+			width: 100px;
+			height: 30px;
+			background-color: var(--gray);
+			color: var(--off-white);
+			border: 2px solid var(--ghost-gray);
+			border-radius: 5px;
+			cursor: pointer;
+		}
+		button.rel:disabled {
+			background-color: var(--tinted-gray);
+			border: 1px solid var(--gray);
+			color: var(--ghost-gray);
+			cursor: default;
+		}
+		button.rel:not(:disabled):hover {
+			background-color: var(--middle-gray);
+		}
+		h3 {
+			margin: 10px;
+		}
+		.option {
+			margin: 8px;
+		}
+		.option-image {
+			margin: 10px;
+		}
+		.question-zone {
+			border-radius: 10px;
+			background: rgba(0, 0, 0, 0.5);
+			padding: 25px;
+		}
+	</style>
+{% endblock %}
+
+{% block customjs %}
+	<script>
+		axios.defaults.withCredentials = true;
+		axios.defaults.headers.common['X-CSRF-TOKEN'] = '{{ csrfToken }}';
+		const socket = io();
+
+		let currentQ = 0;
+		let state = 'waiting';
+		let timeLeft = 0;
+
+		let submittedAnswer = null;
+
+		const waitingMsg = "Waiting for the quizmaster...";
+
+		function generateHTML(components) {
+			return components.map(component => {
+				switch (component.type) {
+					case 'image': return `<img src="${component.val}" class="option-image" style="${component.style || ''}"/>`;
+					case 'mp3': return `<audio src="${component.val}" type="audio/mpeg"> </audio>`;
+					case 'title': return `<h3>${component.val}</h3>`;
+					case undefined: break;
+					default: return component.val;
+				}
+			}).filter(elm => elm).join('<br/>');
+		}
+
+		function showMessage (message) {
+			document.getElementById('q-box').style.display = 'none';
+			document.getElementById('message').style.display = 'block';
+			document.getElementById('message').innerHTML = message;
+		}
+
+		function timer (time) {
+			timeLeft = time;
+			function tick () {
+				if (state === 'waiting' || state === 'submitted') return;
+				document.getElementById('count').innerHTML = timeLeft--;
+				if (timeLeft >= 0) setTimeout(tick, 1000);
+				else {
+					switch (state) {
+
+						case 'running': {
+							state = 'time-out';
+							if (submitAnswer() === false) showMessage('Time is up!');
+							else showMessage('Time is up! Your response has been submitted.');
+							break;
+						}
+
+						default: {
+							state = 'waiting';
+							document.getElementById('count').innerHTML = '';
+							showMessage(waitingMsg);
+							break;
+						}
+					}
+				}
+			}
+			tick();
+		}
+
+		let answerText, optionsContainer, answerTextField;
+		window.addEventListener('load', () => {
+			answerText = document.getElementById('answer-text-container');
+			optionsContainer = document.getElementById('options-container');
+			answerTextField = document.getElementById('answer-text-field');
+		});
+
+		function showQuestion (options, time, currentQ) {
+			document.getElementById('question-no').innerHTML = `Question #${currentQ + 1}`;
+			document.getElementById('count').style.display = 'block';
+			document.getElementById('message').style.display = 'none';
+			document.getElementById('q-box').style.display = 'block';
+			if (options.type === 'mcq') {
+				// TODO: MCQ rendering is to be addressed [M]
+				for (let i = 1; i <= 4; i++) {
+					// if (!Array.isArray(options.value[i - 1])) options.value[i - 1] = Object.values(options.value[i - 1]);
+					document.getElementById(`option-${i}`).innerHTML = generateHTML([options.value[i - 1]]);
+				}
+				answerText.style.display = 'none';
+				optionsContainer.style.display = 'block';
+				answerTextField.required = false;
+			} else {
+				answerText.style.display = 'block';
+				optionsContainer.style.display = 'none';
+				answerTextField.required = true;
+			}
+			state = 'running';
+			timer(time);
+		}
+		socket.on('question', req => {
+			currentQ = req.currentQ;
+			showQuestion(req.options, req.time, currentQ);
+			submittedAnswer = null;
+		});
+
+		socket.on('answer', req => {
+			state = 'showing-answer';
+			let html = `The correct answer was ${req.type === 'mcq' ? '_ABCDEF'.charAt(req.answer?.[0] ?? req.answer) : req.answer}.`;
+			if (submittedAnswer !== null) {
+				html += `<br/>Your submitted answer was ${req.type === 'mcq' ? '_ABCDEF'.charAt(submittedAnswer) : submittedAnswer}.`;
+			} else html += `<br/>You did not submit an answer for this question.`;
+			showMessage(html);
+			timer(5);
+		});
+
+		socket.on('end-quiz', () => {
+			window.location.href = '/live-results';
+		});
+
+		window.addEventListener('load', () => showMessage(waitingMsg));
+
+		function submitAnswer (timeout = false) {
+			let answer = null;
+			if (answerText.style.display === 'block') {
+				answer = document.getElementById('answer-text-field').value;
+				if (!answer) answer = null;
+				else document.getElementById('answer-text-field').value = '';
+			} else {
+				for (let i = 1; i <= 4; i++) {
+					if (document.getElementById(`answer-${i}`).checked) { 
+						document.getElementById(`answer-${i}`).checked = false;
+						answer = document.getElementById(`answer-${i}`).value;
+						break;
+					}
+				}
+			}
+			if (answer === null) return false;
+			document.getElementById('count').style.display = 'none';
+			if (timeout) return;
+			state = 'submitted';
+			showMessage('Your response has been submitted.');
+			axios.post('/live', { answer }).then(() => submittedAnswer = answer).catch(() => {});
+			return true;
+		}
+	</script>
+{% endblock %}
+
+{% set scripts = ['https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js', '/socket.io/socket.io.js'] %}

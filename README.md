@@ -14,7 +14,7 @@ Ensure that pull requests pass tests (`npm test` for both lint and mocha tests).
 
 ## Running the Server
 
-This server requires Node.js v14.0+ to run, and all tests are performed on v14. Please upgrade to Node v14 or higher if you haven't already done so.
+This server requires Node.js v16.0+ to run, and all tests are performed on v14. Please upgrade to Node v16 or higher if you haven't already done so.
 
 There are multiple ways to run the server. The vast majority of the time, you will be running it in dev mode - the command for this is `npm run dev`. If you wish to run in regular mode, the command is `npm start`. Note that the server run in both cases will be identical - the only difference is that dev mode will automatically refresh changes made to the server code and/or pages, while regular mode will not. In addition, you can add flags to customize the operation of the server. These are: 
 
