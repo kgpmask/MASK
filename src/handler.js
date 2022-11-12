@@ -431,9 +431,9 @@ function handler (app, env) {
 							});
 							setTimeout(() => {
 								const type = QUIZ[req.body.currentQ].options.type;
-								const answer = QUIZ[req.body.currentQ].solution;
+								const solution = QUIZ[req.body.currentQ].solution;
 								setTimeout(() => io.sockets.in('waiting-for-live-quiz').emit('answer', {
-									answer,
+									answer: Array.isArray(solution) ? solution.join(' / ') : solution,
 									type
 								}), 2000); // Emit the actual event 3s after
 							}, 1000 * (quizTime + 1)); // Extra second to account for lag
