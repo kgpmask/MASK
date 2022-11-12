@@ -300,7 +300,7 @@ function handler (app, env) {
 				return res.renderFile('quiz_success.njk');
 			}
 			case 'live-results': {
-				const quizId = '2022-11-09' || new Date().toISOString().slice(0, 10);
+				const quizId = new Date().toISOString().slice(0, 10);
 				dbh.getAllLiveResults(quizId).then(RES => {
 					if (!RES) res.notFound();
 					const results = [];
