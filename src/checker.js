@@ -47,7 +47,7 @@ exports.checkLiveQuiz = function check (answer, solutions, questionType, basePoi
 					break;
 				}
 				case 'text': {
-					if (Tools.levenshtein(answer, solution) > 5) points = 0;
+					if (Tools.levenshtein(Tools.toID(answer), Tools.toID(solution)) > 5) points = 0;
 					break;
 				}
 				case 'number': {
