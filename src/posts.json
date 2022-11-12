@@ -1,4 +1,10 @@
 [{
+	"name": "<b>Live Quiz Results</b>",
+	"link": "/live-results",
+	"type": "letter",
+	"date": "12th Nov, 2022",
+	"hype": true
+},{
 	"name": "<b>Live Quiz, Saturday!</b>",
 	"link": "/events",
 	"type": "letter",
