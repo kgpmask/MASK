@@ -82,6 +82,20 @@ a:hover {
 	color: inherit;
 }
 
+.button {
+	border: 2px solid var(--off-white);
+	border-radius: 9px;
+	background: var(--tinted-gray);
+	padding: 20px 30px;
+	color: var(--white);
+	transition: 0.4s;
+	cursor: pointer;
+	font-size: 1.1em;
+}
+.button:hover {
+	background-color: var(--middle-gray);
+}
+
 /********************************************************/
 
 footer {

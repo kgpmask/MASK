@@ -3,6 +3,9 @@
 {% set thispage = 'events' %}
 {% set pagetitle = 'Results' %}
 {% block pagecontent %}
+	<br/><br/>
+	<a href="/prizes"><button class="button">Prizes!</button></a>
+	<br/><br/>
 	<h1>Leaderboard</h1>
 	<div class = "table">
 		<table style="width:70%">
@@ -24,10 +27,10 @@
 {% endblock %}
 {% block customcss %}
 	<style>
-		table{
+		table {
 			margin-left: 15%;
 		}
-		th,td{
+		th, td {
 			border: 1px solid white;
 			border-radius: 7px;
 			background-color: black;
