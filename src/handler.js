@@ -336,8 +336,7 @@ function handler (app, env) {
 			}
 			case 'rebuild': {
 				env.loaders.forEach(loader => loader.cache = {});
-				['./members.json', './posts.json'].forEach(cache => delete require.cache[require.resolve(cache)]);
-				delete require.cache[require.resolve('./rewards.json')];
+				['./members.json', './posts.json', './rewards.json'].forEach(cache => delete require.cache[require.resolve(cache)]);
 				res.renderFile('rebuild.njk');
 				break;
 			}
