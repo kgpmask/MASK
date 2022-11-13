@@ -1,6 +1,5 @@
 const User = require('./schemas/User');
 const Quiz = require('./schemas/Quiz');
-const Questions = require('./schemas/Questions');
 const { LiveQuiz, LiveResult } = require('./schemas/LiveQuiz');
 
 // Handle newly registered user or normal login
@@ -27,31 +26,38 @@ function getAllUsers (id) {
 
 // Add new record to database
 async function updateUserQuizRecord (stats) { // {userId, quizId, time, score}
-	const user = await Quiz.findOne({ userId: stats.userId });
-	const record = user || new Quiz({ userId: stats.userId, points: 0, quizData: {} });
-	if (!record.quizData) record.quizData = {};
+	const user = await Quiz.UserInfo.findOne({ userId: stats.userId });
+	const userName = (await getUser(stats.userId))?.name;
+	const record = user || new Quiz({ userId: stats.userId, userName, points: 0, quizData: [] });
+	if (!record.quizData) record.quizData = [];
 	const key = stats.quizId;
 	if (!key) return record.save();
-	if (record[key]) return record;
-	record.points += stats.score;
-	record.quizData[key] = { score: stats.score, time: stats.time };
+	if (record.quizData.find(elm => elm.quizId === key)) return record;
+	else {
+		record.quizData.push({
+			quizId: key,
+			points: stats.score,
+			time: stats.time
+		});
+		record.points += stats.score;
+	}
 	return record.save();
 }
 
 // User statistics
 async function getUserStats (userId) {
-	const user = await Quiz.findOne({ userId });
+	const user = await Quiz.UserInfo.findOne({ userId });
 	if (user) return user;
 	else return updateUserQuizRecord({ userId });
 }
 
 function getQuizzes () {
-	return Questions.find().lean();
+	return Quiz.Questions.find().lean();
 }
 
 async function getLiveQuiz () {
 	const date = new Date().toISOString().slice(0, 10);
-	const quiz = await LiveQuiz.findOne({ title: date });
+	const quiz = await LiveQuiz.UserInfo.findOne({ title: date });
 	if (quiz) return quiz.toObject();
 }
 

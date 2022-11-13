@@ -200,8 +200,9 @@ function handler (app, env) {
 					if (!PARAMS.userless) req.session.returnTo = req.url;
 					return res.renderFile('quiz_login.njk');
 				}
-				dbh.getUser(req.user._id).then(user => {
-					const quizzed = Object.keys(user.quizData || {});
+				dbh.getUserStats(req.user._id).then(user => {
+					console.log(user.quizData);
+					const quizzed = user.quizData.map(quiz => quiz.quizId) ?? [];
 					dbh.getQuizzes().then(qzs => {
 						const QUIZZES = {};
 						qzs.forEach(qz => QUIZZES[qz.unlock.slice(0, 10)] = qz); // TODO Mokshith: Add a quizId field
