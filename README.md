@@ -26,21 +26,22 @@ There are multiple ways to run the server. The vast majority of the time, you wi
 
 In order to start the server, you will require a credentials.json file - contact your WebDev Team Head for this file, and do NOT share it. The only exception to this is the userless flag - it is recommended to use `npm run dev userless` (or `npm run du`) for any page that does not involve a logged-in user.
 
-Note: Since the college firewall is batshit terrible, you will NOT be able to connect to a remote MongoDB server for user-based testing while on campus. In this case, you will have to leverage either the planned user file, a local MongoDB server, or a VPN that allows you access.
+Note (edited): You can now connect to the database even while on WiFi/LAN without a VPN. The domain name has been whitelisted. The IP address has NOT been whitelisted for direct http/https connections.
 
 
 ## Guidelines
 
-Tabs for indentation, basic JS style guidelines. If you have any questions, post 'em in the WebDev channel.
+Tabs for indentation, basic JS style guidelines (check `./eslintrc.json` for the full list). If you have any questions, post 'em in the WebDev channel. If you aren't a member of the society but have queries/reports/suggestions, feel free to use the Issues / Discussions pages on the repository.
 
 
 ## Code
 
 We'll be using nunjucks for rendering pages.
+The database is on a MongoDB server.
 NGINX has been used for server-side traffic direction and pointing.
 Serving is done via express.
 Mocha is used for testing, and ESLint for linting JS.
-SASS is used for CSS, too.
+SASS is used for CSS.
 
 
 ## Templates
@@ -98,8 +99,8 @@ Take a look at existing articles for the various classes and where they're used.
 Credits:
 
 - <a href="https://github.com/PartMan7" target="_blank">Parth Mane</a> (Lead)  <br />
-- <a href="https://github.com/anjaniit23" target="_blank">Anjani Kumar</a> (Contributor)  <br />
 - <a href="https://github.com/Goose-Of-War" target="_blank">Vidunram A R </a> (Contributor)  <br />
+- <a href="https://github.com/anjaniit23" target="_blank">Anjani Kumar</a> (Contributor)  <br />
 - <a href="https://github.com/mokshith25" target="_blank">Venkatsai Mokshith</a> (Contributor)  <br />
 - <a href="https://github.com/ayush4ise" target="_blank">Ayush Parmar</a> (Contributor)  <br />
 - <a href="https://github.com/lurkingryuu" target="_blank">Karthikeya Y M</a> (Contributor)  <br />
