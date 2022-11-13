@@ -96,7 +96,7 @@ The default newsletter template is:
 Take a look at existing articles for the various classes and where they're used.
 
 
-Credits:
+### Credits:
 
 - <a href="https://github.com/PartMan7" target="_blank">Parth Mane</a> (Lead)  <br />
 - <a href="https://github.com/Goose-Of-War" target="_blank">Vidunram A R </a> (Contributor)  <br />
