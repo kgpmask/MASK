@@ -13,7 +13,7 @@ global.passport = require('passport');
 const path = require('path');
 
 global.Tools = require('./tools.js');
-const DB = require("../database/database.js");
+const DB = require('../database/database.js');
 const { PORT } = require('./config.js');
 const appHandler = require('./handler.js');
 const MongoStore = require('connect-mongo');
@@ -50,8 +50,7 @@ if (!PARAMS.userless) {
 appHandler(app, env);
 
 const server = require('http').createServer(app);
-const io = socketio.listen(server);
-global.io = io;
+global.io = socketio.listen(server);
 
 require('./socket.js');
 

@@ -1,6 +1,4 @@
 /node_modules
-/src/vapid.json
-*.env
 credentials.json
 
 # Testing template, test changes here
