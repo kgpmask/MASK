@@ -14,7 +14,7 @@ Ensure that pull requests pass tests (`npm test` for both lint and mocha tests).
 
 ## Running the Server
 
-This server requires Node.js v16.0+ to run, and all tests are performed on v14. Please upgrade to Node v16 or higher if you haven't already done so.
+This server requires Node.js v16.0+ to run, and all tests are performed on v16. Please upgrade to Node v16 or higher if you haven't already done so.
 
 There are multiple ways to run the server. The vast majority of the time, you will be running it in dev mode - the command for this is `npm run dev`. If you wish to run in regular mode, the command is `npm start`. Note that the server run in both cases will be identical - the only difference is that dev mode will automatically refresh changes made to the server code and/or pages, while regular mode will not. In addition, you can add flags to customize the operation of the server. These are: 
 
@@ -26,21 +26,22 @@ There are multiple ways to run the server. The vast majority of the time, you wi
 
 In order to start the server, you will require a credentials.json file - contact your WebDev Team Head for this file, and do NOT share it. The only exception to this is the userless flag - it is recommended to use `npm run dev userless` (or `npm run du`) for any page that does not involve a logged-in user.
 
-Note: Since the college firewall is batshit terrible, you will NOT be able to connect to a remote MongoDB server for user-based testing while on campus. In this case, you will have to leverage either the planned user file, a local MongoDB server, or a VPN that allows you access.
+Note (edited): You can now connect to the database even while on WiFi/LAN without a VPN. The domain name has been whitelisted. The IP address has NOT been whitelisted for direct http/https connections.
 
 
 ## Guidelines
 
-Tabs for indentation, basic JS style guidelines. If you have any questions, post 'em in the WebDev channel.
+Tabs for indentation, basic JS style guidelines (check `./eslintrc.json` for the full list). If you have any questions, post 'em in the WebDev channel. If you aren't a member of the society but have queries/reports/suggestions, feel free to use the Issues / Discussions pages on the repository.
 
 
 ## Code
 
 We'll be using nunjucks for rendering pages.
+The database is on a MongoDB server.
 NGINX has been used for server-side traffic direction and pointing.
 Serving is done via express.
 Mocha is used for testing, and ESLint for linting JS.
-SASS is used for CSS, too.
+SASS is used for CSS.
 
 
 ## Templates
@@ -95,11 +96,11 @@ The default newsletter template is:
 Take a look at existing articles for the various classes and where they're used.
 
 
-Credits:
+### Credits:
 
 - <a href="https://github.com/PartMan7" target="_blank">Parth Mane</a> (Lead)  <br />
-- <a href="https://github.com/anjaniit23" target="_blank">Anjani Kumar</a> (Contributor)  <br />
 - <a href="https://github.com/Goose-Of-War" target="_blank">Vidunram A R </a> (Contributor)  <br />
+- <a href="https://github.com/anjaniit23" target="_blank">Anjani Kumar</a> (Contributor)  <br />
 - <a href="https://github.com/mokshith25" target="_blank">Venkatsai Mokshith</a> (Contributor)  <br />
 - <a href="https://github.com/ayush4ise" target="_blank">Ayush Parmar</a> (Contributor)  <br />
 - <a href="https://github.com/lurkingryuu" target="_blank">Karthikeya Y M</a> (Contributor)  <br />
