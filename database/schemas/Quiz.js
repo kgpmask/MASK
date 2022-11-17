@@ -42,7 +42,7 @@ const questionsSchema = new mongoose.Schema({
 });
 
 questionsSchema.set('collection', 'quizquestions');
-userQuizDataSchema.set('collection', 'quizData');
+userQuizDataSchema.set('collection', 'quizdata');
 
 module.exports = {
 	UserInfo: mongoose.model('UserQuizData', userQuizDataSchema),
