@@ -4,8 +4,8 @@
 {% set pagetitle = 'Terms of Use' %}
 
 {% block pagecontent %}
-	<h1>Terms and Conditions</h1>
-
+	<h1 style="text-align: center">Terms and Conditions</h1>
+	<div class=text>
 	<p>Welcome to MASK!</p><br/>
 
 	<p>These terms and conditions outline the rules and regulations for the use of <a href="https://kgpmask.club/" target="_blank" rel="noopener noreferrer">https://kgpmask.club/</a>'s Website, located at <a href="https://kgpmask.club/" target="_blank" rel="noopener noreferrer">https://kgpmask.club/</a>.</p><br/>
@@ -121,13 +121,14 @@
 	<br/><br/>
 	<em>Last edited on: 26-11-2022</em>
 	<br/><br/>
+	</div>
 {% endblock %}
 
 {% block customcss %}
 	<style>
-		body {
+		div#pagecontent {
 			text-align: justify;
-			padding: 0 100px;
+			{# padding: 0 100px; #}
 		}
 	</style>
 {% endblock %}
