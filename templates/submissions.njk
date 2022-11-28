@@ -5,7 +5,7 @@
 
 {% block pagecontent %}
 	<!--h1 id="formpre" style="text-align: center;">Submit your content here!</h1-->
-	<script src="/GoogleFormStyler.js" form="https://docs.google.com/forms/d/e/1FAIpQLSfwnkz0L_oTyHPgzCtWg9xusAmiQbG4AjMA2zCRjsRu0959cw/viewform?embedded=true&lang=en"></script>
+	<script src="/assets/GoogleFormStyler.js" form="https://docs.google.com/forms/d/e/1FAIpQLSfwnkz0L_oTyHPgzCtWg9xusAmiQbG4AjMA2zCRjsRu0959cw/viewform?embedded=true&lang=en"></script>
 	<style>
 		a[href] {
 			color: var(--white) !important;
@@ -34,12 +34,29 @@
 		/*Form name class*/
 		.m7w29c {
 			background-color: transparent;
+			border: 1px solid var(--ghost-gray);
 			color: var(--white) !important;
 		}
+		.md0UAd {
+			color: #ae2f27 !important;
+		}
 
+		.TYUeKb {
+			color: #4c8adb !important;
+		}
+
+		.vnumgf {
+			color: #c8463d !important;
+		}
+
+		.RdH0ib .zHQkBf, .RdH0ib .tL9Q4c {
+			border-radius: 5px !important;
+		}
+		
 		/*geS5n is the question div*/
 		.geS5n {
-			background-color: var(--black) !important;
+			border: 1px solid var(--ghost-gray);
+			background-color: transparent !important;
 		}
 
 		/*M7eMe is the question in the div above, the other 3 are divs in the form heading*/
@@ -104,6 +121,7 @@
 			const parent = form.parentNode;
 			form.remove();
 			const submitted = document.createElement('div');
+			const home = document.createElement('div');
 			submitted.setAttribute('class', 'text');
 			submitted.innerHTML = '<h1>Thank you for submitting! We\'ll get back to you soon.</h1>';
 			parent.appendChild(submitted);
