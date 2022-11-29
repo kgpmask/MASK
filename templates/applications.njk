@@ -107,6 +107,7 @@
 			submitted.setAttribute('class', 'text');
 			submitted.innerHTML = '<h1>Thank you for submitting! We\'ll get back to you soon.</h1>';
 			parent.appendChild(submitted);
+			axios.post('/applied');
 		}
 		fixFavicon();
 	</script>

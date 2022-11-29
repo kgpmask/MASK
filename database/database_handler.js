@@ -2,6 +2,7 @@ const User = require('./schemas/User');
 const Quiz = require('./schemas/Quiz');
 const Questions = require('./schemas/Questions');
 const { LiveQuiz, LiveResult } = require('./schemas/LiveQuiz');
+const ApplicantList = require('./schemas/Applicants');
 
 // Handle newly registered user or normal login
 async function createNewUser (profile) {
@@ -81,6 +82,16 @@ async function addLiveResult (userId, quizId, currentQ, points, answer, timeLeft
 	return results.toObject();
 }
 
+function getApplicants () {
+	return ApplicantList.findOne();
+}
+
+async function addApplicant (applicant) {
+	const applicantList = await ApplicantList.findOne() ?? new ApplicantList({ records: [] });
+	applicantList.records.push(applicant);
+	return applicantList.save();
+}
+
 module.exports = {
 	createNewUser,
 	getUser,
@@ -91,5 +102,7 @@ module.exports = {
 	getLiveQuiz,
 	getLiveResult,
 	getAllLiveResults,
-	addLiveResult
+	addLiveResult,
+	getApplicants,
+	addApplicant
 };

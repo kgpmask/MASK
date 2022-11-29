@@ -72,6 +72,23 @@ function handler (app, env) {
 				res.renderFile('home.njk', { posts, vids, art });
 				break;
 			}
+			case 'apply': {
+				if (!loggedIn) {
+					if (!PARAMS.userless) req.session.returnTo = req.url;
+					return res.renderFile('quiz_login.njk');
+				}
+				dbh.getApplicants().then(result => {
+					console.log(result);
+					if (!result || result?.records.find(record => record._id === req.user._id)) {
+						console.log("Yay till here");
+						res.renderFile('applications.njk');
+					} else {
+						// TODO: Set for already submitted
+						res.redirect('/');
+					}
+				});
+				break;
+			}
 			case 'art': {
 				const art = require('./posts.json').filter(post => post.type === 'art');
 				res.renderFile('art.njk', { art });
@@ -372,6 +389,11 @@ function handler (app, env) {
 		const loggedIn = res.locals.loggedIn = Boolean(req.user);
 
 		switch (args[0]) {
+			case 'applied': {
+				const applicant = { _id, user } = req.user;
+				dbh.addApplicant(applicant);
+				break;
+			}
 			case 'checker': {
 				checker.compare(args[2], args[1], req.body).then(response => {
 					switch (response) {
