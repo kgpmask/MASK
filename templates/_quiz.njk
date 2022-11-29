@@ -23,8 +23,11 @@
 						<br/>
 						{% for i in range(1, 5) %}
 							<div class="option">
+							<fieldset>
+    							<legend>What is the Correct Answer? (keyboard supported: [1/2/3/4])</legend>
 								<input type="radio" id="answer-{{ q }}-{{ i }}" name="answer-{{ q }}" value="{{ i }}"/>
 								<label id="option-{{ q }}-{{ i }}" for="answer-{{ q }}-{{ i }}"></label><br/>
+							</fieldset>
 							</div>
 						{% endfor %}
 					</div>
@@ -106,6 +109,21 @@
 			});
 			startQuiz();
 		}
+		window.addEventListener("keydown", function(event) {
+			n = event.keyCode - 48;
+			if(0< n <5){
+				document.getElementById(`option-${qs[n-1] + 1}-${n}`).click()
+				event.preventde
+				}
+		
+			else if(event.keyCode == 27){
+				document.getElementById('quiz').reset()
+			}
+			else if(event.keyCode == 13){
+				nextQ()
+			}
+			}
+		);
 		function timer () {
 			const c = currentQ;
 			document.getElementById(`qbox-${c + 1}`).style.display = 'block';
