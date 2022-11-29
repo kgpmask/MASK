@@ -19,17 +19,16 @@
 				<input type="hidden" name="quizId" value="{{ id }}"/>
 				{% for q in range(1, qAmt + 1) %}
 					<div id="qbox-{{ q }}" style="display:none">
+					<fieldset><legend>Ques [{{ q }}]</legend><br/>
 						<div id="question-{{ q }}"></div>
 						<br/>
-						{% for i in range(1, 5) %}
-							<div class="option">
-							<fieldset>
-    							<legend>What is the Correct Answer? (keyboard supported: [1/2/3/4])</legend>
-								<input type="radio" id="answer-{{ q }}-{{ i }}" name="answer-{{ q }}" value="{{ i }}"/>
-								<label id="option-{{ q }}-{{ i }}" for="answer-{{ q }}-{{ i }}"></label><br/>
-							</fieldset>
-							</div>
-						{% endfor %}
+							{% for i in range(1, 5) %}
+								<div class="option">
+									<input type="radio" id="answer-{{ q }}-{{ i }}" name="answer-{{ q }}" value="{{ i }}"/>
+									<label id="option-{{ q }}-{{ i }}" for="answer-{{ q }}-{{ i }}"></label><br/>
+								</div>
+							{% endfor %}
+					<br/></fieldset>
 					</div>
 				{% endfor %}
 			</form>
@@ -109,26 +108,45 @@
 			});
 			startQuiz();
 		}
+
+		function preventDefault(event){
+			event.stopImmediatePropagation();
+			event.preventDefault();
+			event.stopPropagation();
+		}
+		// Support for Keyboard input for MCQ type Quiz Questions
 		window.addEventListener("keydown", function(event) {
-			n = event.keyCode - 48;
-			if(0< n <5){
-				document.getElementById(`option-${qs[n-1] + 1}-${n}`).click()
-				event.preventde
-				}
-		
-			else if(event.keyCode == 27){
-				document.getElementById('quiz').reset()
+			e = 0;
+			n = event.keyCode;
+			keys=[48,64,96]; //[48: 1-4, 64 A-D, 96:NUM1-4]
+			keys.forEach(k=>{
+			if(k < n && n < k+5){e=n-k;return;}});
+			if(e){
+				//Select the corresponding option
+				document.getElementById(`option-${currentQ + 1}-${e}`).click();
+				preventDefault(event);
 			}
-			else if(event.keyCode == 13){
-				nextQ()
+
+			// NOTE: This feature needs modification
+			// 27 is keyCode for ESC key
+			//else if(event.keyCode == 27){
+				// Unselects the options
+			//	document.getElementById('quiz').reset();
+			//	event.preventDefault();
+			//}
+			// For ENTER
+			else if(n == 13){
+				// TODO: Give warning if empty
+				nextQ();
+				preventDefault(event);
 			}
-			}
-		);
+			
+		});
 		function timer () {
 			const c = currentQ;
 			document.getElementById(`qbox-${c + 1}`).style.display = 'block';
 			if (c) document.getElementById(`qbox-${c}`).style.display = 'none';
-			timeVal = qs[c].time || 30;
+			timeVal = qs[c].time || countLeftPerQs; // removed absolute value
 			let cancel = false;
 			function endTimer () {
 				cancel = true;
@@ -152,6 +170,10 @@
 		}
 		function nextQ () {
 			if (currentTimer) currentTimer();
+			if (timeVal) {
+
+
+			}
 			currentQ++;
 			const c = currentQ;
 			if (c >= qAmt) {
