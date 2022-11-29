@@ -14,6 +14,7 @@
 			<form id="quiz" class="quizzes" onsubmit="return false">
 				<input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
 				<input type="hidden" name="quizId" value="{{ id }}"/>
+				<fieldset><br/>
 				<div id="q-box" style="display: none">
 				<div id="question-no"></div>
 					<br/>
@@ -32,6 +33,8 @@
 					<button id="submit-button" class="rel" onclick="submitAnswer()">Submit</button>
 				</div>
 				<div id="message" style="display: none"><h3>Waiting for the quizmaster...</h3></div>
+				<br/></fieldset>
+
 			</form>
 		</div>
 	</div>
@@ -191,7 +194,33 @@
 		});
 
 		window.addEventListener('load', () => showMessage(waitingMsg));
+		window.addEventListener("keydown", function(event) {
+			e = 0;
+			n = event.keyCode;
+			keys=[48,64,96]; //[48: 1-4, 64 A-D, 96:NUM1-4]
+			keys.forEach(k=>{
+			if(k < n && n < k+5){e=n-k;return;}});
+			if(e){
+				//Select the corresponding option
+				document.getElementById(`option-${e}`).click();
+				preventDefault(event);
+			}
 
+			// NOTE: This feature needs modification
+			// 27 is keyCode for ESC key
+			//else if(event.keyCode == 27){
+				// Unselects the options
+			//	document.getElementById('quiz').reset();
+			//	event.preventDefault();
+			//}
+			// For ENTER
+			else if(n == 13){
+				// TODO: Give warning if empty
+				nextQ();
+				preventDefault(event);
+			}
+			
+		});
 		function submitAnswer (timeout = false) {
 			let answer = null;
 			if (answerText.style.display === 'block') {

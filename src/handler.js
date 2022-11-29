@@ -261,7 +261,7 @@ function handler (app, env) {
 							}));
 						});
 						shuffle(questions);
-						return res.renderFile('_quiz.njk', {
+						return res.renderFile('static_quiz.njk', {
 							adjs,
 							questions: JSON.stringify(questions),
 							qAmt: questions.length,

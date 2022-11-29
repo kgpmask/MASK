@@ -115,35 +115,10 @@
 			event.stopPropagation();
 		}
 		// Support for Keyboard input for MCQ type Quiz Questions
-		window.addEventListener("keydown", function(event) {
-			e = 0;
-			n = event.keyCode;
-			keys=[48,64,96]; //[48: 1-4, 64 A-D, 96:NUM1-4]
-			keys.forEach(k=>{
-			if(k < n && n < k+5){e=n-k;return;}});
-			if(e){
-				//Select the corresponding option
-				document.getElementById(`option-${currentQ + 1}-${e}`).click();
-				preventDefault(event);
-			}
-
-			// NOTE: This feature needs modification
-			// 27 is keyCode for ESC key
-			//else if(event.keyCode == 27){
-				// Unselects the options
-			//	document.getElementById('quiz').reset();
-			//	event.preventDefault();
-			//}
-			// For ENTER
-			else if(n == 13){
-				// TODO: Give warning if empty
-				nextQ();
-				preventDefault(event);
-			}
-			
-		});
+		
 		function timer () {
 			const c = currentQ;
+			
 			document.getElementById(`qbox-${c + 1}`).style.display = 'block';
 			if (c) document.getElementById(`qbox-${c}`).style.display = 'none';
 			timeVal = qs[c].time || countLeftPerQs; // removed absolute value
@@ -170,10 +145,6 @@
 		}
 		function nextQ () {
 			if (currentTimer) currentTimer();
-			if (timeVal) {
-
-
-			}
 			currentQ++;
 			const c = currentQ;
 			if (c >= qAmt) {
