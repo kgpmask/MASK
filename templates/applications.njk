@@ -85,6 +85,8 @@
 
 	</style>
 	<script>
+		axios.defaults.withCredentials = true;
+		axios.defaults.headers.common['X-CSRF-TOKEN'] = '{{ csrfToken }}';
 		function fixFavicon () {
 			link = document.createElement('link');
 			link.rel = 'shortcut icon';
@@ -112,3 +114,5 @@
 		fixFavicon();
 	</script>
 {% endblock %}
+
+{% set scripts = ['https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'] %}

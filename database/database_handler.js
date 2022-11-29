@@ -87,7 +87,8 @@ function getApplicants () {
 }
 
 async function addApplicant (applicant) {
-	const applicantList = await ApplicantList.findOne() ?? new ApplicantList({ records: [] });
+	let applicantList = await ApplicantList.findOne();
+	if (!applicantList) applicantList = new ApplicantList({ records: [] });
 	applicantList.records.push(applicant);
 	return applicantList.save();
 }

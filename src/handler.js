@@ -79,8 +79,7 @@ function handler (app, env) {
 				}
 				dbh.getApplicants().then(result => {
 					console.log(result);
-					if (!result || result?.records.find(record => record._id === req.user._id)) {
-						console.log("Yay till here");
+					if (!result?.records.find(record => record._id === req.user._id)) {
 						res.renderFile('applications.njk');
 					} else {
 						// TODO: Set for already submitted
@@ -215,7 +214,7 @@ function handler (app, env) {
 			case 'quizzes': case 'events': {
 				if (!loggedIn) {
 					if (!PARAMS.userless) req.session.returnTo = req.url;
-					return res.renderFile('quiz_login.njk');
+					return res.renderFile('login.njk');
 				}
 				dbh.getUser(req.user._id).then(user => {
 					const quizzed = Object.keys(user.quizData || {});
@@ -392,6 +391,7 @@ function handler (app, env) {
 			case 'applied': {
 				const applicant = { _id, user } = req.user;
 				dbh.addApplicant(applicant);
+				console.log("Added?");
 				break;
 			}
 			case 'checker': {
