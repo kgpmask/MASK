@@ -5,7 +5,10 @@
 
 {% block pagecontent %}
 	<!--h1 id="formpre" style="text-align: center;">Submit your content here!</h1-->
-	<script src="/GoogleFormStyler.js" form="https://docs.google.com/forms/d/1C3Kh9mfIQ1w14J4AJ80sJteu5yYpPpdUOHhM2y7-XFM/viewform?embedded=true&lang=en"></script>
+	<iframe src="https://docs.google.com/forms/d/1C3Kh9mfIQ1w14J4AJ80sJteu5yYpPpdUOHhM2y7-XFM/viewform?embedded=true&lang=en"></iframe>
+{% endblock %}
+
+{% block customcss %}
 	<style>
 		a[href] {
 			color: var(--white) !important;
@@ -21,98 +24,8 @@
 		}
 		/*Form as a whole*/
 
-		form>div>div>div>div {
-			background-color: rgba(20, 20, 20, 0.8);
+		iframe {
+			border: 0px;
 		}
-
-		.teQAzf {
-			margin: auto;
-			max-width: 90vw;
-			width: 900px;
-		}
-
-		/*Form name class*/
-		.m7w29c {
-			background-color: transparent;
-			color: var(--white) !important;
-		}
-
-		/*geS5n is the question div*/
-		.geS5n {
-			background-color: var(--black) !important;
-		}
-
-		/*M7eMe is the question in the div above, the other 3 are divs in the form heading*/
-		.M7eMe, .F9yp7e, .cBGGJ, .kesdnc{
-			color: var(--off-white) !important;
-			text-align: left;
-		}
-
-		/*Question div...*/
-		.z12JJ {
-			margin-bottom: 2px;
-		}
-
-		/*aDTYNe is the span used for options*/
-		.aDTYNe {
-			color: var(--off-white) !important;
-		}
-
-		input, .tL9Q4c {
-			justify-self: left;
-			background-color: #22222299 !important;
-			color: var(--white) !important;
-		}
-
-		/*Some Background Elements*/
-		.DE3NNc.CekdCb {
-			background-color: rgba(0, 0, 0, 0) !important;
-		}
-
-		.T2dutf, .xpWfed {
-			display: none;
-		}
-
-		.QvWxOd, .RVEQke {
-			background-color: var(--red) !important;
-			color: var(--abyss) !important;
-		}
-
-		/*'Clear form' text*/
-		.TFBnVe{
-			color: var(--red) !important;
-		}
-
 	</style>
-	<script>
-		axios.defaults.withCredentials = true;
-		axios.defaults.headers.common['X-CSRF-TOKEN'] = '{{ csrfToken }}';
-		function fixFavicon () {
-			link = document.createElement('link');
-			link.rel = 'shortcut icon';
-			link.href = '/assets/favicon.ico';
-			document.getElementsByTagName('head')[0].appendChild(link);
-		}
-		let firstLoad = false;
-		const ifrm = document.createElement("iframe");
-		ifrm.setAttribute("name", "swallow");
-		ifrm.setAttribute("id", "swallow");
-		document.body.appendChild(ifrm);
-		ifrm.style.display = 'none';
-		document.forms[0].target = "swallow";
-		document.getElementById('swallow').onload = () => {
-			if (firstLoad === false) return firstLoad = true;
-			const form = document.getElementsByTagName('form')[0];
-			const parent = form.parentNode;
-			form.remove();
-			const submitted = document.createElement('div');
-			submitted.setAttribute('class', 'text');
-			submitted.innerHTML = '<h1>Thank you for submitting! We\'ll get back to you soon.</h1>';
-			parent.appendChild(submitted);
-			axios.post('/applied');
-		}
-		fixFavicon();
-	</script>
 {% endblock %}
-
-{% set scripts = ['https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'] %}
