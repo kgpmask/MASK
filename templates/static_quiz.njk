@@ -109,19 +109,47 @@
 			startQuiz();
 		}
 
+		// Support for Keyboard input for MCQ type Quiz Questions
+		// Feature: 1,2,3,4 or a,b,c,d or Num1,Num2,Num3,Num4 to select quiz options
 		function preventDefault(event){
 			event.stopImmediatePropagation();
 			event.preventDefault();
 			event.stopPropagation();
 		}
-		// Support for Keyboard input for MCQ type Quiz Questions
-		
+		window.addEventListener("keydown", function(event) {
+			e = 0;
+			n = event.keyCode;
+			keys=[48,64,96]; //[48: 1-4, 64 A-D, 96:NUM1-4]
+			keys.forEach(k=>{
+			if(k < n && n < k+5){e=n-k;return;}});
+			if(e){
+				//Select the corresponding option
+				document.getElementById(`option-${currentQ+1}-${e}`).click();
+				preventDefault(event);
+			}
+
+			// NOTE: This feature needs modification
+			// 27 is keyCode for ESC key
+			//else if(event.keyCode == 27){
+				// Unselects the options
+			//	document.getElementById('quiz').reset();
+			//	event.preventDefault();
+			//}
+			// For ENTER
+			else if(n == 13){
+				// TODO: Ignore if no input is selected
+				if(document.querySelector(`input[name="answer-${currentQ+1}"]:checked`)) 
+					nextQ();
+				preventDefault(event);
+			}
+			
+		});
 		function timer () {
 			const c = currentQ;
 			
 			document.getElementById(`qbox-${c + 1}`).style.display = 'block';
 			if (c) document.getElementById(`qbox-${c}`).style.display = 'none';
-			timeVal = qs[c].time || countLeftPerQs; // removed absolute value
+			timeVal = qs[c].time || 30;
 			let cancel = false;
 			function endTimer () {
 				cancel = true;

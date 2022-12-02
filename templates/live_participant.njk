@@ -20,7 +20,7 @@
 					<br/>
 					<div id="options-container" style="display: none">
 						{% for i in range(1, 5) %}
-							<div class="option">
+							<div class="option" id="option">
 								<input type="radio" id="answer-{{ i }}" name="answer" value="{{ i }}"/>
 								<label id="option-{{ i }}" for="answer-{{ i }}">Option {{ i }}</label><br/>
 							</div>
@@ -91,6 +91,7 @@
 		const socket = io();
 
 		let currentQ = 0;
+		let quesCounter = 1;
 		let state = 'waiting';
 		let timeLeft = 0;
 
@@ -152,7 +153,7 @@
 		});
 
 		function showQuestion (options, time, currentQ) {
-			document.getElementById('question-no').innerHTML = `Question #${currentQ + 1}`;
+			document.getElementById('question-no').innerHTML = `Question #${quesCounter}`;
 			document.getElementById('count').style.display = 'block';
 			document.getElementById('message').style.display = 'none';
 			document.getElementById('q-box').style.display = 'block';
@@ -187,6 +188,7 @@
 			} else html += `<br/>You did not submit an answer for this question.`;
 			showMessage(html);
 			timer(5);
+			quesCounter++;
 		});
 
 		socket.on('end-quiz', () => {
@@ -194,6 +196,13 @@
 		});
 
 		window.addEventListener('load', () => showMessage(waitingMsg));
+		
+		// Feature for 1,2,3,4 or a,b,c,d or Num1,Num2,Num3,Num4 to select quiz options
+		function preventDefault(event){
+			event.stopImmediatePropagation();
+			event.preventDefault();
+			event.stopPropagation();
+		}
 		window.addEventListener("keydown", function(event) {
 			e = 0;
 			n = event.keyCode;
@@ -208,19 +217,22 @@
 
 			// NOTE: This feature needs modification
 			// 27 is keyCode for ESC key
-			//else if(event.keyCode == 27){
+			/*else if(event.keyCode == 27){
 				// Unselects the options
-			//	document.getElementById('quiz').reset();
-			//	event.preventDefault();
-			//}
+				document.getElementById('quiz').reset();
+				event.preventDefault();
+			}*/
 			// For ENTER
-			else if(n == 13){
+			/*else if(n == 13){
 				// TODO: Give warning if empty
-				nextQ();
+				if(document.querySelector('input[name="answer"]:checked')) 
+					submitAnswer();
 				preventDefault(event);
-			}
+			}*/
 			
 		});
+		
+		
 		function submitAnswer (timeout = false) {
 			let answer = null;
 			if (answerText.style.display === 'block') {
