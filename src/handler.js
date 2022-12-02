@@ -72,6 +72,10 @@ function handler (app, env) {
 				res.renderFile('home.njk', { posts, vids, art });
 				break;
 			}
+			case 'apply': {
+				res.renderFile('applications.njk');
+				break;
+			}
 			case 'art': {
 				const art = require('./posts.json').filter(post => post.type === 'art');
 				res.renderFile('art.njk', { art });
@@ -198,7 +202,7 @@ function handler (app, env) {
 			case 'quizzes': case 'events': {
 				if (!loggedIn) {
 					if (!PARAMS.userless) req.session.returnTo = req.url;
-					return res.renderFile('quiz_login.njk');
+					return res.renderFile('login.njk');
 				}
 				dbh.getUser(req.user._id).then(user => {
 					const quizzed = Object.keys(user.quizData || {});

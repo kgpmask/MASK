@@ -1,4 +1,10 @@
 [{
+	"name": "<b>Member Applications</b>",
+	"link": "/apply",
+	"type": "letter",
+	"date": "2nd Dec, 2022",
+	"hype": true
+},{
 	"name": "<b>Live Quiz Results</b>",
 	"link": "/live-results",
 	"type": "letter",
