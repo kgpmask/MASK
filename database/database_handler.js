@@ -81,7 +81,6 @@ async function addLiveResult (userId, quizId, currentQ, points, answer, timeLeft
 	return results.toObject();
 }
 
-
 module.exports = {
 	createNewUser,
 	getUser,
