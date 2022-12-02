@@ -28,7 +28,7 @@ function getAllUsers (id) {
 async function updateUserQuizRecord (stats) { // {userId, quizId, time, score}
 	const user = await Quiz.UserInfo.findOne({ userId: stats.userId });
 	const userName = (await getUser(stats.userId)).name;
-	const record = user || new Quiz({ userId: stats.userId, userName, points: 0, quizData: [] });
+	const record = user || new Quiz.UserInfo({ userId: stats.userId, userName, points: 0, quizData: [] });
 	if (!record.quizData) record.quizData = [];
 	const key = stats.quizId;
 	if (!key) return record.save();

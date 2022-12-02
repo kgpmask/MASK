@@ -32,9 +32,9 @@ exports.toID = function toID (string) {
 exports.nth = function nth (num) {
 	const lastDigit = num % 10;
 	switch (lastDigit) {
-		case 1: return num + 'st';
-		case 2: return num + 'nd';
-		case 3: return num + 'rd';
+		case 1: return num + (num - lastDigit !== 10 ? 'st' : 'th');
+		case 2: return num + (num - lastDigit !== 10 ? 'nd' : 'th');
+		case 3: return num + (num - lastDigit !== 10 ? 'rd' : 'th');
 		default: return num + 'th';
 	}
 };

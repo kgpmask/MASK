@@ -183,12 +183,12 @@ function handler (app, env) {
 						name: req.user.name,
 						picture: req.user.picture,
 						points: user.points,
-						quizzes: Object.keys(user.quizData || {}).map(stamp => {
+						quizzes: user.quizData.map(stamp => {
 							const months = [
 								'-', 'January', 'February', 'March', 'April', 'May', 'June',
 								'July', 'August', 'September', 'October', 'November', 'December'
 							];
-							const [year, month, date] = stamp.split('-');
+							const [year, month, date] = stamp.quizId.split('-');
 							return `${Tools.nth(~~date)} ${months[~~month]}`;
 						})
 					});
