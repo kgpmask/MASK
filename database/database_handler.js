@@ -50,8 +50,8 @@ function getQuizzes () {
 }
 
 async function getLiveQuiz () {
-	// const date = new Date().toISOString().slice(0, 10);
-	const date = '2022-11-12';
+	const date = new Date().toISOString().slice(0, 10);
+	// const date = '2022-11-12';
 	const quiz = await LiveQuiz.findOne({ title: date });
 	if (quiz) return quiz.toObject();
 }
