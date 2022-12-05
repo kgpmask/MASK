@@ -107,14 +107,14 @@
 		}
 
 		.rad-input {
-			position: absolute;
+		/*	position: absolute;
 			left: 0;
 			top: 0;
 			width: 1px;
-			height: 1px;
+			height: 1px;*/
 			opacity: 0;
 			z-index: -1;
-			visibility: hidden;
+		
 		}
 
 		.rad-design {
@@ -152,7 +152,7 @@
 		}
 
 		.rad-input:checked~.rad-text {
-			color: hsl(0, 0%, 40%);
+			color: hsl(184deg 58% 60%);
 		}
 	</style>
 {% endblock %}
@@ -213,27 +213,33 @@
 					return;
 				}
 			});
+			chk_opt=document.querySelector(`input[name="answer-${currentQ + 1}"]:checked`)
 			if (e) {
+				if (chk_opt) chk_opt.checked = false
+				/* Was trying a feature to allow focus on a checked element
+				op.dispatchEvent(new KeyboardEvent("keydown",{"key": "Escape"}))
+				op.parentElement.blur();
+				*/
+				
 				//Select the corresponding option
-				document
-					.getElementById(`option-${currentQ + 1}-${e}`)
-					.click();
+				op=document.getElementById(`option-${currentQ + 1}-${e}`)
+				op.click();
+				//op.focus({focusVisible: true});
+				op.scrollIntoView()
 				preventDefault(event);
 			}
-
-			// NOTE: This feature needs modification
-			// 27 is keyCode for ESC key
-			//else if(event.keyCode == 27){
-			// Unselects the options
-			//	document.getElementById('quiz').reset();
-			//	event.preventDefault();}
-			// For ENTER 
+			else if (n == 27) {
+				//chk_opt=document.querySelector(`input[name="answer-${currentQ + 1}"]:checked`)
+				if (chk_opt)
+					chk_opt.checked = false
+			}
 			else if (n == 13) {
 			// TODO: Ignore if no input is selected
 				if (document.querySelector(`input[name="answer-${currentQ + 1}"]:checked`)) 
 					nextQ();
 				preventDefault(event);
 			}
+
 		});
 		function timer() {
 			const c = currentQ;
