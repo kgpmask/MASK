@@ -88,7 +88,7 @@
 			background: rgba(0, 0, 0, 0.5);
 			padding: 25px;
 		}
-
+		/* NEW CSS FOR RADIO BUTTONS */
 		.rad-label {
 			display: flex;
 			align-items: center;
@@ -213,23 +213,18 @@
 					return;
 				}
 			});
-			chk_opt=document.querySelector(`input[name="answer-${currentQ + 1}"]:checked`)
 			if (e) {
-				if (chk_opt) chk_opt.checked = false
-				/* Was trying a feature to allow focus on a checked element
-				op.dispatchEvent(new KeyboardEvent("keydown",{"key": "Escape"}))
-				op.parentElement.blur();
-				*/
 				
 				//Select the corresponding option
-				op=document.getElementById(`option-${currentQ + 1}-${e}`)
+				op=document.getElementById(`option-${currentQ + 1}-${e}`);
 				op.click();
+				/* Was trying a feature to allow focus on a checked element*/
+				op.scrollIntoView();
 				//op.focus({focusVisible: true});
-				op.scrollIntoView()
 				preventDefault(event);
 			}
 			else if (n == 27) {
-				//chk_opt=document.querySelector(`input[name="answer-${currentQ + 1}"]:checked`)
+				chk_opt=document.querySelector(`input[name="answer-${currentQ + 1}"]:checked`)
 				if (chk_opt)
 					chk_opt.checked = false
 			}
