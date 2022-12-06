@@ -239,12 +239,12 @@ function handler (app, env) {
 							});
 						}
 						const index = quizzes.indexOf(args[1]);
-						if (index === -1) return notFound('quizzes_404.njk', { years: renderYears.reverse(), quizzed, locked });
-						if (quizzed.includes(args[1])) return res.renderFile('quiz_attempted.njk');
+						if (index === -1) return notFound('events/quizzes_404.njk', { years: renderYears.reverse(), quizzed, locked });
+						if (quizzed.includes(args[1])) return res.renderFile('events/quiz_attempted.njk');
 						const adjs = [quizzes[index - 1], quizzes[index + 1], quizzes[index]];
 						const QUIZ = QUIZZES[args[1]];
 						const quizDate = new Date(QUIZ.unlock).getTime();
-						if (quizDate > Date.now()) return res.renderFile('quiz_countdown.njk', {
+						if (quizDate > Date.now()) return res.renderFile('events/quiz_countdown.njk', {
 							timeLeft: quizDate - Date.now() + 1000
 						});
 						const rand = Tools.fakeRandom(req.user._id);
@@ -265,7 +265,7 @@ function handler (app, env) {
 							}));
 						});
 						shuffle(questions);
-						return res.renderFile('static_quiz.njk', {
+						return res.renderFile('events/static_quiz.njk', {
 							adjs,
 							questions: JSON.stringify(questions),
 							qAmt: questions.length,
@@ -278,20 +278,20 @@ function handler (app, env) {
 			case 'live': {
 				if (!loggedIn) {
 					if (!PARAMS.userless) req.session.returnTo = req.url;
-					return res.renderFile('quiz_login.njk');
+					return res.renderFile('events/quiz_login.njk');
 				}
 				dbh.getLiveQuiz().then(quiz => {
-					if (!quiz) return res.renderFile('quizzes_404.njk', { message: `The quiz hasn't started, yet!` });
+					if (!quiz) return res.renderFile('events/quizzes_404.njk', { message: `The quiz hasn't started, yet!` });
 					const QUIZ = quiz.questions;
 					dbh.getUser(req.user._id).then(user => {
 						if (user.permissions?.includes("quizmaster")) {
-							res.renderFile("live_master.njk", {
+							res.renderFile("events/live_master.njk", {
 								quiz: JSON.stringify(QUIZ),
 								qAmt: QUIZ.length,
 								id: 'live'
 							});
 						} else {
-							res.renderFile("live_participant.njk", {
+							res.renderFile("events/live_participant.njk", {
 								id: 'live',
 								userId: req.user._id
 							});
@@ -301,7 +301,7 @@ function handler (app, env) {
 				break;
 			}
 			case 'success': {
-				return res.renderFile('quiz_success.njk');
+				return res.renderFile('events/quiz_success.njk');
 			}
 			case 'live-results': {
 				const quizId = new Date().toISOString().slice(0, 10);
@@ -330,13 +330,13 @@ function handler (app, env) {
 						}
 						delete results[result].id;
 					}
-					return res.renderFile('results.njk', { results });
+					return res.renderFile('events/results.njk', { results });
 				}).catch(res.error);
 				break;
 			}
 			case 'prizes': {
 				const prizes = require('./rewards.json');
-				return res.renderFile('prizes.njk', { prizes });
+				return res.renderFile('events/prizes.njk', { prizes });
 			}
 			case 'rebuild': {
 				env.loaders.forEach(loader => loader.cache = {});
@@ -410,7 +410,7 @@ function handler (app, env) {
 					shuffle(solutions);
 					const answers = Array.from({ length: solutions.length }).map((_, i) => ~~req.body[`answer-${i + 1}`]);
 					const points = [answers.filter((ans, i) => ~~ans === ~~solutions[i]).length, solutions.length];
-					res.renderFile('quiz_success.njk', { score: points[0], totalScore: points[1] });
+					res.renderFile('events/quiz_success.njk', { score: points[0], totalScore: points[1] });
 					dbh.updateUserQuizRecord({ userId: req.user._id, quizId, score: points[0], time: Date.now() });
 				}).catch(res.error);
 				break;
@@ -420,7 +420,7 @@ function handler (app, env) {
 				const LQ = handlerContext.liveQuiz;
 				if (!loggedIn) {
 					if (!PARAMS.userless) req.session.returnTo = req.url;
-					return res.renderFile('quiz_login.njk');
+					return res.renderFile('events/quiz_login.njk');
 				}
 				dbh.getLiveQuiz().then(quiz => {
 					const QUIZ = quiz.questions;

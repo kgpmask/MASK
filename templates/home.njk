@@ -14,7 +14,7 @@
 			<div class="notices-header">Updates!</div>
 			<div class="notices-list">
 				{% for post in posts %}
-					<a href="{{ '/assets/art/' if post.type == 'art' }}{{ post.link }}" target="{{ post.page }}" class="notice-link" title="{{ post.date }}"><div class="notice-post">{{ post.name | safe }}{{ ('<sup>NEW</sup>' | safe) if post.recent }}</div></a>{% if not loop.last %}<hr class="notice-break"/>{% endif %}
+					<a href="{{ '/assets/uploads/' if post.type == 'art' }}{{ post.link }}" target="{{ post.page }}" class="notice-link" title="{{ post.date }}"><div class="notice-post">{{ post.name | safe }}{{ ('<sup>NEW</sup>' | safe) if post.recent }}</div></a>{% if not loop.last %}<hr class="notice-break"/>{% endif %}
 				{% endfor %}
 			</div>
 		</div></div>
@@ -32,7 +32,7 @@
 				<div class="imgshow-container">
 					<div class="imgshow">
 						{% for img in art %}
-							<div id="img-{{ loop.index }}" class="to-frost"><div class="full-image" style="background-image: url(/assets/art/{{ img.link }});"></div></div>
+							<div id="img-{{ loop.index }}" class="to-frost"><div class="full-image" style="background-image: url(/assets/uploads/{{ img.link }});"></div></div>
 						{% endfor %}
 					</div>
 					<div class="slide-buttons">
@@ -166,7 +166,7 @@
 					}
 					{% for img in art %}
 						#img-{{ loop.index }}::before {
-							background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(/assets/art/{{ img.link }});
+							background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(/assets/uploads/{{ img.link }});
 						}
 					{% endfor %}
 					.full-image {
