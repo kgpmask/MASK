@@ -14,15 +14,17 @@
 			<form id="quiz" class="quizzes" onsubmit="return false">
 				<input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
 				<input type="hidden" name="quizId" value="{{ id }}"/>
+				<fieldset><br/>
 				<div id="q-box" style="display: none">
-				<div id="question-no"></div>
+					<div id="question-no"></div>
 					<br/>
 					<div id="options-container" style="display: none">
 						{% for i in range(1, 5) %}
-							<div class="option">
-								<input type="radio" id="answer-{{ i }}" name="answer" value="{{ i }}"/>
-								<label id="option-{{ i }}" for="answer-{{ i }}">Option {{ i }}</label><br/>
-							</div>
+							<label  class="rad-label">
+								<input type="radio" id="answer-{{ i }}" name="answer" class="rad-input" value="{{ i }}"/>
+								<div class="rad-design"></div>
+								<div class="rad-text" id="option-{{ i }}" for="answer-{{ i }}"></div>
+							</label><br/>
 						{% endfor %}
 					</div>
 					<div id="answer-text-container" style="display: none">
@@ -32,6 +34,8 @@
 					<button id="submit-button" class="rel" onclick="submitAnswer()">Submit</button>
 				</div>
 				<div id="message" style="display: none"><h3>Waiting for the quizmaster...</h3></div>
+				<br/></fieldset>
+
 			</form>
 		</div>
 	</div>
@@ -69,14 +73,83 @@
 		}
 		.option {
 			margin: 8px;
+			display: inline-block;
 		}
 		.option-image {
 			margin: 10px;
+			text-align: left;
+			display: inline-block;
 		}
 		.question-zone {
 			border-radius: 10px;
 			background: rgba(0, 0, 0, 0.5);
 			padding: 25px;
+		}
+		/* NEW CSS FOR RADIO BUTTONS */
+		.rad-label {
+			display: flex;
+			align-items: center;
+
+			border-radius: 10px;
+
+			cursor: pointer;
+			transition: 0.3s;
+
+			padding: 10px 20px;
+		}
+
+		.rad-label:focus-within,
+		.rad-label:hover {
+			background: hsla(0, 0%, 80%, .14);
+		}
+
+		.rad-input {
+		/*	position: absolute;
+			left: 0;
+			top: 0;
+			width: 1px;
+			height: 1px;*/
+			opacity: 0;
+			z-index: -1;
+		
+		}
+
+		.rad-design {
+			width: 22px;
+			height: 22px;
+			border-radius: 100px;
+
+			background: linear-gradient(to right bottom, hsl(154, 97%, 62%), hsl(225, 97%, 62%));
+			position: relative;
+		}
+
+		.rad-design::before {
+			content: '';
+
+			display: inline-block;
+			width: inherit;
+			height: inherit;
+			border-radius: inherit;
+
+			background: hsl(0, 0%, 90%);
+			transform: scale(1.1);
+			transition: 0.3s;
+		}
+
+		.rad-input:checked+.rad-design::before {
+			transform: scale(0);
+		}
+
+		.rad-text {
+			color: hsl(0, 0%, 60%);
+			margin-left: 14px;
+			font-weight: 900;
+
+			transition: 0.3s;
+		}
+
+		.rad-input:checked~.rad-text {
+			color: hsl(184deg 58% 60%);
 		}
 	</style>
 {% endblock %}
@@ -88,6 +161,7 @@
 		const socket = io();
 
 		let currentQ = 0;
+		let quesCounter = 1;
 		let state = 'waiting';
 		let timeLeft = 0;
 
@@ -116,7 +190,7 @@
 		function timer (time) {
 			timeLeft = time;
 			function tick () {
-				if (state === 'waiting' || state === 'submitted') return;
+				if (state === 'waiting') return;
 				document.getElementById('count').innerHTML = timeLeft--;
 				if (timeLeft >= 0) setTimeout(tick, 1000);
 				else {
@@ -125,10 +199,10 @@
 						case 'running': {
 							state = 'time-out';
 							if (submitAnswer() === false) showMessage('Time is up!');
-							else showMessage('Time is up! Your response has been submitted.');
+							else {submitAnswer(true);showMessage('Time is up! Your response has been submitted.');}
 							break;
 						}
-
+						//case 'submitted': break;
 						default: {
 							state = 'waiting';
 							document.getElementById('count').innerHTML = '';
@@ -140,16 +214,42 @@
 			}
 			tick();
 		}
-
+		function preventDefault(event) {
+			event.stopImmediatePropagation();
+			event.preventDefault();
+			event.stopPropagation();
+		}
 		let answerText, optionsContainer, answerTextField;
 		window.addEventListener('load', () => {
 			answerText = document.getElementById('answer-text-container');
 			optionsContainer = document.getElementById('options-container');
 			answerTextField = document.getElementById('answer-text-field');
 		});
-
+		function keySupport(event){
+					e = 0;
+					n = event.keyCode;
+					keys=[48,64,96]; //[48: 1-4, 64 A-D, 96:NUM1-4]
+					keys.forEach(k=>{if(k < n && n < k+5){e=n-k;return;}});
+					if(e){
+						//Select the corresponding option
+						op=document.getElementById(`option-${e}`);
+						op.click();
+						op.scrollIntoView();
+						preventDefault(event);
+					}
+					else if (n == 27) {
+						chk_opt=document.querySelector(`input[name="answer"]:checked`)
+						if (chk_opt)
+							chk_opt.checked = false
+					}
+					//else if (n == 13) {
+						//if (document.querySelector(`input[name="answer"]:checked`))
+							//submitAnswer();
+						//preventDefault(event);
+					//}
+		}
 		function showQuestion (options, time, currentQ) {
-			document.getElementById('question-no').innerHTML = `Question #${currentQ + 1}`;
+			document.getElementById('question-no').innerHTML = `Question #${quesCounter}`;
 			document.getElementById('count').style.display = 'block';
 			document.getElementById('message').style.display = 'none';
 			document.getElementById('q-box').style.display = 'block';
@@ -160,12 +260,18 @@
 					document.getElementById(`option-${i}`).innerHTML = generateHTML([options.value[i - 1]]);
 				}
 				answerText.style.display = 'none';
-				optionsContainer.style.display = 'block';
+				optionsContainer.style.display = 'inline-block';
 				answerTextField.required = false;
+				//answerTextField.blur();
+				// Feature for 1,2,3,4 or a,b,c,d or Num1,Num2,Num3,Num4 to select quiz options
+				window.addEventListener("keydown", keySupport);
 			} else {
+				window.removeEventListener("keydown",keySupport);
 				answerText.style.display = 'block';
 				optionsContainer.style.display = 'none';
 				answerTextField.required = true;
+				answerText.focus();
+				answerTextField.focus();
 			}
 			state = 'running';
 			timer(time);
@@ -184,6 +290,7 @@
 			} else html += `<br/>You did not submit an answer for this question.`;
 			showMessage(html);
 			timer(5);
+			quesCounter++;
 		});
 
 		socket.on('end-quiz', () => {
@@ -191,13 +298,16 @@
 		});
 
 		window.addEventListener('load', () => showMessage(waitingMsg));
-
+		
 		function submitAnswer (timeout = false) {
 			let answer = null;
 			if (answerText.style.display === 'block') {
-				answer = document.getElementById('answer-text-field').value;
+				atf=document.getElementById('answer-text-field')
+				answer = atf.value;
+				atf.required=false;
+				//atf.blur()
 				if (!answer) answer = null;
-				else document.getElementById('answer-text-field').value = '';
+				else atf.value = '';
 			} else {
 				for (let i = 1; i <= 4; i++) {
 					if (document.getElementById(`answer-${i}`).checked) { 
@@ -207,12 +317,16 @@
 					}
 				}
 			}
-			if (answer === null) return false;
-			document.getElementById('count').style.display = 'none';
-			if (timeout) return;
+			if (answer !== null) submittedAnswer = answer
+			//return false;
+			if (submittedAnswer === null) return false;
+			// This lets the participants know when the timer will end
+			//document.getElementById('count').style.display = 'none';
+			showMessage('Your response has been submitted.<br/>Please wait for the other participants.');
+			if (timeout === false) return;
 			state = 'submitted';
 			showMessage('Your response has been submitted.');
-			axios.post('/live', { answer }).then(() => submittedAnswer = answer).catch(() => {});
+			axios.post('/live', { submittedAnswer }).then(() => submittedAnswer = submittedAnswer).catch(() => {});
 			return true;
 		}
 	</script>
