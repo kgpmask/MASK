@@ -7,6 +7,8 @@ The owner of this repository is @PartMan7, who also runs the server. He's also r
 
 All non-trivial changes are done through PULL REQUESTS ONLY. The WebDev Team Head is responsible for testing and merging all PRs. Feel free to pester them to look at the changes you've prepared.
 
+To work on the templates which require access to credentials using `dev userless` (`du`) mode, check out [this page](/testing.md) for some info.
+
 A webhook-based pull system will be implemented eventually.
 
 Ensure that pull requests pass tests (`npm test` for both lint and mocha tests).
@@ -103,6 +105,7 @@ Take a look at existing articles for the various classes and where they're used.
 - <a href="https://github.com/anjaniit23" target="_blank">Anjani Kumar</a> (Contributor)  <br />
 - <a href="https://github.com/mokshith25" target="_blank">Venkatsai Mokshith</a> (Contributor)  <br />
 - <a href="https://github.com/ayush4ise" target="_blank">Ayush Parmar</a> (Contributor)  <br />
+- <a href="https://github.com/nishkalprakash" target="_blank">Nishkal Prakash</a> (Contributor) <br />
 - <a href="https://github.com/lurkingryuu" target="_blank">Karthikeya Y M</a> (Contributor)  <br />
 - <a href="https://github.com/Yureien" target="_blank">Soham Sen</a> (Contributor)  <br />
 - <a href="https://github.com/Pagol1" target="_blank">Saumyadip Nandy</a> (Contributor)  <br />
