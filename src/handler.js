@@ -187,12 +187,12 @@ function handler (app, env) {
 						name: req.user.name,
 						picture: req.user.picture,
 						points: user.points,
-						quizzes: Object.keys(user.quizData || {}).map(stamp => {
+						quizzes: user.quizData.map(stamp => {
 							const months = [
 								'-', 'January', 'February', 'March', 'April', 'May', 'June',
 								'July', 'August', 'September', 'October', 'November', 'December'
 							];
-							const [year, month, date] = stamp.split('-');
+							const [year, month, date] = stamp.quizId.split('-');
 							return `${Tools.nth(~~date)} ${months[~~month]}`;
 						})
 					});
@@ -204,8 +204,9 @@ function handler (app, env) {
 					if (!PARAMS.userless) req.session.returnTo = req.url;
 					return res.renderFile('login.njk');
 				}
-				dbh.getUser(req.user._id).then(user => {
-					const quizzed = Object.keys(user.quizData || {});
+				dbh.getUserStats(req.user._id).then(user => {
+					console.log(user.quizData);
+					const quizzed = user.quizData.map(quiz => quiz.quizId) ?? [];
 					dbh.getQuizzes().then(qzs => {
 						const QUIZZES = {};
 						qzs.forEach(qz => QUIZZES[qz.unlock.slice(0, 10)] = qz); // TODO Mokshith: Add a quizId field
