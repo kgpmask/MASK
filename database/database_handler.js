@@ -57,7 +57,7 @@ function getQuizzes () {
 
 async function getLiveQuiz () {
 	const date = new Date().toISOString().slice(0, 10);
-	const quiz = await LiveQuiz.UserInfo.findOne({ title: date });
+	const quiz = await LiveQuiz.findOne({ title: date });
 	if (quiz) return quiz.toObject();
 }
 
