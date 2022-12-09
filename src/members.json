@@ -1,7 +1,7 @@
 [
 	{
-		"name": "2021-22",
-		"baseYear": "21",
+		"name": "2022-23",
+		"baseYear": "22",
 		"teams": {
 			"a": {
 				"name": "AMV",
@@ -140,7 +140,8 @@
 				"id": "20_ganji",
 				"name": "Ganji Sanjeev Raj",
 				"roll": "20EC10029",
-				"teams": ["d"]
+				"teams": ["d"],
+				"inactive": true
 			},
 			{
 				"id": "20_hrishabh",
@@ -158,18 +159,13 @@
 				"id": "21_karthikeya",
 				"name": "Karthikeya S M Yelisetty",
 				"roll": "21CS30060",
-				"teams": ["a", "w"]
+				"teams": ["a", "w"],
+				"inactive": true
 			},
 			{
 				"id": "21_maloth",
 				"name": "Maloth Maniteja",
 				"roll": "21PH20002",
-				"teams": ["d"]
-			},
-			{
-				"id": "21_manasvi",
-				"name": "Manasvi Rathore",
-				"roll": "21HS10025",
 				"teams": ["d"]
 			},
 			{
@@ -203,12 +199,6 @@
 				"teams": ["d"]
 			},
 			{
-				"id": "21_rishabh_prasad",
-				"name": "Rishabh Prasad",
-				"roll": "21XX00000",
-				"teams": ["d"]
-			},
-			{
 				"id": "21_ritesah",
 				"name": "Ritesah M",
 				"roll": "21CS30042",
@@ -218,7 +208,8 @@
 				"id": "20_saumyadip",
 				"name": "Saumyadip Nandy",
 				"roll": "20EC10072",
-				"teams": ["w"]
+				"teams": ["w"],
+				"inactive": true
 			},
 			{
 				"id": "21_shreya",
@@ -233,12 +224,6 @@
 				"teams": ["a", "d", "n"]
 			},
 			{
-				"id": "20_soham",
-				"name": "Soham Sen",
-				"roll": "20MF10038",
-				"teams": ["w"]
-			},
-			{
 				"id": "20_spandan",
 				"name": "Spandan Halder",
 				"roll": "20CS10063",
@@ -250,12 +235,6 @@
 				"name": "Srijan Srivastava",
 				"roll": "20EC30051",
 				"teams": ["N", "q"]
-			},
-			{
-				"id": "21_suraj",
-				"name": "Suraj Pati",
-				"roll": "21EC30050",
-				"teams": ["a"]
 			},
 			{
 				"id": "21_suvojit",
@@ -287,24 +266,12 @@
 				"name": "Vidunram",
 				"roll": "21EE30033",
 				"teams": ["q", "w"]
-			},
-			{
-				"id": "20_vishesh",
-				"name": "Vishesh Gupta",
-				"roll": "20EE10080",
-				"teams": ["w"]
-			},
-			{
-				"id": "21_yaman",
-				"name": "Yaman Meena",
-				"roll": "21IE10044",
-				"teams": ["a"]
 			}
 		]
 	},
 	{
-		"name": "2020-21",
-		"baseYear": "20",
+		"name": "2021-22",
+		"baseYear": "21",
 		"teams": {
 			"a": {
 				"name": "AMV",
@@ -614,8 +581,8 @@
 	},
 	{
 		"noshow": true,
-		"name": "2019-20",
-		"baseYear": "19",
+		"name": "2020-21",
+		"baseYear": "20",
 		"teams": {
 			"a": {
 				"name": "AMV",
