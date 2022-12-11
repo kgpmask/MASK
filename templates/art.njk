@@ -9,7 +9,7 @@
 <section id="photos">
 	{% for img in art %}
 	<div class="img-container">
-		<img id="img-{{ loop.index }}" src="/assets/uploads/{{ img.link }}" />
+		<img id="img-{{ loop.index }}" src="/assets/art/{{ img.link }}" />
 		<div class="overlay">
 			<h1>{{ img.name | replace('Art - ', '') }}</h1>
 			<h3>{{ img.attr | join(", ") }}</h3>
