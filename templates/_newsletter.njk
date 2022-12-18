@@ -339,5 +339,9 @@
 {% endblock %}
 
 {% block customjs %}
+	<script>
+		axios.defaults.withCredentials = true;
+		axios.defaults.headers.common['X-CSRF-TOKEN'] = '{{ csrfToken }}';
+	</script>
 	{% block letterjs %}{% endblock %}
 {% endblock %}

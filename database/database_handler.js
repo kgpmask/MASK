@@ -1,6 +1,7 @@
 const User = require('./schemas/User');
 const Quiz = require('./schemas/Quiz');
 const { LiveQuiz, LiveResult } = require('./schemas/LiveQuiz');
+const Newsletter = require('./schemas/Newsletter');
 
 // Handle newly registered user or normal login
 async function createNewUser (profile) {
@@ -88,6 +89,13 @@ async function addLiveResult (userId, quizId, currentQ, points, answer, timeLeft
 	return results.toObject();
 }
 
+// Fetch newsletter solutions
+async function getNewsletter (date) {
+	const newsletter = await Newsletter.findById(date);
+	if (!Object.keys(newsletter).every(e => e)) throw new Error('No newsletters on this date');
+	return newsletter;
+}
+
 module.exports = {
 	createNewUser,
 	getUser,
@@ -98,5 +106,6 @@ module.exports = {
 	getLiveQuiz,
 	getLiveResult,
 	getAllLiveResults,
-	addLiveResult
+	addLiveResult,
+	getNewsletter
 };
