@@ -378,13 +378,15 @@ function handler (app, env) {
 
 		switch (args[0]) {
 			case 'checker': {
-				checker.compare(args[2], args[1], req.body).then(response => {
+				dbh.getNewsletter(args[1]).then(newsletter => {
+					const { solutions } = newsletter;
+					const response = checker.checkNewsletterPuzzle(args[2], req.body, solutions);
 					switch (response) {
 						case true: return res.send('correct');
 						case false: return res.send('');
 						default: return res.send(response);
 					}
-				}).catch(res.error);
+				}).catch(err => console.log(err));
 				break;
 			}
 			case 'quizzes': {

@@ -9,6 +9,12 @@ exports.compare = function compare (puzzleType, date, obj) {
 	});
 };
 
+exports.checkNewsletterPuzzle = function (puzzleType, submission, solutions) {
+	if (!solutions.hasOwnProperty(puzzleType)) throw new Error('Puzzle without a type... sus');
+	if (puzzleType.startsWith('quiz')) return solutions[puzzleType][submission.index];
+	return Tools.deepEquals(solutions[puzzleType], submission);
+};
+
 exports.checkLiveQuiz = function check (answer, solutions, questionType, basePoints, timeLeft) {
 	return new Promise((resolve, reject) => {
 		if (!Array.isArray(solutions)) solutions = [solutions];
