@@ -179,7 +179,7 @@
 	{# Partner-themed Crossword #}
 	<div class="page" id="crossword">
 		<div id="cross-wrapper">
-			<span class="article-header">The Promised Neverland Crossword</span><span style="display:inline-block;min-width:50px"></span><span class="article-author">By: Aditya Das</span><br/><br/>
+			<span class="article-header">Partner-Themed Crossword</span><br/><br/>
 			<table class="crossword-table" id="crossword-table" cellspacing="0"></table>
 			<div id="crossword-words">
 				<div id="crossword-left"></div>
@@ -276,14 +276,19 @@
 			document.addEventListener('keydown', function (e) {
 				if (!crosswordVis) return;
 				if (crossClick) {
-					if ((e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 97 && e.keyCode <= 122)) {
+					if ((e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105)) {
 						let tempCell = document.getElementById(`crossword-cell-${crossClick[0]}-${crossClick[1]}`);
-						let currenttext = String.fromCharCode(e.keyCode).toUpperCase();
+						let currenttext;
+						if (e.keyCode < 96) {
+							currenttext = String.fromCharCode(e.keyCode).toUpperCase();
+						} else {
+							currenttext = e.keyCode - 96;
+						}
 						tempCell.innerHTML = currenttext;
 						crossFound[crossClick[0]][crossClick[1]] = currenttext;
 						// check if crossword is completed
 						if (!letterSpaces.find(([i, j]) => crossFound[i][j] === '-')) {
-							axios.post(`/checker/2021-10-2/crossword`, crossFound).then(res => {
+							axios.post(`/checker/2022-12-1/crossword`, crossFound).then(res => {
 								if (res.data) {
 									mytablebody.classList.add("table-complete-cross");
 									setTimeout(function () {
@@ -318,6 +323,9 @@
 								return true;
 							}
 						});
+					}
+					if ((e.keyCode >= 48 && e.keyCode <= 57) && (e.keyCode >= 96 && e.keyCode <= 105)) {
+						e
 					}
 					if (e.keyCode >= 37 && e.keyCode <= 40) {
 						const offsets = {
@@ -362,18 +370,31 @@
 				}
 			}, { threshold: [0.99] }).observe(document.getElementById('crossword-table'));
 			const clues = [];
-			clues.push(`3. Don's age (3)
-			5. One of Norman's most loyal comrades (7)
-			7. Thoma's age (5)
-			8. Person who left some Morse Code (7)
-			9. Conny's age at the time of her shipping (3)
-			10. Isabella's eye colour (6)`.replace(/\t/g, '').split('\n').map(line => line.split(/\. (.*)/)));
-			clues.push(`1. Name of the House (10)
-			2. Human body part that demons eat (5)
-			4. Character who saved Ray from burning (4)
-			6. Body part with tracking devices (3)
-			7. Demon who saved Ray (5)
-			11. Isabella's child (3)`.replace(/\t/g, '').split('\n').map(line => line.split(/\. (.*)/)));
+			clues.push(`4. <b>Gintama:</b> Zuramp janai, katsura da (9)
+			6. <b>Spy X Family:</b> Biggest enemy is a stuffed penguin (4)
+			9. <b>The Ancient Magus Bride:</b> Pet adopted at graveyard (4)
+			10. <b>Mairamashita Iruma-Kun:</b> If you like it, then you should have put a ring on it (7)
+			11. <b>Death Note:</b> Goes to a different world to eat apple (4)
+			12. <b>Chainsaw Man:</b> John Wick's heart (7)
+			13. <b>Noragami:</b> Sword sad about his death. (6)
+			16. <b>Bleach:</b> Ichigo's 50th powerup (5, 8)
+			17. <b>Tensura:</b> Gains smoother voice after upgrade (3, 5)
+			20. <b>Parasyte:</b> The best right hand man (4)
+			21. <b>Jujutsu Kaisen:</b> Finger Lickin' Good (6)
+			23. <b>Pokemon:</b> Lost to a snivy (7)
+			24. <b>Fate:</b> King Arthur was a reverse trap (5)`.replace(/\t/g, '').split('\n').map(line => line.split(/\. (.*)/)));
+			clues.push(`1. <b>Kill la Kill:</b> Best Uniform (8)
+			2. <b>How to keep a Mummy:</b> Cutest Mummy (3)
+			3. <b>Akame Ga Kill:</b> 
+			5. <b>My Neighbour Totoro:</b> Studio's Mascot (6)
+			7. <b>JoJo's Bizzare Adventure:</b> Stand capable of freezing time (4, 8)
+			8. <b>Dragon Ball:</b> Allows only those with pure heart to fly on it (6, 6)
+			14. <b>Made in Abyss:</b> Regular robot (3)
+			15. <b>Naruto:</b> The fox of Gods, the woe of lords (6)
+			16. <b>Kuroko no basket:</b> Momo's favourite puppy (7, 1)
+			18. <b>Mob Psycho:</b> Cheeky religious conman (6)
+			19. <b>Fairy Tail:</b> Sad cat (5)
+			22. <b>Seven Deadly Sins:</b> Living garbage disposal (4)`.replace(/\t/g, '').split('\n').map(line => line.split(/\. (.*)/)));
 			document.getElementById('crossword-left').innerHTML = `<h3>Across</h3><br/><table class="cross-words">${clues[0].map(clue => `<tr><td>${clue[0]}</td><td>${clue[1]}</td></tr>`).join('')}</table>`;
 			document.getElementById('crossword-right').innerHTML = `<h3>Down</h3><br/><table class="cross-words">${clues[1].map(clue => `<tr><td>${clue[0]}</td><td>${clue[1]}</td></tr>`).join('')}</table>`;
 		}
