@@ -1,14 +1,14 @@
 [{
+	"name": "Newsletter - Dec I",
+	"link": "/newsletters/2022-12-1",
+	"type": "letter",
+	"date": "25th Dec, 2021",
+	"hype": true
+}, {
 	"name": "<b>Member Applications</b>",
 	"link": "/apply",
 	"type": "letter",
 	"date": "2nd Dec, 2022",
-	"hype": true
-},{
-	"name": "<b>Live Quiz Results</b>",
-	"link": "/live-results",
-	"type": "letter",
-	"date": "12th Nov, 2022",
 	"hype": true
 },{
 	"name": "<b>Live Quiz, Saturday!</b>",
