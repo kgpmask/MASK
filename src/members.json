@@ -4,7 +4,7 @@
 		"baseYear": "22",
 		"teams": {
 			"a": {
-				"name": "AMV",
+				"name": "AMV & Music",
 				"icon": "amv"
 			},
 			"d": {
@@ -12,7 +12,7 @@
 				"icon": "design"
 			},
 			"n": {
-				"name": "Newsletter",
+				"name": "Media & Newsletter",
 				"icon": "newsletter"
 			},
 			"q": {
@@ -265,7 +265,7 @@
 				"id": "21_vidunram",
 				"name": "Vidunram",
 				"roll": "21EE30033",
-				"teams": ["q", "w"]
+				"teams": ["n", "q", "w"]
 			}
 		]
 	},
