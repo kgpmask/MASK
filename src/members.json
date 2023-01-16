@@ -45,12 +45,6 @@
 				"teams": ["a", "d", "q"]
 			},
 			{
-				"id": "21_abhinav_v",
-				"name": "Abhinav V Pillai",
-				"roll": "21ME10004",
-				"teams": ["a"]
-			},
-			{
 				"id": "20_aniruddha",
 				"name": "Aniruddha Panda",
 				"roll": "20MI10008",
@@ -91,7 +85,7 @@
 				"id": "21_ayush_parmar",
 				"name": "Ayush Parmar",
 				"roll": "21IM30005",
-				"teams": ["q"]
+				"teams": ["n", "q"]
 			},
 			{
 				"id": "21_bhavesh",
@@ -214,7 +208,7 @@
 			{
 				"id": "21_shreya",
 				"name": "Shreya Rajvanshi",
-				"roll": "21PP00064",
+				"roll": "22XXXXXXX",
 				"teams": ["a", "d"]
 			},
 			{
