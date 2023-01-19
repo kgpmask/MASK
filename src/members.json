@@ -260,6 +260,186 @@
 				"name": "Vidunram",
 				"roll": "21EE30033",
 				"teams": ["n", "q", "w"]
+			},
+			{
+				"id": "21_manish",
+				"name": "Manish",
+				"roll": "21XXXXX",
+				"teams": ["a"]
+			},
+			{
+				"id": "22_ankan",
+				"name": "Ankan Saha",
+				"roll": "22XXXXX",
+				"teams": ["q","w"]
+			},
+			{
+				"id": "22_aman",
+				"name": "Aman Tater ",
+				"roll": "22XXXXX",
+				"teams": ["n","q"]
+			},
+			{
+				"id": "22_maitra",
+				"name": "Maitra Das",
+				"roll": "22XXXXX",
+				"teams": ["n"]
+			},
+			{
+				"id": "22_ashish",
+				"name": "Ashish Thakur",
+				"roll": "22XXXXX",
+				"teams": ["a"]
+			},
+			{
+				"id": "22_dhurjati",
+				"name": "Dhurjati V S Sai Sampreet ",
+				"roll": "22XXXXX",
+				"teams": ["n"]
+			},
+			{
+				"id": "22_uday",
+				"name": "Uday Srivastava ",
+				"roll": "22XXXXX",
+				"teams": ["w"]
+			},
+			{
+				"id": "22_siddhartha",
+				"name": "Siddhartha Kumar",
+				"roll": "22XXXXX",
+				"teams": ["d"]
+			},
+			{
+				"id": "22_gargi",
+				"name": "Gargi Raj ",
+				"roll": "22XXXXX",
+				"teams": ["a","n"]
+			},
+			{
+				"id": "22_mayank",
+				"name": "Mayank",
+				"roll": "22XXXXX",
+				"teams": ["a","n","q"]
+			},
+			{
+				"id": "22_rashmi",
+				"name": "Rashmi Dinkar Patil",
+				"roll": "22XXXXX",
+				"teams": ["d","n","q"]
+			},
+			{
+				"id": "22_nishkal",
+				"name": "Nishkal Prakash",
+				"roll": "22XXXXX",
+				"teams": ["w"]
+			},
+			{
+				"id": "22_anand",
+				"name": "Anand Malav Rameshchandra ",
+				"roll": "22XXXXX",
+				"teams": ["q"]
+			},
+			{
+				"id": "22_vipin",
+				"name": "Vipin kaushik ",
+				"roll": "22XXXXX",
+				"teams": ["d"]
+			},
+			{
+				"id": "22_soumil",
+				"name": "Soumil Maiti ",
+				"roll": "22XXXXX",
+				"teams": ["q"]
+			},
+			{
+				"id": "22_hardik",
+				"name": "Hardik Bhardwaj",
+				"roll": "22XXXXX",
+				"teams": ["a"]
+			},
+			{
+				"id": "22_sahil",
+				"name": "Sahil Patel",
+				"roll": "22XXXXX",
+				"teams": ["d"]
+			},
+			{
+				"id": "22_saroja",
+				"name": "Saroja Bamra",
+				"roll": "22XXXXX",
+				"teams": ["d"]
+			},
+			{
+				"id": "22_dishant",
+				"name": "Dishant Bothra",
+				"roll": "22XXXXX",
+				"teams": ["q"]
+			},
+			{
+				"id": "22_snehansh",
+				"name": "Snehansh Sen ",
+				"roll": "22XXXXX",
+				"teams": ["a"]
+			},
+			{
+				"id": "22_vishu",
+				"name": "Vishu Gour ",
+				"roll": "22XXXXX",
+				"teams": ["a"]
+			},
+			{
+				"id": "22_dibya",
+				"name": "Dibya Ranjan Samal ",
+				"roll": "22XXXXX",
+				"teams": ["d"]
+			},
+			{
+				"id": "22_kushagra",
+				"name": "Kushagra Kuntal ",
+				"roll": "22XXXXX",
+				"teams": ["n"]
+			},
+			{
+				"id": "22_piyush",
+				"name": "Piyush Agarwal",
+				"roll": "22XXXXX",
+				"teams": ["q"]
+			},
+			{
+				"id": "22_anustup",
+				"name": "Anustup Hazra ",
+				"roll": "22XXXXX",
+				"teams": ["n"]
+			},
+			{
+				"id": "22_ritobroto",
+				"name": "Ritobroto Kalita",
+				"roll": "22XXXXX",
+				"teams": ["q"]
+			},
+			{
+				"id": "22_snehal",
+				"name": "Snehal Mishra ",
+				"roll": "22XXXXX",
+				"teams": ["n"]
+			},
+			{
+				"id": "22_sagarika",
+				"name": "Sagarika Debnath ",
+				"roll": "22XXXXX",
+				"teams": ["d"]
+			},
+			{
+				"id": "22_jai",
+				"name": "Jai Sachdev",
+				"roll": "22XXXXX",
+				"teams": ["w"]
+			},
+			{
+				"id": "22_vedanta",
+				"name": "Vedanta Hazra",
+				"roll": "22XXXXX",
+				"teams": ["d"]
 			}
 		]
 	},
