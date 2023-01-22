@@ -10,63 +10,63 @@
 	"type": "letter",
 	"date": "2nd Dec, 2022",
 	"hype": true
-}, {
+},{
 	"name": "<b>Live Quiz, Saturday!</b>",
 	"link": "/events",
 	"type": "letter",
 	"date": "5th Nov, 2022",
 	"hype": true
 }, {
-	"name": "「AMV」That Time I Got Reincarnated as a Slime - Rise Up",
-	"link": "https://www.youtube.com/watch?v=HCl4m9ojMMc",
+	"name": "AMV - Unstoppable",
+	"link": "https://www.youtube.com/watch?v=jYNqbGxeb6g",
 	"type": "video",
-	"attr": ["Karthikeya S. M. Yelisetty"],
-	"date": "10th Jan, 2023",
+	"attr": ["Priyank Mundra"],
+	"date": "4th Dec, 2021",
 	"show": "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/jYNqbGxeb6g\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>",
 	"page": "_blank",
 	"hype": true
 }, {
-	"name": "「AMV」Fate Series - Whatever It Takes",
-	"link": "https://www.youtube.com/watch?v=yhtxX3JkShI",
+	"name": "Music - Lost My Pieces",
+	"link": "https://www.youtube.com/watch?v=6-PNURaK8uY",
 	"type": "video",
-	"attr": ["Arghadeep Biswas"],
-	"date": "10th Jan, 2023",
+	"attr": ["Parth Mane"],
+	"date": "31st Nov, 2021",
 	"show": "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/6-PNURaK8uY\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>",
 	"page": "_blank",
 	"hype": true
 }, {
-	"name": "「AMV」 My Hero Academia - BEGGIN'",
-	"link": "https://www.youtube.com/watch?v=S1pFkcsuMYE",
+	"name": "AMV - I'm a Mess",
+	"link": "https://www.youtube.com/watch?v=BOT8ge4YHu4",
 	"type": "video",
-	"attr": ["Abhibhu Prakash"],
-	"date": "10th Jan, 2023",
+	"attr": ["Kunal Gupta"],
+	"date": "26th Nov, 2021",
 	"show": "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/BOT8ge4YHu4\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>",
 	"page": "_blank",
 	"hype": true
 }, {
-	"name": "「AMV」Gakuen Babysitters - Paathashala Loo",
-	"link": "https://www.youtube.com/watch?v=swFVafJvVac",
+	"name": "AMV - A Thousand Years",
+	"link": "https://www.youtube.com/watch?v=WbNgavtMjIA",
 	"type": "video",
-	"attr": ["Dommeti Chaitanya Srinivas"],
-	"date": "10th Jan,2023",
+	"attr": ["Hrishabh Kumar Tundwar"],
+	"date": "21st Nov, 2021",
 	"show": "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/WbNgavtMjIA\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>",
 	"page": "_blank",
 	"hype": true
 }, {
-	"name": "「AMV」No Game No Life - Blood // Water",
-	"link": "https://www.youtube.com/watch?v=oXpj4H9Qrcw",
+	"name": "AMV - Payphone",
+	"link": "https://www.youtube.com/watch?v=AILjMeocuV0",
 	"type": "video",
-	"attr": ["G. Lohitakshay"],
-	"date": "10th Jan, 2023",
+	"attr": ["Abhibhu Prakash"],
+	"date": "14th Nov, 2021",
 	"show": "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/AILjMeocuV0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>",
 	"page": "_blank",
 	"hype": true
 }, {
-	"name": "「AMV」Assassination Classroom - Heathens",
-	"link": "https://www.youtube.com/watch?v=unITcghHNVI",
+	"name": "AMV - Changes",
+	"link": "https://www.youtube.com/watch?v=Bws8w3F_yKA",
 	"type": "video",
-	"attr": ["Chiranjeet Mishra"],
-	"date": "10th Jan, 2023",
+	"attr": ["Ayush Kumar"],
+	"date": "6th Nov, 2021",
 	"show": "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/Bws8w3F_yKA\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>",
 	"page": "_blank",
 	"hype": true
@@ -77,11 +77,11 @@
 	"date": "23rd Oct, 2021",
 	"hype": true
 }, {
-	"name": "「AMV」Phantasy Star Online 2 - Symphony",
-	"link": "https://www.youtube.com/watch?v=GX7TAigwZPw",
+	"name": "AMV - Six Feet Under",
+	"link": "https://www.youtube.com/watch?v=p4WyHaQd-K0",
 	"type": "video",
-	"attr": ["Hrishabh Kumar Tundwar"],
-	"date": "10th Jan, 2023",
+	"attr": ["Spandan Halder"],
+	"date": "9th Oct, 2021",
 	"show": "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/p4WyHaQd-K0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>",
 	"page": "_blank",
 	"hype": true
@@ -92,20 +92,20 @@
 	"date": "9th Oct, 2021",
 	"hype": true
 }, {
-	"name": "「AMV」Don't Toy With Me Miss Nagatoro - Payphone (Switching Vocals)",
-	"link": "https://www.youtube.com/watch?v=u7jJ2coeBRo",
+	"name": "AMV - Hide and Seek",
+	"link": "https://www.youtube.com/watch?v=E9-DiS6MFwc",
 	"type": "video",
-	"attr": ["Abhibhu Prakash"],
-	"date": "10th Jan, 2023",
+	"attr": ["Rishabh Jain"],
+	"date": "1st Oct, 2021",
 	"show": "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/E9-DiS6MFwc\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>",
 	"page": "_blank",
 	"hype": true
 }, {
-	"name": "「AMV」The Garden of Words - A Thousand Years",
-	"link": "https://www.youtube.com/watch?v=9W4eyQ7LP7g",
+	"name": "AMV - Rockstar",
+	"link": "https://www.youtube.com/watch?v=PecVuz0a6c0",
 	"type": "video",
-	"attr": ["Hrishabh Kumar Tundwar"],
-	"date": "10th Jan, 2023",
+	"attr": ["Ayush Kumar"],
+	"date": "25th Sep, 2021",
 	"show": "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/PecVuz0a6c0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>",
 	"page": "_blank",
 	"hype": true
@@ -116,11 +116,11 @@
 	"date": "25th Sep, 2021",
 	"hype": true
 }, {
-	"name": "「AMV」Your Lie In April - Buniyaad",
-	"link": "https://www.youtube.com/watch?v=0TJkcTWEu9c",
+	"name": "AMV - Symphony",
+	"link": "https://www.youtube.com/watch?v=-CZ7lZFwcsA",
 	"type": "video",
-	"attr": ["Rituraj Warisa"],
-	"date": "10th Jan, 2023",
+	"attr": ["Hrishabh Kumar Tundwar"],
+	"date": "12th Sep, 2021",
 	"show": "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/-CZ7lZFwcsA\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>",
 	"page": "_blank",
 	"hype": true
@@ -170,7 +170,25 @@
 	"attr": ["Ayush Sharma"],
 	"date": "21st Aug, 2021",
 	"hype": true
-},{
+}, {
+	"name": "AMV - Beggin'",
+	"link": "https://www.youtube.com/watch?v=tH8zQdBkkBk",
+	"type": "video",
+	"attr": ["Abhibhu Prakash"],
+	"date": "20th Aug, 2021",
+	"show": "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/tH8zQdBkkBk\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>",
+	"page": "_blank",
+	"hype": true
+}, {
+	"name": "AMV - Zombie",
+	"link": "https://www.instagram.com/tv/CSuMxP8g8YT",
+	"type": "video",
+	"attr": ["Priyank Mundra"],
+	"date": "18th Aug, 2021",
+	"show": "",
+	"page": "_blank",
+	"hype": true
+}, {
 	"name": "Art - Yūji Itadori",
 	"link": "0020.webp",
 	"type": "art",
@@ -218,6 +236,15 @@
 	"attr": ["Ashwin Kumar"],
 	"date": "10th Jun, 2021"
 }, {
+	"name": "AMV - Buniyaad",
+	"link": "https://www.youtube.com/watch?v=qOngOlxEcnY",
+	"type": "video",
+	"attr": ["Rituraj Warisa"],
+	"date": "1st Jan, 2021",
+	"show": "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/qOngOlxEcnY\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>",
+	"page": "_blank",
+	"hype": true
+}, {
 	"name": "Art - Nara Shikamaru",
 	"link": "0013.webp",
 	"type": "art",
@@ -225,11 +252,46 @@
 	"date": "19th Oct, 2020",
 	"hype": true
 }, {
+	"name": "AMV - Avengers Trailer",
+	"link": "https://www.youtube.com/watch?v=K1qJQu6qboY",
+	"type": "video",
+	"attr": ["Arya Tathe"],
+	"date": "27th May, 2020",
+	"show": "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/K1qJQu6qboY\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>",
+	"page": "_blank",
+	"hype": true
+}, {
 	"name": "Art - Kirigakure Shinobi Massacre",
 	"link": "0012.webp",
 	"type": "art",
 	"attr": ["Arpit Das"],
 	"date": "13th May, 2020",
+	"hype": true
+}, {
+	"name": "AMV - Courtesy Call",
+	"link": "https://www.youtube.com/watch?v=mz3l63l-uEs",
+	"type": "video",
+	"attr": ["Shounak Mehendale"],
+	"date": "25th Apr, 2020",
+	"show": "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/mz3l63l-uEs\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>",
+	"page": "_blank"
+}, {
+	"name": "AMV - Thousand Years",
+	"link": "https://www.youtube.com/watch?v=RXTdlbArXlY",
+	"type": "video",
+	"attr": ["Arya Tathe"],
+	"date": "14th Feb, 2020",
+	"show": "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/RXTdlbArXlY\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>",
+	"page": "_blank",
+	"hype": true
+}, {
+	"name": "AMV - Numb",
+	"link": "https://www.youtube.com/watch?v=O950107XEps",
+	"type": "video",
+	"attr": ["Shounak Mehendale"],
+	"date": "19th Jan, 2020",
+	"show": "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/O950107XEps\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>",
+	"page": "_blank",
 	"hype": true
 }, {
 	"name": "Art - Zenitsu Agatsuma",
