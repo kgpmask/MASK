@@ -234,7 +234,7 @@
 				"id": "21_suvojit",
 				"name": "Suvojit Das",
 				"roll": "21EE30029",
-				"teams": ["d"]
+				"teams": ["d", "n"]
 			},
 			{
 				"id": "21_tussar",
@@ -342,7 +342,7 @@
 			},
 			{
 				"id": "22_vipin",
-				"name": "Vipin kaushik ",
+				"name": "Vipin Kaushik ",
 				"roll": "22CH30035",
 				"teams": ["d"]
 			},
