@@ -331,7 +331,7 @@
 				"id": "19_nishkal",
 				"name": "Nishkal Prakash",
 				"roll": "19XXXXXXX",
-				"teams": ["w"],
+				"teams": ["n", "q", "w"],
 				"RA": true
 			},
 			{
@@ -446,6 +446,24 @@
 				"id": "22_neha",
 				"name": "Neha Narayankar",
 				"roll": "22PH10033",
+				"teams": ["d"]
+			},
+			{
+				"id": "X21_kapil",
+				"name": "Kapil Kumar Meena",
+				"roll": "21EE100XX",
+				"teams": ["q"]
+			},
+			{
+				"id": "X22_arhana",
+				"name": "Arhana Jain",
+				"roll": "22XXXXXXX",
+				"teams": ["q"]
+			},
+			{
+				"id": "X22_gracy",
+				"name": "Gracy Debbarma",
+				"roll": "22XXXXXXX",
 				"teams": ["d"]
 			}
 		]
