@@ -208,7 +208,7 @@
 			{
 				"id": "21_shreya",
 				"name": "Shreya Rajvanshi",
-				"roll": "22XXXXXXXXX",
+				"roll": "21XXXXXXXXX",
 				"teams": ["a", "d"]
 			},
 			{
@@ -325,7 +325,7 @@
 				"id": "22_rashmi",
 				"name": "Rashmi Dinkar Patil",
 				"roll": "22ME30046",
-				"teams": ["d","n","q"]
+				"teams": ["d","n"]
 			},
 			{
 				"id": "19_nishkal",
