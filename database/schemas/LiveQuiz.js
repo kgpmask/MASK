@@ -9,7 +9,7 @@ const questionsSchema = new mongoose.Schema({
 		q: {
 			type: [{
 				val: { type: String, required: true },
-				type: { type: String, enum: ["title", "text", "image", "video", "mp3"], required: true }
+				type: { type: String, enum: ['title', 'text', 'image', 'video', 'mp3'], required: true }
 			}],
 			required: true
 		},
@@ -22,7 +22,7 @@ const questionsSchema = new mongoose.Schema({
 			value: {
 				type: [{
 					val: { type: String, required: true },
-					type: { type: String, enum: ["text", "image"], required: true }
+					type: { type: String, enum: ['text', 'image'], required: true }
 				}]
 			}
 		},

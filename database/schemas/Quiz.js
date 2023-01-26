@@ -19,14 +19,14 @@ const questionsSchema = new mongoose.Schema({
 		q: {
 			type: [{
 				val: { type: String, required: true },
-				type: { type: String, enum: ["title", "text", "image"], required: true }
+				type: { type: String, enum: ['title', 'text', 'image'], required: true }
 			}],
 			required: true
 		},
 		options: {
 			type: [{
 				val: { type: String, required: true },
-				type: { type: String, enum: ["text", "image"], required: true }
+				type: { type: String, enum: ['text', 'image'], required: true }
 			}],
 			required: true
 		},
