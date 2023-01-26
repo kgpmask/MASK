@@ -17,10 +17,66 @@
 	"date": "5th Nov, 2022",
 	"hype": true
 }, {
+	"name": "「AMV」Your Lie In April - Buniyaad",
+	"link": "https://www.youtube.com/watch?v=0TJkcTWEu9c",
+	"type": "youtube",
+	"attr": ["Rituraj Warisa"],
+	"date": "10th Jan, 2023",
+	"page": "_blank",
+	"hype": true
+}, {
+	"name": "「AMV」The Garden of Words - A Thousand Years",
+	"link": "https://www.youtube.com/watch?v=9W4eyQ7LP7g",
+	"type": "youtube",
+	"attr": ["Hrishabh Kumar Tundwar"],
+	"date": "10th Jan, 2023",
+	"page": "_blank",
+	"hype": true
+}, {
+	"name": "「AMV」Don't Toy With Me Miss Nagatoro - Payphone (Switching Vocals)",
+	"link": "https://www.youtube.com/watch?v=u7jJ2coeBRo",
+	"type": "youtube",
+	"attr": ["Abhibhu Prakash"],
+	"date": "10th Jan, 2023",
+	"page": "_blank",
+	"hype": true
+}, {
+	"name": "「AMV」Phantasy Star Online 2 - Symphony",
+	"link": "https://www.youtube.com/watch?v=GX7TAigwZPw",
+	"type": "youtube",
+	"attr": ["Hrishabh Kumar Tundwar"],
+	"date": "10th Jan, 2023",
+	"page": "_blank",
+	"hype": true
+}, {
+	"name": "「AMV」Assassination Classroom - Heathens",
+	"link": "https://www.youtube.com/watch?v=unITcghHNVI",
+	"type": "youtube",
+	"attr": ["Chiranjeet Mishra"],
+	"date": "10th Jan, 2023",
+	"page": "_blank",
+	"hype": true
+}, {
+	"name": "「AMV」No Game No Life - Blood // Water",
+	"link": "https://www.youtube.com/watch?v=oXpj4H9Qrcw",
+	"type": "youtube",
+	"attr": ["G. Lohitakshay"],
+	"date": "10th Jan, 2023",
+	"page": "_blank",
+	"hype": true
+}, {
 	"name": "Newsletter - Oct II",
 	"link": "/newsletters/2021-10-2",
 	"type": "letter",
 	"date": "23rd Oct, 2021",
+	"hype": true
+}, {
+	"name": "「AMV」Gakuen Babysitters - Paathashala Loo",
+	"link": "https://www.youtube.com/watch?v=swFVafJvVac",
+	"type": "youtube",
+	"attr": ["Dommeti Chaitanya Srinivas"],
+	"date": "10th Jan, 2023",
+	"page": "_blank",
 	"hype": true
 }, {
 	"name": "Newsletter - Oct I",
@@ -29,10 +85,34 @@
 	"date": "9th Oct, 2021",
 	"hype": true
 }, {
+	"name": "「AMV」 My Hero Academia - BEGGIN'",
+	"link": "https://www.youtube.com/watch?v=S1pFkcsuMYE",
+	"type": "youtube",
+	"attr": ["Abhibhu Prakash"],
+	"date": "10th Jan, 2023",
+	"page": "_blank",
+	"hype": true
+}, {
+	"name": "「AMV」Fate Series - Whatever It Takes",
+	"link": "https://www.youtube.com/watch?v=yhtxX3JkShI",
+	"type": "youtube",
+	"attr": ["Arghadeep Biswas"],
+	"date": "10th Jan, 2023",
+	"page": "_blank",
+	"hype": true
+}, {
 	"name": "Newsletter - Sept II",
 	"link": "/newsletters/2021-09-2",
 	"type": "letter",
 	"date": "25th Sep, 2021",
+	"hype": true
+}, {
+	"name": "「AMV」That Time I Got Reincarnated as a Slime - Rise Up",
+	"link": "https://www.youtube.com/watch?v=HCl4m9ojMMc",
+	"type": "youtube",
+	"attr": ["Karthikeya S. M. Yelisetty"],
+	"date": "10th Jan, 2023",
+	"page": "_blank",
 	"hype": true
 }, {
 	"name": "Newsletter - Sept I",
@@ -149,7 +229,7 @@
 	"date": "3rd Dec, 2019",
 	"hype": true
 }, {
-	"name": "Art - Uchiha brothers:  Itachi and Sasuke",
+	"name": "Art - Uchiha brothers: Itachi and Sasuke",
 	"link": "0010.webp",
 	"type": "art",
 	"attr": ["Rachana Verma"],
