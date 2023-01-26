@@ -12,4 +12,6 @@ const postSchema = new mongoose.Schema({
 
 postSchema.set("collection", 'posts');
 
-module.exports = mongoose.model('Post', postSchema);
+postModel = mongoose.model("posts",postSchema);
+
+module.exports = postModel

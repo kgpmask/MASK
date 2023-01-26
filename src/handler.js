@@ -2,11 +2,11 @@ const axios = require('axios');
 const { render } = require('nunjucks');
 const fs = require('fs').promises;
 const path = require('path');
+const { getPosts } = require('../database/database_handler.js');
 
 const checker = require('./checker.js');
 const login = require('./login.js');
 const dbh = PARAMS.userless ? {} : require('../database/database_handler.js');
-
 const handlerContext = {}; // Store cross-request context here
 
 if (!PARAMS.userless) login.init();
@@ -65,10 +65,8 @@ function handler (app, env) {
 					const elapsed = Date.now() - Date.parse(post.date.replace(/(?<=^\d{1,2})[a-z]{2}/, '').replace(/,/, ''));
 					if (!isNaN(elapsed) && elapsed < 7 * 24 * 60 * 60 * 1000) post.recent = true;
 				});
-				const vids = require('./posts.json').filter(post => {
-					return post.type === 'video' && post.hype && post.link.includes('www.youtube.com');
-				}).shuffle().slice(0, 5);
-				const art = require('./posts.json').filter(post => post.type === 'art' && post.hype).slice(0, 5);
+				const vids = getPosts(video);
+				const art = getPosts(art);
 				res.renderFile('home.njk', { posts, vids, art });
 				break;
 			}
@@ -77,7 +75,7 @@ function handler (app, env) {
 				break;
 			}
 			case 'art': {
-				const art = require('./posts.json').filter(post => post.type === 'art');
+				const art = getPosts(art);
 				res.renderFile('art.njk', { art });
 				break;
 			}
@@ -346,10 +344,8 @@ function handler (app, env) {
 				break;
 			}
 			case 'videos': {
-				const vids = require('./posts.json');
-				const youtubeVids = vids.filter(vid => vid.link.includes('www.youtube.com'));
-				const instaVids = vids.filter(vid => vid.link.includes('www.instagram.com'));
-				res.renderFile('videos.njk', { youtubeVids, instaVids });
+				const vids = getPosts(video);
+				res.renderFile('videos.njk', { vids });
 				break;
 			}
 			case 'corsProxy': {
