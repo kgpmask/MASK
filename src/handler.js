@@ -65,8 +65,9 @@ function handler (app, env) {
 					const elapsed = Date.now() - Date.parse(post.date.replace(/(?<=^\d{1,2})[a-z]{2}/, '').replace(/,/, ''));
 					if (!isNaN(elapsed) && elapsed < 7 * 24 * 60 * 60 * 1000) post.recent = true;
 				});
-				const vids = getPosts(video);
-				const art = getPosts(art);
+				const vids = art = [];
+				// const vids = getPosts(video);
+				// const art = getPosts(art);
 				res.renderFile('home.njk', { posts, vids, art });
 				break;
 			}
@@ -75,7 +76,7 @@ function handler (app, env) {
 				break;
 			}
 			case 'art': {
-				const art = getPosts(art);
+				const art = []/* getPosts(art) */;
 				res.renderFile('art.njk', { art });
 				break;
 			}
@@ -344,7 +345,7 @@ function handler (app, env) {
 				break;
 			}
 			case 'videos': {
-				const vids = getPosts(video);
+				const vids = []/* getPosts(video) */;
 				res.renderFile('videos.njk', { vids });
 				break;
 			}

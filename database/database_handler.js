@@ -2,7 +2,7 @@ const User = require('./schemas/User');
 const Quiz = require('./schemas/Quiz');
 const { LiveQuiz, LiveResult } = require('./schemas/LiveQuiz');
 const Newsletter = require('./schemas/Newsletter');
-const PostModel = require('./schemas/Post');
+const Post = require('./schemas/Post');
 
 // Handle newly registered user or normal login
 async function createNewUser (profile) {
@@ -99,7 +99,7 @@ async function getNewsletter (date) {
 
 // Fetching posts based on type (art/video/newsletter)
 function getPosts (postType) {
-	return PostModel.find({ type: postType });
+	return Post.find({ type: postType });
 }
 
 module.exports = {
