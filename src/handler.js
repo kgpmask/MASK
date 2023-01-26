@@ -117,11 +117,12 @@ function handler (app, env) {
 					teams,
 					members
 				} = membersData[yearIndex];
-				const ctx = { 'Governors': [], 'Former Members': [] };
-				members.forEach(member => {
+				const ctx = { 'Governors': [], 'Former Members': [], 'Research Associate': [] };
+				members.sort((a, b) => -(a.name < b.name)).forEach(member => {
 					let target;
 					if (member.gov) target = 'Governors';
 					else if (member.inactive) target = 'Former Members';
+					else if (member.RA) target = 'Research Associate';
 					else target = `Batch of 20${member.roll.substr(0, 2)}`;
 					if (!ctx[target]) ctx[target] = [];
 					ctx[target].push({
@@ -136,7 +137,8 @@ function handler (app, env) {
 					});
 				});
 				const prev = membersData[yearIndex + 1]?.name, next = membersData[yearIndex - 1]?.name;
-				const keys = ['Governors', ...Object.keys(ctx).filter(key => key.startsWith('Batch of ')).sort(), 'Former Members'];
+				const keys = ['Governors', 'Research Associate', ...Object.keys(ctx)
+					.filter(key => key.startsWith('Batch of ')).sort(), 'Former Members'];
 				res.renderFile('members.njk', {
 					members: Object.fromEntries(keys.map(key => [key, ctx[key]])),
 					membersTitle: name === membersData[0].name ? 'Our Members' : name,
