@@ -161,7 +161,7 @@
 	<script>
 		let currentQ = 0;
 		let timeVal = 0;
-		let countLeftPerQs = 30;
+		let countLeftPerQs = 3;
 		let next = false;
 		let currentTimer;
 		const qAmt = {{ qAmt }};
@@ -248,7 +248,7 @@
 					.getElementById(`qbox-${c}`)
 					.style
 					.display = 'none';
-			timeVal = qs[c].time || 30;
+			timeVal = qs[c].time || countLeftPerQs;
 			let cancel = false;
 			function endTimer() {
 				cancel = true;
@@ -264,7 +264,7 @@
 					setTimeout(decrement, 1000);
 				else 
 					{# nextQ(); #}
-					cancel=true;
+					endQuiz();
 				}
 			decrement();
 			return endTimer;
@@ -285,13 +285,14 @@
 			currentQ++;
 			const c = currentQ;
 			if (c >= qAmt) {
-				document
-					.getElementById('quiz')
-					.submit();
+				endQuiz();
 			} 
 			else 
 				currentTimer = timer();
 			}
+		function endQuiz(){
+			document.getElementById('quiz').submit();
+		}
 	</script>
 {% endblock %}
 
