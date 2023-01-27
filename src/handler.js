@@ -39,6 +39,7 @@ function handler (app, env) {
 
 	app.use((req, res, next) => {
 		res.locals.userless = PARAMS.userless;
+		res.locals.quizFlag = PARAMS.quiz;
 		next();
 	});
 
@@ -249,7 +250,7 @@ function handler (app, env) {
 						}
 						const index = quizzes.indexOf(args[1]);
 						if (index === -1) return notFound('events/quizzes_404.njk', { years: renderYears.reverse(), quizzed, locked });
-						if (quizzed.includes(args[1])) return res.renderFile('events/quiz_attempted.njk');
+						if (!PARAMS.quiz && quizzed.includes(args[1])) return res.renderFile('events/quiz_attempted.njk');
 						const adjs = [quizzes[index - 1], quizzes[index + 1], quizzes[index]];
 						const QUIZ = QUIZZES[args[1]];
 						const quizDate = new Date(QUIZ.unlock).getTime();
