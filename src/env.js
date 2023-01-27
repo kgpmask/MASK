@@ -5,9 +5,10 @@ const aliases = {
 	d: 'dev',
 	l: 'local',
 	p: 'prod',
-	u: 'userless'
+	u: 'userless',
+	q: 'quiz'
 };
-const validParams = ['dev', 'local', 'prod', 'userless'];
+const validParams = ['dev', 'local', 'prod', 'userless', 'quiz'];
 
 if (!global.PARAMS) {
 	if (process.env['NODE_ENV'] === 'production') process.env.prod = true;
