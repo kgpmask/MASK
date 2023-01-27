@@ -45,7 +45,7 @@
 		"space-in-parens": "error",
 		"space-infix-ops": "error",
 		"spaced-comment": ["error", "always", {
-			"exceptions": ["*", "open", "close"]
+			"exceptions": ["*"]
 		}],
 		"yoda": ["error", "never"]
 	}
