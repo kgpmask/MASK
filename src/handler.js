@@ -213,7 +213,7 @@ function handler (app, env) {
 					return res.renderFile('login.njk');
 				}
 				dbh.getUserStats(req.user._id).then(user => {
-					console.log(user.quizData);
+					// console.log(user.quizData);
 					const quizzed = user.quizData.map(quiz => quiz.quizId) ?? [];
 					dbh.getQuizzes().then(qzs => {
 						const QUIZZES = {};

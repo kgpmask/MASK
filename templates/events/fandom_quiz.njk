@@ -161,7 +161,7 @@
 	<script>
 		let currentQ = 0;
 		let timeVal = 0;
-		let countLeftPerQs = 3;
+		let globalTimer = 10;
 		let next = false;
 		let currentTimer;
 		const qAmt = {{ qAmt }};
@@ -216,7 +216,7 @@
 			if (e) {
 				
 				//Select the corresponding option
-				op=document.getElementById(`option-${currentQ + 1}-${e}`);
+				op=document.getElementById(`option-${currentQ}-${e}`);
 				op.click();
 				/* Was trying a feature to allow focus on a checked element*/
 				op.scrollIntoView();
@@ -224,31 +224,21 @@
 				preventDefault(event);
 			}
 			else if (n == 27) {
-				chk_opt=document.querySelector(`input[name="answer-${currentQ + 1}"]:checked`)
+				chk_opt=document.querySelector(`input[name="answer-${currentQ}"]:checked`)
 				if (chk_opt)
 					chk_opt.checked = false
 			}
 			else if (n == 13) {
 			// TODO: Ignore if no input is selected
-				if (document.querySelector(`input[name="answer-${currentQ + 1}"]:checked`)) 
+				if (document.querySelector(`input[name="answer-${currentQ}"]:checked`)) 
 					nextQ();
 				preventDefault(event);
 			}
 
 		});
 		function timer() {
-			const c = currentQ;
-
-			document
-				.getElementById(`qbox-${c + 1}`)
-				.style
-				.display = 'block';
-			if (c) 
-				document
-					.getElementById(`qbox-${c}`)
-					.style
-					.display = 'none';
-			timeVal = qs[c].time || countLeftPerQs;
+			
+			timeVal = globalTimer;
 			let cancel = false;
 			function endTimer() {
 				cancel = true;
@@ -277,19 +267,17 @@
 			for (button of document.getElementsByClassName('nextQ')) {
 				button.style.display = 'inline';
 			}
-			currentTimer = timer();
+			nextQ();
+			timer();	// Here we have started a global timer with value = globalTimer
 		}
 		function nextQ() {
-			if (currentTimer) 
-				currentTimer();
-			currentQ++;
+			//if (currentTimer) currentTimer();
 			const c = currentQ;
-			if (c >= qAmt) {
-				endQuiz();
-			} 
-			else 
-				currentTimer = timer();
-			}
+			if (c >= qAmt) endQuiz();
+			else document.getElementById(`qbox-${c+1}`).style.display = 'block';
+			if (c) document.getElementById(`qbox-${c}`).style.display = 'none';
+			currentQ++;
+		}
 		function endQuiz(){
 			document.getElementById('quiz').submit();
 		}
