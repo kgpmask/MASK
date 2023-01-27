@@ -5,7 +5,7 @@ const path = require('path');
 
 const checker = require('./checker.js');
 const login = require('./login.js');
-const dbh = PARAMS.userless ? {} : require('../database/database_handler.js');
+const dbh = PARAMS.userless ? {} : require('../database/handler');
 
 const handlerContext = {}; // Store cross-request context here
 

@@ -1,6 +1,6 @@
 exports.init = () => {
 	const GoogleStrategy = require('passport-google-oauth20');
-	const dbh = require('../database/database_handler');
+	const dbh = require('../database/handler');
 
 	const port = require('./config.js').PORT;
 	const callbackURL = process.env['NODE_ENV'] === 'production' ? 'https://kgpmask.club' : `http://localhost:${port}`;
