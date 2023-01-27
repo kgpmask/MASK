@@ -263,7 +263,8 @@
 				if (timeVal >= 0) 
 					setTimeout(decrement, 1000);
 				else 
-					nextQ();
+					{# nextQ(); #}
+					cancel=true;
 				}
 			decrement();
 			return endTimer;
@@ -287,7 +288,8 @@
 				document
 					.getElementById('quiz')
 					.submit();
-			} else 
+			} 
+			else 
 				currentTimer = timer();
 			}
 	</script>
