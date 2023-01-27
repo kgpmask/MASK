@@ -2,11 +2,11 @@ const axios = require('axios');
 const { render } = require('nunjucks');
 const fs = require('fs').promises;
 const path = require('path');
-const { getPosts } = require('../database/database_handler.js');
 
 const checker = require('./checker.js');
 const login = require('./login.js');
-const dbh = PARAMS.userless ? {} : require('../database/database_handler.js');
+const dbh = PARAMS.userless ? {} : require('../database/handler');
+
 const handlerContext = {}; // Store cross-request context here
 
 if (!PARAMS.userless) login.init();
@@ -66,8 +66,8 @@ function handler (app, env) {
 					if (!isNaN(elapsed) && elapsed < 7 * 24 * 60 * 60 * 1000) post.recent = true;
 				});
 				const vids = art = [];
-				// const vids = getPosts(video);
-				// const art = getPosts(art);
+				// const vids = dbh.getPosts(video);
+				// const art = dbh.getPosts(art);
 				res.renderFile('home.njk', { posts, vids, art });
 				break;
 			}
@@ -76,7 +76,7 @@ function handler (app, env) {
 				break;
 			}
 			case 'art': {
-				const art = []/* getPosts(art) */;
+				const art = []/* dbh.getPosts(art) */;
 				res.renderFile('art.njk', { art });
 				break;
 			}
@@ -116,11 +116,12 @@ function handler (app, env) {
 					teams,
 					members
 				} = membersData[yearIndex];
-				const ctx = { 'Governors': [], 'Former Members': [] };
-				members.forEach(member => {
+				const ctx = { 'Governors': [], 'Former Members': [], 'Research Associate': [] };
+				members.sort((a, b) => -(a.name < b.name)).forEach(member => {
 					let target;
 					if (member.gov) target = 'Governors';
 					else if (member.inactive) target = 'Former Members';
+					else if (member.RA) target = 'Research Associate';
 					else target = `Batch of 20${member.roll.substr(0, 2)}`;
 					if (!ctx[target]) ctx[target] = [];
 					ctx[target].push({
@@ -135,7 +136,8 @@ function handler (app, env) {
 					});
 				});
 				const prev = membersData[yearIndex + 1]?.name, next = membersData[yearIndex - 1]?.name;
-				const keys = ['Governors', ...Object.keys(ctx).filter(key => key.startsWith('Batch of ')).sort(), 'Former Members'];
+				const keys = ['Governors', 'Research Associate', ...Object.keys(ctx)
+					.filter(key => key.startsWith('Batch of ')).sort(), 'Former Members'];
 				res.renderFile('members.njk', {
 					members: Object.fromEntries(keys.map(key => [key, ctx[key]])),
 					membersTitle: name === membersData[0].name ? 'Our Members' : name,
@@ -345,7 +347,7 @@ function handler (app, env) {
 				break;
 			}
 			case 'videos': {
-				const vids = []/* getPosts(video) */;
+				const vids = []/* dbh.getPosts(video) */;
 				res.renderFile('videos.njk', { vids });
 				break;
 			}
