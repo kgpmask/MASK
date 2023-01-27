@@ -1,4 +1,5 @@
 const axios = require('axios');
+const { restart } = require('nodemon');
 const { render } = require('nunjucks');
 const fs = require('fs').promises;
 const path = require('path');
@@ -106,6 +107,10 @@ function handler (app, env) {
 				req.logout(() => res.redirect('/'));
 				break;
 			}
+			// TODO: add a route here for fandom
+			// case 'fandom': {
+			// 	res.renderFile('fandom_quiz.njk')
+			// }
 			case 'members': {
 				const membersData = require('./members.json');
 				if (!args[1]) args[1] = membersData[0].name;
@@ -268,7 +273,7 @@ function handler (app, env) {
 							}));
 						});
 						shuffle(questions);
-						return res.renderFile('events/static_quiz.njk', {
+						return res.renderFile('events/fandom_quiz.njk', {
 							adjs,
 							questions: JSON.stringify(questions),
 							qAmt: questions.length,
