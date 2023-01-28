@@ -60,14 +60,17 @@ function handler (app, env) {
 		args.shift();
 		switch (args[0]) {
 			case '': case 'home': {
+				// TODO: eliminate posts.json requirement with postModel
 				const posts = require('./posts.json').slice(0, 7);
 				posts.forEach(post => {
 					const elapsed = Date.now() - Date.parse(post.date.replace(/(?<=^\d{1,2})[a-z]{2}/, '').replace(/,/, ''));
 					if (!isNaN(elapsed) && elapsed < 7 * 24 * 60 * 60 * 1000) post.recent = true;
 				});
-				const vids = art = [];
-				// const vids = dbh.getPosts(video);
-				// const art = dbh.getPosts(art);
+
+				dbh.getPosts().then(posts=>{
+					const art = posts.filter(post.type === "art")
+					const vids = posts.filter(post.type === "video")
+				});
 				res.renderFile('home.njk', { posts, vids, art });
 				break;
 			}
@@ -76,8 +79,11 @@ function handler (app, env) {
 				break;
 			}
 			case 'art': {
-				const art = []/* dbh.getPosts(art) */;
-				res.renderFile('art.njk', { art });
+				dbh.getPosts("art").then(art=>res.renderFile('art.njk', { art })).catch(err=>{
+					if(err){
+						throw(err);
+					}
+				});
 				break;
 			}
 			case 'assets': {
@@ -347,8 +353,12 @@ function handler (app, env) {
 				break;
 			}
 			case 'videos': {
-				const vids = []/* dbh.getPosts(video) */;
-				res.renderFile('videos.njk', { vids });
+				dbh.getPosts("video").then(vids=>res.renderFile('videos.njk', { vids })).catch(err=>{
+					if(err){
+						throw(err);
+					}
+				});
+
 				break;
 			}
 			case 'corsProxy': {

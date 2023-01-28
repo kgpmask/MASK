@@ -1,15 +1,16 @@
 const mongoose = require('mongoose');
-
 const postSchema = new mongoose.Schema({
 	name: { type: String, required: true },
 	link: { type: String },
 	type: { type: String, required: true },
 	attr: { type: [String] },
-	date: { type: String, required: true },
+	date: { type: Date, required: true },
 	page: String,
 	hype: Boolean
 });
 
 postSchema.set("collection", 'posts');
 
-module.exports = mongoose.model("posts", postSchema);
+postModel = mongoose.model("posts",postSchema);
+
+module.exports = postModel;
