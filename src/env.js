@@ -42,7 +42,7 @@ exports.init = () => {
 			[process.env.MONGO_URL, process.env.MONGO_TEST_URL] = [process.env.MONGO_TEST_URL, process.env.MONGO_URL];
 		}
 		if (PARAMS.local) process.env.MONGO_URL = 'mongodb://127.0.0.1/mask';
-		if (PARAMS.quiz) process.env.MONGO_URL = 'mongodb://10.5.18.101/mask';
+		if (PARAMS.quiz) process.env.MONGO_URL = 'mongodb://10.14.79.188/mask';
 	} catch (e) {
 		console.log('[!] Unable to load credentials.json');
 	}
