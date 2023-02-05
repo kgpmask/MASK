@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
 
-exports.init = () => {
+exports.init = async () => {
 	if (!process.env.MONGO_URL) return console.log('[!!!] Unable to connect to database: no URL supplied');
-	exports.DB = mongoose.connect(process.env.MONGO_URL, { connectTimeoutMS: 5000 }).then(db => {
+	try {
+		const db = await mongoose.connect(process.env.MONGO_URL, { connectTimeoutMS: 5000 });
 		const socket = db.connections[0];
 		console.log(`Connected to the database at ${socket.host}:${socket.port}`);
 		if (socket.host === '51.79.52.188' && socket.name === 'mask') {
@@ -11,7 +12,10 @@ exports.init = () => {
 			console.log('‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾');
 			// So I like decoration. Sue me.
 		}
-	}).catch(e => console.log(`[!!!] Unable to connect to the database! ${e.message}`, e));
+		return db;
+	} catch (e) {
+		console.log(`[!!!] Unable to connect to the database! ${e.message}`, e);
+	}
 };
 
 exports.disconnect = () => {

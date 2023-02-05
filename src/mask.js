@@ -20,7 +20,7 @@ const MongoStore = require('connect-mongo');
 const socketio = require('socket.io')();
 
 global.app = express();
-if (!PARAMS.userless) DB.init();
+const waitForDB = PARAMS.userless ? Promise.resolve() : DB.init();
 
 const env = nunjucks.configure(path.join(__dirname, '../templates'), {
 	express: app,
@@ -59,6 +59,10 @@ server.listen(PORT, () => {
 });
 
 const sass = childProcess.exec(`npx sass assets${PARAMS.dev ? ' --watch' : ''} --no-source-map --style compressed`);
+
+exports.ready = async () => {
+	await waitForDB;
+};
 
 exports.close = () => {
 	server.close();
