@@ -7,6 +7,8 @@ const pages = ['', 'home', 'art', 'videos', 'events', 'about', 'members', 'submi
 
 before(() => server.ready());
 
+console.log(process.env.SESSION_SECRET); // Well this isn't particularly dangerous...
+
 describe('server', () => {
 	pages.forEach(page => {
 		it(`should serve page (${page || '/'})`, () => axios.get(`http://localhost:${config.PORT}/${page}`)).timeout(1000);
