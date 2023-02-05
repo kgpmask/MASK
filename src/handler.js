@@ -60,6 +60,7 @@ function handler (app, env) {
 		args.shift();
 		switch (args[0]) {
 			case '': case 'home': {
+				if (PARAMS.userless) return res.redirect('/login');
 				// TODO: eliminate posts.json requirement with postModel
 				const posts = require('./posts.json').slice(0, 7);
 				posts.forEach(post => {
@@ -67,9 +68,9 @@ function handler (app, env) {
 					if (!isNaN(elapsed) && elapsed < 7 * 24 * 60 * 60 * 1000) post.recent = true;
 				});
 
-				dbh.getPosts().then(posts=>{
-					const art = posts.filter(post.type === "art")
-					const vids = posts.filter(post.type === "video")
+				dbh.getPosts().then(posts => {
+					const art = posts.filter(post.type === "art");
+					const vids = posts.filter(post.type === "video");
 				});
 				res.renderFile('home.njk', { posts, vids, art });
 				break;
@@ -79,9 +80,10 @@ function handler (app, env) {
 				break;
 			}
 			case 'art': {
-				dbh.getPosts("art").then(art=>res.renderFile('art.njk', { art })).catch(err=>{
-					if(err){
-						throw(err);
+				if (PARAMS.userless) return res.redirect('/login');
+				dbh.getPosts("art").then(art => res.renderFile('art.njk', { art })).catch(err => {
+					if (err) {
+						throw err;
 					}
 				});
 				break;
@@ -353,9 +355,10 @@ function handler (app, env) {
 				break;
 			}
 			case 'videos': {
-				dbh.getPosts("video").then(vids=>res.renderFile('videos.njk', { vids })).catch(err=>{
-					if(err){
-						throw(err);
+				if (PARAMS.userless) return res.redirect('/login');
+				dbh.getPosts("video").then(vids => res.renderFile('videos.njk', { vids })).catch(err => {
+					if (err) {
+						throw err;
 					}
 				});
 
