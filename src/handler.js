@@ -63,6 +63,10 @@ function handler (app, env) {
 				if (PARAMS.userless) return res.redirect('/login');
 				dbh.getPosts().then(POSTS => {
 					const posts = POSTS.splice(0, 7);
+					posts.forEach(post => {
+						const elapsed = Date.now() - post.date;
+						if (!isNaN(elapsed) && elapsed < 7 * 24 * 60 * 60 * 1000) post.recent = true;
+					});
 					const art = POSTS.filter(post => post.type === "art" && post.hype).splice(0, 5);
 					const vids = POSTS.filter(post => post.type === "youtube" && post.hype).splice(0, 5);
 					res.renderFile('home.njk', { posts, vids, art });
