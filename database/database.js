@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 exports.init = () => {
 	if (!process.env.MONGO_URL) return console.log('[!!!] Unable to connect to database: no URL supplied');
-	mongoose.connect(process.env.MONGO_URL, { connectTimeoutMS: 5000 }).then(db => {
+	exports.DB = mongoose.connect(process.env.MONGO_URL, { connectTimeoutMS: 5000 }).then(db => {
 		const socket = db.connections[0];
 		console.log(`Connected to the database at ${socket.host}:${socket.port}`);
 		if (socket.host === '51.79.52.188' && socket.name === 'mask') {
@@ -14,9 +14,12 @@ exports.init = () => {
 	}).catch(e => console.log(`[!!!] Unable to connect to the database! ${e.message}`, e));
 };
 
-/*
+exports.disconnect = () => {
+	mongoose.disconnect();
+	// I have ABSOLUTELY NO IDEA why mongoose refuses to close, so I murder it! (--exit flag in mocha)
+};
 
-New structure:
+/*
 
 Two collections:
 

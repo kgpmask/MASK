@@ -1,5 +1,3 @@
-global.PARAMS = { userless: true };
-
 const assert = require('assert');
 const axios = require('axios');
 const server = require('../src/mask.js');
@@ -9,7 +7,7 @@ const pages = ['', 'home', 'art', 'videos', 'events', 'about', 'members', 'submi
 
 describe('server', () => {
 	pages.forEach(page => {
-		it(`should serve page (${page || '/'})`, () => axios.get(`http://localhost:${config.PORT}/${page}`));
+		it(`should serve page (${page || '/'})`, () => axios.get(`http://localhost:${config.PORT}/${page}`)).timeout(5000);
 	});
 
 	it('should display 404s for pages that don\'t exist', () => axios.get(`http://localhost:${config.PORT}/hashire-sori-yo`)

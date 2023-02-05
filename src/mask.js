@@ -63,4 +63,5 @@ const sass = childProcess.exec(`npx sass assets${PARAMS.dev ? ' --watch' : ''} -
 exports.close = () => {
 	server.close();
 	sass.kill();
+	DB.disconnect();
 };
