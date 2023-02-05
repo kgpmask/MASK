@@ -1,5 +1,7 @@
 /node_modules
-*credentials.json
+
+# Server secrets
+*credentials.*
 
 # Testing template, test changes here
 /templates/test*.njk
