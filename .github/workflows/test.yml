@@ -14,8 +14,6 @@ on:
 
 jobs:
   test:
-    environment: Testing
-
     strategy:
       matrix:
         node-version: [16.x]
