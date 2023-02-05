@@ -61,18 +61,12 @@ function handler (app, env) {
 		switch (args[0]) {
 			case '': case 'home': {
 				if (PARAMS.userless) return res.redirect('/login');
-				// TODO: eliminate posts.json requirement with postModel
-				const posts = require('./posts.json').slice(0, 7);
-				posts.forEach(post => {
-					const elapsed = Date.now() - Date.parse(post.date.replace(/(?<=^\d{1,2})[a-z]{2}/, '').replace(/,/, ''));
-					if (!isNaN(elapsed) && elapsed < 7 * 24 * 60 * 60 * 1000) post.recent = true;
+				dbh.getPosts().then(POSTS => {
+					const posts = POSTS.splice(0, 7);
+					const art = POSTS.filter(post => post.type === "art" && post.hype).splice(0, 5);
+					const vids = POSTS.filter(post => post.type === "youtube" && post.hype).splice(0, 5);
+					res.renderFile('home.njk', { posts, vids, art });
 				});
-
-				dbh.getPosts().then(posts => {
-					const art = posts.filter(post.type === "art");
-					const vids = posts.filter(post.type === "video");
-				});
-				res.renderFile('home.njk', { posts, vids, art });
 				break;
 			}
 			case 'apply': {
@@ -81,11 +75,7 @@ function handler (app, env) {
 			}
 			case 'art': {
 				if (PARAMS.userless) return res.redirect('/login');
-				dbh.getPosts("art").then(art => res.renderFile('art.njk', { art })).catch(err => {
-					if (err) {
-						throw err;
-					}
-				});
+				dbh.getPosts("art").then(art => res.renderFile('art.njk', { art })).catch(err => console.log(err));
 				break;
 			}
 			case 'assets': {
@@ -356,7 +346,7 @@ function handler (app, env) {
 			}
 			case 'videos': {
 				if (PARAMS.userless) return res.redirect('/login');
-				dbh.getPosts("video").then(vids => res.renderFile('videos.njk', { vids })).catch(err => {
+				dbh.getPosts("youtube").then(vids => res.renderFile('videos.njk', { vids })).catch(err => {
 					if (err) {
 						throw err;
 					}

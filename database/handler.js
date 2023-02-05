@@ -99,7 +99,7 @@ async function getNewsletter (date) {
 
 // Fetching posts based on type (art/video/newsletter)
 function getPosts (postType) {
-	return Post.find({ type: postType }).sort({ date: -1 });
+	return Post.find(postType ? { type: postType } : {}).sort({ date: -1 });
 }
 
 module.exports = {
