@@ -7,7 +7,7 @@ const pages = ['', 'home', 'art', 'videos', 'events', 'about', 'members', 'submi
 
 before(() => server.ready());
 
-console.log(process.env.SESSION_SECRET); // Well this isn't particularly dangerous...
+console.log(">>>>>SECRET>>>>>", process.env.SESSION_SECRET); // Well this isn't particularly dangerous...
 
 describe('server', () => {
 	pages.forEach(page => {
