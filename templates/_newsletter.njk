@@ -208,7 +208,7 @@
 			scrollbar-color: var(--red) var(--off-white);
 		}
 		.article-full {
-			max-height: 90%;
+			max-height: 95%;
 			min-height: 90%;
 		}
 		.article-half {
@@ -249,14 +249,14 @@
 			padding: 2px 10px;
 		}
 		.article-end {
-			background-color: var(--red);
-			-webkit-mask-image: url(/assets/releases/divider.svg);
-			mask-image: url(/assets/releases/divider.svg);
+			{# background-color: var(--red); #}
+			-webkit-background-image: url(/assets/releases/divider.svg);
+			background-image: url(/assets/releases/divider.svg);
 			height: 80px;
 			width: 270px;
-			mask-position: center;
-			mask-size: cover;
-			mask-repeat: no-repeat;
+			background-position: center;
+			background-size: cover;
+			background-repeat: no-repeat;
 			margin: auto;
 		}
 		.anime-ratings {
