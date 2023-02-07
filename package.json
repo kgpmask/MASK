@@ -8,7 +8,7 @@
 		"du": "nodemon src/mask.js du",
 		"lint": "eslint . --config .eslintrc.json --ext .js",
 		"start": "node src/mask.js",
-		"test": "npm run lint && npx mocha && echo \"Passing all tests.\" && exit 0",
+		"test": "npm run lint && npx mocha --exit && echo \"Passing all tests.\" && exit 0",
 		"prepare": "husky install"
 	},
 	"repository": {
