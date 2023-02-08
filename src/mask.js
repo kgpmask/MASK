@@ -61,7 +61,7 @@ server.listen(PORT, () => {
 const sass = childProcess.exec(`npx sass assets${PARAMS.dev ? ' --watch' : ''} --no-source-map --style compressed`);
 
 exports.ready = async () => {
-	console.log(PARAMS.userless);
+	console.log('Userless:', PARAMS.userless);
 	console.log(await waitForDB()); // <-- Running in userless
 	console.log(mongoose.connections);
 };
