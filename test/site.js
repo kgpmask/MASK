@@ -7,6 +7,7 @@ const { disconnectFromDB } = require('../database/handler');
 const pages = ['', 'home', 'art', 'videos', 'events', 'about', 'members', 'submissions', '404'];
 
 before(() => {
+	PARAMS.userless = true;
 	server.ready();
 });
 
