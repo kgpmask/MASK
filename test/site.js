@@ -1,11 +1,14 @@
 const assert = require('assert');
 const axios = require('axios');
-const server = require('../src/mask.js');
-const { PORT } = require('../src/config.js');
+const server = require('../src/mask');
+const { PORT } = require('../src/config');
+const { disconnectFromDB } = require('../database/handler');
 
 const pages = ['', 'home', 'art', 'videos', 'events', 'about', 'members', 'submissions', '404'];
 
-before(() => server.ready());
+before(() => {
+	server.ready();
+});
 
 describe('Server', () => {
 	pages.forEach(page => {
@@ -18,4 +21,7 @@ describe('Server', () => {
 		.catch(res => assert.equal(res.response.status, 404)));
 });
 
-after(() => server.close());
+after(() => {
+	disconnectFromDB();
+	server.close();
+});

@@ -60,16 +60,18 @@ function handler (app, env) {
 		args.shift();
 		switch (args[0]) {
 			case '': case 'home': {
-				const posts = require('./posts.json').filter(post => post.type !== 'video' || post.show === '').slice(0, 7);
-				posts.forEach(post => {
-					const elapsed = Date.now() - Date.parse(post.date.replace(/(?<=^\d{1,2})[a-z]{2}/, '').replace(/,/, ''));
-					if (!isNaN(elapsed) && elapsed < 7 * 24 * 60 * 60 * 1000) post.recent = true;
+				dbh.getLiveQuiz().then(() => {
+					const posts = require('./posts.json').filter(post => post.type !== 'video' || post.show === '').slice(0, 7);
+					posts.forEach(post => {
+						const elapsed = Date.now() - Date.parse(post.date.replace(/(?<=^\d{1,2})[a-z]{2}/, '').replace(/,/, ''));
+						if (!isNaN(elapsed) && elapsed < 7 * 24 * 60 * 60 * 1000) post.recent = true;
+					});
+					const vids = require('./posts.json').filter(post => {
+						return post.type === 'video' && post.hype && post.link.includes('www.youtube.com');
+					}).shuffle().slice(0, 5);
+					const art = require('./posts.json').filter(post => post.type === 'art' && post.hype).slice(0, 5);
+					res.renderFile('home.njk', { posts, vids, art });
 				});
-				const vids = require('./posts.json').filter(post => {
-					return post.type === 'video' && post.hype && post.link.includes('www.youtube.com');
-				}).shuffle().slice(0, 5);
-				const art = require('./posts.json').filter(post => post.type === 'art' && post.hype).slice(0, 5);
-				res.renderFile('home.njk', { posts, vids, art });
 				break;
 			}
 			case 'apply': {

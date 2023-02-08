@@ -1,3 +1,5 @@
+const mongoose = require('mongoose');
+
 const User = require('./schemas/User');
 const Quiz = require('./schemas/Quiz');
 const { LiveQuiz, LiveResult } = require('./schemas/LiveQuiz');
@@ -96,6 +98,10 @@ async function getNewsletter (date) {
 	return newsletter;
 }
 
+function disconnectFromDB () {
+	mongoose.connections[0].base.disconnect();
+}
+
 module.exports = {
 	createNewUser,
 	getUser,
@@ -107,5 +113,6 @@ module.exports = {
 	getLiveResult,
 	getAllLiveResults,
 	addLiveResult,
-	getNewsletter
+	getNewsletter,
+	disconnectFromDB
 };

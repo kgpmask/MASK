@@ -30,6 +30,7 @@ jobs:
     - run: npm install
     - run: npm test
       env:
+        userless: false
         GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
         GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
         MONGO_TEST_URL: ${{ secrets.MONGO_TEST_URL }}
