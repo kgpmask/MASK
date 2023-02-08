@@ -62,7 +62,7 @@ const sass = childProcess.exec(`npx sass assets${PARAMS.dev ? ' --watch' : ''} -
 
 exports.ready = async () => {
 	console.log(PARAMS.userless);
-	await waitForDB(); // <-- Running in userless
+	console.log(await waitForDB()); // <-- Running in userless
 	console.log(mongoose.connections);
 };
 
