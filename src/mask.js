@@ -20,7 +20,7 @@ const MongoStore = require('connect-mongo');
 const socketio = require('socket.io')();
 
 global.app = express();
-const waitForDB = PARAMS.userless ? Promise.resolve('No database') : DB.init();
+const waitForDB = PARAMS.userless ? Promise.resolve('No database') : DB.init;
 
 const env = nunjucks.configure(path.join(__dirname, '../templates'), {
 	express: app,
@@ -62,7 +62,7 @@ const sass = childProcess.exec(`npx sass assets${PARAMS.dev ? ' --watch' : ''} -
 
 exports.ready = async () => {
 	console.log(PARAMS.userless);
-	await waitForDB; // <-- Running in userless
+	await waitForDB(); // <-- Running in userless
 	console.log(mongoose.connections);
 };
 
