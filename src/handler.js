@@ -67,8 +67,8 @@ function handler (app, env) {
 						const elapsed = Date.now() - post.date;
 						if (!isNaN(elapsed) && elapsed < 7 * 24 * 60 * 60 * 1000) post.recent = true;
 					});
-					const art = POSTS.filter(post => post.type === "art" && post.hype).splice(0, 5);
-					const vids = POSTS.filter(post => post.type === "youtube" && post.hype).splice(0, 5);
+					const art = POSTS.filter(post => post.type === 'art' && post.hype).splice(0, 5);
+					const vids = POSTS.filter(post => post.type === 'youtube' && post.hype).splice(0, 5);
 					res.renderFile('home.njk', { posts, vids, art });
 				});
 				break;
@@ -79,7 +79,7 @@ function handler (app, env) {
 			}
 			case 'art': {
 				if (PARAMS.userless) return res.redirect('/login');
-				dbh.getPosts("art").then(art => res.renderFile('art.njk', { art })).catch(err => console.log(err));
+				dbh.getPosts('art').then(art => res.renderFile('art.njk', { art })).catch(err => console.log(err));
 				break;
 			}
 			case 'assets': {
@@ -288,14 +288,14 @@ function handler (app, env) {
 					if (!quiz) return res.renderFile('events/quizzes_404.njk', { message: `The quiz hasn't started, yet!` });
 					const QUIZ = quiz.questions;
 					dbh.getUser(req.user._id).then(user => {
-						if (user.permissions?.includes("quizmaster")) {
-							res.renderFile("events/live_master.njk", {
+						if (user.permissions?.includes('quizmaster')) {
+							res.renderFile('events/live_master.njk', {
 								quiz: JSON.stringify(QUIZ),
 								qAmt: QUIZ.length,
 								id: 'live'
 							});
 						} else {
-							res.renderFile("events/live_participant.njk", {
+							res.renderFile('events/live_participant.njk', {
 								id: 'live',
 								userId: req.user._id
 							});
@@ -350,7 +350,10 @@ function handler (app, env) {
 			}
 			case 'videos': {
 				if (PARAMS.userless) return res.redirect('/login');
-				dbh.getPosts("youtube").then(vids => res.renderFile('videos.njk', { vids })).catch(err => {
+				dbh.getPosts('youtube').then(vids => {
+					vids.forEach(vid => vid.embed = `https://www.youtube.com/embed/${vid.link.split('?v=')[1]}?playsinline=1`);
+					res.renderFile('videos.njk', { vids });
+				}).catch(err => {
 					if (err) {
 						throw err;
 					}
