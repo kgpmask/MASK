@@ -4,205 +4,205 @@ const fs = require('fs').promises;
 const path = require('path');
 
 const checker = require('./checker.js');
-const login = require('./login.js');
 const dbh = PARAMS.userless ? {} : require('../database/handler');
 
 const handlerContext = {}; // Store cross-request context here
 
-if (!PARAMS.userless) login.init();
 
-// TODO: Use actual express routing
-function handler (app, env) {
+function handler (app, nunjEnv) {
+	// TODO: Group these according to some better metric
 
-	// Pre-routing
-	if (!PARAMS.userless) {
-		app.get('/login/federated/google', passport.authenticate('google'));
-		app.get('/oauth2/redirect/google', passport.authenticate('google', {
-			successReturnToOrRedirect: '/',
-			failureRedirect: '/login'
-		}));
-	}
-
-	app.use((req, res, next) => {
-		res.renderFile = (files, ctx) => {
-			if (!Array.isArray(files)) files = [files];
-			return res.render(path.join(__dirname, '../templates', ...files), ctx);
-		};
-		next();
+	app.get(['/', '/home'], (req, res) => {
+		const posts = require('./posts.json').filter(post => post.type !== 'video' || post.show === '').slice(0, 7);
+		posts.forEach(post => {
+			const elapsed = Date.now() - Date.parse(post.date.replace(/(?<=^\d{1,2})[a-z]{2}/, '').replace(/,/, ''));
+			if (!isNaN(elapsed) && elapsed < 7 * 24 * 60 * 60 * 1000) post.recent = true;
+		});
+		const vids = require('./posts.json').filter(post => {
+			return post.type === 'video' && post.hype && post.link.includes('www.youtube.com');
+		}).shuffle().slice(0, 5);
+		const art = require('./posts.json').filter(post => post.type === 'art' && post.hype).slice(0, 5);
+		return res.renderFile('home.njk', { posts, vids, art });
+	});
+	app.get('/about', (req, res) => {
+		return res.renderFile('about.njk');
 	});
 
-	app.use((req, res, next) => {
-		res.error = err => res.status(400).send(err?.message || err);
-		next();
+	app.get('/art', (req, res) => {
+		const art = require('./posts.json').filter(post => post.type === 'art');
+		return res.renderFile('art.njk', { art });
+	});
+	app.get('/videos', (req, res) => {
+		const vids = require('./posts.json');
+		const youtubeVids = vids.filter(vid => vid.link.includes('www.youtube.com'));
+		const instaVids = vids.filter(vid => vid.link.includes('www.instagram.com'));
+		return res.renderFile('videos.njk', { youtubeVids, instaVids });
 	});
 
-	app.use((req, res, next) => {
-		res.locals.userless = PARAMS.userless;
-		next();
+	app.get('/apply', (req, res) => {
+		return res.renderFile('applications.njk');
+	});
+	app.get('/submissions', (req, res) => {
+		return res.renderFile('submissions.njk');
+	});
+
+	app.get('/blog', (req, res) => {
+		const url = req.url.replace('^.*?/blog', '');
+		// TODO: Fix this!
+		return res.redirect(`https://maskiitkgp.blogspot.com${url}.html`);
+	});
+
+	app.get('/login', (req, res) => {
+		if (res.loggedIn) return res.redirect('/');
+		res.renderFile('login.njk');
+	});
+	app.get('/logout', (req, res) => {
+		if (!res.loggedIn) return res.redirect('/login');
+		return req.logout(() => res.redirect('/'));
+	});
+	app.get('/profile', (req, res) => {
+		if (!res.loggedIn) return res.redirect('/');
+		dbh.getUserStats(req.user._id).then(user => {
+			return res.renderFile('profile.njk', {
+				name: req.user.name,
+				picture: req.user.picture,
+				points: user.points,
+				quizzes: user.quizData.map(stamp => {
+					const months = [
+						'-', 'January', 'February', 'March', 'April', 'May', 'June',
+						'July', 'August', 'September', 'October', 'November', 'December'
+					];
+					const [year, month, date] = stamp.quizId.split('-');
+					return `${Tools.nth(~~date)} ${months[~~month]}`;
+				})
+			});
+		});
+	});
+
+	app.get('/members/:yearName?', (req, res) => {
+		const membersData = require('./members.json');
+		const yearName = req.params.yearName || membersData[0].name;
+		const yearIndex = membersData.findIndex(year => [year.name, year.baseYear].includes(yearName));
+		if (yearIndex === -1) return res.notFound();
+		const {
+			name,
+			baseYear,
+			teams,
+			members
+		} = membersData[yearIndex];
+		const ctx = { 'Governors': [], 'Former Members': [], 'Research Associate': [] };
+		members.sort((a, b) => -(a.name < b.name)).forEach(member => {
+			let target;
+			if (member.gov) target = 'Governors';
+			else if (member.inactive) target = 'Former Members';
+			else if (member.RA) target = 'Research Associate';
+			else target = `Batch of 20${member.roll.substr(0, 2)}`;
+			if (!ctx[target]) ctx[target] = [];
+			ctx[target].push({
+				name: member.name,
+				roll: member.roll,
+				href: member.id.startsWith('X') ? 'blank.webp' : `${member.id}.webp`,
+				teams: member.teams.map(teamID => {
+					const team = teams[teamID.toLowerCase()];
+					if (teamID === teamID.toUpperCase()) return { name: team.name, icon: team.icon + '-head' };
+					return team;
+				})
+			});
+		});
+		const prev = membersData[yearIndex + 1]?.name, next = membersData[yearIndex - 1]?.name;
+		const keys = [
+			'Governors',
+			'Research Associate',
+			...Object.keys(ctx).filter(key => key.startsWith('Batch of ')).sort(),
+			'Former Members'
+		];
+		const membersObj = Object.fromEntries(keys.map(key => [key, ctx[key]]));
+		const membersTitle = name === membersData[0].name ? 'Our Members' : name;
+		return res.renderFile('members.njk', { members: membersObj, membersTitle, prev, next });
+	});
+
+	app.get('/newsletters/:target?', (req, res) => {
+		const months = [
+			'-', 'January', 'February', 'March', 'April', 'May', 'June',
+			'July', 'August', 'September', 'October', 'November', 'December'
+		];
+		return fs.readdir(path.join(__dirname, '../templates/newsletters')).then(letters => {
+			const years = {};
+			letters.sort();
+			letters.forEach(letter => {
+				const [year, month, num] = letter.slice(0, -4).split('-');
+				if (!years[year]) years[year] = { title: year, months: {} };
+				if (!years[year].months[~~month]) years[year].months[~~month] = { title: months[~~month], issues: [] };
+				years[year].months[~~month].issues.push({
+					title: ['-', 'First', 'Second', 'Special'][~~num],
+					href: letter.slice(0, -4)
+				});
+			});
+			const renderYears = Object.values(years);
+			renderYears.forEach(year => year.months = Object.values(year.months).reverse());
+
+			const target = req.params.target;
+			if (!target) return res.renderFile('newsletters.njk', {
+				years: renderYears.reverse()
+			});
+			if (target === 'random') {
+				const referer = req.headers.referer?.split('/').pop();
+				const randLetter = letters.filter(letter => letter.slice(0, -4) !== referer).random().slice(0, -4);
+				return res.redirect(`/newsletters/${randLetter}`);
+			}
+			const index = letters.indexOf(target + '.njk');
+			if (index === -1) return res.notFound('newsletters_404.njk', { years: renderYears.reverse() });
+			const filepath = ['newsletters', letters[index]];
+			const adjs = [letters[index - 1]?.slice(0, -4), letters[index + 1]?.slice(0, -4), letters[index].slice(0, -4)];
+			return res.renderFile(filepath, { adjs });
+		}).catch(err => console.log(err) || res.notFound());
+	});
+
+	app.get('/success', (req, res) => {
+		// TODO: Rename this to /quiz/success
+		return res.renderFile('events/quiz_success.njk');
+	});
+
+	app.get('/prizes', (req, res) => {
+		const prizes = require('./rewards.json');
+		return res.renderFile('events/prizes.njk', { prizes });
+	});
+
+	app.get('/corsProxy', (req, res) => {
+		const base64Url = req.query.base64Url;
+		const url = atob(base64Url);
+		return axios.get(url, { headers: { 'Access-Control-Allow-Origin': '*' } }).then(response => {
+			return res.send(response.data);
+		});
+	});
+	app.get('/rebuild', (req, res) => {
+		nunjEnv.loaders.forEach(loader => loader.cache = {});
+		['./members.json', './posts.json', './rewards.json'].forEach(cache => delete require.cache[require.resolve(cache)]);
+		return res.renderFile('rebuild.njk');
+	});
+
+	app.get((req, res) => {
+		// Catch-all 404
+		res.notFound();
 	});
 
 	function get (req, res) {
-		function notFound (custom404, ctx) {
-			res.status(404).renderFile(custom404 || '404.njk', ctx);
-		}
-		function tryFile (path, asset, ctx) {
-			fs.access(path).then(err => {
-				if (err) notFound(false, ctx);
-				else res[asset ? 'sendFile' : 'render'](path, ctx);
-			}).catch(() => {
-				notFound(false, ctx);
-			});
-		}
-		const loggedIn = res.locals.loggedIn = Boolean(req.user);
 		const GET = req.url.match(/(?<=\?)[^/]+$/);
 		if (GET) req.url = req.url.slice(0, -(GET[0].length + 1));
 		const args = req.url.split('/');
 		args.shift();
 		switch (args[0]) {
-			case '': case 'home': {
-				const posts = require('./posts.json').filter(post => post.type !== 'video' || post.show === '').slice(0, 7);
-				posts.forEach(post => {
-					const elapsed = Date.now() - Date.parse(post.date.replace(/(?<=^\d{1,2})[a-z]{2}/, '').replace(/,/, ''));
-					if (!isNaN(elapsed) && elapsed < 7 * 24 * 60 * 60 * 1000) post.recent = true;
-				});
-				const vids = require('./posts.json').filter(post => {
-					return post.type === 'video' && post.hype && post.link.includes('www.youtube.com');
-				}).shuffle().slice(0, 5);
-				const art = require('./posts.json').filter(post => post.type === 'art' && post.hype).slice(0, 5);
-				res.renderFile('home.njk', { posts, vids, art });
-				break;
-			}
-			case 'apply': {
-				res.renderFile('applications.njk');
-				break;
-			}
-			case 'art': {
-				const art = require('./posts.json').filter(post => post.type === 'art');
-				res.renderFile('art.njk', { art });
-				break;
-			}
-			case 'assets': {
-				args.shift();
-				const filepath = path.join(__dirname, '../assets', ...args);
-				fs.access(filepath).then(err => {
-					if (err) notFound();
-					else res.sendFile(filepath);
-				}).catch(() => notFound());
-				break;
-			}
-			case 'blog': {
-				args.shift();
-				const url = `https://maskiitkgp.blogspot.com/${args.join('/')}.html`;
-				res.redirect(url);
-				break;
-			}
-			case 'login': {
-				if (loggedIn) return res.redirect('/');
-				res.renderFile('login.njk');
-				break;
-			}
-			case 'logout': {
-				if (!loggedIn) return res.redirect('/login');
-				req.logout(() => res.redirect('/'));
-				break;
-			}
-			case 'members': {
-				const membersData = require('./members.json');
-				if (!args[1]) args[1] = membersData[0].name;
-				const yearIndex = membersData.findIndex(year => [year.name, year.baseYear].includes(args[1]));
-				if (yearIndex === -1) return notFound();
-				const {
-					name,
-					baseYear,
-					teams,
-					members
-				} = membersData[yearIndex];
-				const ctx = { 'Governors': [], 'Former Members': [], 'Research Associate': [] };
-				members.sort((a, b) => -(a.name < b.name)).forEach(member => {
-					let target;
-					if (member.gov) target = 'Governors';
-					else if (member.inactive) target = 'Former Members';
-					else if (member.RA) target = 'Research Associate';
-					else target = `Batch of 20${member.roll.substr(0, 2)}`;
-					if (!ctx[target]) ctx[target] = [];
-					ctx[target].push({
-						name: member.name,
-						roll: member.roll,
-						href: member.id.startsWith('X') ? 'blank.webp' : `${member.id}.webp`,
-						teams: member.teams.map(teamID => {
-							const team = teams[teamID.toLowerCase()];
-							if (teamID === teamID.toUpperCase()) return { name: team.name, icon: team.icon + '-head' };
-							return team;
-						})
-					});
-				});
-				const prev = membersData[yearIndex + 1]?.name, next = membersData[yearIndex - 1]?.name;
-				const keys = ['Governors', 'Research Associate', ...Object.keys(ctx)
-					.filter(key => key.startsWith('Batch of ')).sort(), 'Former Members'];
-				res.renderFile('members.njk', {
-					members: Object.fromEntries(keys.map(key => [key, ctx[key]])),
-					membersTitle: name === membersData[0].name ? 'Our Members' : name,
-					prev,
-					next
-				});
-				break;
-			}
-			case 'newsletters': {
-				const months = [
-					'-', 'January', 'February', 'March', 'April', 'May', 'June',
-					'July', 'August', 'September', 'October', 'November', 'December'
-				];
-				fs.readdir(path.join(__dirname, '../templates/newsletters')).then(letters => {
-					const years = {};
-					letters.sort();
-					letters.forEach(letter => {
-						const [year, month, num] = letter.slice(0, -4).split('-');
-						if (!years[year]) years[year] = { title: year, months: {} };
-						if (!years[year].months[~~month]) years[year].months[~~month] = { title: months[~~month], issues: [] };
-						years[year].months[~~month].issues.push({
-							title: ['-', 'First', 'Second', 'Special'][~~num],
-							href: letter.slice(0, -4)
-						});
-					});
-					const renderYears = Object.values(years);
-					renderYears.forEach(year => year.months = Object.values(year.months).reverse());
-					if (!args[1]) return res.renderFile('newsletters.njk', {
-						years: renderYears.reverse()
-					});
-					if (args[1] === 'random') {
-						const referer = req.headers.referer?.split('/').pop();
-						const randLetter = letters.filter(letter => letter.slice(0, -4) !== referer).random().slice(0, -4);
-						return res.redirect(`/newsletters/${randLetter}`);
-					}
-					const index = letters.indexOf(args[1] + '.njk');
-					if (index === -1) return notFound('newsletters_404.njk', { years: renderYears.reverse() });
-					const filepath = ['newsletters', letters[index]];
-					const adjs = [letters[index - 1]?.slice(0, -4), letters[index + 1]?.slice(0, -4), letters[index].slice(0, -4)];
-					return res.renderFile(filepath, { adjs });
-				}).catch(err => console.log(err) || notFound());
-				break;
-			}
-			case 'profile': {
-				if (!loggedIn) return res.redirect('/');
-				dbh.getUserStats(req.user._id).then(user => {
-					return res.renderFile('profile.njk', {
-						name: req.user.name,
-						picture: req.user.picture,
-						points: user.points,
-						quizzes: user.quizData.map(stamp => {
-							const months = [
-								'-', 'January', 'February', 'March', 'April', 'May', 'June',
-								'July', 'August', 'September', 'October', 'November', 'December'
-							];
-							const [year, month, date] = stamp.quizId.split('-');
-							return `${Tools.nth(~~date)} ${months[~~month]}`;
-						})
-					});
-				});
-				break;
-			}
+			// case 'assets': {
+			// 	args.shift();
+			// 	const filepath = path.join(__dirname, '../assets', ...args);
+			// 	fs.access(filepath).then(err => {
+			// 		if (err) res.notFound();
+			// 		else res.sendFile(filepath);
+			// 	}).catch(() => res.notFound());
+			// 	break;
+			// }
 			case 'quizzes': case 'events': {
-				if (!loggedIn) {
+				if (!res.loggedIn) {
 					if (!PARAMS.userless) req.session.returnTo = req.url;
 					return res.renderFile('login.njk');
 				}
@@ -242,8 +242,9 @@ function handler (app, env) {
 							});
 						}
 						const index = quizzes.indexOf(args[1]);
-						if (index === -1) return notFound('events/quizzes_404.njk', { years: renderYears.reverse(), quizzed, locked });
-						if (quizzed.includes(args[1])) return res.renderFile('events/quiz_attempted.njk');
+						if (index === -1) {
+							return res.notFound('events/quizzes_404.njk', { years: renderYears.reverse(), quizzed, locked });
+						} else if (quizzed.includes(args[1])) return res.renderFile('events/quiz_attempted.njk');
 						const adjs = [quizzes[index - 1], quizzes[index + 1], quizzes[index]];
 						const QUIZ = QUIZZES[args[1]];
 						const quizDate = new Date(QUIZ.unlock).getTime();
@@ -279,7 +280,7 @@ function handler (app, env) {
 				break;
 			}
 			case 'live': {
-				if (!loggedIn) {
+				if (!res.loggedIn) {
 					if (!PARAMS.userless) req.session.returnTo = req.url;
 					return res.renderFile('events/quiz_login.njk');
 				}
@@ -303,13 +304,10 @@ function handler (app, env) {
 				}).catch(res.error);
 				break;
 			}
-			case 'success': {
-				return res.renderFile('events/quiz_success.njk');
-			}
 			case 'live-results': {
 				const quizId = new Date().toISOString().slice(0, 10);
 				dbh.getAllLiveResults(quizId).then(RES => {
-					if (!RES) res.notFound();
+					if (!RES) res.res.notFound();
 					const results = [];
 					RES.forEach(_RES => {
 						if (!results.find(res => res.id === _RES.userId)) results.push({
@@ -337,46 +335,11 @@ function handler (app, env) {
 				}).catch(res.error);
 				break;
 			}
-			case 'prizes': {
-				const prizes = require('./rewards.json');
-				return res.renderFile('events/prizes.njk', { prizes });
-			}
-			case 'rebuild': {
-				env.loaders.forEach(loader => loader.cache = {});
-				['./members.json', './posts.json', './rewards.json'].forEach(cache => delete require.cache[require.resolve(cache)]);
-				res.renderFile('rebuild.njk');
-				break;
-			}
-			case 'videos': {
-				const vids = require('./posts.json');
-				const youtubeVids = vids.filter(vid => vid.link.includes('www.youtube.com'));
-				const instaVids = vids.filter(vid => vid.link.includes('www.instagram.com'));
-				res.renderFile('videos.njk', { youtubeVids, instaVids });
-				break;
-			}
-			case 'corsProxy': {
-				const base64Url = req.query.base64Url;
-				const url = atob(base64Url);
-				axios.get(url, { headers: { 'Access-Control-Allow-Origin': '*' } }).then(response => {
-					return res.send(response.data);
-				});
-				break;
-			}
-			default: {
-				while (!args[args.length - 1]) args.pop();
-				const isAsset = /\.(?:js|ico)$/.test(args[args.length - 1]);
-				const filepath = path.join(
-					__dirname,
-					isAsset ? '../assets' : '../templates', path.join(...args) + (isAsset ? '' : '.njk')
-				);
-				tryFile(filepath, isAsset);
-			}
 		}
 	}
 	function post (req, res) {
 		const args = req.url.split('/');
 		args.shift();
-		const loggedIn = res.locals.loggedIn = Boolean(req.user);
 
 		switch (args[0]) {
 			case 'checker': {
@@ -423,7 +386,7 @@ function handler (app, env) {
 			case 'live': {
 				if (!handlerContext.liveQuiz) handlerContext.liveQuiz = {};
 				const LQ = handlerContext.liveQuiz;
-				if (!loggedIn) {
+				if (!res.loggedIn) {
 					if (!PARAMS.userless) req.session.returnTo = req.url;
 					return res.renderFile('events/quiz_login.njk');
 				}
@@ -487,9 +450,6 @@ function handler (app, env) {
 				break;
 		}
 	}
-
-	app.get(/.*/, (req, res) => get(req, res));
-	app.post(/.*/, (req, res) => post(req, res));
 }
 
 module.exports = handler;
