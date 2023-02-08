@@ -12,31 +12,47 @@ const handlerContext = {}; // Store cross-request context here
 function handler (app, nunjEnv) {
 	// TODO: Group these according to some better metric
 
-	app.get(['/', '/home'], (req, res) => {
-		const posts = require('./posts.json').filter(post => post.type !== 'video' || post.show === '').slice(0, 7);
+	app.get(['/', '/home'], async (req, res) => {
+		const sample = [{
+			name: 'How to get into MASK',
+			link: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+			type: 'youtube',
+			attr: ['Parth Mane'],
+			date: new Date('Oct 25, 2009'),
+			page: '_blank',
+			hype: true
+		}];
+		const allPosts = PARAMS.userless ? sample : await dbh.getPosts();
+		const posts = allPosts.splice(0, 7);
 		posts.forEach(post => {
-			const elapsed = Date.now() - Date.parse(post.date.replace(/(?<=^\d{1,2})[a-z]{2}/, '').replace(/,/, ''));
+			const elapsed = Date.now() - post.date;
 			if (!isNaN(elapsed) && elapsed < 7 * 24 * 60 * 60 * 1000) post.recent = true;
 		});
-		const vids = require('./posts.json').filter(post => {
-			return post.type === 'video' && post.hype && post.link.includes('www.youtube.com');
-		}).shuffle().slice(0, 5);
-		const art = require('./posts.json').filter(post => post.type === 'art' && post.hype).slice(0, 5);
+		const art = allPosts.filter(post => post.type === 'art' && post.hype).splice(0, 5);
+		const vids = allPosts.filter(post => post.type === 'youtube' && post.hype).splice(0, 5);
 		return res.renderFile('home.njk', { posts, vids, art });
 	});
 	app.get('/about', (req, res) => {
 		return res.renderFile('about.njk');
 	});
 
-	app.get('/art', (req, res) => {
-		const art = require('./posts.json').filter(post => post.type === 'art');
+	app.get('/art', async (req, res) => {
+		const sample = [{
+			name: 'Art - Tanjiro Kamado',
+			link: '0025.webp',
+			type: 'art',
+			attr: [ 'Sanjeev Raj Ganji' ],
+			date: new Date(1630261800000),
+			hype: true
+		}];
+		const art = PARAMS.userless ? sample : await dbh.getPosts('art');
 		return res.renderFile('art.njk', { art });
 	});
-	app.get('/videos', (req, res) => {
-		const vids = require('./posts.json');
-		const youtubeVids = vids.filter(vid => vid.link.includes('www.youtube.com'));
-		const instaVids = vids.filter(vid => vid.link.includes('www.instagram.com'));
-		return res.renderFile('videos.njk', { youtubeVids, instaVids });
+	app.get('/videos', async (req, res) => {
+		const sample = [{ name: 'How to get into MASK', link: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', type: 'youtube' }];
+		const vids = PARAMS.userless ? sample : await dbh.getPosts('youtube');
+		vids.forEach(vid => vid.embed = `https://www.youtube.com/embed/${vid.link.split('?v=')[1]}?playsinline=1`);
+		return res.renderFile('videos.njk', { vids });
 	});
 
 	app.get('/apply', (req, res) => {
@@ -288,14 +304,14 @@ function handler (app, nunjEnv) {
 					if (!quiz) return res.renderFile('events/quizzes_404.njk', { message: `The quiz hasn't started, yet!` });
 					const QUIZ = quiz.questions;
 					dbh.getUser(req.user._id).then(user => {
-						if (user.permissions?.includes("quizmaster")) {
-							res.renderFile("events/live_master.njk", {
+						if (user.permissions?.includes('quizmaster')) {
+							res.renderFile('events/live_master.njk', {
 								quiz: JSON.stringify(QUIZ),
 								qAmt: QUIZ.length,
 								id: 'live'
 							});
 						} else {
-							res.renderFile("events/live_participant.njk", {
+							res.renderFile('events/live_participant.njk', {
 								id: 'live',
 								userId: req.user._id
 							});

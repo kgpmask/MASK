@@ -4,10 +4,10 @@
 {% set pagetitle = 'Videos' %}
 
 {% block pagecontent %}
-	<div class="text">Check out our video content here or on <a href="https://www.youtube.com/channel/UCVYGmPrKHFPKKzO0lb-XM_Q" class="link" target="_blank">YouTube</a>!</div>
+	<div class="text">Check out our video content here or on <a href="https://www.youtube.com/@maskiitkgp" class="link" target="_blank">YouTube</a>!</div>
 	<div class="youtube-videos">
-		{% for vid in youtubeVids %}
-			<div class="youtube-vid">{{ vid.show | safe }}</div>
+		{% for vid in vids %}
+			<div class="youtube-vid" id="vid-{{ loop.index }}"><iframe width="100%" height="100%" src="{{ vid.embed }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
 		{% endfor %}
 	</div>
 {% endblock %}
