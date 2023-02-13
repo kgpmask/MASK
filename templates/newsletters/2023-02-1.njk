@@ -2,15 +2,11 @@
 
 {% set pagetitle = '[PREVIEW] Febuary 2023 Issue' %}
 
-{% set pagecount = 23 %}
+{% set pagecount = 24 %}
 
-{% block nullcoverpage %}
+{% block coverpage %}
 	<div class="page" id="cover-page"></div>
 {% endblock %}
-
-{# {% block coverpage %}
-	<div class="page" id="cover-page" style="background-image: url(/assets/releases/2023-02-1/logo.jpeg)"></div>
-{% endblock %} #}
 
 {# At the moment, most of it contains old newsletter's text. Edit them accordingly onegai. #}
 {% block article %}
@@ -493,11 +489,11 @@
 	<div class="page" id="crossword">
 		<div id="cross-wrapper">
 			<span class="article-header">Crossword</span>
-			<div class="anime-info" style="max-width: 30%; padding: 5px; text-align: center;">Everyone has a partner, be it a pet, a friend or even a bloodthirsty demon who resides inside you. This crossword is all about them. Use the clues to find out some of the most iconic partners in your favourite animes</div>
+			<div class="anime-info" style="max-width: 30%; padding: 5px; text-align: center;">As we think about romance, there are some anime which immediately pop up in our mind. There are some which we hold dear to us, and some which leaves us in tears. Use the clues to find out some references to various anime plot points. </div>
 			<table class="crossword-table" id="crossword-table" cellspacing="0"></table>
 			<div id="crossword-words">
-				<div id="crossword-left" style=""></div>
-				<div id="crossword-right" style=""></div>
+				<div id="crossword-left"></div>
+				<div id="crossword-right"></div>
 			</div>
 		</div>
 		<div id="cross-alt">Your device is too thin to view this content; please rotate your screen or use a larger device!</div>
@@ -717,13 +713,13 @@
 		.page {
 			color: var(--dark-blue);
 		}
-		{# #cover-page {
-			background-image: url(/assets/releases/2022-12-1/cover.webp);
+		#cover-page {
+			background-image: url(/assets/releases/2023-02-1/cover.webp);
 			background-position: center;
 			background-size: contain;
 			background-repeat: no-repeat;
 			background-color: rgba(0, 0, 0, 0) !important;
-		} #}
+		}
 		.article-full, .article-half, #crossword-left, #crossword-right {
 			scrollbar-color: var(--teal) var(--off-white) !important;
 		}
@@ -752,6 +748,10 @@
 		}
 		li {
 			margin: 7px 0px;
+		}
+		#crossword-left, #crossword-right {
+			min-height: 75px !important;
+			height: calc(90vh - 480px) !important;
 		}
 	</style>
 	<link rel="stylesheet" type="text/css" href="/assets/styles/wordsearch.css"/>
