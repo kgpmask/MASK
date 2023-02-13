@@ -24,6 +24,7 @@ There are multiple ways to run the server. The vast majority of the time, you wi
 * `local` (l): Uses a local database (mongodb://127.0.0.1/mask) instead of the designated test database. Overwrites all other DB flags.
 * `prod` (p): Connects directly to the production database. Do NOT use this flag lightly; it can break many, many things if you mess up and the testing database should serve your purposes. Cannot be used in conjuction with dev mode, for security reasons.
 * `userless` (u): Runs the server without a database connection. All user-based pages cannot be loaded. A planned feature is to have a dummy user with a modifiable JSON file, but as of now no user exists.
+* `quiz` (q): Allows for infinite quiz attempts. Should be used with `dev`.
 
 
 In order to start the server, you will require a credentials.json file - contact your WebDev Team Head for this file, and do NOT share it. The only exception to this is the userless flag - it is recommended to use `npm run dev userless` (or `npm run du`) for any page that does not involve a logged-in user.

@@ -1,4 +1,5 @@
 const axios = require('axios');
+const { restart } = require('nodemon');
 const { render } = require('nunjucks');
 const fs = require('fs').promises;
 const path = require('path');
@@ -38,6 +39,7 @@ function handler (app, env) {
 
 	app.use((req, res, next) => {
 		res.locals.userless = PARAMS.userless;
+		res.locals.quizFlag = PARAMS.quiz;
 		next();
 	});
 
@@ -107,6 +109,10 @@ function handler (app, env) {
 				req.logout(() => res.redirect('/'));
 				break;
 			}
+			// TODO: add a route here for fandom
+			// case 'fandom': {
+			// 	res.renderFile('fandom_quiz.njk')
+			// }
 			case 'members': {
 				const membersData = require('./members.json');
 				if (!args[1]) args[1] = membersData[0].name;
@@ -208,7 +214,7 @@ function handler (app, env) {
 					return res.renderFile('login.njk');
 				}
 				dbh.getUserStats(req.user._id).then(user => {
-					console.log(user.quizData);
+					// console.log(user.quizData);
 					const quizzed = user.quizData.map(quiz => quiz.quizId) ?? [];
 					dbh.getQuizzes().then(qzs => {
 						const QUIZZES = {};
@@ -244,7 +250,7 @@ function handler (app, env) {
 						}
 						const index = quizzes.indexOf(args[1]);
 						if (index === -1) return notFound('events/quizzes_404.njk', { years: renderYears.reverse(), quizzed, locked });
-						if (quizzed.includes(args[1])) return res.renderFile('events/quiz_attempted.njk');
+						if (!PARAMS.quiz && quizzed.includes(args[1])) return res.renderFile('events/quiz_attempted.njk');
 						const adjs = [quizzes[index - 1], quizzes[index + 1], quizzes[index]];
 						const QUIZ = QUIZZES[args[1]];
 						const quizDate = new Date(QUIZ.unlock).getTime();
@@ -269,7 +275,7 @@ function handler (app, env) {
 							}));
 						});
 						shuffle(questions);
-						return res.renderFile('events/static_quiz.njk', {
+						return res.renderFile('events/fandom_quiz.njk', {
 							adjs,
 							questions: JSON.stringify(questions),
 							qAmt: questions.length,
