@@ -1,11 +1,12 @@
 const axios = require('axios');
+const { restart } = require('nodemon');
 const { render } = require('nunjucks');
 const fs = require('fs').promises;
 const path = require('path');
 
 const checker = require('./checker.js');
 const login = require('./login.js');
-const dbh = PARAMS.userless ? {} : require('../database/database_handler.js');
+const dbh = PARAMS.userless ? {} : require('../database/handler');
 
 const handlerContext = {}; // Store cross-request context here
 
@@ -38,6 +39,7 @@ function handler (app, env) {
 
 	app.use((req, res, next) => {
 		res.locals.userless = PARAMS.userless;
+		res.locals.quizFlag = PARAMS.quiz;
 		next();
 	});
 
@@ -60,16 +62,17 @@ function handler (app, env) {
 		args.shift();
 		switch (args[0]) {
 			case '': case 'home': {
-				const posts = require('./posts.json').filter(post => post.type !== 'video' || post.show === '').slice(0, 7);
-				posts.forEach(post => {
-					const elapsed = Date.now() - Date.parse(post.date.replace(/(?<=^\d{1,2})[a-z]{2}/, '').replace(/,/, ''));
-					if (!isNaN(elapsed) && elapsed < 7 * 24 * 60 * 60 * 1000) post.recent = true;
+				if (PARAMS.userless) return res.redirect('/login');
+				dbh.getPosts().then(POSTS => {
+					const posts = POSTS.splice(0, 7);
+					posts.forEach(post => {
+						const elapsed = Date.now() - post.date;
+						if (!isNaN(elapsed) && elapsed < 7 * 24 * 60 * 60 * 1000) post.recent = true;
+					});
+					const art = POSTS.filter(post => post.type === 'art' && post.hype).splice(0, 5);
+					const vids = POSTS.filter(post => post.type === 'youtube' && post.hype).splice(0, 5);
+					res.renderFile('home.njk', { posts, vids, art });
 				});
-				const vids = require('./posts.json').filter(post => {
-					return post.type === 'video' && post.hype && post.link.includes('www.youtube.com');
-				}).shuffle().slice(0, 5);
-				const art = require('./posts.json').filter(post => post.type === 'art' && post.hype).slice(0, 5);
-				res.renderFile('home.njk', { posts, vids, art });
 				break;
 			}
 			case 'apply': {
@@ -77,8 +80,8 @@ function handler (app, env) {
 				break;
 			}
 			case 'art': {
-				const art = require('./posts.json').filter(post => post.type === 'art');
-				res.renderFile('art.njk', { art });
+				if (PARAMS.userless) return res.redirect('/login');
+				dbh.getPosts('art').then(art => res.renderFile('art.njk', { art })).catch(err => console.log(err));
 				break;
 			}
 			case 'assets': {
@@ -106,6 +109,10 @@ function handler (app, env) {
 				req.logout(() => res.redirect('/'));
 				break;
 			}
+			// TODO: add a route here for fandom
+			// case 'fandom': {
+			// 	res.renderFile('fandom_quiz.njk')
+			// }
 			case 'members': {
 				const membersData = require('./members.json');
 				if (!args[1]) args[1] = membersData[0].name;
@@ -117,11 +124,12 @@ function handler (app, env) {
 					teams,
 					members
 				} = membersData[yearIndex];
-				const ctx = { 'Governors': [], 'Former Members': [] };
-				members.forEach(member => {
+				const ctx = { 'Governors': [], 'Former Members': [], 'Research Associate': [] };
+				members.sort((a, b) => -(a.name < b.name)).forEach(member => {
 					let target;
 					if (member.gov) target = 'Governors';
 					else if (member.inactive) target = 'Former Members';
+					else if (member.RA) target = 'Research Associate';
 					else target = `Batch of 20${member.roll.substr(0, 2)}`;
 					if (!ctx[target]) ctx[target] = [];
 					ctx[target].push({
@@ -136,7 +144,8 @@ function handler (app, env) {
 					});
 				});
 				const prev = membersData[yearIndex + 1]?.name, next = membersData[yearIndex - 1]?.name;
-				const keys = ['Governors', ...Object.keys(ctx).filter(key => key.startsWith('Batch of ')).sort(), 'Former Members'];
+				const keys = ['Governors', 'Research Associate', ...Object.keys(ctx)
+					.filter(key => key.startsWith('Batch of ')).sort(), 'Former Members'];
 				res.renderFile('members.njk', {
 					members: Object.fromEntries(keys.map(key => [key, ctx[key]])),
 					membersTitle: name === membersData[0].name ? 'Our Members' : name,
@@ -205,7 +214,7 @@ function handler (app, env) {
 					return res.renderFile('login.njk');
 				}
 				dbh.getUserStats(req.user._id).then(user => {
-					console.log(user.quizData);
+					// console.log(user.quizData);
 					const quizzed = user.quizData.map(quiz => quiz.quizId) ?? [];
 					dbh.getQuizzes().then(qzs => {
 						const QUIZZES = {};
@@ -241,7 +250,7 @@ function handler (app, env) {
 						}
 						const index = quizzes.indexOf(args[1]);
 						if (index === -1) return notFound('events/quizzes_404.njk', { years: renderYears.reverse(), quizzed, locked });
-						if (quizzed.includes(args[1])) return res.renderFile('events/quiz_attempted.njk');
+						if (!PARAMS.quiz && quizzed.includes(args[1])) return res.renderFile('events/quiz_attempted.njk');
 						const adjs = [quizzes[index - 1], quizzes[index + 1], quizzes[index]];
 						const QUIZ = QUIZZES[args[1]];
 						const quizDate = new Date(QUIZ.unlock).getTime();
@@ -266,7 +275,7 @@ function handler (app, env) {
 							}));
 						});
 						shuffle(questions);
-						return res.renderFile('events/static_quiz.njk', {
+						return res.renderFile('events/fandom_quiz.njk', {
 							adjs,
 							questions: JSON.stringify(questions),
 							qAmt: questions.length,
@@ -285,14 +294,14 @@ function handler (app, env) {
 					if (!quiz) return res.renderFile('events/quizzes_404.njk', { message: `The quiz hasn't started, yet!` });
 					const QUIZ = quiz.questions;
 					dbh.getUser(req.user._id).then(user => {
-						if (user.permissions?.includes("quizmaster")) {
-							res.renderFile("events/live_master.njk", {
+						if (user.permissions?.includes('quizmaster')) {
+							res.renderFile('events/live_master.njk', {
 								quiz: JSON.stringify(QUIZ),
 								qAmt: QUIZ.length,
 								id: 'live'
 							});
 						} else {
-							res.renderFile("events/live_participant.njk", {
+							res.renderFile('events/live_participant.njk', {
 								id: 'live',
 								userId: req.user._id
 							});
@@ -346,10 +355,16 @@ function handler (app, env) {
 				break;
 			}
 			case 'videos': {
-				const vids = require('./posts.json');
-				const youtubeVids = vids.filter(vid => vid.link.includes('www.youtube.com'));
-				const instaVids = vids.filter(vid => vid.link.includes('www.instagram.com'));
-				res.renderFile('videos.njk', { youtubeVids, instaVids });
+				if (PARAMS.userless) return res.redirect('/login');
+				dbh.getPosts('youtube').then(vids => {
+					vids.forEach(vid => vid.embed = `https://www.youtube.com/embed/${vid.link.split('?v=')[1]}?playsinline=1`);
+					res.renderFile('videos.njk', { vids });
+				}).catch(err => {
+					if (err) {
+						throw err;
+					}
+				});
+
 				break;
 			}
 			case 'corsProxy': {
