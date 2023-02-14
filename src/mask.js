@@ -1,6 +1,5 @@
 require('./env.js').init();
 
-
 const childProcess = require('child_process');
 const express = require('express');
 const http = require('http');
@@ -16,7 +15,7 @@ const socketio = require('socket.io')();
 const initMiddleware = require('./middleware.js');
 
 global.app = express();
-const waitForDB = PARAMS.userless ? Promise.resolve() : DB.init();
+const waitForDB = PARAMS.mongoless ? Promise.resolve() : DB.init;
 
 const nunjEnv = nunjucks.configure(path.join(__dirname, '../templates'), {
 	express: app,
@@ -27,7 +26,7 @@ initMiddleware(app);
 
 appHandler(app, nunjEnv);
 
-const server = require('http').createServer(app);
+const server = http.createServer(app);
 global.io = socketio.listen(server);
 
 require('./socket.js');
