@@ -39,12 +39,19 @@ exports.init = () => {
 				process.env[key] = env[key];
 			}
 		}
-		if (!PARAMS.prod) {
-			[process.env.MONGO_URL, process.env.MONGO_TEST_URL] = [process.env.MONGO_TEST_URL, process.env.MONGO_URL];
-		}
-		if (PARAMS.local) process.env.MONGO_URL = 'mongodb://127.0.0.1/mask';
-		if (PARAMS.quiz) process.env.MONGO_URL = 'mongodb://10.5.18.101/mask';
 	} catch (e) {
-		console.log(e);
+		console.log(e.code === 'ENOENT' ? 'Unable to find credentials.json' : e);
 	}
+	if (!(process.env.MONGO_TEST_URL || process.env.MONGO_URL)) {
+		PARAMS.mongoless = PARAMS.userless = true;
+		console.log('Operating in mongoless mode.');
+	} else if (!(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET)) {
+		PARAMS.userless = true;
+		console.log('Operating in userless mode.');
+	}
+	if (!PARAMS.prod) {
+		[process.env.MONGO_URL, process.env.MONGO_TEST_URL] = [process.env.MONGO_TEST_URL, process.env.MONGO_URL];
+	}
+	if (PARAMS.local) process.env.MONGO_URL = 'mongodb://127.0.0.1/mask';
+	if (PARAMS.quiz) process.env.MONGO_URL = 'mongodb://10.5.18.101/mask';
 };
