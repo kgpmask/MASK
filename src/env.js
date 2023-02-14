@@ -6,10 +6,11 @@ const aliases = {
 	l: 'local',
 	p: 'prod',
 	u: 'userless',
+	m: 'mongoless',
 	q: 'quiz'
 };
-const validParams = ['dev', 'local', 'prod', 'userless', 'quiz'];
-
+const validParams = ['dev', 'local', 'prod', 'mongoless', 'userless', 'quiz'];
+// mongoless: No mongo at all. userless: mongo but no user login
 if (!global.PARAMS) {
 	if (process.env['NODE_ENV'] === 'production') process.env.prod = true;
 	const shorts = new Set();
@@ -44,6 +45,6 @@ exports.init = () => {
 		if (PARAMS.local) process.env.MONGO_URL = 'mongodb://127.0.0.1/mask';
 		if (PARAMS.quiz) process.env.MONGO_URL = 'mongodb://10.5.18.101/mask';
 	} catch (e) {
-		console.log('[!] Unable to load credentials.json');
+		console.log(e);
 	}
 };

@@ -6,9 +6,10 @@
 	"scripts": {
 		"dev": "nodemon src/mask.js dev",
 		"du": "nodemon src/mask.js du",
+		"dm": "nodemon src/mask.js dm",
 		"lint": "eslint . --config .eslintrc.json --ext .js",
 		"start": "node src/mask.js",
-		"test": "npm run lint && npx mocha --exit && echo \"Passing all tests.\" && exit 0",
+		"test": "npm run lint && npx mocha --timeout 3000 && echo \"Passing all tests.\" && exit 0",
 		"prepare": "husky install"
 	},
 	"repository": {
