@@ -64,6 +64,7 @@ function handler (app, env) {
 		switch (args[0]) {
 			case '': case 'home': {
 				if (PARAMS.mongoless) return res.redirect('/login');
+				// TODO: Changes have been made to, uhh, improve this behaviour in the abstract branch. Get those in.
 				dbh.getPosts().then(POSTS => {
 					const posts = POSTS.splice(0, 7);
 					posts.forEach(post => {
@@ -316,6 +317,7 @@ function handler (app, env) {
 			}
 			case 'live-results': {
 				const quizId = new Date().toISOString().slice(0, 10);
+				if (PARAMS.mongoless) return res.redirect('/');
 				dbh.getAllLiveResults(quizId).then(RES => {
 					if (!RES) res.notFound();
 					const results = [];
@@ -406,6 +408,10 @@ function handler (app, env) {
 				break;
 			}
 			case 'quizzes': {
+				if (!loggedIn) {
+					if (!PARAMS.userless) req.session.returnTo = req.url;
+					return res.renderFile('events/quiz_login.njk');
+				}
 				// Regenerate questions
 				const rand = Tools.fakeRandom(req.user._id);
 				function shuffle (array) {
@@ -489,6 +495,10 @@ function handler (app, env) {
 				break;
 			}
 			case 'live-end': {
+				if (!loggedIn) {
+					if (!PARAMS.userless) req.session.returnTo = req.url;
+					return res.renderFile('events/quiz_login.njk');
+				}
 				dbh.getUser(req.user._id).then(user => {
 					if (!user.permissions.find(perm => perm === 'quizmaster')) throw new Error('Access denied');
 					io.sockets.in('waiting-for-live-quiz').emit('end-quiz');
