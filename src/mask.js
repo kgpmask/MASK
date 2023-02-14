@@ -20,7 +20,7 @@ const MongoStore = require('connect-mongo');
 const socketio = require('socket.io')();
 
 global.app = express();
-const waitForDB = PARAMS.userless ? Promise.resolve() : DB.init();
+const waitForDB = PARAMS.mongoless ? Promise.resolve() : DB.init();
 
 const env = nunjucks.configure(path.join(__dirname, '../templates'), {
 	express: app,

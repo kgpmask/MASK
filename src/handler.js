@@ -6,7 +6,7 @@ const path = require('path');
 
 const checker = require('./checker.js');
 const login = require('./login.js');
-const dbh = PARAMS.userless ? {} : require('../database/handler');
+const dbh = PARAMS.mongoless ? {} : require('../database/handler');
 
 const handlerContext = {}; // Store cross-request context here
 
@@ -39,6 +39,7 @@ function handler (app, env) {
 
 	app.use((req, res, next) => {
 		res.locals.userless = PARAMS.userless;
+		res.locals.mongoless = PARAMS.mongoless;
 		res.locals.quizFlag = PARAMS.quiz;
 		next();
 	});
@@ -62,7 +63,7 @@ function handler (app, env) {
 		args.shift();
 		switch (args[0]) {
 			case '': case 'home': {
-				if (PARAMS.userless) return res.redirect('/login');
+				if (PARAMS.mongoless) return res.redirect('/login');
 				dbh.getPosts().then(POSTS => {
 					const posts = POSTS.splice(0, 7);
 					posts.forEach(post => {
@@ -80,7 +81,7 @@ function handler (app, env) {
 				break;
 			}
 			case 'art': {
-				if (PARAMS.userless) return res.redirect('/login');
+				if (PARAMS.mongoless) return res.redirect('/login');
 				dbh.getPosts('art').then(art => res.renderFile('art.njk', { art })).catch(err => console.log(err));
 				break;
 			}
@@ -355,7 +356,7 @@ function handler (app, env) {
 				break;
 			}
 			case 'videos': {
-				if (PARAMS.userless) return res.redirect('/login');
+				if (PARAMS.mongoless) return res.redirect('/login');
 				dbh.getPosts('youtube').then(vids => {
 					vids.forEach(vid => vid.embed = `https://www.youtube.com/embed/${vid.link.split('?v=')[1]}?playsinline=1`);
 					res.renderFile('videos.njk', { vids });
