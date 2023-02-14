@@ -1,3 +1,5 @@
+const passport = require('passport');
+
 exports.init = () => {
 	const GoogleStrategy = require('passport-google-oauth20');
 	const dbh = require('../database/handler');

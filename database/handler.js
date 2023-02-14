@@ -99,6 +99,7 @@ async function getNewsletter (date) {
 
 // Fetching posts based on type (art/video/newsletter)
 function getPosts (postType) {
+	// TODO: Make this accept a number of posts as a cap filter
 	return Post.find(postType ? { type: postType } : {}).sort({ date: -1 });
 }
 
