@@ -68,8 +68,9 @@ module.exports = function setMiddleware (app) {
 
 	app.use((req, res, next) => {
 		res.locals.userless = PARAMS.userless;
-		res.loggedIn = res.locals.loggedIn = Boolean(req.user);
-
+		res.locals.mongoless = PARAMS.mongoless;
+		res.locals.quizFlag = PARAMS.quiz;
+		req.loggedIn = res.locals.loggedIn = Boolean(req.user);
 		next();
 	});
 };

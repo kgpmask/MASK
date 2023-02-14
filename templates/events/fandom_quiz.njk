@@ -1,3 +1,4 @@
+
 {% extends "_base.njk" %}
 
 {% set thispage = 'events' %}
@@ -7,14 +8,15 @@
 	<div class="quiz-container">
 		<div class="countDown">
 			<button id="startQuiz" onclick="startQuiz()" class="rel">Start</button>
-			<button onclick="nextQ()" style="display:none" class="rel nextQ">Next</button>
 			<button onclick="prevQ()" style="display:none" class="rel prevQ">Previous</button>
+			<button onclick="nextQ()" style="display:none" class="rel nextQ">Next</button>
 			<br/><br/>
 		</div>
 		<br/>
 		<div class="question-zone">
 			<div id="count"></div>
 			<br/>
+			<button onclick="endQuiz()" style="display:none" class="rel submit">Submit</button>
 			<form id="quiz" class="quizzes" method="POST" action="/quizzes">
 				<input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
 				<input type="hidden" name="quizId" value="{{ id }}"/>
@@ -163,7 +165,7 @@
 	<script>
 		let currentQ = 0;
 		let timeVal = 0;
-		let countLeftPerQs = 30;
+		let globalTimer = 1000;
 		let next = false;
 		let currentTimer;
 		const qAmt = {{ qAmt }};
@@ -218,7 +220,7 @@
 			if (e) {
 				
 				//Select the corresponding option
-				op=document.getElementById(`option-${currentQ + 1}-${e}`);
+				op=document.getElementById(`option-${currentQ}-${e}`);
 				op.click();
 				/* Was trying a feature to allow focus on a checked element*/
 				op.scrollIntoView();
@@ -226,31 +228,25 @@
 				preventDefault(event);
 			}
 			else if (n == 27) {
-				chk_opt=document.querySelector(`input[name="answer-${currentQ + 1}"]:checked`)
+				chk_opt=document.querySelector(`input[name="answer-${currentQ}"]:checked`)
 				if (chk_opt)
 					chk_opt.checked = false
 			}
-			else if (n == 13) {
+			else if (n == 13 || n == 39) {
 			// TODO: Ignore if no input is selected
-				if (document.querySelector(`input[name="answer-${currentQ + 1}"]:checked`)) 
+				if (document.querySelector(`input[name="answer-${currentQ}"]:checked`)) 
 					nextQ();
+				preventDefault(event);
+			}
+			else if (n == 8 || n == 37) {
+				prevQ();
 				preventDefault(event);
 			}
 
 		});
 		function timer() {
-			const c = currentQ;
-
-			document
-				.getElementById(`qbox-${c + 1}`)
-				.style
-				.display = 'block';
-			if (c) 
-				document
-					.getElementById(`qbox-${c}`)
-					.style
-					.display = 'none';
-			timeVal = qs[c].time || 30;
+			
+			timeVal = globalTimer;
 			let cancel = false;
 			function endTimer() {
 				cancel = true;
@@ -265,7 +261,8 @@
 				if (timeVal >= 0) 
 					setTimeout(decrement, 1000);
 				else 
-					nextQ();
+					{# nextQ(); #}
+					endQuiz();
 				}
 			decrement();
 			return endTimer;
@@ -281,27 +278,57 @@
 			for (button of document.getElementsByClassName('prevQ')) {
 				button.style.display = 'inline';
 			}
-			currentTimer = timer();
+			nextQ();
+			timer();	// Here we have started a global timer with value = globalTimer
 		}
 		function nextQ() {
-			if (currentTimer) 
-				currentTimer();
-			currentQ++;
-			const c = currentQ;
-			if (c >= qAmt) {
-				document
-					.getElementById('quiz')
-					.submit();
-			} else 
-				currentTimer = timer();
+			//if (currentTimer) currentTimer();
+			for (button of document.getElementsByClassName('nextQ')) {
+				button.disabled = false;
 			}
+			for (button of document.getElementsByClassName('prevQ')) {
+				button.disabled = false;
+			}
+			const c = currentQ;
+			if(c<1){
+				for (button of document.getElementsByClassName('prevQ')) {
+					button.disabled = true;
+				}
+			}
+			if (c >= qAmt){
+				for (button of document.getElementsByClassName('submit')) {
+					button.style.display = 'inline';
+				}
+				document.getElementById(`qbox-${c}`).style.display = 'none';
+				for (button of document.getElementsByClassName('nextQ')) {
+					button.disabled = true;
+				}
+			}
+			else document.getElementById(`qbox-${c+1}`).style.display = 'block';
+			if (c) document.getElementById(`qbox-${c}`).style.display = 'none';
+			currentQ++;
+		}
 		function prevQ() {
 			const d = currentQ;
+			for (button of document.getElementsByClassName('submit')) {
+				button.style.display = 'none';
+			}
+			for (button of document.getElementsByClassName('nextQ')) {
+				button.disabled = false;
+			}
 			if(d>1){
 				document.getElementById(`qbox-${d-1}`).style.display = 'block';
-				document.getElementById(`qbox-${d}`).style.display = 'none';
+				if(d<=qAmt) document.getElementById(`qbox-${d}`).style.display = 'none';
 				currentQ--;
 			}
+			if(d<=2){
+				for (button of document.getElementsByClassName('prevQ')) {
+					button.disabled = true;
+				}
+			}
+		}
+		function endQuiz(){
+			document.getElementById('quiz').submit();
 		}
 	</script>
 {% endblock %}
