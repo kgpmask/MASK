@@ -105,8 +105,8 @@ function handler (app, nunjEnv) {
 	app.get('/submissions', (req, res) => {
 		return res.renderFile('submissions.njk');
 	});
-	app.get('/blog', (req, res) => {
-		const url = req.url.replace('^.*?/blog', '');
+	app.use('/blog', (req, res) => {
+		const url = req.url.replace(/^.*?\/blog/, '');
 		// TODO: Fix this!
 		return res.redirect(`https://maskiitkgp.blogspot.com${url}.html`);
 	});
@@ -192,7 +192,7 @@ function handler (app, nunjEnv) {
 		}
 	});
 
-	app.get(/\/(quizzes|events)\/(arg)/, async (req, res) => {
+	app.get(['/quizzes/:arg', '/events/:arg'], async (req, res) => {
 		if (!req.loggedIn) {
 			if (!PARAMS.userless) req.session.returnTo = req.url;
 			return res.renderFile('login.njk');
@@ -208,7 +208,7 @@ function handler (app, nunjEnv) {
 		];
 		const quizzes = Object.keys(QUIZZES);
 		quizzes.sort();
-		const index = quizzes.indexOf(req.params[1]);
+		const index = quizzes.indexOf(req.params.arg);
 		if (index === -1) {
 			const years = {};
 			quizzes.forEach(quiz => {
@@ -228,9 +228,9 @@ function handler (app, nunjEnv) {
 			).map(k => k[0]);
 			// TODO: Make this redirect to /${req.params[0]}-404
 			return res.notFound('events/quizzes_404.njk', { years: renderYears.reverse(), quizzed, locked });
-		} else if (!PARAMS.quiz && quizzed.includes(req.params[1])) return res.renderFile('events/quiz_attempted.njk');
+		} else if (!PARAMS.quiz && quizzed.includes(req.params.arg)) return res.renderFile('events/quiz_attempted.njk');
 		const adjs = [quizzes[index - 1], quizzes[index + 1], quizzes[index]];
-		const QUIZ = QUIZZES[req.param.arg];
+		const QUIZ = QUIZZES[req.params.arg];
 		const quizDate = new Date(QUIZ.unlock).getTime();
 		if (quizDate > Date.now()) {
 			return res.renderFile('events/quiz_countdown.njk', {
@@ -260,7 +260,7 @@ function handler (app, nunjEnv) {
 			adjs,
 			questions: JSON.stringify(questions),
 			qAmt: questions.length,
-			id: args[1]
+			id: req.params.arg
 		});
 	});
 	app.get(['/quizzes', '/events'], async (req, res) => {
@@ -483,7 +483,7 @@ function handler (app, nunjEnv) {
 		// If propagation hasn't stopped, switch to GET!
 		return res.redirect(req.url);
 	});
-	app.get((req, res) => {
+	app.use((req, res) => {
 		// Catch-all 404
 		res.notFound();
 	});
