@@ -256,7 +256,7 @@ function handler (app, nunjEnv) {
 			}));
 		});
 		shuffle(questions);
-		return res.renderFile('events/fandom_quiz.njk', {
+		return res.renderFile('events/static_quiz.njk', {
 			adjs,
 			questions: JSON.stringify(questions),
 			qAmt: questions.length,
