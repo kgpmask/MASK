@@ -57,9 +57,9 @@ function getQuizzes () {
 	return Quiz.Questions.find().lean();
 }
 
-async function getLiveQuiz () {
-	const date = new Date().toISOString().slice(0, 10);
-	// const date = '2022-11-12';
+async function getLiveQuiz (test = false) {
+	const date = test ? '2022-11-12' : new Date().toISOString().slice(0, 10);
+	// The first live quiz
 	const quiz = await LiveQuiz.findOne({ title: date });
 	if (quiz) return quiz.toObject();
 }

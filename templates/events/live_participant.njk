@@ -311,22 +311,23 @@
 			} else {
 				for (let i = 1; i <= 4; i++) {
 					if (document.getElementById(`answer-${i}`).checked) { 
-						document.getElementById(`answer-${i}`).checked = false;
 						answer = document.getElementById(`answer-${i}`).value;
+						document.getElementById(`answer-${i}`).checked = false;
 						break;
 					}
 				}
 			}
-			if (answer !== null) submittedAnswer = answer
+			console.log("Answer:", answer);
+			if (answer !== null) submittedAnswer = answer;
 			//return false;
 			if (submittedAnswer === null) return false;
 			// This lets the participants know when the timer will end
 			//document.getElementById('count').style.display = 'none';
+			axios.post('/live', { submittedAnswer }).then(() => submittedAnswer = submittedAnswer).catch(() => {});
 			showMessage('Your response has been submitted.<br/>Please wait for the other participants.');
 			if (timeout === false) return;
 			state = 'submitted';
 			showMessage('Your response has been submitted.');
-			axios.post('/live', { submittedAnswer }).then(() => submittedAnswer = submittedAnswer).catch(() => {});
 			return true;
 		}
 	</script>
