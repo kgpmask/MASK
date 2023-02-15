@@ -192,7 +192,7 @@ function handler (app, nunjEnv) {
 		}
 	});
 
-	app.get(/\/(quizzes|events)\/(arg)/, async (req, res) => {
+	app.get(['/quizzes/:arg?', '/events/:arg?'], async (req, res) => {
 		if (!req.loggedIn) {
 			if (!PARAMS.userless) req.session.returnTo = req.url;
 			return res.renderFile('login.njk');
@@ -208,7 +208,7 @@ function handler (app, nunjEnv) {
 		];
 		const quizzes = Object.keys(QUIZZES);
 		quizzes.sort();
-		const index = quizzes.indexOf(req.params[1]);
+		const index = quizzes.indexOf(req.params.arg);
 		if (index === -1) {
 			const years = {};
 			quizzes.forEach(quiz => {
@@ -230,7 +230,7 @@ function handler (app, nunjEnv) {
 			return res.notFound('events/quizzes_404.njk', { years: renderYears.reverse(), quizzed, locked });
 		} else if (!PARAMS.quiz && quizzed.includes(req.params[1])) return res.renderFile('events/quiz_attempted.njk');
 		const adjs = [quizzes[index - 1], quizzes[index + 1], quizzes[index]];
-		const QUIZ = QUIZZES[req.param.arg];
+		const QUIZ = QUIZZES[req.params.arg];
 		const quizDate = new Date(QUIZ.unlock).getTime();
 		if (quizDate > Date.now()) {
 			return res.renderFile('events/quiz_countdown.njk', {
@@ -260,7 +260,7 @@ function handler (app, nunjEnv) {
 			adjs,
 			questions: JSON.stringify(questions),
 			qAmt: questions.length,
-			id: args[1]
+			id: req.params.arg
 		});
 	});
 	app.get(['/quizzes', '/events'], async (req, res) => {
@@ -458,7 +458,6 @@ function handler (app, nunjEnv) {
 		return res.renderFile('fandom_quiz.njk');
 	});
 
-
 	// Assorted other stuff
 
 	app.get('/corsProxy', (req, res) => {
@@ -485,6 +484,7 @@ function handler (app, nunjEnv) {
 	});
 	app.get((req, res) => {
 		// Catch-all 404
+		console.log("404... so...");
 		res.notFound();
 	});
 }
