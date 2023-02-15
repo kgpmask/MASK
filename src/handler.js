@@ -342,7 +342,7 @@ function handler (app, nunjEnv) {
 			if (!PARAMS.userless) req.session.returnTo = req.url;
 			return res.renderFile('events/quiz_login.njk');
 		}
-		const quiz = await dbh.getLiveQuiz();
+		const quiz = await dbh.getLiveQuiz(PARAMS.dev);
 		if (!quiz) return res.renderFile('events/quizzes_404.njk', { message: `The quiz hasn't started, yet!` });
 		const QUIZ = quiz.questions;
 		const user = await dbh.getUser(req.user._id);
@@ -366,7 +366,7 @@ function handler (app, nunjEnv) {
 		}
 		if (!handlerContext.liveQuiz) handlerContext.liveQuiz = {};
 		const LQ = handlerContext.liveQuiz;
-		const quiz = await dbh.getLiveQuiz();
+		const quiz = await dbh.getLiveQuiz(PARAMS.dev);
 		const QUIZ = quiz.questions;
 		const user = await dbh.getUser(req.user._id);
 		if (user.permissions?.includes('quizmaster')) {
