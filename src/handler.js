@@ -256,7 +256,7 @@ function handler (app, nunjEnv) {
 			}));
 		});
 		shuffle(questions);
-		return res.renderFile('events/fandom_quiz.njk', {
+		return res.renderFile('events/static_quiz.njk', {
 			adjs,
 			questions: JSON.stringify(questions),
 			qAmt: questions.length,
@@ -458,7 +458,6 @@ function handler (app, nunjEnv) {
 		return res.renderFile('fandom_quiz.njk');
 	});
 
-
 	// Assorted other stuff
 
 	app.get('/corsProxy', (req, res) => {
@@ -485,6 +484,7 @@ function handler (app, nunjEnv) {
 	});
 	app.use((req, res) => {
 		// Catch-all 404
+		console.log("404... so...");
 		res.notFound();
 	});
 }
