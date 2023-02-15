@@ -388,7 +388,7 @@ function handler (app, nunjEnv) {
 			LQ.endTime = Date.now() + 1000 * (quizTime + 1);
 			res.send('Done');
 		} else {
-			const { answer } = req.body;
+			const answer = req.body.submittedAnswer;
 			if (answer === '') throw new Error('Missing answer');
 			const currentQ = LQ.currentQ ?? - 1;
 			const Q = QUIZ[currentQ];
@@ -397,13 +397,12 @@ function handler (app, nunjEnv) {
 			if (time < 0) throw new Error('Too late!');
 			const alreadySubmitted = await dbh.getLiveResult(user._id, quiz.title, currentQ);
 			if (alreadySubmitted) throw new Error('Already attempted this question!');
-			const { points, timeLeft } = checker.checkLiveQuiz(answer, Q.solution, Q.options.type, Q.points, time);
+			const { points, timeLeft } = await checker.checkLiveQuiz(answer, Q.solution, Q.options.type, Q.points, time);
 			const result = points
 				? points < Q.points ? 'partial' : 'correct'
 				: 'incorrect';
 			const functionArgs = [user._id, quiz.title, currentQ, points, answer, timeLeft, result];
-			dbh.addLiveResult(...functionArgs).catch(res.error);
-			res.send('Submitted');
+			dbh.addLiveResult(...functionArgs).then(() => res.send('Submitted')).catch(e => console.log(e) && res.error(e));
 		}
 	});
 	app.post('/live-end', async (req, res) => {
