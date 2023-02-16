@@ -428,22 +428,19 @@ function handler (app, nunjEnv) {
 		const QUIZ = quiz.questions;
 		const user = await dbh.getUser(req.user._id);
 		if (user.permissions?.includes('quizmaster')) {
-			const quizTime = { '10': 20, '5': 15, '3': 12 }[QUIZ[req.body.currentQ].points];
-			io.sockets.in('waiting-for-live-quiz').emit('question', {
-				currentQ: req.body.currentQ,
-				options: req.body.options,
-				time: quizTime
-			});
+			const { currentQ, options } = req.body;
+			const time = { '10': 20, '5': 15, '3': 12 }[QUIZ[currentQ].points];
+			io.sockets.in('waiting-for-live-quiz').emit('question', { currentQ, options, time });
 			setTimeout(() => {
-				const type = QUIZ[req.body.currentQ].options.type;
-				const solution = QUIZ[req.body.currentQ].solution;
+				const type = QUIZ[currentQ].options.type;
+				const solution = QUIZ[currentQ].solution;
 				setTimeout(() => io.sockets.in('waiting-for-live-quiz').emit('answer', {
 					answer: Array.isArray(solution) ? solution.join(' / ') : solution,
 					type
 				}), 2000); // Emit the actual event 3s after
-			}, 1000 * (quizTime + 1)); // Extra second to account for lag
+			}, 1000 * (time + 1)); // Extra second to account for lag
 			LQ.currentQ = req.body.currentQ;
-			LQ.endTime = Date.now() + 1000 * (quizTime + 1);
+			LQ.endTime = Date.now() + 1000 * (time + 1);
 			res.send('Done');
 		} else {
 			const answer = req.body.submittedAnswer;
