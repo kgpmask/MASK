@@ -323,7 +323,7 @@
 			if (submittedAnswer === null) return false;
 			// This lets the participants know when the timer will end
 			//document.getElementById('count').style.display = 'none';
-			axios.post('/live', { submittedAnswer }).then(() => submittedAnswer = submittedAnswer).catch(() => {});
+			axios.post('/live', { submittedAnswer }).then(() => submittedAnswer = submittedAnswer).catch(e => console.log('Error:', e.response.data));
 			showMessage('Your response has been submitted.<br/>Please wait for the other participants.');
 			if (timeout === false) return;
 			state = 'submitted';

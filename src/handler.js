@@ -444,14 +444,14 @@ function handler (app, nunjEnv) {
 			res.send('Done');
 		} else {
 			const answer = req.body.submittedAnswer;
-			if (answer === '') throw new Error('Missing answer');
+			if (answer === '') return res.error('Missing answer');
 			const currentQ = LQ.currentQ ?? - 1;
 			const Q = QUIZ[currentQ];
-			if (!Q) throw new Error('currentQ out of bounds');
+			if (!Q) return res.error('currentQ out of bounds');
 			const time = Math.round((LQ.endTime - Date.now()) / 1000);
-			if (time < 0) throw new Error('Too late!');
+			if (time < 0) return res.error('Too late!');
 			const alreadySubmitted = await dbh.getLiveResult(user._id, quiz.title, currentQ);
-			if (alreadySubmitted) throw new Error('Already attempted this question!');
+			if (alreadySubmitted) return res.error('Already attempted this question!');
 			const { points, timeLeft } = await checker.checkLiveQuiz(answer, Q.solution, Q.options.type, Q.points, time);
 			const result = points
 				? points < Q.points ? 'partial' : 'correct'
