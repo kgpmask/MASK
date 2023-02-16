@@ -1,0 +1,15 @@
+name: Node.js CI
+
+on:
+  push:
+    branches: [ main, dev ]
+    paths-ignore:
+        - 'LICENSE'
+        - 'README.md'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: deploy
