@@ -38,7 +38,7 @@ function handler (app, nunjEnv) {
 			name: 'Art - Tanjiro Kamado',
 			link: '0025.webp',
 			type: 'art',
-			attr: [ 'Sanjeev Raj Ganji' ],
+			attr: ['Sanjeev Raj Ganji'],
 			date: new Date(1630261800000),
 			hype: true
 		}];
@@ -336,7 +336,50 @@ function handler (app, nunjEnv) {
 		// TODO: Rename this to /quiz/success
 		return res.renderFile('events/quiz_success.njk');
 	});
+	// Live master endpoint
+	app.get('/live-master', async (req, res) => {
+		if (PARAMS.dev) {
+			const quiz = await dbh.getLiveQuiz(PARAMS.dev);
+			// if (!quiz) return res.renderFile('events/quizzes_404.njk', { message: `The quiz hasn't started, yet!` });
+			const QUIZ = quiz.questions;
 
+			return res.renderFile('events/live_master.njk', {
+				quiz: JSON.stringify(QUIZ),
+				qAmt: QUIZ.length,
+				id: 'live',
+				dev: PARAMS.dev
+			});
+		} else {
+			return res.renderFile('events/quizzes_404.njk', { message: `STOP SNOOPING AROUND!` });
+		}
+	});
+	app.post('/live-master', async (req, res) => {
+		if (PARAMS.dev) {
+			// LQ keeps track of which question is currently being asked
+			if (!handlerContext.liveQuiz) handlerContext.liveQuiz = {};
+			const LQ = handlerContext.liveQuiz;
+			const quiz = await dbh.getLiveQuiz(PARAMS.dev);
+			const QUIZ = quiz.questions;
+			// console.log(req.body);
+			const { currentQ, options } = req.body;
+
+			const time = { '10': 20, '5': 15, '3': 12 }[QUIZ[currentQ].points];
+			io.sockets.in('waiting-for-live-quiz').emit('question', { currentQ, options, time });
+			setTimeout(() => {
+				const type = QUIZ[currentQ].options.type;
+				const solution = QUIZ[currentQ].solution;
+				setTimeout(() => io.sockets.in('waiting-for-live-quiz').emit('answer', {
+					answer: Array.isArray(solution) ? solution.join(' / ') : solution,
+					type
+				}), 2000); // Emit the actual event 3s after
+			}, 1000 * (time + 1)); // Extra second to account for lag
+			LQ.currentQ = req.body.currentQ;
+			LQ.endTime = Date.now() + 1000 * (time + 1);
+			res.send('Done');
+		} else {
+			return res.renderFile('events/quizzes_404.njk', { message: `STOP SNOOPING AROUND!` });
+		}
+	});
 	app.get('/live', async (req, res) => {
 		if (!req.loggedIn) {
 			if (!PARAMS.userless) req.session.returnTo = req.url;
