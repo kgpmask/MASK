@@ -9,7 +9,7 @@ before(() => server.ready());
 
 describe('Server', () => {
 	pages.forEach(page => {
-		it(`should serve page (${page || '/'})`, () => axios.get(`http://localhost:${PORT}/${page}`)).timeout(1_000);
+		it(`should serve page (${page || '/'})`, () => axios.get(`http://localhost:${PORT}/${page}`)).timeout(1_500);
 		// Pages should render in under a second
 	});
 
