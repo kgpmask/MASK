@@ -180,9 +180,16 @@ div#contact-us {
 	}
 }
 
-@media (max-width: 625px) {
+@media (max-width: 600px) {
 	#footer-name {
 		display: none;
+		margin-right: 10px
+	}
+}
+
+@media (max-width: 630px) {
+	div#contact-us {
+		margin-right: 10px;
 	}
 }
 
