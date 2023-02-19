@@ -1,3 +1,6 @@
+const childProcess = require('child_process');
+const util = require('util');
+
 exports.deepClone = function deepClone (aObject) {
 	if (!aObject) return aObject;
 	const bObject = Array.isArray(aObject) ? [] : {};
@@ -123,6 +126,18 @@ exports.levenshteinDamerau = function levenshteinDamerau (str1, str2, weights) {
 
 	dist = column[len2];
 	return dist;
+};
+
+exports.shell = async function exec (command) {
+	const { stdout, stderr } = await util.promisify(childProcess.exec)(command);
+	if (stderr) throw stderr;
+	return stdout.trim();
+};
+
+exports.updateCode = async function () {
+	const shell = exports.shell;
+	await shell('git pull');
+	await shell('npm install');
 };
 
 
