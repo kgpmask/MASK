@@ -80,7 +80,7 @@ function handler (app, nunjEnv) {
 			hype: true
 		}];
 		const allPosts = PARAMS.mongoless ? sample : await dbh.getPosts();
-		const posts = PARAMS.mongoless ? allPosts.splice(0, 2) : allPosts.slice(0, 7);
+		const posts = PARAMS.mongoless ? allPosts.splice(0, 2) : allPosts.splice(0, 7);
 		posts.forEach(post => {
 			const elapsed = Date.now() - post.date;
 			if (!isNaN(elapsed) && elapsed < 7 * 24 * 60 * 60 * 1000) post.recent = true;
