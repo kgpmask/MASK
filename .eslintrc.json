@@ -4,7 +4,7 @@
 		"es6": true
 	},
 	"parserOptions": {
-		"ecmaVersion": 2020
+		"ecmaVersion": 14
 	},
 	"rules": {
 		"arrow-spacing": "error",
@@ -32,20 +32,21 @@
 		"no-unused-expressions": "error",
 		"no-var": "error",
 		"object-curly-spacing": ["error", "always"],
-		"prefer-const": "error",
+		"prefer-const": ["error", {
+			"ignoreReadBeforeAssign": true
+		}],
 		"semi": ["error", "always"],
-		"semi-spacing": [
-			"error",
-			{
-				"before": false,
-				"after": true
-			}
-		],
+		"semi-spacing": ["error", {
+			"before": false,
+			"after": true
+		}],
 		"space-before-blocks": ["error"],
 		"space-before-function-paren": ["error", "always"],
 		"space-in-parens": "error",
 		"space-infix-ops": "error",
-		"spaced-comment": ["error", "always", { "exceptions": ["*"] }],
+		"spaced-comment": ["error", "always", {
+			"exceptions": ["*"]
+		}],
 		"yoda": ["error", "never"]
 	}
 }

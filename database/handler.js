@@ -2,6 +2,7 @@ const User = require('./schemas/User');
 const Quiz = require('./schemas/Quiz');
 const { LiveQuiz, LiveResult } = require('./schemas/LiveQuiz');
 const Newsletter = require('./schemas/Newsletter');
+const Post = require('./schemas/Post');
 
 // Handle newly registered user or normal login
 async function createNewUser (profile) {
@@ -56,9 +57,9 @@ function getQuizzes () {
 	return Quiz.Questions.find().lean();
 }
 
-async function getLiveQuiz () {
-	const date = new Date().toISOString().slice(0, 10);
-	// const date = '2022-11-12';
+async function getLiveQuiz (test = false) {
+	const date = test ? '2022-11-12' : new Date().toISOString().slice(0, 10);
+	// The first live quiz
 	const quiz = await LiveQuiz.findOne({ title: date });
 	if (quiz) return quiz.toObject();
 }
@@ -96,6 +97,12 @@ async function getNewsletter (date) {
 	return newsletter;
 }
 
+// Fetching posts based on type (art/video/newsletter)
+function getPosts (postType) {
+	// TODO: Make this accept a number of posts as a cap filter
+	return Post.find(postType ? { type: postType } : {}).sort({ date: -1 });
+}
+
 module.exports = {
 	createNewUser,
 	getUser,
@@ -107,5 +114,6 @@ module.exports = {
 	getLiveResult,
 	getAllLiveResults,
 	addLiveResult,
-	getNewsletter
+	getNewsletter,
+	getPosts
 };

@@ -1,0 +1,336 @@
+
+{% extends "_base.njk" %}
+
+{% set thispage = 'events' %}
+{% set pagetitle = 'Events' %}
+
+{% block pagecontent %}
+	<div class="quiz-container">
+		<div class="countDown">
+			<button id="startQuiz" onclick="startQuiz()" class="rel">Start</button>
+			<button onclick="prevQ()" style="display:none" class="rel prevQ">Previous</button>
+			<button onclick="nextQ()" style="display:none" class="rel nextQ">Next</button>
+			<br/><br/>
+		</div>
+		<br/>
+		<div class="question-zone">
+			<div id="count"></div>
+			<br/>
+			<button onclick="endQuiz()" style="display:none" class="rel submit">Submit</button>
+			<form id="quiz" class="quizzes" method="POST" action="/quizzes">
+				<input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
+				<input type="hidden" name="quizId" value="{{ id }}"/>
+				{% for q in range(1, qAmt + 1) %}
+					<div id="qbox-{{ q }}" style="display:none">
+						<fieldset>
+							<legend>Ques [{{ q }}]</legend><br/>
+							<div id="question-{{ q }}"></div>
+							<br/>
+							<div id="options-{{ q }}" class="options">
+								{% for i in range(1, 5) %}
+									<div class="option">
+										<label  class="rad-label">
+											<input type="radio" id="answer-{{ q }}-{{ i }}" name="answer-{{ q }}" class="rad-input" value="{{ i }}"/>
+											<div class="rad-design"></div>
+											<div class="rad-text" id="option-{{ q }}-{{ i }}" for="answer-{{ q }}-{{ i }}"></div>
+										</label><br/>
+									</div>
+								{% endfor %}
+							</div>
+							<br/></fieldset>
+					</div>
+				{% endfor %}
+			</form>
+		</div>
+		<br/><br/><br/>
+		<button onclick="prevQ()" style="display:none" class="rel prevQ">Previous</button>
+		<button onclick="nextQ()" style="display:none" class="rel nextQ">Next</button>
+	</div>
+	<br/><br/>
+{% endblock %}
+
+{% block customcss %}
+	<link rel="stylesheet" type="text/css" href="/assets/styles/icons.css"/>
+	<style>
+		.quiz-container {
+			width: 80%;
+			margin: auto;
+		}
+		button.rel {
+			width: 100px;
+			height: 30px;
+			background-color: var(--gray);
+			color: var(--off-white);
+			border: 2px solid var(--ghost-gray);
+			border-radius: 5px;
+			cursor: pointer;
+		}
+		button.rel:disabled {
+			background-color: var(--tinted-gray);
+			border: 1px solid var(--gray);
+			color: var(--ghost-gray);
+			cursor: default;
+		}
+		button.rel:not(:disabled):hover {
+			background-color: var(--middle-gray);
+		}
+		h3 {
+			margin: 10px;
+		}
+		.option {
+			margin: 8px;
+		}
+		.options {
+			text-align: left;
+			display: inline-block;
+		}
+		.option-image {
+			margin: 10px;
+		}
+		.question-zone {
+			border-radius: 10px;
+			background: rgba(0, 0, 0, 0.5);
+			padding: 25px;
+		}
+		/* NEW CSS FOR RADIO BUTTONS */
+		.rad-label {
+			display: flex;
+			align-items: center;
+
+			border-radius: 10px;
+
+			cursor: pointer;
+			transition: 0.3s;
+
+			padding: 10px 20px;
+		}
+
+		.rad-label:focus-within,
+		.rad-label:hover {
+			background: hsla(0, 0%, 80%, .14);
+		}
+
+		.rad-input {
+		/*	position: absolute;
+			left: 0;
+			top: 0;
+			width: 1px;
+			height: 1px;*/
+			opacity: 0;
+			z-index: -1;
+		
+		}
+
+		.rad-design {
+			width: 22px;
+			height: 22px;
+			border-radius: 100px;
+
+			background: linear-gradient(to right bottom, hsl(0deg 100% 75%), hsl(0deg 100% 50%));
+			position: relative;
+		}
+
+		.rad-design::before {
+			content: '';
+
+			display: inline-block;
+			width: inherit;
+			height: inherit;
+			border-radius: inherit;
+
+			background: hsl(0, 0%, 90%);
+			transform: scale(1.1);
+			transition: 0.3s;
+		}
+
+		.rad-input:checked+.rad-design::before {
+			transform: scale(0);
+		}
+
+		.rad-text {
+			color: hsl(0, 0%, 60%);
+			margin-left: 14px;
+			font-weight: 900;
+
+			transition: 0.3s;
+		}
+
+		.rad-input:checked~.rad-text {
+			color: hsl(184deg 58% 60%);
+		}
+	</style>
+{% endblock %}
+
+{% block customjs %}
+	<script>
+		let currentQ = 0;
+		let timeVal = 0;
+		let globalTimer = 1000;
+		let next = false;
+		let currentTimer;
+		const qAmt = {{ qAmt }};
+		const qs = {{ questions | safe }};
+		function generateHTML(components) {
+			return components
+				.map(component => {
+					switch (component.type) {
+						case 'image':
+							return `<img src="${component.val}" class="option-image" style="${component.style || ''}"/>`;
+						case 'mp3':
+							return `<audio src="${component.val}" type="audio/mpeg"> </audio>`;
+						case 'title':
+							return `<h3>${component.val}</h3>`;
+						default:
+							return component.val;
+					}
+				})
+				.join('<br/>');
+		}
+		window.onload = () => {
+			qs.forEach((question, q) => {
+				document
+					.getElementById(`question-${q + 1}`)
+					.innerHTML = generateHTML(question.q);
+				for (let i = 1; i <= 4; i++) 
+					document
+						.getElementById(`option-${q + 1}-${i}`)
+						.innerHTML = generateHTML(question.options[i - 1]);
+				}
+			);
+			startQuiz();
+		}
+
+		// Support for Keyboard input for MCQ type Quiz Questions
+		// Feature: 1,2,3,4 or a,b,c,d or Num1,Num2,Num3,Num4 to select quiz options
+		function preventDefault(event) {
+			event.stopImmediatePropagation();
+			event.preventDefault();
+			event.stopPropagation();
+		}
+		window.addEventListener("keydown", function (event) {
+			e = 0;
+			n = event.keyCode;
+			keys = [48, 64, 96]; //[48: 1-4, 64 A-D, 96:NUM1-4]
+			keys.forEach(k => {
+				if (k < n && n < k + 5) {
+					e = n - k;
+					return;
+				}
+			});
+			if (e) {
+				
+				//Select the corresponding option
+				op=document.getElementById(`option-${currentQ}-${e}`);
+				op.click();
+				/* Was trying a feature to allow focus on a checked element*/
+				op.scrollIntoView();
+				//op.focus({focusVisible: true});
+				preventDefault(event);
+			}
+			else if (n == 27) {
+				chk_opt=document.querySelector(`input[name="answer-${currentQ}"]:checked`)
+				if (chk_opt)
+					chk_opt.checked = false
+			}
+			else if (n == 13 || n == 39) {
+			// TODO: Ignore if no input is selected
+				if (document.querySelector(`input[name="answer-${currentQ}"]:checked`)) 
+					nextQ();
+				preventDefault(event);
+			}
+			else if (n == 8 || n == 37) {
+				prevQ();
+				preventDefault(event);
+			}
+
+		});
+		function timer() {
+			
+			timeVal = globalTimer;
+			let cancel = false;
+			function endTimer() {
+				cancel = true;
+			}
+			function decrement() {
+				if (cancel) 
+					return;
+				document
+					.getElementById('count')
+					.innerHTML = timeVal;
+				timeVal--;
+				if (timeVal >= 0) 
+					setTimeout(decrement, 1000);
+				else 
+					{# nextQ(); #}
+					endQuiz();
+				}
+			decrement();
+			return endTimer;
+		}
+		function startQuiz() {
+			document
+				.getElementById('startQuiz')
+				.style
+				.display = 'none';
+			for (button of document.getElementsByClassName('nextQ')) {
+				button.style.display = 'inline';
+			}
+			for (button of document.getElementsByClassName('prevQ')) {
+				button.style.display = 'inline';
+			}
+			nextQ();
+			timer();	// Here we have started a global timer with value = globalTimer
+		}
+		function nextQ() {
+			//if (currentTimer) currentTimer();
+			for (button of document.getElementsByClassName('nextQ')) {
+				button.disabled = false;
+			}
+			for (button of document.getElementsByClassName('prevQ')) {
+				button.disabled = false;
+			}
+			const c = currentQ;
+			if(c<1){
+				for (button of document.getElementsByClassName('prevQ')) {
+					button.disabled = true;
+				}
+			}
+			if (c >= qAmt){
+				for (button of document.getElementsByClassName('submit')) {
+					button.style.display = 'inline';
+				}
+				document.getElementById(`qbox-${c}`).style.display = 'none';
+				for (button of document.getElementsByClassName('nextQ')) {
+					button.disabled = true;
+				}
+			}
+			else document.getElementById(`qbox-${c+1}`).style.display = 'block';
+			if (c) document.getElementById(`qbox-${c}`).style.display = 'none';
+			currentQ++;
+		}
+		function prevQ() {
+			const d = currentQ;
+			for (button of document.getElementsByClassName('submit')) {
+				button.style.display = 'none';
+			}
+			for (button of document.getElementsByClassName('nextQ')) {
+				button.disabled = false;
+			}
+			if(d>1){
+				document.getElementById(`qbox-${d-1}`).style.display = 'block';
+				if(d<=qAmt) document.getElementById(`qbox-${d}`).style.display = 'none';
+				currentQ--;
+			}
+			if(d<=2){
+				for (button of document.getElementsByClassName('prevQ')) {
+					button.disabled = true;
+				}
+			}
+		}
+		function endQuiz(){
+			document.getElementById('quiz').submit();
+		}
+	</script>
+{% endblock %}
+
+{% set scripts = ['https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'] %}

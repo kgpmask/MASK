@@ -40,7 +40,7 @@
 			<br/>
 			<div class="article-author">By: Abhibhu Prakash</div>
 			<div class="article-content">
-				<div class="article-end"></div>
+				{# <div class="article-end"></div> #}
 				<h3 style="text-align:center">That Time I Got Reincarnated as a Slime</h3>
 				<table class="anime-info">
 					<tr><td>Genre</td><td>Isekai, Action, Adventure, Fantasy</td></tr>
@@ -207,7 +207,7 @@
 			<h2>Shadows Quiz</h2>
 			<br/>
 			<div class="article-author">By: Anshul Bankar</div>
-			<div class="article-end"></div>
+			{# <div class="article-end"></div> #}
 			{% set quizimgs = [
 				{
 					src: '/assets/releases/2021-09-2/quiz1.webp',
@@ -288,9 +288,9 @@
 				{% endfor %}
 				<br/>
 				<button onclick="validateQuiz({{ index }}, 1)" class="quiz-button">Check!</button>
-				{% if not loop.last %}
+				{# {% if not loop.last %} #}
 					<div class="article-end"></div>
-				{% endif %}
+				{# {% endif %} #}
 			{% endfor %}
 		</div>
 	</div>
@@ -299,7 +299,7 @@
 			<h2>Isekai Quiz</h2>
 			<br/>
 			<div class="article-author">By: Arjit Lohia</div>
-			<div class="article-end"></div>
+			{# <div class="article-end"></div> #}
 			{% set quizlets = [
 				{
 					q: 'Which anime is this location from?<br/><img src="/assets/releases/2021-09-2/quizlet1.webp" style="max-height:40vh;max-width:70%"><br/>',
@@ -397,9 +397,9 @@
 				{% endfor %}
 				<br/>
 				<button onclick="validateQuiz({{ index }}, 2)" class="quiz-button">Check!</button>
-				{% if not loop.last %}
+				{# {% if not loop.last %} #}
 					<div class="article-end"></div>
-				{% endif %}
+				{# {% endif %} #}
 			{% endfor %}
 		</div>
 	</div>
@@ -564,9 +564,9 @@
 		.article-full > h2, .article-half > h2, .article-header {
 			text-shadow: 0 0 2px var(--teal) !important;
 		}
-		.article-end {
+		{# .article-end {
 			background-color: var(--dirty-green);
-		}
+		} #}
 		.wordsearchCellS {
 			background-color: var(--dirty-yellow) !important;
 		}
