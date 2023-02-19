@@ -473,7 +473,7 @@ function handler (app, nunjEnv) {
 		return res.renderFile('rebuild.njk');
 	});
 	app.post('/git-hook', async (req, res) => {
-		const secret = 'qwerty' || process.env.WEBHOOK_SECRET;
+		const secret = process.env.WEBHOOK_SECRET;
 		if (!secret) return res.send('Disabled due to no webhook secret being configured');
 		// Validate secret
 		const sigHeader = 'X-Hub-Signature-256';
