@@ -37,6 +37,7 @@
 		"nunjucks": "^3.2.3",
 		"passport": "^0.6.0",
 		"passport-google-oauth20": "^2.0.0",
+		"pokemon": "^2.3.4",
 		"sass": "^1.38.1",
 		"socket.io": "^4.5.3"
 	},
