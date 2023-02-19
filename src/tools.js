@@ -136,8 +136,8 @@ exports.shell = async function exec (command) {
 
 exports.updateCode = async function () {
 	const shell = exports.shell;
-	await shell('git pull');
-	await shell('npm install');
+	console.log(await shell('git pull'));
+	console.log(await shell('npm install'));
 };
 
 
