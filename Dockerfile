@@ -3,5 +3,6 @@ FROM node:16-alpine
 WORKDIR /MASK
 COPY . .
 RUN npm install
-CMD ["npm", "start", "prod"]
+RUN npm install pm2 -g
+CMD ["pm2-runtime", ""]
 EXPOSE 6969

@@ -1,0 +1,10 @@
+{
+	"apps": [
+		{
+			"name": "MASK",
+			"cwd": ".",
+			"script": "npm",
+			"args": "start prod"
+		}
+	]
+}
