@@ -552,17 +552,23 @@ function handler (app, nunjEnv) {
 	app.use((err, req, res, next) => {
 		if (PARAMS.dev) console.error(err.stack);
 		// Make POST errors show only the data, and GET errors show the page with the error message
-		res.status(500).renderFile('404.njk', { message: 'Server error! This may or may not be due to invalid input.' });
+		if(err) res.status(500).render('404.njk', { message: 'Server error! This may or may not be due to invalid input.' });
+		next();	
 	});
 
 	app.post((req, res) => {
 		// If propagation hasn't stopped, switch to GET!
 		return res.redirect(req.url);
+		if(err) {
+			throw(err);
+			console.log(err);
+		}
 	});
-	app.use((req, res) => {
-		// Catch-all 404
-		console.log("404... so...");
-		res.notFound();
+	app.get((req, res) => {
+		if(err){
+			console.log(err.status);
+			res.notFound();
+		}
 	});
 }
 
