@@ -397,7 +397,8 @@ function handler (app, nunjEnv) {
 	// Live master endpoint
 	app.get('/live-master', async (req, res) => {
 		if (PARAMS.dev) {
-			const quiz = await dbh.getLiveQuiz(PARAMS.dev);
+			// TODO: In the future, set a 'daily' script to run at midnight and update a process.env.LIVE_QUIZ parameter
+			const quiz = await dbh.getLiveQuiz('2022-11-12');
 			// if (!quiz) return res.renderFile('events/quizzes_404.njk', { message: `The quiz hasn't started, yet!` });
 			const QUIZ = quiz.questions;
 
@@ -416,7 +417,7 @@ function handler (app, nunjEnv) {
 			// LQ keeps track of which question is currently being asked
 			if (!handlerContext.liveQuiz) handlerContext.liveQuiz = {};
 			const LQ = handlerContext.liveQuiz;
-			const quiz = await dbh.getLiveQuiz(PARAMS.dev);
+			const quiz = await dbh.getLiveQuiz('2022-11-12');
 			const QUIZ = quiz.questions;
 			// console.log(req.body);
 			const { currentQ, options } = req.body;
@@ -443,7 +444,7 @@ function handler (app, nunjEnv) {
 			if (!PARAMS.userless) req.session.returnTo = req.url;
 			return res.renderFile('events/quiz_login.njk');
 		}
-		const quiz = await dbh.getLiveQuiz(PARAMS.dev);
+		const quiz = await dbh.getLiveQuiz(PARAMS.dev ? '2022-11-12' : false);
 		if (!quiz) return res.renderFile('events/quizzes_404.njk', { message: `The quiz hasn't started, yet!` });
 		const QUIZ = quiz.questions;
 		const user = await dbh.getUser(req.user._id);
@@ -467,7 +468,7 @@ function handler (app, nunjEnv) {
 		}
 		if (!handlerContext.liveQuiz) handlerContext.liveQuiz = {};
 		const LQ = handlerContext.liveQuiz;
-		const quiz = await dbh.getLiveQuiz(PARAMS.dev);
+		const quiz = await dbh.getLiveQuiz(PARAMS.dev ? '2022-11-12' : false);
 		const QUIZ = quiz.questions;
 		const user = await dbh.getUser(req.user._id);
 		if (user.permissions?.includes('quizmaster')) {

@@ -57,10 +57,9 @@ function getQuizzes () {
 	return Quiz.Questions.find().lean();
 }
 
-async function getLiveQuiz () {
-	// TODO: Use IDs as a parameter instead
-	// Currently only entry is: '2022-11-12'
-	const date = new Date().toISOString().slice(0, 10);
+async function getLiveQuiz (query) {
+	// TODO: Use IDs as a parameter properly
+	const date = query || new Date().toISOString().slice(0, 10);
 	// The first live quiz
 	const quiz = await LiveQuiz.findOne({ title: date });
 	if (quiz) return quiz.toObject();
