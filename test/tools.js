@@ -66,3 +66,10 @@ describe('Tools.LevenshteinDamerau', () => {
 	// it('should work with swap', () => assert(Tools.levenshteinDamerau(strs[0], strs[1]) === 2));
 	// Swap is broken
 });
+
+describe('Tools.shell', () => {
+	it('should run successfully', async () => {
+		const res = await Tools.shell('echo TEST');
+		assert(res === 'TEST');
+	});
+});

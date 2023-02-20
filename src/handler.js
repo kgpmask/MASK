@@ -1,508 +1,610 @@
 const axios = require('axios');
+const crypto = require('crypto');
+const fs = require('fs').promises;
 const { restart } = require('nodemon');
 const { render } = require('nunjucks');
-const fs = require('fs').promises;
 const path = require('path');
 
 const checker = require('./checker.js');
-const login = require('./login.js');
-const dbh = PARAMS.userless ? {} : require('../database/handler');
+const dbh = PARAMS.mongoless ? {} : require('../database/handler');
 
 const handlerContext = {}; // Store cross-request context here
 
-if (!PARAMS.userless) login.init();
 
-// TODO: Use actual express routing
-function handler (app, env) {
+function handler (app, nunjEnv) {
+	// Main pages
 
-	// Pre-routing
-	if (!PARAMS.userless) {
-		app.get('/login/federated/google', passport.authenticate('google'));
-		app.get('/oauth2/redirect/google', passport.authenticate('google', {
-			successReturnToOrRedirect: '/',
-			failureRedirect: '/login'
-		}));
-	}
-
-	app.use((req, res, next) => {
-		res.renderFile = (files, ctx) => {
-			if (!Array.isArray(files)) files = [files];
-			return res.render(path.join(__dirname, '../templates', ...files), ctx);
-		};
-		next();
+	app.get(['/', '/home'], async (req, res) => {
+		const sample = [{
+			name: 'How to get into MASK',
+			link: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+			type: 'youtube',
+			attr: ['Parth Mane'],
+			date: new Date('Oct 25, 2009'),
+			page: '_blank',
+			hype: true
+		},
+		{
+			name: 'Art - Tanjiro Kamado',
+			link: '0025.webp',
+			type: 'art',
+			attr: [ 'Sanjeev Raj Ganji' ],
+			date: new Date(1630261800000),
+			hype: true
+		},
+		{
+			name: 'Art - Saitama',
+			link: '0019.webp',
+			type: 'art',
+			attr: [ 'Garima Mendhe' ],
+			date: new Date(1628879400000),
+			hype: true
+		},
+		{
+			name: 'Art - Kirigakure Shinobi Massacre',
+			link: '0012.webp',
+			type: 'art',
+			attr: [ 'Arpit Das' ],
+			date: new Date(1589308200000),
+			hype: true
+		},
+		{
+			name: 'Art - Garou',
+			link: '0008.webp',
+			type: 'art',
+			attr: [ 'Pritam Mallick' ],
+			date: new Date(1572220800000),
+			hype: true
+		},
+		{
+			name: '「AMV」Phantasy Star Online 2 - Symphony',
+			link: 'https://www.youtube.com/watch?v=GX7TAigwZPw',
+			type: 'youtube',
+			attr: [ 'Hrishabh Kumar Tundwar' ],
+			date: new Date(1673289000000),
+			hype: true
+		},
+		{
+			name: '「AMV」The Garden of Words - A Thousand Years',
+			link: 'https://www.youtube.com/watch?v=9W4eyQ7LP7g',
+			type: 'youtube',
+			attr: [ 'Hrishabh Kumar Tundwar' ],
+			date: new Date(1673289000000),
+			hype: true
+		},
+		{
+			name: '「AMV」Assassination Classroom - Heathens',
+			link: 'https://www.youtube.com/watch?v=unITcghHNVI',
+			type: 'youtube',
+			attr: [ 'Chiranjeet Mishra' ],
+			date: new Date(1673289000000),
+			hype: true
+		}];
+		const allPosts = PARAMS.mongoless ? sample : await dbh.getPosts();
+		const posts = PARAMS.mongoless ? allPosts.splice(0, 2) : allPosts.splice(0, 7);
+		posts.forEach(post => {
+			const elapsed = Date.now() - post.date;
+			if (!isNaN(elapsed) && elapsed < 7 * 24 * 60 * 60 * 1000) post.recent = true;
+		});
+		const toBeDisplayed = PARAMS.mongoless ? 3 : 5;
+		const art = allPosts.filter(post => post.type === 'art' && post.hype).splice(0, toBeDisplayed);
+		const vids = allPosts.filter(post => post.type === 'youtube' && post.hype).splice(0, toBeDisplayed);
+		return res.renderFile('home.njk', { posts, vids, art });
 	});
-
-	app.use((req, res, next) => {
-		res.error = err => res.status(400).send(err?.message || err);
-		next();
+	app.get('/art', async (req, res) => {
+		const sample = [{
+			name: 'Art - Tanjiro Kamado',
+			link: '0025.webp',
+			type: 'art',
+			attr: ['Sanjeev Raj Ganji'],
+			date: new Date(1630261800000),
+			hype: true
+		}];
+		const art = PARAMS.mongoless ? sample : await dbh.getPosts('art');
+		return res.renderFile('art.njk', { art });
 	});
-
-	app.use((req, res, next) => {
-		res.locals.userless = PARAMS.userless;
-		res.locals.quizFlag = PARAMS.quiz;
-		next();
+	app.get('/videos', async (req, res) => {
+		const sample = [{ name: 'How to get into MASK', link: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', type: 'youtube' }];
+		const vids = PARAMS.mongoless ? sample : await dbh.getPosts('youtube');
+		vids.forEach(vid => vid.embed = `https://www.youtube.com/embed/${vid.link.split('?v=')[1]}?playsinline=1`);
+		return res.renderFile('videos.njk', { vids });
 	});
-
-	function get (req, res) {
-		function notFound (custom404, ctx) {
-			res.status(404).renderFile(custom404 || '404.njk', ctx);
-		}
-		function tryFile (path, asset, ctx) {
-			fs.access(path).then(err => {
-				if (err) notFound(false, ctx);
-				else res[asset ? 'sendFile' : 'render'](path, ctx);
-			}).catch(() => {
-				notFound(false, ctx);
+	app.get('/about', (req, res) => {
+		return res.renderFile('about.njk');
+	});
+	app.get('/members/:yearName?', (req, res) => {
+		const membersData = require('./members.json');
+		const yearName = req.params.yearName || membersData[0].name;
+		const yearIndex = membersData.findIndex(year => [year.name, year.baseYear].includes(yearName));
+		if (yearIndex === -1) return res.notFound();
+		const {
+			name,
+			baseYear,
+			teams,
+			members
+		} = membersData[yearIndex];
+		const ctx = { 'Governors': [], 'Former Members': [], 'Research Associate': [] };
+		members.sort((a, b) => -(a.name < b.name)).forEach(member => {
+			let target;
+			if (member.gov) target = 'Governors';
+			else if (member.inactive) target = 'Former Members';
+			else if (member.RA) target = 'Research Associate';
+			else target = `Batch of 20${member.roll.substr(0, 2)}`;
+			if (!ctx[target]) ctx[target] = [];
+			ctx[target].push({
+				name: member.name,
+				roll: member.roll,
+				href: member.id.startsWith('X') ? 'blank.webp' : `${member.id}.webp`,
+				teams: member.teams.map(teamID => {
+					const team = teams[teamID.toLowerCase()];
+					if (teamID === teamID.toUpperCase()) return { name: team.name, icon: team.icon + '-head' };
+					return team;
+				})
 			});
-		}
-		const loggedIn = res.locals.loggedIn = Boolean(req.user);
-		const GET = req.url.match(/(?<=\?)[^/]+$/);
-		if (GET) req.url = req.url.slice(0, -(GET[0].length + 1));
-		const args = req.url.split('/');
-		args.shift();
-		switch (args[0]) {
-			case '': case 'home': {
-				if (PARAMS.userless) return res.redirect('/login');
-				dbh.getPosts().then(POSTS => {
-					const posts = POSTS.splice(0, 7);
-					posts.forEach(post => {
-						const elapsed = Date.now() - post.date;
-						if (!isNaN(elapsed) && elapsed < 7 * 24 * 60 * 60 * 1000) post.recent = true;
-					});
-					const art = POSTS.filter(post => post.type === 'art' && post.hype).splice(0, 5);
-					const vids = POSTS.filter(post => post.type === 'youtube' && post.hype).splice(0, 5);
-					res.renderFile('home.njk', { posts, vids, art });
-				});
-				break;
-			}
-			case 'apply': {
-				res.renderFile('applications.njk');
-				break;
-			}
-			case 'art': {
-				if (PARAMS.userless) return res.redirect('/login');
-				dbh.getPosts('art').then(art => res.renderFile('art.njk', { art })).catch(err => console.log(err));
-				break;
-			}
-			case 'assets': {
-				args.shift();
-				const filepath = path.join(__dirname, '../assets', ...args);
-				fs.access(filepath).then(err => {
-					if (err) notFound();
-					else res.sendFile(filepath);
-				}).catch(() => notFound());
-				break;
-			}
-			case 'blog': {
-				args.shift();
-				const url = `https://maskiitkgp.blogspot.com/${args.join('/')}.html`;
-				res.redirect(url);
-				break;
-			}
-			case 'login': {
-				if (loggedIn) return res.redirect('/');
-				res.renderFile('login.njk');
-				break;
-			}
-			case 'logout': {
-				if (!loggedIn) return res.redirect('/login');
-				req.logout(() => res.redirect('/'));
-				break;
-			}
-			// TODO: add a route here for fandom
-			// case 'fandom': {
-			// 	res.renderFile('fandom_quiz.njk')
-			// }
-			case 'members': {
-				const membersData = require('./members.json');
-				if (!args[1]) args[1] = membersData[0].name;
-				const yearIndex = membersData.findIndex(year => [year.name, year.baseYear].includes(args[1]));
-				if (yearIndex === -1) return notFound();
-				const {
-					name,
-					baseYear,
-					teams,
-					members
-				} = membersData[yearIndex];
-				const ctx = { 'Governors': [], 'Former Members': [], 'Research Associate': [] };
-				members.sort((a, b) => -(a.name < b.name)).forEach(member => {
-					let target;
-					if (member.gov) target = 'Governors';
-					else if (member.inactive) target = 'Former Members';
-					else if (member.RA) target = 'Research Associate';
-					else target = `Batch of 20${member.roll.substr(0, 2)}`;
-					if (!ctx[target]) ctx[target] = [];
-					ctx[target].push({
-						name: member.name,
-						roll: member.roll,
-						href: member.id.startsWith('X') ? 'blank.webp' : `${member.id}.webp`,
-						teams: member.teams.map(teamID => {
-							const team = teams[teamID.toLowerCase()];
-							if (teamID === teamID.toUpperCase()) return { name: team.name, icon: team.icon + '-head' };
-							return team;
-						})
-					});
-				});
-				const prev = membersData[yearIndex + 1]?.name, next = membersData[yearIndex - 1]?.name;
-				const keys = ['Governors', 'Research Associate', ...Object.keys(ctx)
-					.filter(key => key.startsWith('Batch of ')).sort(), 'Former Members'];
-				res.renderFile('members.njk', {
-					members: Object.fromEntries(keys.map(key => [key, ctx[key]])),
-					membersTitle: name === membersData[0].name ? 'Our Members' : name,
-					prev,
-					next
-				});
-				break;
-			}
-			case 'newsletters': {
+		});
+		const prev = membersData[yearIndex + 1]?.name, next = membersData[yearIndex - 1]?.name;
+		const keys = [
+			'Governors',
+			'Research Associate',
+			...Object.keys(ctx).filter(key => key.startsWith('Batch of ')).sort(),
+			'Former Members'
+		];
+		const membersObj = Object.fromEntries(keys.map(key => [key, ctx[key]]));
+		const membersTitle = name === membersData[0].name ? 'Our Members' : name;
+		return res.renderFile('members.njk', { members: membersObj, membersTitle, prev, next });
+	});
+
+
+	// Links to external stuff
+
+	app.get('/apply', (req, res) => {
+		return res.renderFile('applications.njk');
+	});
+	app.get('/submissions', (req, res) => {
+		return res.renderFile('submissions.njk');
+	});
+	app.use('/blog', (req, res) => {
+		const url = req.url.replace(/^.*?\/blog/, '');
+		// TODO: Fix this!
+		return res.redirect(`https://maskiitkgp.blogspot.com${url}.html`);
+	});
+
+
+	// User stuff
+
+	app.get('/login', (req, res) => {
+		if (req.loggedIn) return res.redirect('/');
+		res.renderFile('login.njk');
+	});
+	app.get('/logout', (req, res) => {
+		if (!req.loggedIn) return res.redirect('/login');
+		return req.logout(() => res.redirect('/'));
+	});
+	app.get('/profile', async (req, res) => {
+		if (!req.loggedIn) return res.redirect('/');
+		const user = await dbh.getUserStats(req.user._id);
+		return res.renderFile('profile.njk', {
+			name: req.user.name,
+			picture: req.user.picture,
+			points: user.points,
+			quizzes: user.quizData.map(stamp => {
 				const months = [
 					'-', 'January', 'February', 'March', 'April', 'May', 'June',
 					'July', 'August', 'September', 'October', 'November', 'December'
 				];
-				fs.readdir(path.join(__dirname, '../templates/newsletters')).then(letters => {
-					const years = {};
-					letters.sort();
-					letters.forEach(letter => {
-						const [year, month, num] = letter.slice(0, -4).split('-');
-						if (!years[year]) years[year] = { title: year, months: {} };
-						if (!years[year].months[~~month]) years[year].months[~~month] = { title: months[~~month], issues: [] };
-						years[year].months[~~month].issues.push({
-							title: ['-', 'First', 'Second', 'Special'][~~num],
-							href: letter.slice(0, -4)
-						});
-					});
-					const renderYears = Object.values(years);
-					renderYears.forEach(year => year.months = Object.values(year.months).reverse());
-					if (!args[1]) return res.renderFile('newsletters.njk', {
-						years: renderYears.reverse()
-					});
-					if (args[1] === 'random') {
-						const referer = req.headers.referer?.split('/').pop();
-						const randLetter = letters.filter(letter => letter.slice(0, -4) !== referer).random().slice(0, -4);
-						return res.redirect(`/newsletters/${randLetter}`);
-					}
-					const index = letters.indexOf(args[1] + '.njk');
-					if (index === -1) return notFound('newsletters_404.njk', { years: renderYears.reverse() });
-					const filepath = ['newsletters', letters[index]];
-					const adjs = [letters[index - 1]?.slice(0, -4), letters[index + 1]?.slice(0, -4), letters[index].slice(0, -4)];
-					return res.renderFile(filepath, { adjs });
-				}).catch(err => console.log(err) || notFound());
-				break;
-			}
-			case 'profile': {
-				if (!loggedIn) return res.redirect('/');
-				dbh.getUserStats(req.user._id).then(user => {
-					return res.renderFile('profile.njk', {
-						name: req.user.name,
-						picture: req.user.picture,
-						points: user.points,
-						quizzes: user.quizData.map(stamp => {
-							const months = [
-								'-', 'January', 'February', 'March', 'April', 'May', 'June',
-								'July', 'August', 'September', 'October', 'November', 'December'
-							];
-							const [year, month, date] = stamp.quizId.split('-');
-							return `${Tools.nth(~~date)} ${months[~~month]}`;
-						})
-					});
-				});
-				break;
-			}
-			case 'quizzes': case 'events': {
-				if (!loggedIn) {
-					if (!PARAMS.userless) req.session.returnTo = req.url;
-					return res.renderFile('login.njk');
-				}
-				dbh.getUserStats(req.user._id).then(user => {
-					// console.log(user.quizData);
-					const quizzed = user.quizData.map(quiz => quiz.quizId) ?? [];
-					dbh.getQuizzes().then(qzs => {
-						const QUIZZES = {};
-						qzs.forEach(qz => QUIZZES[qz.unlock.slice(0, 10)] = qz); // TODO Mokshith: Add a quizId field
-						const months = [
-							'-', 'January', 'February', 'March', 'April', 'May', 'June',
-							'July', 'August', 'September', 'October', 'November', 'December'
-						];
-						const quizzes = Object.keys(QUIZZES);
-						const years = {};
-						quizzes.sort();
-						quizzes.forEach(quiz => {
-							const [year, month, date] = quiz.split('-');
-							if (!years[year]) years[year] = { title: year, months: {} };
-							if (!years[year].months[~~month]) years[year].months[~~month] = { title: months[~~month], issues: [] };
-							years[year].months[~~month].issues.push({
-								title: `${Tools.nth(~~date)} ${months[~~month]}`,
-								href: quiz
-							});
-						});
-						const renderYears = Object.values(years);
-						renderYears.forEach(year => year.months = Object.values(year.months).reverse());
-						const now = Date.now();
-						const locked = Object.entries(QUIZZES).filter(
-							([_, quiz]) => new Date(quiz.unlock).getTime() > now
-						).map(k => k[0]);
-						if (!args[1]) {
-							return res.renderFile('events.njk', {
-								quizzed,
-								years: renderYears.reverse(),
-								locked
-							});
-						}
-						const index = quizzes.indexOf(args[1]);
-						if (index === -1) return notFound('events/quizzes_404.njk', { years: renderYears.reverse(), quizzed, locked });
-						if (!PARAMS.quiz && quizzed.includes(args[1])) return res.renderFile('events/quiz_attempted.njk');
-						const adjs = [quizzes[index - 1], quizzes[index + 1], quizzes[index]];
-						const QUIZ = QUIZZES[args[1]];
-						const quizDate = new Date(QUIZ.unlock).getTime();
-						if (quizDate > Date.now()) return res.renderFile('events/quiz_countdown.njk', {
-							timeLeft: quizDate - Date.now() + 1000
-						});
-						const rand = Tools.fakeRandom(req.user._id);
-						function shuffle (array) {
-							for (let i = array.length - 1; i > 0; i--) {
-								const j = Math.floor(rand() * (i + 1));
-								[array[i], array[j]] = [array[j], array[i]];
-							}
-							return array;
-						}
-						const questions = [];
-						QUIZ.random.forEach(randDef => {
-							const keys = shuffle(Object.keys(randDef.from)).slice(0, randDef.amount);
-							questions.push(...keys.map(key => randDef.from[key]).map(key => {
-								const q = Tools.deepClone(QUIZ.questions[key]);
-								delete q.solution;
-								return q;
-							}));
-						});
-						shuffle(questions);
-						return res.renderFile('events/fandom_quiz.njk', {
-							adjs,
-							questions: JSON.stringify(questions),
-							qAmt: questions.length,
-							id: args[1]
-						});
-					}).catch(res.error);
-				}).catch(res.error);
-				break;
-			}
-			case 'live': {
-				if (!loggedIn) {
-					if (!PARAMS.userless) req.session.returnTo = req.url;
-					return res.renderFile('events/quiz_login.njk');
-				}
-				dbh.getLiveQuiz().then(quiz => {
-					if (!quiz) return res.renderFile('events/quizzes_404.njk', { message: `The quiz hasn't started, yet!` });
-					const QUIZ = quiz.questions;
-					dbh.getUser(req.user._id).then(user => {
-						if (user.permissions?.includes('quizmaster')) {
-							res.renderFile('events/live_master.njk', {
-								quiz: JSON.stringify(QUIZ),
-								qAmt: QUIZ.length,
-								id: 'live'
-							});
-						} else {
-							res.renderFile('events/live_participant.njk', {
-								id: 'live',
-								userId: req.user._id
-							});
-						}
-					}).catch(res.error);
-				}).catch(res.error);
-				break;
-			}
-			case 'success': {
-				return res.renderFile('events/quiz_success.njk');
-			}
-			case 'live-results': {
-				const quizId = new Date().toISOString().slice(0, 10);
-				dbh.getAllLiveResults(quizId).then(RES => {
-					if (!RES) res.notFound();
-					const results = [];
-					RES.forEach(_RES => {
-						if (!results.find(res => res.id === _RES.userId)) results.push({
-							id: _RES.userId,
-							name: _RES.username,
-							points: 0
-						});
-						results.find(res => res.id === _RES.userId).points += _RES.points;
-					});
-					results.sort((a, b) => -(a.points > b.points));
-					let i = 1, j = 1;
-					for (let result = 0; result < results.length; result++) {
-						if (!result) results[result].rank = i;
-						else {
-							if (results[result].points === results[result - 1].points) j++;
-							else {
-								i += j;
-								j = 1;
-							}
-							results[result].rank = i;
-						}
-						delete results[result].id;
-					}
-					return res.renderFile('events/results.njk', { results });
-				}).catch(res.error);
-				break;
-			}
-			case 'prizes': {
-				const prizes = require('./rewards.json');
-				return res.renderFile('events/prizes.njk', { prizes });
-			}
-			case 'rebuild': {
-				env.loaders.forEach(loader => loader.cache = {});
-				['./members.json', './posts.json', './rewards.json'].forEach(cache => delete require.cache[require.resolve(cache)]);
-				res.renderFile('rebuild.njk');
-				break;
-			}
-			case 'videos': {
-				if (PARAMS.userless) return res.redirect('/login');
-				dbh.getPosts('youtube').then(vids => {
-					vids.forEach(vid => vid.embed = `https://www.youtube.com/embed/${vid.link.split('?v=')[1]}?playsinline=1`);
-					res.renderFile('videos.njk', { vids });
-				}).catch(err => {
-					if (err) {
-						throw err;
-					}
-				});
+				const [year, month, date] = stamp.quizId.split('-');
+				return `${Tools.nth(~~date)} ${months[~~month]}`;
+			})
+		});
+	});
 
-				break;
-			}
-			case 'corsProxy': {
-				const base64Url = req.query.base64Url;
-				const url = atob(base64Url);
-				axios.get(url, { headers: { 'Access-Control-Allow-Origin': '*' } }).then(response => {
-					return res.send(response.data);
+
+	// Newsletters, quizzes, and events
+
+	app.get('/newsletters/:target?', (req, res) => {
+		const months = [
+			'-', 'January', 'February', 'March', 'April', 'May', 'June',
+			'July', 'August', 'September', 'October', 'November', 'December'
+		];
+		return fs.readdir(path.join(__dirname, '../templates/newsletters')).then(letters => {
+			const years = {};
+			letters.sort();
+			letters.forEach(letter => {
+				const [year, month, num] = letter.slice(0, -4).split('-');
+				if (!years[year]) years[year] = { title: year, months: {} };
+				if (!years[year].months[~~month]) years[year].months[~~month] = { title: months[~~month], issues: [] };
+				years[year].months[~~month].issues.push({
+					title: ['-', 'First', 'Second', 'Special'][~~num],
+					href: letter.slice(0, -4)
 				});
-				break;
+			});
+			const renderYears = Object.values(years);
+			renderYears.forEach(year => year.months = Object.values(year.months).reverse());
+
+			const target = req.params.target;
+			if (!target) return res.renderFile('newsletters.njk', {
+				years: renderYears.reverse()
+			});
+			if (target === 'random') {
+				const referer = req.headers.referer?.split('/').pop();
+				const randLetter = letters.filter(letter => letter.slice(0, -4) !== referer).random().slice(0, -4);
+				return res.redirect(`/newsletters/${randLetter}`);
 			}
-			default: {
-				while (!args[args.length - 1]) args.pop();
-				const isAsset = /\.(?:js|ico)$/.test(args[args.length - 1]);
-				const filepath = path.join(
-					__dirname,
-					isAsset ? '../assets' : '../templates', path.join(...args) + (isAsset ? '' : '.njk')
-				);
-				tryFile(filepath, isAsset);
-			}
+			const index = letters.indexOf(target + '.njk');
+			if (index === -1) return res.notFound('newsletters_404.njk', { years: renderYears.reverse() });
+			const filepath = ['newsletters', letters[index]];
+			const adjs = [letters[index - 1]?.slice(0, -4), letters[index + 1]?.slice(0, -4), letters[index].slice(0, -4)];
+			return res.renderFile(filepath, { adjs });
+		}).catch(err => {
+			console.log(err);
+			return res.notFound();
+		});
+	});
+	app.post('/checker/:newsletter/:puzzleType', async (req, res) => {
+		const { solutions } = await dbh.getNewsletter(req.params.newsletter);
+		const response = checker.checkNewsletterPuzzle(req.params.puzzleType, req.body, solutions);
+		switch (response) {
+			case true: return res.send('correct');
+			case false: return res.send('');
+			default: return res.send(response);
 		}
-	}
-	function post (req, res) {
-		const args = req.url.split('/');
-		args.shift();
-		const loggedIn = res.locals.loggedIn = Boolean(req.user);
+	});
 
-		switch (args[0]) {
-			case 'checker': {
-				dbh.getNewsletter(args[1]).then(newsletter => {
-					const { solutions } = newsletter;
-					const response = checker.checkNewsletterPuzzle(args[2], req.body, solutions);
-					switch (response) {
-						case true: return res.send('correct');
-						case false: return res.send('');
-						default: return res.send(response);
-					}
-				}).catch(err => console.log(err));
-				break;
-			}
-			case 'quizzes': {
-				// Regenerate questions
-				const rand = Tools.fakeRandom(req.user._id);
-				function shuffle (array) {
-					for (let i = array.length - 1; i > 0; i--) {
-						const j = Math.floor(rand() * (i + 1));
-						[array[i], array[j]] = [array[j], array[i]];
-					}
-					return array;
-				}
-				const quizId = req.body.quizId;
-				const solutions = [];
-				dbh.getQuizzes().then(qzs => {
-					const QUIZZES = {};
-					qzs.forEach(qz => QUIZZES[qz.unlock.slice(0, 10)] = qz);
-					if (!QUIZZES.hasOwnProperty(quizId)) return res.status(400).send('Invalid Quiz ID');
-					const QUIZ = QUIZZES[quizId];
-					QUIZ.random.forEach(randDef => {
-						const keys = shuffle(Object.keys(randDef.from)).slice(0, randDef.amount);
-						solutions.push(...keys.map(key => QUIZ.questions[randDef.from[key]].solution));
-					});
-					shuffle(solutions);
-					const answers = Array.from({ length: solutions.length }).map((_, i) => ~~req.body[`answer-${i + 1}`]);
-					const points = [answers.filter((ans, i) => ~~ans === ~~solutions[i]).length, solutions.length];
-					res.renderFile('events/quiz_success.njk', { score: points[0], totalScore: points[1] });
-					dbh.updateUserQuizRecord({ userId: req.user._id, quizId, score: points[0], time: Date.now() });
-				}).catch(res.error);
-				break;
-			}
-			case 'live': {
-				if (!handlerContext.liveQuiz) handlerContext.liveQuiz = {};
-				const LQ = handlerContext.liveQuiz;
-				if (!loggedIn) {
-					if (!PARAMS.userless) req.session.returnTo = req.url;
-					return res.renderFile('events/quiz_login.njk');
-				}
-				dbh.getLiveQuiz().then(quiz => {
-					const QUIZ = quiz.questions;
-					dbh.getUser(req.user._id).then(user => {
-						if (user.permissions?.includes('quizmaster')) {
-							const quizTime = { '10': 20, '5': 15, '3': 12 }[QUIZ[req.body.currentQ].points];
-							io.sockets.in('waiting-for-live-quiz').emit('question', {
-								currentQ: req.body.currentQ,
-								options: req.body.options,
-								time: quizTime
-							});
-							setTimeout(() => {
-								const type = QUIZ[req.body.currentQ].options.type;
-								const solution = QUIZ[req.body.currentQ].solution;
-								setTimeout(() => io.sockets.in('waiting-for-live-quiz').emit('answer', {
-									answer: Array.isArray(solution) ? solution.join(' / ') : solution,
-									type
-								}), 2000); // Emit the actual event 3s after
-							}, 1000 * (quizTime + 1)); // Extra second to account for lag
-							LQ.currentQ = req.body.currentQ;
-							LQ.endTime = Date.now() + 1000 * (quizTime + 1);
-							res.send('Done');
-						} else {
-							const { answer } = req.body;
-							if (answer === '') throw new Error('Missing answer');
-							const currentQ = LQ.currentQ ?? - 1;
-							const Q = QUIZ[currentQ];
-							if (!Q) throw new Error('currentQ out of bounds');
-							const timeLeft = Math.round((LQ.endTime - Date.now()) / 1000);
-							if (timeLeft < 0) throw new Error('Too late!');
-							dbh.getLiveResult(user._id, quiz.title, currentQ).then(alreadySubmitted => {
-								if (alreadySubmitted) throw new Error('Already attempted this question!');
-								checker.checkLiveQuiz(answer, Q.solution, Q.options.type, Q.points, timeLeft).then(({
-									points, timeLeft
-								}) => {
-									const result = points
-										? points < Q.points ? 'partial' : 'correct'
-										: 'incorrect';
-									const functionArgs = [user._id, quiz.title, currentQ, points, answer, timeLeft, result];
-									dbh.addLiveResult(...functionArgs).catch(res.error);
-									res.send('Submitted');
-								}).catch(res.error);
-							}).catch(res.error);
-						}
-					}).catch(res.error);
-				}).catch(res.error);
-				break;
-			}
-			case 'live-end': {
-				dbh.getUser(req.user._id).then(user => {
-					if (!user.permissions.find(perm => perm === 'quizmaster')) throw new Error('Access denied');
-					io.sockets.in('waiting-for-live-quiz').emit('end-quiz');
-					return res.send('Ended!');
-				}).catch(res.error);
-				break;
-			}
-			default:
-				res.redirect(`/${args.join('/')}`);
-				break;
+	app.get(['/quizzes/:arg', '/events/:arg'], async (req, res) => {
+		if (!req.loggedIn) {
+			if (!PARAMS.userless) req.session.returnTo = req.url;
+			return res.renderFile('login.njk');
 		}
-	}
+		const user = req.loggedIn ? await dbh.getUserStats(req.user._id) : {};
+		const quizzed = user.quizData?.map(quiz => quiz.quizId) ?? [];
+		const qzs = await dbh.getQuizzes();
+		const QUIZZES = {};
+		qzs.forEach(qz => QUIZZES[qz.unlock.slice(0, 10)] = qz); // TODO Mokshith: Add a quizId field
+		const months = [
+			'-', 'January', 'February', 'March', 'April', 'May', 'June',
+			'July', 'August', 'September', 'October', 'November', 'December'
+		];
+		const quizzes = Object.keys(QUIZZES);
+		quizzes.sort();
+		const index = quizzes.indexOf(req.params.arg);
+		if (index === -1) {
+			const years = {};
+			quizzes.forEach(quiz => {
+				const [year, month, date] = quiz.split('-');
+				if (!years[year]) years[year] = { title: year, months: {} };
+				if (!years[year].months[~~month]) years[year].months[~~month] = { title: months[~~month], issues: [] };
+				years[year].months[~~month].issues.push({
+					title: `${Tools.nth(~~date)} ${months[~~month]}`,
+					href: quiz
+				});
+			});
+			const renderYears = Object.values(years);
+			renderYears.forEach(year => year.months = Object.values(year.months).reverse());
+			const now = Date.now();
+			const locked = Object.entries(QUIZZES).filter(
+				([_, quiz]) => new Date(quiz.unlock).getTime() > now
+			).map(k => k[0]);
+			// TODO: Make this redirect to /${req.params[0]}-404
+			return res.notFound('events/quizzes_404.njk', { years: renderYears.reverse(), quizzed, locked });
+		} else if (!PARAMS.quiz && quizzed.includes(req.params.arg)) return res.renderFile('events/quiz_attempted.njk');
+		const adjs = [quizzes[index - 1], quizzes[index + 1], quizzes[index]];
+		const QUIZ = QUIZZES[req.params.arg];
+		const quizDate = new Date(QUIZ.unlock).getTime();
+		if (quizDate > Date.now()) {
+			return res.renderFile('events/quiz_countdown.njk', {
+				timeLeft: quizDate - Date.now() + 1000
+			});
+		}
+		// Deterministically select questions 'randomly'
+		const rand = Tools.fakeRandom(req.user._id);
+		function shuffle (array) {
+			for (let i = array.length - 1; i > 0; i--) {
+				const j = Math.floor(rand() * (i + 1));
+				[array[i], array[j]] = [array[j], array[i]];
+			}
+			return array;
+		}
+		const questions = [];
+		QUIZ.random.forEach(randDef => {
+			const keys = shuffle(Object.keys(randDef.from)).slice(0, randDef.amount);
+			questions.push(...keys.map(key => randDef.from[key]).map(key => {
+				const q = Tools.deepClone(QUIZ.questions[key]);
+				delete q.solution;
+				return q;
+			}));
+		});
+		shuffle(questions);
+		return res.renderFile('events/static_quiz.njk', {
+			adjs,
+			questions: JSON.stringify(questions),
+			qAmt: questions.length,
+			id: req.params.arg
+		});
+	});
+	app.get(['/quizzes', '/events'], async (req, res) => {
+		// No specific event queried!
+		if (PARAMS.mongoless) return res.redirect('/');
+		const user = req.loggedIn ? await dbh.getUserStats(req.user._id) : {};
+		const quizzed = user.quizData?.map(quiz => quiz.quizId) ?? [];
+		const qzs = await dbh.getQuizzes();
+		const QUIZZES = {};
+		qzs.forEach(qz => QUIZZES[qz.unlock.slice(0, 10)] = qz); // TODO Mokshith: Add a quizId field
+		const months = [
+			'-', 'January', 'February', 'March', 'April', 'May', 'June',
+			'July', 'August', 'September', 'October', 'November', 'December'
+		];
+		const quizzes = Object.keys(QUIZZES);
+		const years = {};
+		quizzes.sort();
+		quizzes.forEach(quiz => {
+			const [year, month, date] = quiz.split('-');
+			if (!years[year]) years[year] = { title: year, months: {} };
+			if (!years[year].months[~~month]) years[year].months[~~month] = { title: months[~~month], issues: [] };
+			years[year].months[~~month].issues.push({
+				title: `${Tools.nth(~~date)} ${months[~~month]}`,
+				href: quiz
+			});
+		});
+		const renderYears = Object.values(years);
+		renderYears.forEach(year => year.months = Object.values(year.months).reverse());
+		const now = Date.now();
+		const locked = Object.entries(QUIZZES).filter(
+			([_, quiz]) => new Date(quiz.unlock).getTime() > now
+		).map(k => k[0]);
+		return res.renderFile('events.njk', {
+			quizzed,
+			years: renderYears.reverse(),
+			locked
+		});
+	});
+	app.post('/quizzes', async (req, res) => {
+		// TODO: Use a res.requireLogin(req) function
+		if (!req.loggedIn) {
+			if (!PARAMS.userless) req.session.returnTo = req.url;
+			return res.renderFile('events/quiz_login.njk');
+		}
+		// Regenerate questions
+		const rand = Tools.fakeRandom(req.user._id);
+		function shuffle (array) {
+			for (let i = array.length - 1; i > 0; i--) {
+				const j = Math.floor(rand() * (i + 1));
+				[array[i], array[j]] = [array[j], array[i]];
+			}
+			return array;
+		}
+		const quizId = req.body.quizId;
+		const solutions = [];
+		const qzs = await dbh.getQuizzes();
+		const QUIZZES = {};
+		qzs.forEach(qz => QUIZZES[qz.unlock.slice(0, 10)] = qz);
+		if (!QUIZZES.hasOwnProperty(quizId)) return res.status(400).send('Invalid Quiz ID');
+		const QUIZ = QUIZZES[quizId];
+		QUIZ.random.forEach(randDef => {
+			const keys = shuffle(Object.keys(randDef.from)).slice(0, randDef.amount);
+			solutions.push(...keys.map(key => QUIZ.questions[randDef.from[key]].solution));
+		});
+		shuffle(solutions);
+		const answers = Array.from({ length: solutions.length }).map((_, i) => ~~req.body[`answer-${i + 1}`]);
+		const points = [answers.filter((ans, i) => ~~ans === ~~solutions[i]).length, solutions.length];
+		dbh.updateUserQuizRecord({ userId: req.user._id, quizId, score: points[0], time: Date.now() });
+		// Despite the above function being async, we don't need the result to continue, so no point in 'await' here
+		return res.renderFile('events/quiz_success.njk', { score: points[0], totalScore: points[1] });
+	});
+	app.get('/success', (req, res) => {
+		// TODO: Rename this to /quiz/success
+		return res.renderFile('events/quiz_success.njk');
+	});
+	// Live master endpoint
+	app.get('/live-master', async (req, res) => {
+		if (PARAMS.dev) {
+			// TODO: In the future, set a 'daily' script to run at midnight and update a process.env.LIVE_QUIZ parameter
+			const quiz = await dbh.getLiveQuiz('2022-11-12');
+			// if (!quiz) return res.renderFile('events/quizzes_404.njk', { message: `The quiz hasn't started, yet!` });
+			const QUIZ = quiz.questions;
 
-	app.get(/.*/, (req, res) => get(req, res));
-	app.post(/.*/, (req, res) => post(req, res));
+			return res.renderFile('events/live_master.njk', {
+				quiz: JSON.stringify(QUIZ),
+				qAmt: QUIZ.length,
+				id: 'live',
+				dev: PARAMS.dev
+			});
+		} else {
+			return res.renderFile('events/quizzes_404.njk', { message: `STOP SNOOPING AROUND!` });
+		}
+	});
+	app.post('/live-master', async (req, res) => {
+		if (PARAMS.dev) {
+			// LQ keeps track of which question is currently being asked
+			if (!handlerContext.liveQuiz) handlerContext.liveQuiz = {};
+			const LQ = handlerContext.liveQuiz;
+			const quiz = await dbh.getLiveQuiz('2022-11-12');
+			const QUIZ = quiz.questions;
+			// console.log(req.body);
+			const { currentQ, options } = req.body;
+
+			const time = { '10': 20, '5': 15, '3': 12 }[QUIZ[currentQ].points];
+			io.sockets.in('waiting-for-live-quiz').emit('question', { currentQ, options, time });
+			setTimeout(() => {
+				const type = QUIZ[currentQ].options.type;
+				const solution = QUIZ[currentQ].solution;
+				setTimeout(() => io.sockets.in('waiting-for-live-quiz').emit('answer', {
+					answer: Array.isArray(solution) ? solution.join(' / ') : solution,
+					type
+				}), 2000); // Emit the actual event 3s after
+			}, 1000 * (time + 1)); // Extra second to account for lag
+			LQ.currentQ = req.body.currentQ;
+			LQ.endTime = Date.now() + 1000 * (time + 1);
+			res.send('Done');
+		} else {
+			return res.renderFile('events/quizzes_404.njk', { message: `STOP SNOOPING AROUND!` });
+		}
+	});
+	app.get('/live', async (req, res) => {
+		if (!req.loggedIn) {
+			if (!PARAMS.userless) req.session.returnTo = req.url;
+			return res.renderFile('events/quiz_login.njk');
+		}
+		const quiz = await dbh.getLiveQuiz(PARAMS.dev ? '2022-11-12' : false);
+		if (!quiz) return res.renderFile('events/quizzes_404.njk', { message: `The quiz hasn't started, yet!` });
+		const QUIZ = quiz.questions;
+		const user = await dbh.getUser(req.user._id);
+		if (user.permissions?.includes('quizmaster')) {
+			return res.renderFile('events/live_master.njk', {
+				quiz: JSON.stringify(QUIZ),
+				qAmt: QUIZ.length,
+				id: 'live'
+			});
+		} else {
+			return res.renderFile('events/live_participant.njk', {
+				id: 'live',
+				userId: req.user._id
+			});
+		}
+	});
+	app.post('/live', async (req, res) => {
+		if (!req.loggedIn) {
+			if (!PARAMS.userless) req.session.returnTo = req.url;
+			return res.renderFile('events/quiz_login.njk');
+		}
+		if (!handlerContext.liveQuiz) handlerContext.liveQuiz = {};
+		const LQ = handlerContext.liveQuiz;
+		const quiz = await dbh.getLiveQuiz(PARAMS.dev ? '2022-11-12' : false);
+		const QUIZ = quiz.questions;
+		const user = await dbh.getUser(req.user._id);
+		if (user.permissions?.includes('quizmaster')) {
+			const { currentQ, options } = req.body;
+			const time = { '10': 20, '5': 15, '3': 12 }[QUIZ[currentQ].points];
+			io.sockets.in('waiting-for-live-quiz').emit('question', { currentQ, options, time });
+			setTimeout(() => {
+				const type = QUIZ[currentQ].options.type;
+				const solution = QUIZ[currentQ].solution;
+				setTimeout(() => io.sockets.in('waiting-for-live-quiz').emit('answer', {
+					answer: Array.isArray(solution) ? solution.join(' / ') : solution,
+					type
+				}), 2000); // Emit the actual event 3s after
+			}, 1000 * (time + 1)); // Extra second to account for lag
+			LQ.currentQ = req.body.currentQ;
+			LQ.endTime = Date.now() + 1000 * (time + 1);
+			res.send('Done');
+		} else {
+			const answer = req.body.submittedAnswer;
+			if (answer === '') return res.error('Missing answer');
+			const currentQ = LQ.currentQ ?? - 1;
+			const Q = QUIZ[currentQ];
+			if (!Q) return res.error('currentQ out of bounds');
+			const time = Math.round((LQ.endTime - Date.now()) / 1000);
+			if (time < 0) return res.error('Too late!');
+			const alreadySubmitted = await dbh.getLiveResult(user._id, quiz.title, currentQ);
+			if (alreadySubmitted) return res.error('Already attempted this question!');
+			const { points, timeLeft } = await checker.checkLiveQuiz(answer, Q.solution, Q.options.type, Q.points, time);
+			const result = points
+				? points < Q.points ? 'partial' : 'correct'
+				: 'incorrect';
+			const functionArgs = [user._id, quiz.title, currentQ, points, answer, timeLeft, result];
+			dbh.addLiveResult(...functionArgs).then(() => res.send('Submitted')).catch(e => console.log(e) && res.error(e));
+		}
+	});
+	app.post('/live-end', async (req, res) => {
+		if (!req.loggedIn) {
+			if (!PARAMS.userless) req.session.returnTo = req.url;
+			return res.renderFile('events/quiz_login.njk');
+		}
+		const user = await dbh.getUser(req.user._id);
+		if (!user.permissions.find(perm => perm === 'quizmaster')) throw new Error('Access denied');
+		io.sockets.in('waiting-for-live-quiz').emit('end-quiz');
+		return res.send('Ended!');
+	});
+	app.get('/live-results', async (req, res) => {
+		const quizId = new Date().toISOString().slice(0, 10);
+		const RES = await dbh.getAllLiveResults(quizId);
+		if (!RES) return res.notFound();
+		const results = [];
+		RES.forEach(_RES => {
+			if (!results.find(res => res.id === _RES.userId)) {
+				results.push({
+					id: _RES.userId,
+					name: _RES.username,
+					points: 0
+				});
+			}
+			results.find(res => res.id === _RES.userId).points += _RES.points;
+		});
+		results.sort((a, b) => -(a.points > b.points));
+		let i = 1, j = 1;
+		for (let result = 0; result < results.length; result++) {
+			if (!result) results[result].rank = i;
+			else {
+				if (results[result].points === results[result - 1].points) j++;
+				else {
+					i += j;
+					j = 1;
+				}
+				results[result].rank = i;
+			}
+			delete results[result].id;
+		}
+		return res.renderFile('events/results.njk', { results });
+	});
+	app.get('/prizes', (req, res) => {
+		const prizes = require('./rewards.json');
+		return res.renderFile('events/prizes.njk', { prizes });
+	});
+
+	app.get('/fandom', (req, res) => {
+		return res.error(`...uhh I don't think you're supposed to be here...`);
+		// eslint-disable-next-line no-unreachable
+		return res.renderFile('fandom_quiz.njk');
+	});
+
+	// Assorted other stuff
+
+	app.get('/corsProxy', (req, res) => {
+		const base64Url = req.query.base64Url;
+		const url = atob(base64Url);
+		return axios.get(url, { headers: { 'Access-Control-Allow-Origin': '*' } }).then(response => {
+			return res.send(response.data);
+		});
+	});
+	app.get('/rebuild', (req, res) => {
+		nunjEnv.loaders.forEach(loader => loader.cache = {});
+		['./members.json', './posts.json', './rewards.json'].forEach(cache => delete require.cache[require.resolve(cache)]);
+		return res.renderFile('rebuild.njk');
+	});
+	app.post('/git-hook', async (req, res) => {
+		const secret = process.env.WEBHOOK_SECRET;
+		if (!secret) return res.send('Disabled due to no webhook secret being configured');
+		// Validate secret
+		const sigHeader = 'X-Hub-Signature-256';
+		const signature = Buffer.from(req.get(sigHeader) || '', 'utf8');
+		const payload = JSON.stringify(req.body);
+		const hmac = crypto.createHmac('sha256', secret);
+		const digest = Buffer.from('sha256=' + hmac.update(payload).digest('hex'), 'utf8');
+		if (signature.length !== digest.length || !crypto.timingSafeEqual(digest, signature)) {
+			return res.error(new Error(`Request body digest (${digest}) did not match ${sigHeader} (${signature})`));
+		}
+		const branch = process.env.WEBHOOK_BRANCH;
+		if (!branch) return res.send('No branch configured for webhooks');
+		if (branch !== 'docker') return res.send('Automatic webhook updates are only enabled on the dev branch');
+		await Tools.updateCode();
+		res.send('Success!');
+		return process.exit(0);
+	});
+
+	app.use((err, req, res, next) => {
+		if (PARAMS.dev) console.error(err.stack);
+		// Make POST errors show only the data, and GET errors show the page with the error message
+		res.status(500).renderFile('404.njk', { message: 'Server error! This may or may not be due to invalid input.' });
+	});
+
+	app.post((req, res) => {
+		// If propagation hasn't stopped, switch to GET!
+		return res.redirect(req.url);
+	});
+	app.use((req, res) => {
+		// Catch-all 404
+		console.log("404... so...");
+		res.notFound();
+	});
 }
 
 module.exports = handler;

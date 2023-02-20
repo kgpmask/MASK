@@ -7,7 +7,9 @@ The owner of this repository is @PartMan7, who also runs the server. He's also r
 
 All non-trivial changes are done through PULL REQUESTS ONLY. The WebDev Team Head is responsible for testing and merging all PRs. Feel free to pester them to look at the changes you've prepared.
 
-To work on the templates which require access to credentials using `dev userless` (`du`) mode, check out [this page](/testing.md) for some info.
+To create a pull request, navigate to the `dev` branch (clicking on the GitHub client, or `git checkout dev` on the CLI) and create a new branch based on it (`New Branch` button (based on the `dev` branch, again!) on the GitHub client's branches page, or `git checkout -b [branch-name]` on the CLI). Pull requests will _never_ be merged directly to `main`; they will be first merged to `dev` and batches of changes and/or patches will be merged from `dev` to `main` alongside version increments.
+
+To work on the templates which require access to credentials using `dev userless` (`du`) mode, check out [this page](/TESTING.md) for some info.
 
 A webhook-based pull system will be implemented eventually.
 
@@ -23,11 +25,18 @@ There are multiple ways to run the server. The vast majority of the time, you wi
 * `dev` (d): An internal flag that does the same as `npm run dev`, except you lose access to nodemon. Just use `npm run dev` instead.
 * `local` (l): Uses a local database (mongodb://127.0.0.1/mask) instead of the designated test database. Overwrites all other DB flags.
 * `prod` (p): Connects directly to the production database. Do NOT use this flag lightly; it can break many, many things if you mess up and the testing database should serve your purposes. Cannot be used in conjuction with dev mode, for security reasons.
-* `userless` (u): Runs the server without a database connection. All user-based pages cannot be loaded. A planned feature is to have a dummy user with a modifiable JSON file, but as of now no user exists.
+* `mongoless` (m): Runs the server without a database connection. All database-based pages cannot be loaded. This is a superset of the `userless` flag (ie; a `mongoless` server will also always be `userless`).
+* <strike>`testuser` (t): Runs the server with the user details being defined in `/src/user.json`.</strike> **This is in progress.**
+* `userless` (u): Runs the server without a user connection/query. All user-based pages cannot be loaded. A planned feature is to have a dummy user with a modifiable JSON file, but as of now no user exists.
 * `quiz` (q): Allows for infinite quiz attempts. Should be used with `dev`.
 
 
-In order to start the server, you will require a credentials.json file - contact your WebDev Team Head for this file, and do NOT share it. The only exception to this is the userless flag - it is recommended to use `npm run dev userless` (or `npm run du`) for any page that does not involve a logged-in user.
+In order to start the server, you will require a credentials.json file - contact your WebDev Team Head for this file, and do NOT share it. The only exception to this is the userless/mongoless flag - it is recommended to use `npm run dev userless` (or `npm run du`) for any page that does not involve a logged-in user.
+
+You may also override the database connection string for testing purposes, like so:
+```bash
+MONGO_TEST_URL="mongodb://4.20.69.420/mask" npm dev
+```
 
 Note (edited): You can now connect to the database even while on WiFi/LAN without a VPN. The domain name has been whitelisted. The IP address has NOT been whitelisted for direct http/https connections.
 
@@ -101,13 +110,13 @@ Take a look at existing articles for the various classes and where they're used.
 
 ### Credits:
 
-- <a href="https://github.com/PartMan7" target="_blank">Parth Mane</a> (Lead)  <br />
-- <a href="https://github.com/Goose-Of-War" target="_blank">Vidunram A R </a> (Contributor)  <br />
-- <a href="https://github.com/anjaniit23" target="_blank">Anjani Kumar</a> (Contributor)  <br />
-- <a href="https://github.com/mokshith25" target="_blank">Venkatsai Mokshith</a> (Contributor)  <br />
-- <a href="https://github.com/ayush4ise" target="_blank">Ayush Parmar</a> (Contributor)  <br />
+- <a href="https://github.com/PartMan7" target="_blank">Parth Mane</a> (Lead)<br />
+- <a href="https://github.com/ayush4ise" target="_blank">Ayush Parmar</a> (Contributor)<br />
 - <a href="https://github.com/nishkalprakash" target="_blank">Nishkal Prakash</a> (Contributor) <br />
-- <a href="https://github.com/lurkingryuu" target="_blank">Karthikeya Y M</a> (Contributor)  <br />
-- <a href="https://github.com/Yureien" target="_blank">Soham Sen</a> (Contributor)  <br />
-- <a href="https://github.com/Pagol1" target="_blank">Saumyadip Nandy</a> (Contributor)  <br />
-- <a href="https://github.com/shiroyasha263" target="_blank">Vishesh Gupta</a> (Contributor)  <br />
+- <a href="https://github.com/Goose-Of-War" target="_blank">Vidunram A R </a> (Contributor)<br />
+- <a href="https://github.com/anjaniit23" target="_blank">Anjani Kumar</a> (Contributor)<br />
+- <a href="https://github.com/mokshith25" target="_blank">Venkatsai Mokshith</a> (Contributor)<br />
+- <a href="https://github.com/lurkingryuu" target="_blank">Karthikeya Y M</a> (Contributor)<br />
+- <a href="https://github.com/Yureien" target="_blank">Soham Sen</a> (Contributor)<br />
+- <a href="https://github.com/Pagol1" target="_blank">Saumyadip Nandy</a> (Contributor)<br />
+- <a href="https://github.com/shiroyasha263" target="_blank">Vishesh Gupta</a> (Contributor)<br />

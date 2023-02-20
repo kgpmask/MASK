@@ -57,9 +57,10 @@ function getQuizzes () {
 	return Quiz.Questions.find().lean();
 }
 
-async function getLiveQuiz () {
-	const date = new Date().toISOString().slice(0, 10);
-	// const date = '2022-11-12';
+async function getLiveQuiz (query) {
+	// TODO: Use IDs as a parameter properly
+	const date = query || new Date().toISOString().slice(0, 10);
+	// The first live quiz
 	const quiz = await LiveQuiz.findOne({ title: date });
 	if (quiz) return quiz.toObject();
 }
@@ -99,6 +100,7 @@ async function getNewsletter (date) {
 
 // Fetching posts based on type (art/video/newsletter)
 function getPosts (postType) {
+	// TODO: Make this accept a number of posts as a cap filter
 	return Post.find(postType ? { type: postType } : {}).sort({ date: -1 });
 }
 
