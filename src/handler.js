@@ -549,11 +549,10 @@ function handler (app, nunjEnv) {
 		return process.exit(0);
 	});
 
-	app.use((err, req, res, next) => {
+	app.use((err, req, res) => {
 		if (PARAMS.dev) console.error(err.stack);
 		// Make POST errors show only the data, and GET errors show the page with the error message
 		if(err) res.status(500).render('404.njk', { message: 'Server error! This may or may not be due to invalid input.' });
-		next();	
 	});
 
 	app.post((req, res) => {
