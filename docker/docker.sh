@@ -12,8 +12,8 @@ elif [ "$1" == "prod" ] ; then
 		exit 1
 	fi
 	command docker container rm mask
-	command docker run --name mask -dp 6971:6969 mask_image &&
-	command echo "Dev docker is running!"
+	command docker run --name mask -dp 6969:6969 mask_image &&
+	command echo "Prod docker is running!"
 else
 	command echo "No environment specified."
 fi
