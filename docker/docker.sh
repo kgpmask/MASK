@@ -1,3 +1,5 @@
+set -e
+
 if [ "$1" == "dev" ] ; then
 	command docker build -t mask-dev -f ./docker/Dockerfile-dev
 	command docker run --name mask_dev -rm -p 6971:6969 mask-dev
