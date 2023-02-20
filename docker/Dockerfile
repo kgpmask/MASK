@@ -7,4 +7,5 @@ COPY src/admin-credentials.json src/credentials.json
 RUN npm install
 RUN npm install pm2 -g
 CMD ["pm2-runtime", "docker/pm2.json"]
+CMD ["pm2", "list"]
 EXPOSE 6969
