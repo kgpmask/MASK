@@ -10,7 +10,8 @@ const path = require('path');
 global.Tools = require('./tools.js');
 const DB = require('../database/database.js');
 const PORT =  PARAMS.port ?? require('./config.js').PORT;
-const appHandler = require('./handler.js');
+// const appHandler = require('./handler.js');
+const route = require("./route.js");
 const socketio = require('socket.io')();
 const initMiddleware = require('./middleware.js');
 
@@ -24,7 +25,8 @@ const nunjEnv = nunjucks.configure(path.join(__dirname, '../templates'), {
 
 initMiddleware(app);
 
-appHandler(app, nunjEnv);
+route(app);
+// appHandler(app, nunjEnv);
 
 const server = http.createServer(app);
 global.io = socketio.listen(server);
