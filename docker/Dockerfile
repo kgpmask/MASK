@@ -5,6 +5,5 @@ RUN git clone https://github.com/mask-tech/MASK.git --depth 1 --single-branch --
 WORKDIR /MASK
 COPY src/admin-credentials.json src/credentials.json
 RUN npm install
-RUN npm install pm2 -g
 CMD ["npm", "start", "prod"]
 EXPOSE 6969
