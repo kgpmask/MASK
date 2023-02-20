@@ -29,7 +29,8 @@ function link (app) {
 	app.use('/corsProxy', corsProxyRouter);
 	app.use('/fandom', fandomRouter);
 	app.use('/git-hook', gitHookRouter);
-	app.use(['/', '/home'], homeRouter);
+	app.use('/', homeRouter);
+	app.use('/home', homeRouter);
 	app.use('/live', liveRouter);
 	app.use('/login', loginRouter);
 	app.use('/logout', logoutRouter);
