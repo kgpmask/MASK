@@ -1,10 +1,10 @@
-const artRouter = require("../routes/art");
 const checkerRouter = require("../routes/checker");
 const corsProxyRouter = require("../routes/corsProxy");
 const fandomRouter = require("../routes/fandom");
 const gitHookRouter = require("../routes/gitHook");
 const homeRouter = require("../routes/home");
 const liveRouter = require("../routes/live");
+const mediaRouter = require("../routes/media");
 const membersRouter = require("../routes/members");
 const miscRouter = require("../routes/misc");
 const newsletterRouter = require("../routes/newsletter");
@@ -12,11 +12,11 @@ const profileRouter = require("../routes/profile");
 const quizzesRouter = require("../routes/quizzes");
 const rebuildRouter = require("../routes/rebuild");
 const userRouter = require("../routes/user");
-const videosRouter = require("../routes/videos");
 
 function link (app) {
 	const smallerRoutes = ["/about", "/apply", "/blog", "/prizes", "/submissions", "/success"];
 	const userRoutes = ["/login", "/logout"];
+	const mediaRoutes = ["/art", "/videos"];
 
 	app.use('/', (req, res, next) => {
 		if (req.url in smallerRoutes) {
@@ -34,7 +34,14 @@ function link (app) {
 		}
 	}, userRouter);
 
-	app.use('/art', artRouter);
+	app.use('/', (req, res, next) => {
+		if (req.url in mediaRoutes) {
+			next();
+		} else {
+			next('route');
+		}
+	}, mediaRouter);
+
 	app.use('/checker', checkerRouter);
 	app.use('/corsProxy', corsProxyRouter);
 	app.use('/fandom', fandomRouter);
@@ -47,7 +54,6 @@ function link (app) {
 	app.use('/profile', profileRouter);
 	app.use(['/quizzes', '/events'], quizzesRouter);
 	app.use('/rebuild', rebuildRouter);
-	app.use('/videos', videosRouter);
 
 	app.use((err, req, res, next) => {
 		if (PARAMS.dev) console.error(err.stack);

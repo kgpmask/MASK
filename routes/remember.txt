@@ -1,4 +1,0 @@
-make path for both quizzes and events link to quizzes.js (x)
-
-/live-results -> /live/results
-/live-end -> /live/end
