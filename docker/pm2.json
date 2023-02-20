@@ -2,7 +2,7 @@
 	"apps": [
 		{
 			"name": "MASK",
-			"cwd": ".",
+			"cwd": "..",
 			"script": "npm",
 			"args": "start prod"
 		}
