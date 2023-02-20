@@ -5,7 +5,7 @@ if [ "$1" == "dev" ] ; then
 	fi
 	command docker container rm mask_dev
 	command docker run --name mask_dev -d -p 6971:6969 mask_dev_image &&
-	echo "Dev docker is running!"
+	command echo "Dev docker is running!"
 elif [ "$1" == "prod" ] ; then
 	if ! command docker build -t mask_image -f ./docker/Dockerfile .
 	then
