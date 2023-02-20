@@ -4,4 +4,4 @@
 *
 
 # ...except the config files!
-/src/*-credentials.json
+!/src/*-credentials.json
