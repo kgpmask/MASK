@@ -193,8 +193,8 @@
 
 		function endQuiz () {
 			if (!confirm('End the quiz?')) return;
-			axios.post('/live-end').then(() => {
-				window.location.href = '/live-results';
+			axios.post('/live/end').then(() => {
+				window.location.href = '/live/results';
 			});
 		}
 	</script>
