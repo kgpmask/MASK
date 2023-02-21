@@ -18,7 +18,7 @@ const initMiddleware = require('./middleware.js');
 global.app = express();
 const waitForDB = PARAMS.mongoless ? Promise.resolve() : DB.init();
 
-const nunjEnv = nunjucks.configure(path.join(__dirname, '../templates'), {
+global.nunjEnv = nunjucks.configure(path.join(__dirname, '../templates'), {
 	express: app,
 	noCache: PARAMS.dev
 });

@@ -13,7 +13,7 @@ const quizzesRouter = require("../routes/quizzes");
 const rebuildRouter = require("../routes/rebuild");
 const userRouter = require("../routes/user");
 
-function link (app) {
+function link (app, nunjEnv) {
 	const smallerRoutes = ["/about", "/apply", "/blog", "/prizes", "/submissions", "/success"];
 	const userRoutes = ["/login", "/logout"];
 	const mediaRoutes = ["/art", "/videos"];
