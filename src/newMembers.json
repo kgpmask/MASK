@@ -1,0 +1,1768 @@
+{
+    "legend" : {
+        "2020" : {
+			"a": {
+				"name": "AMV",
+				"icon": "amv"
+			},
+			"c": {
+				"name": "Creative",
+				"icon": "design"
+			},
+			"q": {
+				"name": "Quiz",
+				"icon": "newsletter"
+			},
+			"w": {
+				"name": "WebDev",
+				"icon": "webdev"
+			}
+		},
+        "2021" : {
+			"a": {
+				"name": "AMV",
+				"icon": "amv"
+			},
+			"d": {
+				"name": "Design & Arts",
+				"icon": "design"
+			},
+			"m": {
+				"name": "Music",
+				"icon": "music"
+			},
+			"q": {
+				"name": "Quiz",
+				"icon": "newsletter"
+			},
+			"w": {
+				"name": "WebDev",
+				"icon": "webdev"
+			}
+		},
+        "2022" : {
+			"a": {
+				"name": "AMV & Music",
+				"icon": "amv"
+			},
+			"d": {
+				"name": "Design & Arts",
+				"icon": "design"
+			},
+			"n": {
+				"name": "Media & Newsletter",
+				"icon": "newsletter"
+			},
+			"q": {
+				"name": "Quiz",
+				"icon": "quiz"
+			},
+			"w": {
+				"name": "WebDev",
+				"icon": "webdev"
+			}
+		}
+    },
+    "data" : [
+        {
+            "id":"18_aishik",
+            "name":"Aishik Mandal",
+            "roll":"18EC3AI21",
+            "records": [
+                {
+                    "year":2020,
+                    "position":"Executive",
+                    "teams": ["q"]
+                }
+            ]
+        },
+        {
+            "id":"X19_akula",
+            "name":"Akula Sai Sridhar",
+            "roll":"19MI10005",
+            "records": [
+                {
+                    "year":2020,
+                    "position":"Associate",
+                    "teams": ["q"]
+                }
+            ]
+        },
+        {
+            "id":"X18_amay",
+            "name":"Amay Varma",
+            "roll":"18MA20006",
+            "records": [
+                {
+                    "year":2020,
+                    "position":"Executive",
+                    "teams": ["q"]
+                }
+            ]
+        },
+        {
+            "id":"19_saad",
+            "name":"Ansari Saad",
+            "roll":"19EE10007",
+            "records": [
+                {
+                    "year":2020,
+                    "position":"Associate",
+                    "teams": ["c","q"]
+                }
+            ]
+        },
+        {
+            "id":"18_apoorva",
+            "name":"Apoorva Vashisth",
+            "roll":"18ME33001",
+            "records": [
+                {
+                    "year":2020,
+                    "position":"Executive",
+                    "teams": ["q"]
+                }
+            ]
+        },
+        {
+            "id":"18_arijit",
+            "name":"Arijit Ghosh Dastidar",
+            "roll":"18ME10009",
+            "records": [
+                {
+                    "year":2020,
+                    "position":"Former Executive",
+                    "teams": []
+                }
+            ]
+        },
+        {
+            "id":"18_arya",
+            "name":"Arya Tathe",
+            "roll":"18ME31037",
+            "records": [
+                {
+                    "year":2020,
+                    "position":"Governor",
+                    "teams": ["aH"]
+                }
+            ]
+        },
+        {
+            "id":"X19_aryan",
+            "name":"Aryan Ahirwar",
+            "roll":"19EC30007",
+            "records": [
+                {
+                    "year":2020,
+                    "position":"Associate",
+                    "teams": ["w"]
+                }
+            ]
+        },
+        {
+            "id":"X19_divyajyoti",
+            "name":"Divyajyoti Nayak",
+            "roll":"19AE30008",
+            "records": [
+                {
+                    "year":2020,
+                    "position":"Associate",
+                    "teams": ["c"]
+                }
+            ]
+        },
+        {
+            "id":"18_divyansh",
+            "name":"Divyansh Singh",
+            "roll":"18EE35003",
+            "records": [
+                {
+                    "year":2020,
+                    "position":"Executive",
+                    "teams": ["w"]
+                }
+            ]
+        },
+        {
+            "id":"X19_sandeep",
+            "name":"K. Sandeep Kumar",
+            "roll":"19EC10037",
+            "records": [
+                {
+                    "year":2020,
+                    "position":"Associate",
+                    "teams": ["q"]
+                }
+            ]
+        },
+        {
+            "id":"X18_kshitij",
+            "name":"Kshitij Prasad",
+            "roll":"18xxddddd",
+            "records": [
+                {
+                    "year":2020,
+                    "position":"Executive",
+                    "teams": ["q"]
+                }
+            ]
+        },
+        {
+            "id":"18_moto",
+            "name":"Moto Mohor",
+            "roll":"18CE36007",
+            "records": [
+                {
+                    "year":2020,
+                    "position":"Executive",
+                    "teams": ["c"]
+                }
+            ]
+        },
+        {
+            "id":"18_muhammad",
+            "name":"Muhammad Hussain",
+            "roll":"18CH30040",
+            "records": [
+                {
+                    "year":2020,
+                    "position":"Executive",
+                    "teams": ["q"]
+                }
+            ]
+        },
+        {
+            "id":"18_pankaj",
+            "name":"Pankaj Kumar Agarwal",
+            "roll":"18CS30031",
+            "records": [
+                {
+                    "year":2020,
+                    "position":"Governor",
+                    "teams": ["wH"]
+                }
+            ]
+        },
+        {
+            "id":"18_pratyasha",
+            "name":"Pratyasha Kalita",
+            "roll":"18ME10039",
+            "records": [
+                {
+                    "year":2020,
+                    "position":"Executive",
+                    "teams": ["c"]
+                }
+            ]
+        },
+        {
+            "id":"18_pritam",
+            "name":"Pritam Mallick",
+            "roll":"18CS10042",
+            "records": [
+                {
+                    "year":2020,
+                    "position":"Governor",
+                    "teams": ["cH"]
+                }
+            ]
+        },
+        {
+            "id":"X18_samir",
+            "name":"Samir Kumar",
+            "roll":"18ME30036",
+            "records": [
+                {
+                    "year":2020,
+                    "position":"Executive",
+                    "teams": ["w"]
+                }
+            ]
+        },
+        {
+            "id":"X18_sanskar",
+            "name":"Sanskar Singh",
+            "roll":"19CH10047",
+            "records": [
+                {
+                    "year":2020,
+                    "position":"Executive",
+                    "teams": ["c"]
+                }
+            ]
+        },
+        {
+            "id":"18_sarthak",
+            "name":"Sarthak Johnson",
+            "roll":"18CS10049",
+            "records": [
+                {
+                    "year":2020,
+                    "position":"Governor",
+                    "teams": ["qH"]
+                }
+            ]
+        },
+        {
+            "id":"18_shibashis",
+            "name":"Shibashis Das",
+            "roll":"18CE10052",
+            "records": [
+                {
+                    "year":2020,
+                    "position":"Executive",
+                    "teams": ["q"]
+                }
+            ]
+        },
+        {
+            "id":"18_shounak",
+            "name":"Shounak Mehendale",
+            "roll":"18ME31035",
+            "records": [
+                {
+                    "year":2020,
+                    "position":"Executive",
+                    "teams": ["a"]
+                }
+            ]
+        },
+        {
+            "id":"X19_subhraneel",
+            "name":"Shubhraneel Pal",
+            "roll":"19EC30043",
+            "records": [
+                {
+                    "year":2020,
+                    "position":"Associate",
+                    "teams": ["c","q"]
+                }
+            ]
+        },
+        {
+            "id":"18_sohan",
+            "name":"Sohan Kumar Parida",
+            "roll":"18IE10025",
+            "records": [
+                {
+                    "year":2020,
+                    "position":"Executive",
+                    "teams": ["q"]
+                }
+            ]
+        },
+        {
+            "id":"X19_yashasvi",
+            "name":"Yashasvi Rathore",
+            "roll":"19IE10035",
+            "records": [
+                {
+                    "year":2020,
+                    "position":"Associate",
+                    "teams": ["c"]
+                }
+            ]
+        },
+        {
+            "id":"X18_yashika",
+            "name":"Yashika Lanjewar",
+            "roll":"18ME10076",
+            "records": [
+                {
+                    "year":2020,
+                    "position":"Executive",
+                    "teams": ["w"]
+                }
+            ]
+        },
+        {
+            "id":"19_aaryan",
+            "name":"Aaryan Durgam",
+            "roll":"19AE30002",
+            "records": [
+                {
+                    "year":2020,
+                    "position":"Associate",
+                    "teams": ["c", "q"]
+                },
+                {
+                    "year":2021,
+                    "position":"Executive",
+                    "teams": ["a", "d", "qH"]
+                }
+            ]
+        },
+        {
+            "id":"19_abhishek",
+            "name":"Abhishek Kumar",
+            "roll":"19EC30001",
+            "records": [
+                {
+                    "year":2020,
+                    "position":"Associate",
+                    "teams": ["q"]
+                },
+                {
+                    "year":2021,
+                    "position":"Executive",
+                    "teams": ["q"]
+                }
+            ]
+        },
+        {
+            "id":"19_aman",
+            "name":"Aman Nagrale",
+            "roll":"19IM10004",
+            "records": [
+                {
+                    "year":2020,
+                    "position":"Associate",
+                    "teams": ["c"]
+                },
+                {
+                    "year":2021,
+                    "position":"Executive",
+                    "teams": ["d"]
+                }
+            ]
+        },
+        {
+            "id":"19_arpit",
+            "name":"Arpit Das",
+            "roll":"19CS10012",
+            "records": [
+                {
+                    "year":2020,
+                    "position":"Associate",
+                    "teams": ["c"]
+                },
+                {
+                    "year":2021,
+                    "position":"Executive",
+                    "teams": ["d"]
+                }
+            ]
+        },
+        {
+            "id":"19_ashwin",
+            "name":"Ashwin Kumar",
+            "roll":"19ME30008",
+            "records": [
+                {
+                    "year":2020,
+                    "position":"Associate",
+                    "teams": ["c"]
+                },
+                {
+                    "year":2021,
+                    "position":"Governor",
+                    "teams": ["dH"]
+                }
+            ]
+        },
+        {
+            "id":"19_ayush",
+            "name":"Ayush Dongre",
+            "roll":"19MA20008",
+            "records": [
+                {
+                    "year":2020,
+                    "position":"Associate",
+                    "teams": ["c"]
+                },
+                {
+                    "year":2021,
+                    "position":"Executive",
+                    "teams": ["a"]
+                }
+            ]
+        },
+        {
+            "id":"19_manish",
+            "name":"Manish Kumar",
+            "roll":"19GG20017",
+            "records": [
+                {
+                    "year":2020,
+                    "position":"Associate",
+                    "teams": ["c"]
+                },
+                {
+                    "year":2021,
+                    "position":"Executive",
+                    "teams": ["a"]
+                }
+            ]
+        },
+        {
+            "id":"19_rituraj",
+            "name":"Rituraj Warisa",
+            "roll":"19EC10055",
+            "records": [
+                {
+                    "year":2020,
+                    "position":"Associate",
+                    "teams": ["c"]
+                },
+                {
+                    "year":2021,
+                    "position":"Governor",
+                    "teams": ["aH"]
+                }
+            ]
+        },
+        {
+            "id":"19_shreyas",
+            "name":"Shreyas Ranveerkar",
+            "roll":"19NA10021",
+            "records": [
+                {
+                    "year":2020,
+                    "position":"Associate",
+                    "teams": ["c"]
+                },
+                {
+                    "year":2021,
+                    "position":"Executive",
+                    "teams": ["d"]
+                }
+            ]
+        },
+        {
+            "id":"19_viraj",
+            "name":"Viraj Madke",
+            "roll":"19ME30059",
+            "records": [
+                {
+                    "year":2020,
+                    "position":"Associate",
+                    "teams": ["c"]
+                },
+                {
+                    "year":2021,
+                    "position":"Governor",
+                    "teams": ["a", "mH"]
+                }
+            ]
+        },
+        {
+            "id":"20_aditya",
+            "name":"Aditya Das",
+            "roll":"20EX20014",
+            "records": [
+                {
+                    "year":2021,
+                    "position":"Associate",
+                    "teams": ["q"]
+                }
+            ]
+        },
+        {
+            "id":"20_aditya_sarode",
+            "name":"Aditya Sarode",
+            "roll":"20HS20014",
+            "records": [
+                {
+                    "year":2021,
+                    "position":"Associate",
+                    "teams": ["q"]
+                }
+            ]
+        },
+        {
+            "id":"20_anjani",
+            "name":"Anjani Kumar",
+            "roll":"20EE30005",
+            "records": [
+                {
+                    "year":2021,
+                    "position":"Associate",
+                    "teams": ["w"]
+                }
+            ]
+        },
+        {
+            "id":"20_ankit",
+            "name":"Ankit Chowdhury",
+            "roll":"20ME30008",
+            "records": [
+                {
+                    "year":2021,
+                    "position":"Associate",
+                    "teams": ["d", "m", "q"]
+                }
+            ]
+        },
+        {
+            "id":"20_anmol",
+            "name":"Anmol Kumar",
+            "roll":"20HS20010",
+            "records": [
+                {
+                    "year":2021,
+                    "position":"Associate",
+                    "teams": ["q"]
+                }
+            ]
+        },
+        {
+            "id":"20_anshul",
+            "name":"Anshul Bankar",
+            "roll":"20ME10030",
+            "records": [
+                {
+                    "year":2021,
+                    "position":"Associate",
+                    "teams": ["q"]
+                }
+            ]
+        },
+        {
+            "id":"20_bhavyaa",
+            "name":"Bhavyaa Sharma",
+            "roll":"20ME10033",
+            "records": [
+                {
+                    "year":2021,
+                    "position":"Associate",
+                    "teams": ["m"]
+                }
+            ]
+        },
+        {
+            "id":"20_bishal",
+            "name":"Bishal Kumar Behera",
+            "roll":"20MT10020",
+            "records": [
+                {
+                    "year":2021,
+                    "position":"Associate",
+                    "teams": ["q"]
+                }
+            ]
+        },
+        {
+            "id":"20_deepa",
+            "name":"Deepa Raj",
+            "roll":"20IM10006",
+            "records": [
+                {
+                    "year":2021,
+                    "position":"Former Associate",
+                    "teams": ["a"]
+                }
+            ]
+        },
+        {
+            "id":"20_dhruv",
+            "name":"Dhruv Baheti",
+            "roll":"20PH20010",
+            "records": [
+                {
+                    "year":2021,
+                    "position":"Associate",
+                    "teams": ["m"]
+                }
+            ]
+        },
+        {
+            "id":"20_faiza",
+            "name":"Faiza Kashish",
+            "roll":"20EE10026",
+            "records": [
+                {
+                    "year":2021,
+                    "position":"Associate",
+                    "teams": ["m"]
+                }
+            ]
+        },
+        {
+            "id":"20_garima",
+            "name":"Garima Mendhe",
+            "roll":"20BT10017",
+            "records": [
+                {
+                    "year":2021,
+                    "position":"Associate",
+                    "teams": ["d"]
+                }
+            ]
+        },
+        {
+            "id":"20_gourav",
+            "name":"Gourav Parashar",
+            "roll":"20CE10025",
+            "records": [
+                {
+                    "year":2021,
+                    "position":"Associate",
+                    "teams": ["a"]
+                }
+            ]
+        },
+        {
+            "id":"20_kartik",
+            "name":"Kartik Narayan Sahoo",
+            "roll":"20MI10025",
+            "records": [
+                {
+                    "year":2021,
+                    "position":"Associate",
+                    "teams": ["m"]
+                }
+            ]
+        },
+        {
+            "id":"20_kunal",
+            "name":"Kunal Gupta",
+            "roll":"20AG10022",
+            "records": [
+                {
+                    "year":2021,
+                    "position":"Associate",
+                    "teams": ["a"]
+                }
+            ]
+        },
+        {
+            "id":"20_manasa",
+            "name":"Manasa Mylavarapu",
+            "roll":"20MI10034",
+            "records": [
+                {
+                    "year":2021,
+                    "position":"Associate",
+                    "teams": ["d"]
+                }
+            ]
+        },
+        {
+            "id":"20_priyank",
+            "name":"Priyank Mundra",
+            "roll":"20EC30034",
+            "records": [
+                {
+                    "year":2021,
+                    "position":"Associate",
+                    "teams": ["a"]
+                }
+            ]
+        },
+        {
+            "id":"20_rishabh",
+            "name":"Rishabh Jain",
+            "roll":"20HS20045",
+            "records": [
+                {
+                    "year":2021,
+                    "position":"Associate",
+                    "teams": ["a"]
+                }
+            ]
+        },
+        {
+            "id":"20_samarth",
+            "name":"Samarth Singh",
+            "roll":"20MF10031",
+            "records": [
+                {
+                    "year":2021,
+                    "position":"Associate",
+                    "teams": ["d"]
+                }
+            ]
+        },
+        {
+            "id":"20_sarthak",
+            "name":"Sarthak Vijaywat",
+            "roll":"20CE10063",
+            "records": [
+                {
+                    "year":2021,
+                    "position":"Former Associate",
+                    "teams": ["q"]
+                }
+            ]
+        },
+        {
+            "id":"20_shroyon",
+            "name":"Shroyon Dasgupta",
+            "roll":"20NA10037",
+            "records": [
+                {
+                    "year":2021,
+                    "position":"Associate",
+                    "teams": ["m"]
+                }
+            ]
+        },
+        {
+            "id":"20_soham",
+            "name":"Soham Sen",
+            "roll":"20MF10038",
+            "records": [
+                {
+                    "year":2021,
+                    "position":"Associate",
+                    "teams": ["w"]
+                }
+            ]
+        },
+        {
+            "id":"20_surendra",
+            "name":"Surendra Kolhe",
+            "roll":"20AE10040",
+            "records": [
+                {
+                    "year":2021,
+                    "position":"Associate",
+                    "teams": ["a"]
+                }
+            ]
+        },
+        {
+            "id":"20_vishesh",
+            "name":"Vishesh Gupta",
+            "roll":"20EE10080",
+            "records": [
+                {
+                    "year":2021,
+                    "position":"Associate",
+                    "teams": ["q","w"]
+                }
+            ]
+        },
+        {
+            "id":"19_parth",
+            "name":"Parth Mane",
+            "roll":"19MF10022",
+            "records": [
+                {
+                    "year":2020,
+                    "position":"Associate",
+                    "teams": ["q", "w"]
+                },
+                {
+                    "year":2021,
+                    "position":"Governor",
+                    "teams": ["m", "qH", "wH"]
+                },
+                {
+                    "year":2022,
+                    "position":"Advisoor",
+                    "teams": ["a", "n", "q", "wH"]
+                }
+            ]
+        },
+        {
+            "id":"20_abhibhu",
+            "name":"Abhibhu Prakash",
+            "roll":"20CS10002",
+            "records": [
+                {
+                    "year":2021,
+                    "position":"Associate",
+                    "teams": ["a","q"]
+                },
+                {
+                    "year":2022,
+                    "position":"Governor",
+                    "teams": ["a", "n", "q"]
+                }
+            ]
+        },
+        {
+            "id":"21_abhinav",
+            "name":"Abhinav Prakash",
+            "roll":"21CH10001",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Associate",
+                    "teams": ["a","dS","q"]
+                }
+            ]
+        },
+        {
+            "id":"20_aniruddha",
+            "name":"Aniruddha Panda",
+            "roll":"20MI10008",
+            "records": [
+                {
+                    "year":2021,
+                    "position":"Associate",
+                    "teams": ["m"]
+                },
+                {
+                    "year":2022,
+                    "position":"Governor",
+                    "teams": ["a","n"]
+                }
+            ]
+        },
+        {
+            "id":"21_anwesha",
+            "name":"Anwesha Das",
+            "roll":"21CS30007",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Associate",
+                    "teams": ["d"]
+                }
+            ]
+        },
+        {
+            "id":"21_arghadeep",
+            "name":"Arghadeep Biswas",
+            "roll":"21CH10008",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Associate",
+                    "teams": ["a","qS"]
+                }
+            ]
+        },
+        {
+            "id":"20_arjit",
+            "name":"Arjit Lohia",
+            "roll":"20EC30006",
+            "records": [
+                {
+                    "year":2021,
+                    "position":"Associate",
+                    "teams": ["d","q"]
+                },
+                {
+                    "year":2022,
+                    "position":"Executive",
+                    "teams": ["d","qH"]
+                }
+            ]
+        },
+        {
+            "id":"20_ayush",
+            "name":"Ayush Kumar",
+            "roll":"20HS20012",
+            "records": [
+                {
+                    "year":2021,
+                    "position":"Associate",
+                    "teams": ["a"]
+                },
+                {
+                    "year":2022,
+                    "position":"Executive",
+                    "teams": ["aH"]
+                }
+            ]
+        },
+        {
+            "id":"21_ayush",
+            "name":"Ayush Kumar",
+            "roll":"21AG10008",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Associate",
+                    "teams": ["dS"]
+                }
+            ]
+        },
+        {
+            "id":"21_ayush_parmar",
+            "name":"Ayush Parmar",
+            "roll":"21IM30005",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Associate",
+                    "teams": ["n","qS"]
+                }
+            ]
+        },
+        {
+            "id":"21_bhavesh",
+            "name":"Bhavesh Mukheja",
+            "roll":"21PH10008",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Associate",
+                    "teams": ["aS","q"]
+                }
+            ]
+        },
+        {
+            "id":"21_chiranjeet",
+            "name":"Chiranjeet Mishra",
+            "roll":"21PH10011",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Associate",
+                    "teams": ["a","n"]
+                }
+            ]
+        },
+        {
+            "id":"21_dillip",
+            "name":"Dillip Dibyajyoti Dash",
+            "roll":"21EC10020",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Associate",
+                    "teams": ["nS","q"]
+                }
+            ]
+        },
+        {
+            "id":"21_divyansh",
+            "name":"Divyansh Tripathi",
+            "roll":"21MF10016",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Associate",
+                    "teams": ["n"]
+                }
+            ]
+        },
+        {
+            "id":"21_dommeti",
+            "name":"Dommeti Chaitanya Srinivas",
+            "roll":"21EC10021",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Associate",
+                    "teams": ["a","d"]
+                }
+            ]
+        },
+        {
+            "id":"21_lohitakshay",
+            "name":"G Lohitakshay",
+            "roll":"21CY10015",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Associate",
+                    "teams": ["a"]
+                }
+            ]
+        },
+        {
+            "id":"20_akshith",
+            "name":"G Akshith",
+            "roll":"20BT30009",
+            "records": [
+                {
+                    "year":2021,
+                    "position":"Associate",
+                    "teams": ["d"]
+                },
+                {
+                    "year":2022,
+                    "position":"Governor",
+                    "teams": ["dH"]
+                }
+            ]
+        },
+        {
+            "id":"20_ganji",
+            "name":"Ganji Sanjeev Raj",
+            "roll":"20EC10029",
+            "records": [
+                {
+                    "year":2021,
+                    "position":"Associate",
+                    "teams": ["d"]
+                },
+                {
+                    "year":2022,
+                    "position":"Former Executive",
+                    "teams": ["d"]
+                }
+            ]
+        },
+        {
+            "id":"20_hrishabh",
+            "name":"Hrishabh Kumar Tundwar",
+            "roll":"20MI10020",
+            "records": [
+                {
+                    "year":2021,
+                    "position":"Associate",
+                    "teams": ["a"]
+                },
+                {
+                    "year":2022,
+                    "position":"Executive",
+                    "teams": ["a","d","nH"]
+                }
+            ]
+        },
+        {
+            "id":"21_karan",
+            "name":"Karan Nag",
+            "roll":"21ME30038",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Associate",
+                    "teams": ["d"]
+                }
+            ]
+        },
+        {
+            "id":"21_karthikeya",
+            "name":"Karthikeya S M Yelisetty",
+            "roll":"21CS30060",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Former Associate",
+                    "teams": ["a","w"]
+                }
+            ]
+        },
+        {
+            "id":"21_maloth",
+            "name":"Maloth Maniteja",
+            "roll":"21PH20002",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Associate",
+                    "teams": ["d"]
+                }
+            ]
+        },
+        {
+            "id":"21_mohit",
+            "name":"Mohit Kumar Meena",
+            "roll":"21CE10035",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Associate",
+                    "teams": ["a"]
+                }
+            ]
+        },
+        {
+            "id":"21_nikhith",
+            "name":"Nikhith Mathai Manoj",
+            "roll":"21AE10027",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Associate",
+                    "teams": ["a","n"]
+                }
+            ]
+        },
+        {
+            "id":"21_nischay",
+            "name":"Nischay Gururani",
+            "roll":"21AG30026",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Associate",
+                    "teams": ["aS"]
+                }
+            ]
+        },
+        {
+            "id":"21_pranay",
+            "name":"Pranay Bhaskar",
+            "roll":"21MI33015",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Associate",
+                    "teams": ["q"]
+                }
+            ]
+        },
+        {
+            "id":"21_purba",
+            "name":"Purba Saren",
+            "roll":"21IE10030",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Associate",
+                    "teams": ["d"]
+                }
+            ]
+        },
+        {
+            "id":"21_ritesah",
+            "name":"Ritesah M",
+            "roll":"21CS30042",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Associate",
+                    "teams": ["a","d"]
+                }
+            ]
+        },
+        {
+            "id":"20_saumyadip",
+            "name":"Saumyadip Nandy",
+            "roll":"20EC10072",
+            "records": [
+                {
+                    "year":2021,
+                    "position":"Associate",
+                    "teams": ["w"]
+                },
+                {
+                    "year":2022,
+                    "position":"Former Executive",
+                    "teams": ["w"]
+                }
+            ]
+        },
+        {
+            "id":"21_shreya",
+            "name":"Shreya Rajvanshi",
+            "roll":"21XXXXXXX",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Associate",
+                    "teams": ["a","d"]
+                }
+            ]
+        },
+        {
+            "id":"21_shubham",
+            "name":"Shubham Dilawar",
+            "roll":"21AR10031",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Associate",
+                    "teams": ["a","d","n"]
+                }
+            ]
+        },
+        {
+            "id":"20_spandan",
+            "name":"Spandan Halder",
+            "roll":"20CS10063",
+            "records": [
+                {
+                    "year":2021,
+                    "position":"Associate",
+                    "teams": ["a"]
+                },
+                {
+                    "year":2022,
+                    "position":"Governor",
+                    "teams": ["a","n"]
+                }
+            ]
+        },
+        {
+            "id":"20_srijan",
+            "name":"Srijan Srivastava",
+            "roll":"20EC30051",
+            "records": [
+                {
+                    "year":2021,
+                    "position":"Associate",
+                    "teams": ["q"]
+                },
+                {
+                    "year":2022,
+                    "position":"Executive",
+                    "teams": ["nH","q"]
+                }
+            ]
+        },
+        {
+            "id":"21_suvojit",
+            "name":"Suvojit Das",
+            "roll":"21EE30029",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Associate",
+                    "teams": ["d","nS"]
+                }
+            ]
+        },
+        {
+            "id":"21_tussar",
+            "name":"Tussar Roy",
+            "roll":"21EC10083",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Associate",
+                    "teams": ["a","n"]
+                }
+            ]
+        },
+        {
+            "id":"21_venkatsai",
+            "name":"Venkatsai Mokshith",
+            "roll":"21CS10050",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Associate",
+                    "teams": ["w"]
+                }
+            ]
+        },
+        {
+            "id":"20_vidhu",
+            "name":"Vidhu Vikas Singh",
+            "roll":"20AG30039",
+            "records": [
+                {
+                    "year":2021,
+                    "position":"Associate",
+                    "teams": ["q"]
+                },
+                {
+                    "year":2022,
+                    "position":"Governor",
+                    "teams": ["n","q"]
+                }
+            ]
+        },
+        {
+            "id":"21_vidunram",
+            "name":"Vidunram",
+            "roll":"21EE30033",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Associate",
+                    "teams": ["n","q","wS"]
+                }
+            ]
+        },
+        {
+            "id": "21_manish",
+            "name": "Manish Yadav",
+            "roll": "21MI10034",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Associate",
+                    "teams": ["a"]
+                }
+            ]
+        },
+        {
+            "id": "22_ankan",
+            "name": "Ankan Saha",
+            "roll": "22EE10008",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Fresher",
+                    "teams": ["q","w"]
+                }
+            ]
+        },
+        {
+            "id": "22_aman",
+            "name": "Aman Tater ",
+            "roll": "22ME30010",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Fresher",
+                    "teams": ["n","q"]
+                }
+            ]
+        },
+        {
+            "id": "22_maitra",
+            "name": "Maitra Das",
+            "roll": "22CE10039",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Fresher",
+                    "teams": ["n"]
+                }
+            ]
+        },
+        {
+            "id": "21_ashish",
+            "name": "Ashish Thakur",
+            "roll": "21NA30004",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Associate",
+                    "teams": ["a"]
+                }
+            ]
+        },
+        {
+            "id": "21_sampreet",
+            "name": "Dhurjati V S Sai Sampreet ",
+            "roll": "21AE10015",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Associate",
+                    "teams": ["n"]
+                }
+            ]
+        },
+        {
+            "id": "22_uday",
+            "name": "Uday Srivastava ",
+            "roll": "22ME30072",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Fresher",
+                    "teams": ["w"]
+                }
+            ]
+        },
+        {
+            "id": "21_siddhartha",
+            "name": "Siddhartha Kumar",
+            "roll": "21EE10069",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Associate",
+                    "teams": ["d"]
+                }
+            ]
+        },
+        {
+            "id": "21_gargi",
+            "name": "Gargi Raj ",
+            "roll": "21EC10025",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Associate",
+                    "teams": ["a","n"]
+                }
+            ]
+        },
+        {
+            "id": "22_mayank",
+            "name": "Mayank Rana",
+            "roll": "22HS10035",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Fresher",
+                    "teams": ["a","n","q"]
+                }
+            ]
+        },
+        {
+            "id": "22_rashmi",
+            "name": "Rashmi Dinkar Patil",
+            "roll": "22ME30046",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Fresher",
+                    "teams": ["d","n"]
+                }
+            ]
+        },
+        {
+            "id": "19_nishkal",
+            "name": "Nishkal Prakash",
+            "roll": "19CS91R05",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"RA",
+                    "teams": ["a","d"]
+                }
+            ],
+            "RA": true
+        },
+        {
+            "id": "22_anand",
+            "name": "Anand Malav Rameshchandra ",
+            "roll": "22CS10008",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Fresher",
+                    "teams": ["q"]
+                }
+            ]
+        },
+        {
+            "id": "22_vipin",
+            "name": "Vipin Kaushik ",
+            "roll": "22CH30035",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Fresher",
+                    "teams": ["d"]
+                }
+            ]
+        },
+        {
+            "id": "22_soumil",
+            "name": "Soumil Maiti ",
+            "roll": "22ME10082",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Fresher",
+                    "teams": ["q"]
+                }
+            ]
+        },
+        {
+            "id": "22_hardik",
+            "name": "Hardik Bhardwaj",
+            "roll": "22AE10011",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Fresher",
+                    "teams": ["a"]
+                }
+            ]
+        },
+        {
+            "id": "22_sahil",
+            "name": "Sahil Patel",
+            "roll": "22NA30028",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Fresher",
+                    "teams": ["d"]
+                }
+            ]
+        },
+        {
+            "id": "22_saroja",
+            "name": "Saroja Bamra",
+            "roll": "22HS10048",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Fresher",
+                    "teams": ["d"]
+                }
+            ]
+        },
+        {
+            "id": "22_dishant",
+            "name": "Dishant Bothra",
+            "roll": "22MT30014",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Fresher",
+                    "teams": ["q"]
+                }
+            ]
+        },
+        {
+            "id": "22_snehansh",
+            "name": "Snehansh Sen ",
+            "roll": "22BT30026",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Fresher",
+                    "teams": ["a"]
+                }
+            ]
+        },
+        {
+            "id": "22_vishu",
+            "name": "Vishu Gour ",
+            "roll": "22EX10049",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Fresher",
+                    "teams": ["a"]
+                }
+            ]
+        },
+        {
+            "id": "22_dibya",
+            "name": "Dibya Ranjan Samal ",
+            "roll": "22BT10007",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Fresher",
+                    "teams": ["d"]
+                }
+            ]
+        },
+        {
+            "id": "21_kushagra",
+            "name": "Kushagra Kuntal ",
+            "roll": "21MI10032",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Associate",
+                    "teams": ["n"]
+                }
+            ]
+        },
+        {
+            "id": "22_piyush",
+            "name": "Piyush Agarwal",
+            "roll": "22ME10063",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Fresher",
+                    "teams": ["q"]
+                }
+            ]
+        },
+        {
+            "id": "22_anustup",
+            "name": "Anustup Hazra ",
+            "roll": "22EC10015",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Fresher",
+                    "teams": ["n"]
+                }
+            ]
+        },
+        {
+            "id": "22_ritobroto",
+            "name": "Ritobroto Kalita",
+            "roll": "22ME10070",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Fresher",
+                    "teams": ["q"]
+                }
+            ]
+        },
+        {
+            "id": "21_snehal",
+            "name": "Snehal Mishra ",
+            "roll": "21IM10036",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Associate",
+                    "teams": ["n"]
+                }
+            ]
+        },
+        {
+            "id": "22_sagarika",
+            "name": "Sagarika Debnath ",
+            "roll": "22NA30027",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Fresher",
+                    "teams": ["d"]
+                }
+            ]
+        },
+        {
+            "id": "22_jai",
+            "name": "Jai Sachdev",
+            "roll": "22BT10011",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Fresher",
+                    "teams": ["w"]
+                }
+            ]
+        },
+        {
+            "id": "22_vedanta",
+            "name": "Vedanta Hazra",
+            "roll": "22MA10068",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Fresher",
+                    "teams": ["d"]
+                }
+            ]
+        },
+        {
+            "id": "22_neha",
+            "name": "Neha Narayankar",
+            "roll": "22PH10033",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Fresher",
+                    "teams": ["d"]
+                }
+            ]
+        },
+        {
+            "id": "21_kapil",
+            "name": "Kapil Kumar Meena",
+            "roll": "21EE100XX",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Associate",
+                    "teams": ["a","d"]
+                }
+            ]
+        },
+        {
+            "id": "22_arhana",
+            "name": "Arhana Jain",
+            "roll": "22PH10009",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Fresher",
+                    "teams": ["q"]
+                }
+            ]
+        },
+        {
+            "id": "22_gracy",
+            "name": "Gracy Debbarma",
+            "roll": "22MA10026",
+            "records": [
+                {
+                    "year":2022,
+                    "position":"Fresher",
+                    "teams": ["d"]
+                }
+            ]
+        }
+    ]
+}
