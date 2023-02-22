@@ -112,23 +112,9 @@ function handler (app, nunjEnv) {
 	app.get('/about', (req, res) => {
 		return res.renderFile('about.njk');
 	});
-	app.get('/members/:yearName?', (req, res) => {
-		const membersData = require('./newMembers.json');
-		const yearName = 2022;
-		const teamsData = require("./teams.json");
-		const yearMembers = [];
-		membersData.forEach(member => {
-			if (member.records.forEach(rec => rec.year === yearName)) {
-				const mem = {
-					image: member.image,
-					name: member.name,
-					roll: member.roll,
-					position: rec.position,
-					teams: rec.teams
-				};
-				yearMembers.push(mem);
-			}
-		});
+	app.get('/members/:yearName?', async (req, res) => {
+		const yearName = parseInt(req.params.yearName) || 2022;
+		const membersData = await dbh.getMembersbyYear(yearName);
 		const status = {
 			'Governor': [],
 			'Team Heads': [],
@@ -140,28 +126,16 @@ function handler (app, nunjEnv) {
 			'Fresher': [],
 			'Former Member': []
 		};
-		membersData.sort((a, b) => -(a.name < b.name)).forEach(mem => {
-			mem.records.forEach(yearData => {
-				if (yearData.year === yearName) {
-					status[yearData.position].push({
-						name: mem.name,
-						roll: mem.roll,
-						image: mem.image,
-						teams: yearData.teams.map(teamID => {
-							const team = {
-								name: teamsData[yearName][teamID[0]].name,
-								icon: teamsData[yearName][teamID[0]].icon
-							};
-							team.icon += teamID[1] === "H" ? "-head" : teamID[1] === "S" ? "-sub" : '';
-							return team;
-						})
-					});
-				}
-			});
+		membersData.forEach(member => {
+			status[member.position].push(member);
 		});
 		const membersObj = Object.entries(status);
 		const membersTitle = 'Our Members';
-		return res.renderFile('members.njk', { membersObj: membersObj, prev: 2021, membersTitle: membersTitle, next: undefined });
+		return res.renderFile('members.njk', {
+			membersObj,
+			membersTitle,
+			prev: yearName - 1 >= 2020 ? `${yearName - 1}-${yearName % 100}` : undefined,
+			next: yearName + 1 <= 2022 ? `${yearName + 1}-${yearName % 100 + 2}` : undefined });
 	});
 
 
