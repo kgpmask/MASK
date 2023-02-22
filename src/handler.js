@@ -131,12 +131,12 @@ function handler (app, nunjEnv) {
 		});
 		const status = {
 			'Governor': [],
-			'Former Member': [],
 			'Research Associate': [],
 			'Advisor': [],
 			'Executive': [],
 			'Associate': [],
-			'Fresher': []
+			'Fresher': [],
+			'Former Member': []
 		};
 		membersData.sort((a, b) => -(a.name < b.name)).forEach(mem => {
 			mem.records.forEach(yearData => {
