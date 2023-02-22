@@ -116,18 +116,22 @@ function handler (app, nunjEnv) {
 		const yearName = parseInt(req.params.yearName) || 2022;
 		const membersData = await dbh.getMembersbyYear(yearName);
 		const status = {
-			'Governor': [],
+			'Governors': [],
 			'Team Heads': [],
 			'Team Sub-Heads': [],
-			'Advisor': [],
+			'Advisors': [],
 			'Research Associate': [],
-			'Executive': [],
-			'Associate': [],
-			'Fresher': [],
-			'Former Member': []
+			'Executives': [],
+			'Associates': [],
+			'Freshers': [],
+			'Former Members': []
 		};
 		membersData.forEach(member => {
-			status[member.position].push(member);
+			try {
+				status[member.position].push(member);
+			} catch {
+				status[member.position + 's'].push(member);
+			}
 		});
 		const membersObj = Object.entries(status);
 		const membersTitle = 'Our Members';
