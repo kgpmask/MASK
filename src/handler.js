@@ -131,8 +131,10 @@ function handler (app, nunjEnv) {
 		});
 		const status = {
 			'Governor': [],
-			'Research Associate': [],
+			'Team Heads': [],
+			'Team Sub-Heads': [],
 			'Advisor': [],
+			'Research Associate': [],
 			'Executive': [],
 			'Associate': [],
 			'Fresher': [],
