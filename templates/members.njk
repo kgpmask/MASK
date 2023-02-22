@@ -7,6 +7,7 @@
 	<div id="loaded" style="display:none">
 		<h1><u>{{ membersTitle }}</u></h1>
 		{% for status, members in membersObj %}
+			{% if members | length %}
 				<div class="status">
 					<h2><u>{{ status }}</u></h2>
 					<div class="yearbox">
@@ -26,6 +27,7 @@
 						</div>
 					</div>
 				</div>
+			{% endif %}
 		{% endfor %}
 		{% if prev %}
 			<a href="/members/{{ prev }}"><button class="year-button">{{ prev }}</button></a>

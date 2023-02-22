@@ -12,6 +12,6 @@ const memberSchema = new mongoose.Schema({
 		// Team: x = member, xH = x Head, xS = x Sub-Head
 		teams: { type: [String], required: true }
 	}]
-}, { collection: 'member' });
+}, { collection: 'members' });
 
 module.exports = new mongoose.model("Member", memberSchema);
