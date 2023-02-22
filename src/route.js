@@ -10,10 +10,9 @@ const miscRouter = require("../routes/misc");
 const newsletterRouter = require("../routes/newsletter");
 const profileRouter = require("../routes/profile");
 const quizzesRouter = require("../routes/quizzes");
-const rebuildRouter = require("../routes/rebuild");
 const userRouter = require("../routes/user");
 
-function link (app) {
+function link (app, nunjEnv) {
 	const smallerRoutes = ["/about", "/apply", "/blog", "/prizes", "/submissions", "/success"];
 	const userRoutes = ["/login", "/logout"];
 	const mediaRoutes = ["/art", "/videos"];
@@ -53,7 +52,11 @@ function link (app) {
 	app.use('/newsletters', newsletterRouter);
 	app.use('/profile', profileRouter);
 	app.use(['/quizzes', '/events'], quizzesRouter);
-	app.use('/rebuild', rebuildRouter);
+	app.use('/rebuild', (req, res) => {
+		nunjEnv.loaders.forEach(loader => loader.cache = {});
+		['./members.json', './rewards.json'].forEach(cache => delete require.cache[require.resolve(cache)]);
+		return res.renderFile('rebuild.njk');
+	});
 
 	app.use((err, req, res, next) => {
 		if (PARAMS.dev) console.error(err.stack);
