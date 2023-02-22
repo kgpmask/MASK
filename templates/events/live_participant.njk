@@ -214,6 +214,7 @@
 			}
 			tick();
 		}
+
 		function preventDefault(event) {
 			event.stopImmediatePropagation();
 			event.preventDefault();
@@ -225,29 +226,30 @@
 			optionsContainer = document.getElementById('options-container');
 			answerTextField = document.getElementById('answer-text-field');
 		});
-		function keySupport(event){
-					e = 0;
-					n = event.keyCode;
-					keys=[48,64,96]; //[48: 1-4, 64 A-D, 96:NUM1-4]
-					keys.forEach(k=>{if(k < n && n < k+5){e=n-k;return;}});
-					if(e){
-						//Select the corresponding option
-						op=document.getElementById(`option-${e}`);
-						op.click();
-						op.scrollIntoView();
-						preventDefault(event);
-					}
-					else if (n == 27) {
-						chk_opt=document.querySelector(`input[name="answer"]:checked`)
-						if (chk_opt)
-							chk_opt.checked = false
-					}
-					//else if (n == 13) {
-						//if (document.querySelector(`input[name="answer"]:checked`))
-							//submitAnswer();
-						//preventDefault(event);
-					//}
+		function keySupport(event) {
+			e = 0;
+			n = event.keyCode;
+			keys=[48,64,96]; //[48: 1-4, 64 A-D, 96:NUM1-4]
+			keys.forEach(k=>{if(k < n && n < k+5){e=n-k;return;}});
+			if(e){
+				//Select the corresponding option
+				op=document.getElementById(`option-${e}`);
+				op.click();
+				op.scrollIntoView();
+				preventDefault(event);
+			}
+			else if (n == 27) {
+				chk_opt=document.querySelector(`input[name="answer"]:checked`)
+				if (chk_opt)
+					chk_opt.checked = false
+			}
+			//else if (n == 13) {
+				//if (document.querySelector(`input[name="answer"]:checked`))
+					//submitAnswer();
+				//preventDefault(event);
+			//}
 		}
+
 		function showQuestion (options, time, currentQ) {
 			document.getElementById('question-no').innerHTML = `Question #${quesCounter}`;
 			document.getElementById('count').style.display = 'block';
@@ -276,6 +278,7 @@
 			state = 'running';
 			timer(time);
 		}
+
 		socket.on('question', req => {
 			currentQ = req.currentQ;
 			showQuestion(req.options, req.time, currentQ);
@@ -323,7 +326,7 @@
 			if (submittedAnswer === null) return false;
 			// This lets the participants know when the timer will end
 			//document.getElementById('count').style.display = 'none';
-			axios.post('/live', { submittedAnswer }).then(() => submittedAnswer = submittedAnswer).catch(() => {});
+			axios.post('/live', { submittedAnswer }).then(() => submittedAnswer = submittedAnswer).catch(e => console.log('Error:', e.response.data));
 			showMessage('Your response has been submitted.<br/>Please wait for the other participants.');
 			if (timeout === false) return;
 			state = 'submitted';

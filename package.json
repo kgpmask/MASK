@@ -1,6 +1,6 @@
 {
 	"name": "mask",
-	"version": "3.0.0",
+	"version": "3.1.0",
 	"description": "Website for MASK",
 	"main": "./src/index.js",
 	"scripts": {
@@ -9,7 +9,7 @@
 		"dm": "nodemon src/mask.js dm",
 		"lint": "eslint . --config .eslintrc.json --ext .js",
 		"start": "node src/mask.js",
-		"test": "npm run lint && npx mocha --timeout 3000 && echo \"Passing all tests.\" && exit 0",
+		"test": "npm run lint && npx mocha test --timeout 3000 && echo \"Passing all tests.\" && exit 0",
 		"prepare": "husky install"
 	},
 	"repository": {
