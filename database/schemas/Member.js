@@ -7,7 +7,9 @@ const memberSchema = new mongoose.Schema({
 	imageLink: String,
 	records: [{
 		year: { type: Number, required: true },
+		// Positions: Governor, Research Associate, Executive, Associate, Fresher
 		position: String,
+		// Team: x = member, xH = x Head, xS = x Sub-Head
 		teams: { type: [String], required: true }
 	}]
 }, { collection: 'member' });
