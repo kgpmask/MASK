@@ -66,7 +66,7 @@
 		"records": [
 			{
 				"year": 2020,
-				"position": "Former Executive",
+				"position": "Former Member",
 				"teams": []
 			}
 		]
@@ -584,7 +584,7 @@
 		"records": [
 			{
 				"year": 2021,
-				"position": "Former Associate",
+				"position": "Former Member",
 				"teams": ["a"]
 			}
 		]
@@ -716,7 +716,7 @@
 		"records": [
 			{
 				"year": 2021,
-				"position": "Former Associate",
+				"position": "Former Member",
 				"teams": ["q"]
 			}
 		]
@@ -786,7 +786,7 @@
 			},
 			{
 				"year": 2022,
-				"position": "Advisoor",
+				"position": "Advisor",
 				"teams": ["a", "n", "q", "wH"]
 			}
 		]
@@ -1020,7 +1020,7 @@
 			},
 			{
 				"year": 2022,
-				"position": "Former Executive",
+				"position": "Former Member",
 				"teams": ["d"]
 			}
 		]
@@ -1061,7 +1061,7 @@
 		"records": [
 			{
 				"year": 2022,
-				"position": "Former Associate",
+				"position": "Former Member",
 				"teams": ["a","w"]
 			}
 		]
@@ -1162,7 +1162,7 @@
 			},
 			{
 				"year": 2022,
-				"position": "Former Executive",
+				"position": "Former Member",
 				"teams": ["w"]
 			}
 		]
@@ -1429,11 +1429,10 @@
 		"records": [
 			{
 				"year": 2022,
-				"position": "RA",
+				"position": "Research Associate",
 				"teams": ["a","d"]
 			}
-		],
-		"RA": true
+		]
 	},
 	{
 		"image": "../assets/members/22_anand.webp",
