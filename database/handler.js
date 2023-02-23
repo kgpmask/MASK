@@ -115,7 +115,7 @@ async function getMembersbyYear (year) {
 		yearData.push({
 			name: member.name,
 			roll: member.roll,
-			image: member.image,
+			image: "../assets/members/" + member.image,
 			teams: rec.teams.map(teamID => {
 				const team = {
 					name: teamsData[year][teamID[0]].name,
