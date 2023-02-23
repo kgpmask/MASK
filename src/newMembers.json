@@ -1,6 +1,6 @@
 [
     {
-        "image": "../assets/members/21_yaman.webp",
+        "image": "21_yaman.webp",
         "name": "Yaman Meena",
         "roll": "21IE10044",
         "records":
@@ -13,7 +13,7 @@
         ]
     },
     {
-        "image": "../assets/members/21_suraj.webp",
+        "image": "21_suraj.webp",
         "name": "Suraj Pati",
         "roll": "21EC30050",
         "records":
@@ -26,7 +26,7 @@
         ]
     },
     {
-        "image": "../assets/members/21_risabh_prasad.webp",
+        "image": "21_rishabh_prasad.webp",
         "name": "Rishabh Prasad",
         "roll": "21XX00000",
         "records":
@@ -39,7 +39,7 @@
         ]
     },
     {
-        "image": "../assets/members/21_risabh.webp",
+        "image": "21_rishabh.webp",
         "name": "Rishabh Mishra",
         "roll": "21XX00000",
         "records":
@@ -52,7 +52,7 @@
         ]
     },
     {
-        "image": "../assets/members/21_manasvi.webp",
+        "image": "21_manasvi.webp",
         "name": "Manasvi Rathore",
         "roll": "21HS10025",
         "records":
@@ -65,7 +65,7 @@
         ]
     },
     {
-        "image": "../assets/members/21_abhinav_v.webp",
+        "image": "21_abhinav_v.webp",
         "name": "Abhinav V Pillai",
         "roll": "21ME10004",
         "records":
@@ -78,7 +78,7 @@
         ]
     },
     {
-        "image": "../assets/members/18_aishik.webp",
+        "image": "18_aishik.webp",
         "name": "Aishik Mandal",
         "roll": "18EC3AI21",
         "records":
@@ -91,7 +91,7 @@
         ]
     },
     {
-        "image": "../assets/members/blank.webp",
+        "image": "blank.webp",
         "name": "Akula Sai Sridhar",
         "roll": "19MI10005",
         "records":
@@ -104,7 +104,7 @@
         ]
     },
     {
-        "image": "../assets/members/blank.webp",
+        "image": "blank.webp",
         "name": "Amay Varma",
         "roll": "18MA20006",
         "records":
@@ -117,7 +117,7 @@
         ]
     },
     {
-        "image": "../assets/members/19_saad.webp",
+        "image": "19_saad.webp",
         "name": "Ansari Saad",
         "roll": "19EE10007",
         "records":
@@ -130,7 +130,7 @@
         ]
     },
     {
-        "image": "../assets/members/18_apoorva.webp",
+        "image": "18_apoorva.webp",
         "name": "Apoorva Vashisth",
         "roll": "18ME33001",
         "records":
@@ -143,7 +143,7 @@
         ]
     },
     {
-        "image": "../assets/members/18_arijit.webp",
+        "image": "18_arijit.webp",
         "name": "Arijit Ghosh Dastidar",
         "roll": "18ME10009",
         "records":
@@ -156,7 +156,7 @@
         ]
     },
     {
-        "image": "../assets/members/18_arya.webp",
+        "image": "18_arya.webp",
         "name": "Arya Tathe",
         "roll": "18ME31037",
         "records":
@@ -169,7 +169,7 @@
         ]
     },
     {
-        "image": "../assets/members/blank.webp",
+        "image": "blank.webp",
         "name": "Aryan Ahirwar",
         "roll": "19EC30007",
         "records":
@@ -182,7 +182,7 @@
         ]
     },
     {
-        "image": "../assets/members/blank.webp",
+        "image": "blank.webp",
         "name": "Divyajyoti Nayak",
         "roll": "19AE30008",
         "records":
@@ -195,7 +195,7 @@
         ]
     },
     {
-        "image": "../assets/members/18_divyansh.webp",
+        "image": "18_divyansh.webp",
         "name": "Divyansh Singh",
         "roll": "18EE35003",
         "records":
@@ -208,7 +208,7 @@
         ]
     },
     {
-        "image": "../assets/members/blank.webp",
+        "image": "blank.webp",
         "name": "K. Sandeep Kumar",
         "roll": "19EC10037",
         "records":
@@ -221,7 +221,7 @@
         ]
     },
     {
-        "image": "../assets/members/blank.webp",
+        "image": "blank.webp",
         "name": "Kshitij Prasad",
         "roll": "18xxddddd",
         "records":
@@ -234,7 +234,7 @@
         ]
     },
     {
-        "image": "../assets/members/18_moto.webp",
+        "image": "18_moto.webp",
         "name": "Moto Mohor",
         "roll": "18CE36007",
         "records":
@@ -247,7 +247,7 @@
         ]
     },
     {
-        "image": "../assets/members/18_muhammad.webp",
+        "image": "18_muhammad.webp",
         "name": "Muhammad Hussain",
         "roll": "18CH30040",
         "records":
@@ -260,7 +260,7 @@
         ]
     },
     {
-        "image": "../assets/members/18_pankaj.webp",
+        "image": "18_pankaj.webp",
         "name": "Pankaj Kumar Agarwal",
         "roll": "18CS30031",
         "records":
@@ -273,7 +273,7 @@
         ]
     },
     {
-        "image": "../assets/members/18_pratyasha.webp",
+        "image": "18_pratyasha.webp",
         "name": "Pratyasha Kalita",
         "roll": "18ME10039",
         "records":
@@ -286,7 +286,7 @@
         ]
     },
     {
-        "image": "../assets/members/18_pritam.webp",
+        "image": "18_pritam.webp",
         "name": "Pritam Mallick",
         "roll": "18CS10042",
         "records":
@@ -299,7 +299,7 @@
         ]
     },
     {
-        "image": "../assets/members/blank.webp",
+        "image": "blank.webp",
         "name": "Samir Kumar",
         "roll": "18ME30036",
         "records":
@@ -312,7 +312,7 @@
         ]
     },
     {
-        "image": "../assets/members/blank.webp",
+        "image": "blank.webp",
         "name": "Sanskar Singh",
         "roll": "19CH10047",
         "records":
@@ -325,7 +325,7 @@
         ]
     },
     {
-        "image": "../assets/members/18_sarthak.webp",
+        "image": "18_sarthak.webp",
         "name": "Sarthak Johnson",
         "roll": "18CS10049",
         "records":
@@ -338,7 +338,7 @@
         ]
     },
     {
-        "image": "../assets/members/18_shibashis.webp",
+        "image": "18_shibashis.webp",
         "name": "Shibashis Das",
         "roll": "18CE10052",
         "records":
@@ -351,7 +351,7 @@
         ]
     },
     {
-        "image": "../assets/members/18_shounak.webp",
+        "image": "18_shounak.webp",
         "name": "Shounak Mehendale",
         "roll": "18ME31035",
         "records":
@@ -364,7 +364,7 @@
         ]
     },
     {
-        "image": "../assets/members/blank.webp",
+        "image": "blank.webp",
         "name": "Shubhraneel Pal",
         "roll": "19EC30043",
         "records":
@@ -377,7 +377,7 @@
         ]
     },
     {
-        "image": "../assets/members/18_sohan.webp",
+        "image": "18_sohan.webp",
         "name": "Sohan Kumar Parida",
         "roll": "18IE10025",
         "records":
@@ -390,7 +390,7 @@
         ]
     },
     {
-        "image": "../assets/members/blank.webp",
+        "image": "blank.webp",
         "name": "Yashasvi Rathore",
         "roll": "19IE10035",
         "records":
@@ -403,7 +403,7 @@
         ]
     },
     {
-        "image": "../assets/members/blank.webp",
+        "image": "blank.webp",
         "name": "Yashika Lanjewar",
         "roll": "18ME10076",
         "records":
@@ -416,7 +416,7 @@
         ]
     },
     {
-        "image": "../assets/members/19_aaryan.webp",
+        "image": "19_aaryan.webp",
         "name": "Aaryan Durgam",
         "roll": "19AE30002",
         "records":
@@ -434,7 +434,7 @@
         ]
     },
     {
-        "image": "../assets/members/19_abhishek.webp",
+        "image": "19_abhishek.webp",
         "name": "Abhishek Kumar",
         "roll": "19EC30001",
         "records":
@@ -452,7 +452,7 @@
         ]
     },
     {
-        "image": "../assets/members/19_aman.webp",
+        "image": "19_aman.webp",
         "name": "Aman Nagrale",
         "roll": "19IM10004",
         "records":
@@ -470,7 +470,7 @@
         ]
     },
     {
-        "image": "../assets/members/19_arpit.webp",
+        "image": "19_arpit.webp",
         "name": "Arpit Das",
         "roll": "19CS10012",
         "records":
@@ -488,7 +488,7 @@
         ]
     },
     {
-        "image": "../assets/members/19_ashwin.webp",
+        "image": "19_ashwin.webp",
         "name": "Ashwin Kumar",
         "roll": "19ME30008",
         "records":
@@ -506,7 +506,7 @@
         ]
     },
     {
-        "image": "../assets/members/19_ayush.webp",
+        "image": "19_ayush.webp",
         "name": "Ayush Dongre",
         "roll": "19MA20008",
         "records":
@@ -524,7 +524,7 @@
         ]
     },
     {
-        "image": "../assets/members/19_manish.webp",
+        "image": "19_manish.webp",
         "name": "Manish Kumar",
         "roll": "19GG20017",
         "records":
@@ -542,7 +542,7 @@
         ]
     },
     {
-        "image": "../assets/members/19_rituraj.webp",
+        "image": "19_rituraj.webp",
         "name": "Rituraj Warisa",
         "roll": "19EC10055",
         "records":
@@ -560,7 +560,7 @@
         ]
     },
     {
-        "image": "../assets/members/19_shreyas.webp",
+        "image": "19_shreyas.webp",
         "name": "Shreyas Ranveerkar",
         "roll": "19NA10021",
         "records":
@@ -578,7 +578,7 @@
         ]
     },
     {
-        "image": "../assets/members/19_viraj.webp",
+        "image": "19_viraj.webp",
         "name": "Viraj Madke",
         "roll": "19ME30059",
         "records":
@@ -596,7 +596,7 @@
         ]
     },
     {
-        "image": "../assets/members/20_aditya.webp",
+        "image": "20_aditya.webp",
         "name": "Aditya Das",
         "roll": "20EX20014",
         "records":
@@ -614,7 +614,7 @@
         ]
     },
     {
-        "image": "../assets/members/20_aditya_sarode.webp",
+        "image": "20_aditya_sarode.webp",
         "name": "Aditya Sarode",
         "roll": "20HS20014",
         "records":
@@ -632,7 +632,7 @@
         ]
     },
     {
-        "image": "../assets/members/20_anjani.webp",
+        "image": "20_anjani.webp",
         "name": "Anjani Kumar",
         "roll": "20EE30005",
         "records":
@@ -650,7 +650,7 @@
         ]
     },
     {
-        "image": "../assets/members/20_ankit.webp",
+        "image": "20_ankit.webp",
         "name": "Ankit Chowdhury",
         "roll": "20ME30008",
         "records":
@@ -668,7 +668,7 @@
         ]
     },
     {
-        "image": "../assets/members/20_anmol.webp",
+        "image": "20_anmol.webp",
         "name": "Anmol Kumar",
         "roll": "20HS20010",
         "records":
@@ -686,7 +686,7 @@
         ]
     },
     {
-        "image": "../assets/members/20_anshul.webp",
+        "image": "20_anshul.webp",
         "name": "Anshul Bankar",
         "roll": "20ME10030",
         "records":
@@ -704,7 +704,7 @@
         ]
     },
     {
-        "image": "../assets/members/20_bhavyaa.webp",
+        "image": "20_bhavyaa.webp",
         "name": "Bhavyaa Sharma",
         "roll": "20ME10033",
         "records":
@@ -722,7 +722,7 @@
         ]
     },
     {
-        "image": "../assets/members/20_bishal.webp",
+        "image": "20_bishal.webp",
         "name": "Bishal Kumar Behera",
         "roll": "20MT10020",
         "records":
@@ -740,7 +740,7 @@
         ]
     },
     {
-        "image": "../assets/members/20_deepa.webp",
+        "image": "20_deepa.webp",
         "name": "Deepa Raj",
         "roll": "20IM10006",
         "records":
@@ -758,7 +758,7 @@
         ]
     },
     {
-        "image": "../assets/members/20_dhruv.webp",
+        "image": "20_dhruv.webp",
         "name": "Dhruv Baheti",
         "roll": "20PH20010",
         "records":
@@ -776,7 +776,7 @@
         ]
     },
     {
-        "image": "../assets/members/20_faiza.webp",
+        "image": "20_faiza.webp",
         "name": "Faiza Kashish",
         "roll": "20EE10026",
         "records":
@@ -794,7 +794,7 @@
         ]
     },
     {
-        "image": "../assets/members/20_garima.webp",
+        "image": "20_garima.webp",
         "name": "Garima Mendhe",
         "roll": "20BT10017",
         "records":
@@ -812,7 +812,7 @@
         ]
     },
     {
-        "image": "../assets/members/20_gourav.webp",
+        "image": "20_gourav.webp",
         "name": "Gourav Parashar",
         "roll": "20CE10025",
         "records":
@@ -830,7 +830,7 @@
         ]
     },
     {
-        "image": "../assets/members/20_kartik.webp",
+        "image": "20_kartik.webp",
         "name": "Kartik Narayan Sahoo",
         "roll": "20MI10025",
         "records":
@@ -848,7 +848,7 @@
         ]
     },
     {
-        "image": "../assets/members/20_kunal.webp",
+        "image": "20_kunal.webp",
         "name": "Kunal Gupta",
         "roll": "20AG10022",
         "records":
@@ -866,7 +866,7 @@
         ]
     },
     {
-        "image": "../assets/members/20_manasa.webp",
+        "image": "20_manasa.webp",
         "name": "Manasa Mylavarapu",
         "roll": "20MI10034",
         "records":
@@ -884,7 +884,7 @@
         ]
     },
     {
-        "image": "../assets/members/20_priyank.webp",
+        "image": "20_priyank.webp",
         "name": "Priyank Mundra",
         "roll": "20EC30034",
         "records":
@@ -902,7 +902,7 @@
         ]
     },
     {
-        "image": "../assets/members/20_rishabh.webp",
+        "image": "20_rishabh.webp",
         "name": "Rishabh Jain",
         "roll": "20HS20045",
         "records":
@@ -920,7 +920,7 @@
         ]
     },
     {
-        "image": "../assets/members/20_samarth.webp",
+        "image": "20_samarth.webp",
         "name": "Samarth Singh",
         "roll": "20MF10031",
         "records":
@@ -938,7 +938,7 @@
         ]
     },
     {
-        "image": "../assets/members/20_sarthak.webp",
+        "image": "20_sarthak.webp",
         "name": "Sarthak Vijaywat",
         "roll": "20CE10063",
         "records":
@@ -956,7 +956,7 @@
         ]
     },
     {
-        "image": "../assets/members/20_shroyon.webp",
+        "image": "20_shroyon.webp",
         "name": "Shroyon Dasgupta",
         "roll": "20NA10037",
         "records":
@@ -974,7 +974,7 @@
         ]
     },
     {
-        "image": "../assets/members/20_soham.webp",
+        "image": "20_soham.webp",
         "name": "Soham Sen",
         "roll": "20MF10038",
         "records":
@@ -992,7 +992,7 @@
         ]
     },
     {
-        "image": "../assets/members/20_surendra.webp",
+        "image": "20_surendra.webp",
         "name": "Surendra Kolhe",
         "roll": "20AE10040",
         "records":
@@ -1010,7 +1010,7 @@
         ]
     },
     {
-        "image": "../assets/members/20_vishesh.webp",
+        "image": "20_vishesh.webp",
         "name": "Vishesh Gupta",
         "roll": "20EE10080",
         "records":
@@ -1028,7 +1028,7 @@
         ]
     },
     {
-        "image": "../assets/members/19_parth.webp",
+        "image": "19_parth.webp",
         "name": "Parth Mane",
         "roll": "19MF10022",
         "records":
@@ -1051,7 +1051,7 @@
         ]
     },
     {
-        "image": "../assets/members/20_abhibhu.webp",
+        "image": "20_abhibhu.webp",
         "name": "Abhibhu Prakash",
         "roll": "20CS10002",
         "records":
@@ -1074,7 +1074,7 @@
         ]
     },
     {
-        "image": "../assets/members/21_abhinav.webp",
+        "image": "21_abhinav.webp",
         "name": "Abhinav Prakash",
         "roll": "21CH10001",
         "records":
@@ -1092,7 +1092,7 @@
         ]
     },
     {
-        "image": "../assets/members/20_aniruddha.webp",
+        "image": "20_aniruddha.webp",
         "name": "Aniruddha Panda",
         "roll": "20MI10008",
         "records":
@@ -1115,7 +1115,7 @@
         ]
     },
     {
-        "image": "../assets/members/21_anwesha.webp",
+        "image": "21_anwesha.webp",
         "name": "Anwesha Das",
         "roll": "21CS30007",
         "records":
@@ -1133,7 +1133,7 @@
         ]
     },
     {
-        "image": "../assets/members/21_arghadeep.webp",
+        "image": "21_arghadeep.webp",
         "name": "Arghadeep Biswas",
         "roll": "21CH10008",
         "records":
@@ -1151,7 +1151,7 @@
         ]
     },
     {
-        "image": "../assets/members/20_arjit.webp",
+        "image": "20_arjit.webp",
         "name": "Arjit Lohia",
         "roll": "20EC30006",
         "records":
@@ -1174,7 +1174,7 @@
         ]
     },
     {
-        "image": "../assets/members/20_ayush.webp",
+        "image": "20_ayush.webp",
         "name": "Ayush Kumar",
         "roll": "20HS20012",
         "records":
@@ -1197,7 +1197,7 @@
         ]
     },
     {
-        "image": "../assets/members/21_ayush.webp",
+        "image": "21_ayush.webp",
         "name": "Ayush Kumar",
         "roll": "21AG10008",
         "records":
@@ -1215,7 +1215,7 @@
         ]
     },
     {
-        "image": "../assets/members/21_ayush_parmar.webp",
+        "image": "21_ayush_parmar.webp",
         "name": "Ayush Parmar",
         "roll": "21IM30005",
         "records":
@@ -1233,7 +1233,7 @@
         ]
     },
     {
-        "image": "../assets/members/21_bhavesh.webp",
+        "image": "21_bhavesh.webp",
         "name": "Bhavesh Mukheja",
         "roll": "21PH10008",
         "records":
@@ -1251,7 +1251,7 @@
         ]
     },
     {
-        "image": "../assets/members/21_chiranjeet.webp",
+        "image": "21_chiranjeet.webp",
         "name": "Chiranjeet Mishra",
         "roll": "21PH10011",
         "records":
@@ -1269,7 +1269,7 @@
         ]
     },
     {
-        "image": "../assets/members/21_dillip.webp",
+        "image": "21_dillip.webp",
         "name": "Dillip Dibyajyoti Dash",
         "roll": "21EC10020",
         "records":
@@ -1287,7 +1287,7 @@
         ]
     },
     {
-        "image": "../assets/members/21_divyansh.webp",
+        "image": "21_divyansh.webp",
         "name": "Divyansh Tripathi",
         "roll": "21MF10016",
         "records":
@@ -1305,7 +1305,7 @@
         ]
     },
     {
-        "image": "../assets/members/21_dommeti.webp",
+        "image": "21_dommeti.webp",
         "name": "Dommeti Chaitanya Srinivas",
         "roll": "21EC10021",
         "records":
@@ -1323,7 +1323,7 @@
         ]
     },
     {
-        "image": "../assets/members/21_lohitakshay.webp",
+        "image": "21_lohitakshay.webp",
         "name": "G Lohitakshay",
         "roll": "21CY10015",
         "records":
@@ -1341,7 +1341,7 @@
         ]
     },
     {
-        "image": "../assets/members/20_akshith.webp",
+        "image": "20_akshith.webp",
         "name": "G Akshith",
         "roll": "20BT30009",
         "records":
@@ -1364,7 +1364,7 @@
         ]
     },
     {
-        "image": "../assets/members/20_ganji.webp",
+        "image": "20_ganji.webp",
         "name": "Ganji Sanjeev Raj",
         "roll": "20EC10029",
         "records":
@@ -1387,7 +1387,7 @@
         ]
     },
     {
-        "image": "../assets/members/20_hrishabh.webp",
+        "image": "20_hrishabh.webp",
         "name": "Hrishabh Kumar Tundwar",
         "roll": "20MI10020",
         "records":
@@ -1410,7 +1410,7 @@
         ]
     },
     {
-        "image": "../assets/members/21_karan.webp",
+        "image": "21_karan.webp",
         "name": "Karan Nag",
         "roll": "21ME30038",
         "records":
@@ -1428,7 +1428,7 @@
         ]
     },
     {
-        "image": "../assets/members/21_karthikeya.webp",
+        "image": "21_karthikeya.webp",
         "name": "Karthikeya S M Yelisetty",
         "roll": "21CS30060",
         "records":
@@ -1446,7 +1446,7 @@
         ]
     },
     {
-        "image": "../assets/members/21_maloth.webp",
+        "image": "21_maloth.webp",
         "name": "Maloth Maniteja",
         "roll": "21PH20002",
         "records":
@@ -1464,7 +1464,7 @@
         ]
     },
     {
-        "image": "../assets/members/21_mohit.webp",
+        "image": "21_mohit.webp",
         "name": "Mohit Kumar Meena",
         "roll": "21CE10035",
         "records":
@@ -1482,7 +1482,7 @@
         ]
     },
     {
-        "image": "../assets/members/21_nikhith.webp",
+        "image": "21_nikhith.webp",
         "name": "Nikhith Mathai Manoj",
         "roll": "21AE10027",
         "records":
@@ -1500,7 +1500,7 @@
         ]
     },
     {
-        "image": "../assets/members/21_nischay.webp",
+        "image": "21_nischay.webp",
         "name": "Nischay Gururani",
         "roll": "21AG30026",
         "records":
@@ -1518,7 +1518,7 @@
         ]
     },
     {
-        "image": "../assets/members/21_pranay.webp",
+        "image": "21_pranay.webp",
         "name": "Pranay Bhaskar",
         "roll": "21MI33015",
         "records":
@@ -1536,7 +1536,7 @@
         ]
     },
     {
-        "image": "../assets/members/21_purba.webp",
+        "image": "21_purba.webp",
         "name": "Purba Saren",
         "roll": "21IE10030",
         "records":
@@ -1554,7 +1554,7 @@
         ]
     },
     {
-        "image": "../assets/members/21_ritesah.webp",
+        "image": "21_ritesah.webp",
         "name": "Ritesah M",
         "roll": "21CS30042",
         "records":
@@ -1572,7 +1572,7 @@
         ]
     },
     {
-        "image": "../assets/members/20_saumyadip.webp",
+        "image": "20_saumyadip.webp",
         "name": "Saumyadip Nandy",
         "roll": "20EC10072",
         "records":
@@ -1595,7 +1595,7 @@
         ]
     },
     {
-        "image": "../assets/members/21_shreya.webp",
+        "image": "21_shreya.webp",
         "name": "Shreya Rajvanshi",
         "roll": "21PP00064",
         "records":
@@ -1613,7 +1613,7 @@
         ]
     },
     {
-        "image": "../assets/members/21_shubham.webp",
+        "image": "21_shubham.webp",
         "name": "Shubham Dilawar",
         "roll": "21AR10031",
         "records":
@@ -1631,7 +1631,7 @@
         ]
     },
     {
-        "image": "../assets/members/20_spandan.webp",
+        "image": "20_spandan.webp",
         "name": "Spandan Halder",
         "roll": "20CS10063",
         "records":
@@ -1654,7 +1654,7 @@
         ]
     },
     {
-        "image": "../assets/members/20_srijan.webp",
+        "image": "20_srijan.webp",
         "name": "Srijan Srivastava",
         "roll": "20EC30051",
         "records":
@@ -1677,7 +1677,7 @@
         ]
     },
     {
-        "image": "../assets/members/21_suvojit.webp",
+        "image": "21_suvojit.webp",
         "name": "Suvojit Das",
         "roll": "21EE30029",
         "records":
@@ -1695,7 +1695,7 @@
         ]
     },
     {
-        "image": "../assets/members/21_tussar.webp",
+        "image": "21_tussar.webp",
         "name": "Tussar Roy",
         "roll": "21EC10083",
         "records":
@@ -1713,7 +1713,7 @@
         ]
     },
     {
-        "image": "../assets/members/21_venkatsai.webp",
+        "image": "21_venkatsai.webp",
         "name": "Venkatsai Mokshith",
         "roll": "21CS10050",
         "records":
@@ -1731,7 +1731,7 @@
         ]
     },
     {
-        "image": "../assets/members/20_vidhu.webp",
+        "image": "20_vidhu.webp",
         "name": "Vidhu Vikas Singh",
         "roll": "20AG30039",
         "records":
@@ -1754,7 +1754,7 @@
         ]
     },
     {
-        "image": "../assets/members/21_vidunram.webp",
+        "image": "21_vidunram.webp",
         "name": "Vidunram A R",
         "roll": "21EE30033",
         "records":
@@ -1772,7 +1772,7 @@
         ]
     },
     {
-        "image": "../assets/members/21_manish.webp",
+        "image": "21_manish.webp",
         "name": "Manish Yadav",
         "roll": "21MI10034",
         "records":
@@ -1785,7 +1785,7 @@
         ]
     },
     {
-        "image": "../assets/members/22_ankan.webp",
+        "image": "22_ankan.webp",
         "name": "Ankan Saha",
         "roll": "22EE10008",
         "records":
@@ -1798,7 +1798,7 @@
         ]
     },
     {
-        "image": "../assets/members/22_aman.webp",
+        "image": "22_aman.webp",
         "name": "Aman Tater",
         "roll": "22ME30010",
         "records":
@@ -1811,7 +1811,7 @@
         ]
     },
     {
-        "image": "../assets/members/22_maitra.webp",
+        "image": "22_maitra.webp",
         "name": "Maitra Das",
         "roll": "22CE10039",
         "records":
@@ -1824,7 +1824,7 @@
         ]
     },
     {
-        "image": "../assets/members/21_ashish.webp",
+        "image": "21_ashish.webp",
         "name": "Ashish Thakur",
         "roll": "21NA30004",
         "records":
@@ -1837,7 +1837,7 @@
         ]
     },
     {
-        "image": "../assets/members/21_sampreet.webp",
+        "image": "21_sampreet.webp",
         "name": "Sampreet Dhurjati",
         "roll": "21AE10015",
         "records":
@@ -1850,7 +1850,7 @@
         ]
     },
     {
-        "image": "../assets/members/22_uday.webp",
+        "image": "22_uday.webp",
         "name": "Uday Srivastava",
         "roll": "22ME30072",
         "records":
@@ -1863,7 +1863,7 @@
         ]
     },
     {
-        "image": "../assets/members/21_siddhartha.webp",
+        "image": "21_siddhartha.webp",
         "name": "Siddhartha Kumar",
         "roll": "21EE10069",
         "records":
@@ -1876,7 +1876,7 @@
         ]
     },
     {
-        "image": "../assets/members/21_gargi.webp",
+        "image": "21_gargi.webp",
         "name": "Gargi Raj",
         "roll": "21EC10025",
         "records":
@@ -1889,7 +1889,7 @@
         ]
     },
     {
-        "image": "../assets/members/22_mayank.webp",
+        "image": "22_mayank.webp",
         "name": "Mayank Rana",
         "roll": "22HS10035",
         "records":
@@ -1902,7 +1902,7 @@
         ]
     },
     {
-        "image": "../assets/members/22_rashmi.webp",
+        "image": "22_rashmi.webp",
         "name": "Rashmi Dinkar Patil",
         "roll": "22ME30046",
         "records":
@@ -1915,7 +1915,7 @@
         ]
     },
     {
-        "image": "../assets/members/19_nishkal.webp",
+        "image": "19_nishkal.webp",
         "name": "Nishkal Prakash",
         "roll": "19CS91R05",
         "records":
@@ -1928,7 +1928,7 @@
         ]
     },
     {
-        "image": "../assets/members/22_anand.webp",
+        "image": "22_anand.webp",
         "name": "Anand Malav Rameshchandra",
         "roll": "22CS10008",
         "records":
@@ -1941,7 +1941,7 @@
         ]
     },
     {
-        "image": "../assets/members/22_vipin.webp",
+        "image": "22_vipin.webp",
         "name": "Vipin Kaushik",
         "roll": "22CH30035",
         "records":
@@ -1954,7 +1954,7 @@
         ]
     },
     {
-        "image": "../assets/members/22_soumil.webp",
+        "image": "22_soumil.webp",
         "name": "Soumil Maiti",
         "roll": "22ME10082",
         "records":
@@ -1967,7 +1967,7 @@
         ]
     },
     {
-        "image": "../assets/members/22_hardik.webp",
+        "image": "22_hardik.webp",
         "name": "Hardik Bhardwaj",
         "roll": "22AE10011",
         "records":
@@ -1980,7 +1980,7 @@
         ]
     },
     {
-        "image": "../assets/members/22_sahil.webp",
+        "image": "22_sahil.webp",
         "name": "Sahil Patel",
         "roll": "22NA30028",
         "records":
@@ -1993,7 +1993,7 @@
         ]
     },
     {
-        "image": "../assets/members/22_saroja.webp",
+        "image": "22_saroja.webp",
         "name": "Saroja Bamra",
         "roll": "22HS10048",
         "records":
@@ -2006,7 +2006,7 @@
         ]
     },
     {
-        "image": "../assets/members/22_dishant.webp",
+        "image": "22_dishant.webp",
         "name": "Dishant Bothra",
         "roll": "22MT30014",
         "records":
@@ -2019,7 +2019,7 @@
         ]
     },
     {
-        "image": "../assets/members/22_snehansh.webp",
+        "image": "22_snehansh.webp",
         "name": "Snehansh Sen",
         "roll": "22BT30026",
         "records":
@@ -2032,7 +2032,7 @@
         ]
     },
     {
-        "image": "../assets/members/22_vishu.webp",
+        "image": "22_vishu.webp",
         "name": "Vishu Gour",
         "roll": "22EX10049",
         "records":
@@ -2045,7 +2045,7 @@
         ]
     },
     {
-        "image": "../assets/members/22_dibya.webp",
+        "image": "22_dibya.webp",
         "name": "Dibya Ranjan Samal",
         "roll": "22BT10007",
         "records":
@@ -2058,7 +2058,7 @@
         ]
     },
     {
-        "image": "../assets/members/21_kushagra.webp",
+        "image": "21_kushagra.webp",
         "name": "Kushagra Kuntal",
         "roll": "21MI10032",
         "records":
@@ -2071,7 +2071,7 @@
         ]
     },
     {
-        "image": "../assets/members/22_piyush.webp",
+        "image": "22_piyush.webp",
         "name": "Piyush Agarwal",
         "roll": "22ME10063",
         "records":
@@ -2084,7 +2084,7 @@
         ]
     },
     {
-        "image": "../assets/members/22_anustup.webp",
+        "image": "22_anustup.webp",
         "name": "Anustup Hazra",
         "roll": "22EC10015",
         "records":
@@ -2097,7 +2097,7 @@
         ]
     },
     {
-        "image": "../assets/members/22_ritobroto.webp",
+        "image": "22_ritobroto.webp",
         "name": "Ritobroto Kalita",
         "roll": "22ME10070",
         "records":
@@ -2110,7 +2110,7 @@
         ]
     },
     {
-        "image": "../assets/members/21_snehal.webp",
+        "image": "21_snehal.webp",
         "name": "Snehal Mishra",
         "roll": "21IM10036",
         "records":
@@ -2123,7 +2123,7 @@
         ]
     },
     {
-        "image": "../assets/members/22_sagarika.webp",
+        "image": "22_sagarika.webp",
         "name": "Sagarika Debnath",
         "roll": "22NA30027",
         "records":
@@ -2136,7 +2136,7 @@
         ]
     },
     {
-        "image": "../assets/members/22_jai.webp",
+        "image": "22_jai.webp",
         "name": "Jai Sachdev",
         "roll": "22BT10011",
         "records":
@@ -2149,7 +2149,7 @@
         ]
     },
     {
-        "image": "../assets/members/22_vedanta.webp",
+        "image": "22_vedanta.webp",
         "name": "Vedanta Hazra",
         "roll": "22MA10068",
         "records":
@@ -2162,7 +2162,7 @@
         ]
     },
     {
-        "image": "../assets/members/22_neha.webp",
+        "image": "22_neha.webp",
         "name": "Neha Narayankar",
         "roll": "22PH10033",
         "records":
@@ -2175,7 +2175,7 @@
         ]
     },
     {
-        "image": "../assets/members/21_kapil.webp",
+        "image": "21_kapil.webp",
         "name": "Kapil Kumar Meena",
         "roll": "21EE100XX",
         "records":
@@ -2188,7 +2188,7 @@
         ]
     },
     {
-        "image": "../assets/members/22_arhana.webp",
+        "image": "22_arhana.webp",
         "name": "Arhana Jain",
         "roll": "22PH10009",
         "records":
@@ -2201,7 +2201,7 @@
         ]
     },
     {
-        "image": "../assets/members/22_gracy.webp",
+        "image": "22_gracy.webp",
         "name": "Gracy Debbarma",
         "roll": "22MA10026",
         "records":
