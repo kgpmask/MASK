@@ -284,8 +284,8 @@ function handler (app, nunjEnv) {
 		return res.renderFile('members.njk', {
 			membersObj,
 			membersTitle,
-			prev: yearName - 1 >= 2020 ? `${yearName - 1}-${yearName % 100}` : undefined,
-			next: yearName + 1 <= 2022 ? `${yearName + 1}-${yearName % 100 + 2}` : undefined });
+			prev: yearName - 1 >= 2020 && !PARAMS.mongoless ? `${yearName - 1}-${yearName % 100}` : undefined,
+			next: yearName + 1 <= 2022 && !PARAMS.mongoless ? `${yearName + 1}-${yearName % 100 + 2}` : undefined });
 	});
 
 
