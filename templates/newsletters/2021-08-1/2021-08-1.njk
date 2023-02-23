@@ -1,0 +1,359 @@
+{% extends "_newsletter.njk" %}
+
+{% set pagetitle = 'August - Issue 1' %}
+
+{# {% set pages = ['01','02','03','04','05','06','wordsearch','crossword'] %} #}
+
+
+{% block prescript %}
+	<script>
+		"use strict";
+		const crossMatrix = [['-','-','-',' ','-','-','-',' ','-','-','-','-','-','-','-'],[' ',' ',' ',' ','-','-','-',' ','-',' ',' ',' ',' ',' ',' '],['-','-','-',' ',' ',' ',' ',' ','-','-','-','-',' ','-','-'],['-','-','-',' ','-','-','-',' ','-','-',' ','-',' ','-','-'],['-','-','-',' ','-','-','-',' ',' ',' ',' ',' ',' ','-','-'],['-','-','-','-','-','-','-','-','-','-',' ','-',' ','-','-'],['-','-','-','-','-','-','-','-','-','-',' ','-','-','-','-'],['-','-','-','-','-','-','-',' ','-','-',' ','-','-','-','-'],['-','-','-','-',' ',' ',' ',' ',' ',' ',' ','-','-','-','-'],['-','-','-','-',' ','-','-',' ','-','-','-','-','-','-','-'],['-','-','-','-',' ','-','-',' ','-','-','-','-','-','-','-'],['-','-','-','-',' ','-','-',' ','-','-','-','-','-','-','-'],['-','-','-','-',' ','-','-','-','-','-','-','-','-','-','-'],['-','-','-','-',' ','-','-','-','-','-','-','-','-','-','-'],['-','-','-','-',' ','-','-','-','-','-','-','-','-','-','-']];
+
+		const wordMatrix = `M X A R O K R I M T X O K N K G S Q R Y Y N T
+		H W K D Q M L Y P W C O A S U R B F J L R H M
+		T I U A Z D I D F E S Q L S R P B R R P G F T
+		L V M I D N I G H T N Y L O O X P E S R M S H
+		J T A H Y R D F Q V B Y F T G Q B M E E H K G
+		X R M J H A L Y H H J L O N I G C H G S F W I
+		I Z V L F O C M O Z Q R R E R U P D I E U A M
+		B E S T J E A N I S T N O M I P B S D N R H L
+		B F R O R O G E K B N H N E U C F Y V T C N L
+		N O I T T M E R I B N Z E C W G E W H M O N A
+		V Z K A Z Q B I M R C O M P R E S S U I N K O
+		B G N I K A R A G I H S A R U M O T Q C D F G
+		D A B I V C Q S W A W U V F Y I H H I T U H F
+		I B N M W R W K E S D S M R O V A E D N E B R
+		I W D A E H R E S A R E Q N U O H U D A Z M S
+		L I R Y U K Y U P Z D K Q L U X R J U X A B U`.replace(/\t/g, '').split("\n").map(line => line.split(" "));
+
+		const letterSpaces = [];
+
+		(() => {
+			const maxDimension = Math.max(crossMatrix.length, crossMatrix[0].length);
+			const root = document.querySelector(':root');
+			root.style.setProperty('--crossword-cell-size', (40 * 10 / maxDimension - 4) + "px");
+			root.style.setProperty('--crossword-font-size', (10 / maxDimension) ** (1 / 2) + "em");
+			crossMatrix.forEach((row, i) => {
+				row.forEach((char, j) => {
+					if (char === ' ') letterSpaces.push([i, j]);
+				});
+			});
+			root.style.setProperty('--wordsearch-padding', (100 * wordMatrix.length / wordMatrix[0].length) + '%');
+			root.style.setProperty('--wordsearch-cell-height', (100 / wordMatrix.length) + '%');
+			root.style.setProperty('--wordsearch-cell-width', (100 / wordMatrix[0].length) + '%');
+		})();
+
+
+	</script>
+{% endblock %}
+
+{% block letterjs %}
+	<script type="text/javascript">
+
+		const tempWords = `ALL FOR ONE\nALL MIGHT\nBEST JEANIST\nCEMENTOSS\nDABI\nENDEAVOR\nERASER HEAD\nHAWKS\nKUROGIRI\nMIDNIGHT\nMIRKO\nMR COMPRESS\nPRESENT MIC\nRYUKYU\nTOMURA SHIGARAKI`.split("\n").map(word => word.replace(/\t/g, '')), words = tempWords.map(word => word.replace(/[ ]/g, '').toUpperCase());
+
+		const wordRows = wordMatrix.length;
+		const wordCols = wordMatrix[0].length;
+
+		let wordFound = [];
+
+		let wordClick = false;
+
+		function startWord () {
+			let max = Math.max(wordRows, wordCols);
+			let size = 40 * 10 / max - 3 + "px";
+			let fontsize = (10 / max) ** (1 / 2) + "em";
+			let mytablebody = document.getElementById("wordsearch-table");
+
+			for (let i = 0; i < wordRows; i++) {
+				let mycurrent_row = document.createElement("tr");
+
+				for (let j = 0; j < wordCols; j++) {
+					let mycurrent_cell = document.createElement("td");
+					mycurrent_cell.classList.add("wordsearch-cell");
+					mycurrent_cell.setAttribute("id", `wordsearch-cell-${i}-${j}`);
+					mycurrent_cell.setAttribute("data-posI", i);
+					mycurrent_cell.setAttribute("data-posJ", j);
+					/*mycurrent_cell.style.width = size;
+					mycurrent_cell.style.minWidth = size;
+					mycurrent_cell.style.height = size;
+					mycurrent_cell.style.maxHeight = size;
+					mycurrent_cell.style.fontSize = fontsize;*/
+					let currenttext = document.createTextNode(wordMatrix[i][j]);
+					mycurrent_cell.addEventListener("click", function (event) {
+						if (wordClick) {
+							const start = wordClick;
+							const final = [~~this.getAttribute("data-posI"), ~~this.getAttribute("data-posJ")];
+							wordClick = false;
+							if (start[0] === final[0] && start[1] === final[1]) return; //same position
+							if (start[0] === final[0] || start[1] === final[1] || (Math.abs(start[0] - final[0]) === Math.abs(start[1] - final[1]))) {
+								let word = "";
+								let offsets = [Math.sign(final[0] - start[0]), Math.sign(final[1] - start[1])];
+								for (let [i, j] = start; (i !== final[0] || j !== final[1]); [i += offsets[0], j += offsets[1]]) word += wordMatrix[i][j];
+								word += wordMatrix[final[0]][final[1]];
+								console.log(word);
+								if (words.includes(word) && !wordFound.includes(word)) {
+									wordFound.push(word);
+									document.getElementById(`wordsearch-word-${word.toLowerCase()}`).classList.add("found-word");
+									if (words.length === wordFound.length) {
+										mytablebody.id = "table-complete";
+										const wordsList = document.getElementById('wordsearch-words');
+										wordsList.style.animation = "fadeOut 1.5s";
+										wordsList.style.opacity = 0.1;
+										setTimeout(function () {
+											document.getElementById(`wordsearch`).innerHTML = `<div class="wordsearch-complete">Completed!</div>`;
+										}, 1500);
+									}
+								}
+							}
+							return; // invalid
+						}
+						else {
+							wordClick = [~~this.getAttribute("data-posI"), ~~this.getAttribute("data-posJ")];
+						}
+					}, false);
+					mycurrent_cell.addEventListener("mouseover", function (event) {
+						if (wordClick) {
+							const start = wordClick;
+							const final = [~~this.getAttribute("data-posI"), ~~this.getAttribute("data-posJ")];
+							if (start[0] === final[0] && start[1] === final[1]) return; //same position
+							if (start[0] === final[0] || start[1] === final[1] || (Math.abs(start[0] - final[0]) === Math.abs(start[1] - final[1]))) {
+								let offsets = [Math.sign(final[0] - start[0]), Math.sign(final[1] - start[1])];
+								for (let [i, j] = start; (i !== final[0] + offsets[0] || j !== final[1] + offsets[1]); [i += offsets[0], j += offsets[1]]) {
+									let tempCell = document.getElementById(`wordsearch-cell-${i}-${j}`);
+									tempCell.classList.add("wordsearchCellS");
+								}
+							}
+						}
+						event.target.classList.add("wordsearchCellH");
+					}, false);
+					mycurrent_cell.addEventListener("mouseleave", function (event) {
+						for (let i = 0; i < wordRows; i++) {
+							for (let j = 0; j < wordCols; j++) {
+								let tempCell = document.getElementById(`wordsearch-cell-${i}-${j}`);
+								tempCell.classList.remove("wordsearchCellH");
+								tempCell.classList.remove("wordsearchCellS");
+							}
+						}
+					}, false);
+					mycurrent_cell.appendChild(currenttext);
+					mycurrent_row.appendChild(mycurrent_cell);
+				}
+				mytablebody.appendChild(mycurrent_row);
+			}
+
+			let colnum = Math.ceil(words.length / 5);
+			let wordArea = document.getElementById("wordsearch-words");
+			wordArea.innerHTML = tempWords.map(word => `<div id="wordsearch-word-${word.replace(/[ \t]/g, '').toLowerCase()}" class="wordsearch-word">${word}</div>`).join("");
+		}
+	</script>
+	<script>
+		"use strict";
+
+		const crossRows = crossMatrix.length;
+		const crossCols = crossMatrix[0].length;
+
+		const crossFound = crossMatrix.map(row => row.map(() => '-'));
+
+		let crossClick = false;
+		let crossDir = false; // 1234 NESW
+		let crosswordVis = false;
+
+		function startCross () {
+			let mytablebody = document.getElementById("crossword-table");
+
+			for (let i = 0; i < crossRows; i++) {
+				let mycurrent_row = document.createElement("tr");
+
+				for (let j = 0; j < crossCols; j++) {
+					let mycurrent_cell = document.createElement("td");
+					if (crossMatrix[i][j] === "-") {
+						mycurrent_cell.classList.add("crossword-cell-blank");
+						mycurrent_cell.setAttribute("data-cell", "");
+					} else {
+						mycurrent_cell.classList.add("crossword-cell");
+						mycurrent_cell.setAttribute("data-cell", "1");
+						if (((!i || crossMatrix[i - 1][j] === '-') && crossMatrix[i + 1][j] !== '-') || ((!j || crossMatrix[i][j - 1] === '-') && crossMatrix[i][j + 1] !== '-')) {
+							mycurrent_cell.classList.add('crossword-count');
+						}
+					}
+					mycurrent_cell.setAttribute("id", `crossword-cell-${i}-${j}`);
+					mycurrent_cell.setAttribute("data-posI", i);
+					mycurrent_cell.setAttribute("data-posJ", j);
+					mycurrent_cell.addEventListener("click", function (event) {
+						for (let i = 0; i < crossRows; i++) {
+							for (let j = 0; j < crossCols; j++) {
+								let tempCell = document.getElementById(`crossword-cell-${i}-${j}`);
+								tempCell.classList.remove("crosswordCellH");
+								tempCell.classList.remove("crosswordCellS");
+							}
+						}
+						crossClick = [~~this.getAttribute("data-posI"), ~~this.getAttribute("data-posJ")];
+						if (crossMatrix[crossClick[0]][crossClick[1]] === "-") crossClick = false;
+						else event.target.classList.add("crosswordCellH");
+					}, false);
+					mycurrent_row.appendChild(mycurrent_cell);
+				}
+				mytablebody.appendChild(mycurrent_row);
+			}
+			document.addEventListener('keydown', function (e) {
+				if (!crosswordVis) return;
+				if (crossClick) {
+					if ((e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 97 && e.keyCode <= 122)) {
+						let tempCell = document.getElementById(`crossword-cell-${crossClick[0]}-${crossClick[1]}`);
+						let currenttext = String.fromCharCode(e.keyCode).toUpperCase();
+						tempCell.innerHTML = currenttext;
+						crossFound[crossClick[0]][crossClick[1]] = currenttext;
+						// check if crossword is completed
+						if (!letterSpaces.find(([i, j]) => crossFound[i][j] === '-')) {
+							axios.post(`/checker/2021-08-1/crossword`, crossFound).then(res => {
+								if (res.data) {
+									mytablebody.classList.add("table-complete-cross");
+									setTimeout(function () {
+										document.getElementById(`crossword`).innerHTML = `<div class="crossword-complete">Completed!</div>`;
+									}, 1600);
+								}
+							}).catch(err => console.log(err));
+						}
+						const nexts = [];
+						(() => {
+							const a = crossClick;
+							nexts.push({ c: [a[0] + 1, a[1]], d: 3 });
+							nexts.push({ c: [a[0], a[1] + 1], d: 2 });
+							if (crossDir) {
+								const o = [null, [-1, 0], [0, 1], [1, 0], [0, -1]][crossDir];
+								nexts.unshift({ c: [a[0] + o[0], a[1] + o[1]], d: crossDir });
+							}
+						})();
+						return nexts.find(coords => {
+							const cell = document.getElementById(`crossword-cell-${coords.c[0]}-${coords.c[1]}`);
+							if (cell && cell.getAttribute("data-cell")) {
+								crossClick = coords.c;
+								crossDir = coords.d;
+								for (let i = 0; i < crossRows; i++) {
+									for (let j = 0; j < crossCols; j++) {
+										let tempCell = document.getElementById(`crossword-cell-${i}-${j}`);
+										tempCell.classList.remove("crosswordCellH");
+										tempCell.classList.remove("crosswordCellS");
+									}
+								}
+								cell.classList.add('crosswordCellH');
+								return true;
+							}
+						});
+					}
+					if (e.keyCode >= 37 && e.keyCode <= 40) {
+						const offsets = {
+							'37': [0, -1],
+							'38': [-1, 0],
+							'39': [0, +1],
+							'40': [+1, 0]
+						}, keyDir = {
+							'37': 4,
+							'38': 1,
+							'39': 2,
+							'40': 3
+						};
+						e.preventDefault();
+						const next = document.getElementById(`crossword-cell-${crossClick[0] + offsets[e.keyCode][0]}-${crossClick[1] + offsets[e.keyCode][1]}`);
+						if (next && next.getAttribute("data-cell")) {
+							crossClick[0] += offsets[e.keyCode][0];
+							crossClick[1] += offsets[e.keyCode][1];
+							for (let i = 0; i < crossRows; i++) {
+								for (let j = 0; j < crossCols; j++) {
+									let tempCell = document.getElementById(`crossword-cell-${i}-${j}`);
+									tempCell.classList.remove("crosswordCellH");
+									tempCell.classList.remove("crosswordCellS");
+								}
+							}
+							next.classList.add("crosswordCellH");
+							crossDir = keyDir[e.keyCode];
+							return;
+						}
+					}
+					if ([8, 46].includes(e.keyCode)) {
+						document.getElementById(`crossword-cell-${crossClick[0]}-${crossClick[1]}`).innerHTML = '';
+						crossFound[crossClick[0]][crossClick[1]] = '-';
+					}
+				}
+			});
+			new IntersectionObserver(([crossword]) => {
+				if (crossword.isIntersecting && crossword.intersectionRatio > 0.8) {
+					crosswordVis = true;
+				} else {
+					crosswordVis = false;
+				}
+			}, { threshold: [0.99] }).observe(document.getElementById('crossword-table'));
+
+			const clues = [];
+			clues.push(`3. No. of siblings that Tanjiro has
+			4. Name of stone Hashira (Pillar)
+			6. Name of Upper Moon Three
+			8. Current leader of Demon Slayer Corps
+			10. Former water Hashira (Pillar)`.replace(/\t/g, '').split('\n').map(line => line.split(/\. (.*)/)));
+			clues.push(`1. Breathing style that Inosuke uses
+			2. Colour of Tanjiro's nichirin blade
+			5. First demon ever
+			7. Hashira with green nichirin blade
+			9. Last name of Shinobu
+			10. Type of bird that Zenitsu has`.replace(/\t/g, '').split('\n').map(line => line.split(/\. (.*)/)));
+
+			document.getElementById('crossword-left').innerHTML = `<h3>Across</h3><br/><table class="cross-words">${clues[0].map(clue => `<tr><td>${clue[0]}</td><td>${clue[1]}</td></tr>`).join('')}</table>`;
+			document.getElementById('crossword-right').innerHTML = `<h3>Down</h3><br/><table class="cross-words">${clues[1].map(clue => `<tr><td>${clue[0]}</td><td>${clue[1]}</td></tr>`).join('')}</table>`;
+		}
+	</script>
+	<script>
+		window.onload = () => {
+			startWord();
+			startCross();
+		}
+	</script>
+{% endblock %}
+
+{% block lettercss %}
+	<style>
+		:root {
+			--navy        : #0e1b45;
+			--deep-purple : #392352;
+			--wine        : #f73f75;
+			--violet      : #7c2f64;
+			--pink        : #f04dc8;
+			--purple      : #c03ebb;
+		}
+		.page {
+			color: var(--deep-purple);
+		}
+		#cover-page {
+			background-image: url(/assets/releases/2021-08-1/cover.webp);
+			background-position: center;
+			background-size: contain;
+			background-repeat: no-repeat;
+			background-color: rgba(0, 0, 0, 0) !important;
+		}
+		.article-full, .article-half, #crossword-left, #crossword-right {
+			scrollbar-color: var(--purple) var(--off-white) !important;
+		}
+		.article-full > h2, .article-half > h2, .article-header {
+			text-shadow: 0 0 2px var(--wine) !important;
+		}
+		{# .article-end {
+			background-color: var(--purple);
+		} #}
+		.wordsearchCellS {
+			background-color: var(--wine) !important;
+		}
+		.found-word {
+			color: var(--wine) !important;
+		}
+		.wordsearch-complete, .crossword-complete {
+			color: var(--wine) !important;
+		}
+		.spoiler:before {
+			color: var(--wine);
+			background: var(--light-pink);
+		}
+	</style>
+	<link rel="stylesheet" type="text/css" href="/assets/styles/wordsearch.css"/>
+	<link rel="stylesheet" type="text/css" href="/assets/styles/crossword.css"/>
+{% endblock %}

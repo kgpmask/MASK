@@ -1,6 +1,7 @@
 const axios = require('axios');
 const crypto = require('crypto');
 const fs = require('fs').promises;
+const fss = require('fs');
 const { restart } = require('nodemon');
 const { render } = require('nunjucks');
 const path = require('path');
@@ -210,12 +211,12 @@ function handler (app, nunjEnv) {
 			const years = {};
 			letters.sort();
 			letters.forEach(letter => {
-				const [year, month, num] = letter.slice(0, -4).split('-');
+				const [year, month, num] = letter.split('-');
 				if (!years[year]) years[year] = { title: year, months: {} };
 				if (!years[year].months[~~month]) years[year].months[~~month] = { title: months[~~month], issues: [] };
 				years[year].months[~~month].issues.push({
 					title: ['-', 'First', 'Second', 'Special'][~~num],
-					href: letter.slice(0, -4)
+					href: letter
 				});
 			});
 			const renderYears = Object.values(years);
@@ -227,14 +228,19 @@ function handler (app, nunjEnv) {
 			});
 			if (target === 'random') {
 				const referer = req.headers.referer?.split('/').pop();
-				const randLetter = letters.filter(letter => letter.slice(0, -4) !== referer).random().slice(0, -4);
+				const randLetter = letters.filter(letter => letter !== referer).random();
 				return res.redirect(`/newsletters/${randLetter}`);
 			}
-			const index = letters.indexOf(target + '.njk');
+			const index = letters.indexOf(target);
 			if (index === -1) return res.notFound('newsletters_404.njk', { years: renderYears.reverse() });
-			const filepath = ['newsletters', letters[index]];
-			const adjs = [letters[index - 1]?.slice(0, -4), letters[index + 1]?.slice(0, -4), letters[index].slice(0, -4)];
-			return res.renderFile(filepath, { adjs });
+			const filepath = ['newsletters', letters[index], letters[index] + '.njk'];
+			const adjs = [letters[index - 1], letters[index + 1], letters[index]];
+			const pages = fss.readdirSync(
+				path.join(__dirname, '../templates/newsletters', target))
+				.filter(file => !file.endsWith('.njk')
+				);
+
+			return res.renderFile(filepath, { adjs, pages, target });
 		}).catch(err => {
 			console.log(err);
 			return res.notFound();

@@ -1,0 +1,193 @@
+{% extends "_newsletter.njk" %}
+
+{% set pagetitle = 'September - Issue 2' %}
+
+{% set pdf = '2021-09-2/issue.pdf' %}
+
+
+{% block prescript %}
+	<script>
+		"use strict";
+		const wordMatrix = `N J O Z B D D E E H R V L L U
+			U Y R V N T M E E K I L E P K
+			K J Z I E I B U K E Y H L S N
+			I G M R L R O T I T N H O J E
+			R P E I P L L A T T R T U I S
+			I S A C E F T O R Q F T C L M
+			T U T L F K R B R O J N H D K
+			O I B C V V Y W P D S C V N G
+			P S Y C H O P A S S U W Y M S
+			P O B E B Y O B W O C N Y F Q
+			H U G N W O R C Y T L I U G S`.replace(/\t/g, '').split("\n").map(line => line.split(" "));
+		const letterSpaces = [];
+		(() => {
+			const root = document.querySelector(':root');
+			root.style.setProperty('--wordsearch-padding', (100 * wordMatrix.length / wordMatrix[0].length) + '%');
+			root.style.setProperty('--wordsearch-cell-height', (100 / wordMatrix.length) + '%');
+			root.style.setProperty('--wordsearch-cell-width', (100 / wordMatrix[0].length) + '%');
+		})();
+	</script>
+{% endblock %}
+
+{% block letterjs %}
+	<script>
+		function validateQuiz (index, which) {
+			const selected = document.querySelector(`input[name="imgselect${which}${index}"]:checked`);
+			if (!selected) return;
+			axios.post(`/checker/2021-09-2/quiz${which}`, { index: index }).then(correct => {
+				console.log(correct);
+				const correctLabel = document.querySelector(`label[for="${which}-${index}-${correct.data}"]`);
+				correctLabel.classList.add('correct-quiz-image');
+			}).catch(console.log);
+		}
+	</script>
+	<script type="text/javascript">
+		const tempWords = `OVERLORD\nKIRITO\nEMILIA\nJOHN TITOR\nSORA\nSENKU\nLELOUCH\nPSYCHO-PASS\nCOWBOY BEBOP\nGUILTY CROWN`.split("\n").map(word => word.replace(/\t/g, '')), words = tempWords.map(word => word.replace(/[ -]/g, '').toUpperCase());
+		const wordRows = wordMatrix.length;
+		const wordCols = wordMatrix[0].length;
+		let wordFound = [];
+		let wordClick = false;
+		function startWord () {
+			let max = Math.max(wordRows, wordCols);
+			let size = 40 * 10 / max - 3 + "px";
+			let fontsize = (10 / max) ** (1 / 2) + "em";
+			let mytablebody = document.getElementById("wordsearch-table");
+			for (let i = 0; i < wordRows; i++) {
+				let mycurrent_row = document.createElement("tr");
+				for (let j = 0; j < wordCols; j++) {
+					let mycurrent_cell = document.createElement("td");
+					mycurrent_cell.classList.add("wordsearch-cell");
+					mycurrent_cell.setAttribute("id", `wordsearch-cell-${i}-${j}`);
+					mycurrent_cell.setAttribute("data-posI", i);
+					mycurrent_cell.setAttribute("data-posJ", j);
+					/*mycurrent_cell.style.width = size;
+					mycurrent_cell.style.minWidth = size;
+					mycurrent_cell.style.height = size;
+					mycurrent_cell.style.maxHeight = size;
+					mycurrent_cell.style.fontSize = fontsize;*/
+					let currenttext = document.createTextNode(wordMatrix[i][j]);
+					mycurrent_cell.addEventListener("click", function (event) {
+						if (wordClick) {
+							const start = wordClick;
+							const final = [~~this.getAttribute("data-posI"), ~~this.getAttribute("data-posJ")];
+							wordClick = false;
+							if (start[0] === final[0] && start[1] === final[1]) return; //same position
+							if (start[0] === final[0] || start[1] === final[1] || (Math.abs(start[0] - final[0]) === Math.abs(start[1] - final[1]))) {
+								let word = "";
+								let offsets = [Math.sign(final[0] - start[0]), Math.sign(final[1] - start[1])];
+								for (let [i, j] = start; (i !== final[0] || j !== final[1]); [i += offsets[0], j += offsets[1]]) word += wordMatrix[i][j];
+								word += wordMatrix[final[0]][final[1]];
+								console.log(word);
+								if (words.includes(word) && !wordFound.includes(word)) {
+									wordFound.push(word);
+									document.getElementById(`wordsearch-word-${word.toLowerCase()}`).classList.add("found-word");
+									if (words.length === wordFound.length) {
+										mytablebody.id = "table-complete";
+										const wordsList = document.getElementById('wordsearch-words');
+										wordsList.style.animation = "fadeOut 1.5s";
+										wordsList.style.opacity = 0.1;
+										setTimeout(function () {
+											document.getElementById(`wordsearch`).innerHTML = `<div class="wordsearch-complete">Completed!</div>`;
+										}, 1500);
+									}
+								}
+							}
+							return; // invalid
+						}
+						else {
+							wordClick = [~~this.getAttribute("data-posI"), ~~this.getAttribute("data-posJ")];
+						}
+					}, false);
+					mycurrent_cell.addEventListener("mouseover", function (event) {
+						if (wordClick) {
+							const start = wordClick;
+							const final = [~~this.getAttribute("data-posI"), ~~this.getAttribute("data-posJ")];
+							if (start[0] === final[0] && start[1] === final[1]) return; //same position
+							if (start[0] === final[0] || start[1] === final[1] || (Math.abs(start[0] - final[0]) === Math.abs(start[1] - final[1]))) {
+								let offsets = [Math.sign(final[0] - start[0]), Math.sign(final[1] - start[1])];
+								for (let [i, j] = start; (i !== final[0] + offsets[0] || j !== final[1] + offsets[1]); [i += offsets[0], j += offsets[1]]) {
+									let tempCell = document.getElementById(`wordsearch-cell-${i}-${j}`);
+									tempCell.classList.add("wordsearchCellS");
+								}
+							}
+						}
+						event.target.classList.add("wordsearchCellH");
+					}, false);
+					mycurrent_cell.addEventListener("mouseleave", function (event) {
+						for (let i = 0; i < wordRows; i++) {
+							for (let j = 0; j < wordCols; j++) {
+								let tempCell = document.getElementById(`wordsearch-cell-${i}-${j}`);
+								tempCell.classList.remove("wordsearchCellH");
+								tempCell.classList.remove("wordsearchCellS");
+							}
+						}
+					}, false);
+					mycurrent_cell.appendChild(currenttext);
+					mycurrent_row.appendChild(mycurrent_cell);
+				}
+				mytablebody.appendChild(mycurrent_row);
+			}
+			let colnum = Math.ceil(words.length / 5);
+			let wordArea = document.getElementById("wordsearch-words");
+			wordArea.innerHTML = tempWords.map(word => `<div id="wordsearch-word-${word.replace(/[ \t-]/g, '').toLowerCase()}" class="wordsearch-word">${word}</div>`).join("");
+		}
+	</script>
+	<script>
+		window.onload = () => {
+			startWord();
+		}
+	</script>
+{% endblock %}
+
+{% block lettercss %}
+	<style>
+		:root {
+			--black-blue   : #121920;
+			--dark-blue    : #112f3f;
+			--teal         : #006280;
+			--dirty-green  : #4d5843;
+			--dirty-yellow : #a98135;
+		}
+		.page {
+			color: var(--dark-blue);
+		}
+		#cover-page {
+			background-image: url(/assets/releases/2021-09-2/cover.webp);
+			background-position: center;
+			background-size: contain;
+			background-repeat: no-repeat;
+			background-color: rgba(0, 0, 0, 0) !important;
+		}
+		.article-full, .article-half, #crossword-left, #crossword-right {
+			scrollbar-color: var(--teal) var(--off-white) !important;
+		}
+		.article-full > h2, .article-half > h2, .article-header {
+			text-shadow: 0 0 2px var(--teal) !important;
+		}
+		{# .article-end {
+			background-color: var(--dirty-green);
+		} #}
+		.wordsearchCellS {
+			background-color: var(--dirty-yellow) !important;
+		}
+		.found-word {
+			color: var(--teal) !important;
+		}
+		.wordsearch-complete {
+			color: var(--teal) !important;
+		}
+		.spoiler:before {
+			color: var(--teal);
+			background: var(--dirty-yellow);
+		}
+		.correct-quiz-image {
+			color: #228C22;
+			font-weight: bold;
+		}
+		.quiz-button {
+			padding: 10px;
+			background-color: rgba(0, 0, 0, 0.2);
+		}
+	</style>
+	<link rel="stylesheet" type="text/css" href="/assets/styles/wordsearch.css"/>
+{% endblock %}
