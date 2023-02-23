@@ -159,6 +159,26 @@ function handler (app, nunjEnv) {
 				position: 'Former Member'
 			},
 			{
+				name: 'Nishkal Prakash',
+				roll: '19CS91R05',
+				image: '../assets/members/19_nishkal.webp',
+				teams: [
+					{
+						name: 'AMV & Music',
+						icon: 'amv'
+					},
+					{
+						name: 'Design & Arts',
+						icon: 'design'
+					},
+					{
+						name: 'WebDev',
+						icon: 'webdev'
+					}
+				],
+				position: 'Research Associate'
+			},
+			{
 				name: 'Parth Mane',
 				roll: '19MF10022',
 				image: '../assets/members/19_parth.webp',
