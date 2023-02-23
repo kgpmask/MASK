@@ -1,5 +1,83 @@
 [
     {
+        "image": "../assets/members/21_yaman.webp",
+        "name": "Yaman Meena",
+        "roll": "21IE10044",
+        "records":
+        [
+            {
+                "year": 2021,
+                "position": "Fresher",
+                "teams": ["a"]
+            }
+        ]
+    },
+    {
+        "image": "../assets/members/21_suraj.webp",
+        "name": "Suraj Pati",
+        "roll": "21EC30050",
+        "records":
+        [
+            {
+                "year": 2021,
+                "position": "Fresher",
+                "teams": ["a"]
+            }
+        ]
+    },
+    {
+        "image": "../assets/members/21_risabh_prasad.webp",
+        "name": "Rishabh Prasad",
+        "roll": "21XX00000",
+        "records":
+        [
+            {
+                "year": 2021,
+                "position": "Fresher",
+                "teams": ["d"]
+            }
+        ]
+    },
+    {
+        "image": "../assets/members/21_risabh.webp",
+        "name": "Rishabh Mishra",
+        "roll": "21XX00000",
+        "records":
+        [
+            {
+                "year": 2021,
+                "position": "Fresher",
+                "teams": ["a"]
+            }
+        ]
+    },
+    {
+        "image": "../assets/members/21_manasvi.webp",
+        "name": "Manasvi Rathore",
+        "roll": "21HS10025",
+        "records":
+        [
+            {
+                "year": 2021,
+                "position": "Fresher",
+                "teams": ["d"]
+            }
+        ]
+    },
+    {
+        "image": "../assets/members/21_abhinav_v.webp",
+        "name": "Abhinav V Pillai",
+        "roll": "21ME10004",
+        "records":
+        [
+            {
+                "year": 2021,
+                "position": "Fresher",
+                "teams": ["a"]
+            }
+        ]
+    },
+    {
         "image": "../assets/members/18_aishik.webp",
         "name": "Aishik Mandal",
         "roll": "18EC3AI21",
@@ -1519,7 +1597,7 @@
     {
         "image": "../assets/members/21_shreya.webp",
         "name": "Shreya Rajvanshi",
-        "roll": "21XXXXXXX",
+        "roll": "21PP00064",
         "records":
         [
             {
