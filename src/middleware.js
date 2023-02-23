@@ -23,10 +23,12 @@ module.exports = function setMiddleware (app) {
 		}));
 		app.use(passport.authenticate('session'));
 
-		app.use(csrf());
 		app.use((req, res, next) => {
-			res.locals.csrfToken = req.csrfToken();
-			next();
+			if (req.url !== '/git-hook') {
+				csrf()(req, res, next);
+				res.locals.csrfToken = req.csrfToken();
+			} else next();
+			// git-hook ignores CSRF
 		});
 
 		login.init();

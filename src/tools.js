@@ -1,3 +1,6 @@
+const childProcess = require('child_process');
+const util = require('util');
+
 exports.deepClone = function deepClone (aObject) {
 	if (!aObject) return aObject;
 	const bObject = Array.isArray(aObject) ? [] : {};
@@ -123,6 +126,21 @@ exports.levenshteinDamerau = function levenshteinDamerau (str1, str2, weights) {
 
 	dist = column[len2];
 	return dist;
+};
+
+exports.shell = async function exec (command) {
+	const { stdout, stderr } = await util.promisify(childProcess.exec)(command);
+	if (stderr) throw stderr;
+	return stdout.trim();
+};
+
+exports.updateCode = async function () {
+	const shell = exports.shell;
+	const gitFetch = await shell(`git fetch $(git rev-parse --symbolic-full-name --abbrev-ref @{upstream} | sed 's!/! !')`);
+	// Look I know it looks scary, but we only need to ever pull the current branch!
+	const gitMerge = await shell(`git merge FETCH_HEAD`);
+	const npmInstall = await shell('npm install');
+	return { gitFetch, gitMerge, npmInstall };
 };
 
 

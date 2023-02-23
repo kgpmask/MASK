@@ -1,7 +1,7 @@
 const assert = require('assert');
 const axios = require('axios');
 const server = require('../src/mask.js');
-const { PORT } = require('../src/config.js');
+const PORT = 42069;
 
 const pages = ['', 'home', 'art', 'videos', 'events', 'about', 'members', 'submissions'];
 
