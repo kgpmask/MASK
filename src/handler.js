@@ -1,9 +1,9 @@
 const axios = require('axios');
 const crypto = require('crypto');
 const fs = require('fs').promises;
-const fss = require('fs');
 const { restart } = require('nodemon');
 const { render } = require('nunjucks');
+const { resolve } = require('path');
 const path = require('path');
 
 const checker = require('./checker.js');
@@ -235,12 +235,12 @@ function handler (app, nunjEnv) {
 			if (index === -1) return res.notFound('newsletters_404.njk', { years: renderYears.reverse() });
 			const filepath = ['newsletters', letters[index], letters[index] + '.njk'];
 			const adjs = [letters[index - 1], letters[index + 1], letters[index]];
-			const pages = fss.readdirSync(
-				path.join(__dirname, '../templates/newsletters', target))
-				.filter(file => !file.endsWith('.njk')
-				);
+			fs.readdir(
+				path.join(__dirname, '../templates/newsletters', target)).then(files => {
+				const pages = files.filter(file => !file.endsWith('.njk'));
+				return res.renderFile(filepath, { adjs, pages, target });
+			});
 
-			return res.renderFile(filepath, { adjs, pages, target });
 		}).catch(err => {
 			console.log(err);
 			return res.notFound();
