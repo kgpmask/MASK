@@ -1,1 +1,7 @@
-**/node_modules
+# Docker only needs the config files
+
+# Exclude everything...
+*
+
+# ...except the config files!
+!/src/*-credentials.json

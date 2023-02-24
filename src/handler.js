@@ -96,7 +96,7 @@ function handler (app, nunjEnv) {
 			name: 'Art - Tanjiro Kamado',
 			link: '0025.webp',
 			type: 'art',
-			attr: [ 'Sanjeev Raj Ganji' ],
+			attr: ['Sanjeev Raj Ganji'],
 			date: new Date(1630261800000),
 			hype: true
 		}];
@@ -394,13 +394,57 @@ function handler (app, nunjEnv) {
 		// TODO: Rename this to /quiz/success
 		return res.renderFile('events/quiz_success.njk');
 	});
+	// Live master endpoint
+	app.get('/live-master', async (req, res) => {
+		if (PARAMS.dev) {
+			// TODO: In the future, set a 'daily' script to run at midnight and update a process.env.LIVE_QUIZ parameter
+			const quiz = await dbh.getLiveQuiz('2022-11-12');
+			// if (!quiz) return res.renderFile('events/quizzes_404.njk', { message: `The quiz hasn't started, yet!` });
+			const QUIZ = quiz.questions;
 
+			return res.renderFile('events/live_master.njk', {
+				quiz: JSON.stringify(QUIZ),
+				qAmt: QUIZ.length,
+				id: 'live',
+				dev: PARAMS.dev
+			});
+		} else {
+			return res.renderFile('events/quizzes_404.njk', { message: `STOP SNOOPING AROUND!` });
+		}
+	});
+	app.post('/live-master', async (req, res) => {
+		if (PARAMS.dev) {
+			// LQ keeps track of which question is currently being asked
+			if (!handlerContext.liveQuiz) handlerContext.liveQuiz = {};
+			const LQ = handlerContext.liveQuiz;
+			const quiz = await dbh.getLiveQuiz('2022-11-12');
+			const QUIZ = quiz.questions;
+			// console.log(req.body);
+			const { currentQ, options } = req.body;
+
+			const time = { '10': 20, '5': 15, '3': 12 }[QUIZ[currentQ].points];
+			io.sockets.in('waiting-for-live-quiz').emit('question', { currentQ, options, time });
+			setTimeout(() => {
+				const type = QUIZ[currentQ].options.type;
+				const solution = QUIZ[currentQ].solution;
+				setTimeout(() => io.sockets.in('waiting-for-live-quiz').emit('answer', {
+					answer: Array.isArray(solution) ? solution.join(' / ') : solution,
+					type
+				}), 2000); // Emit the actual event 3s after
+			}, 1000 * (time + 1)); // Extra second to account for lag
+			LQ.currentQ = req.body.currentQ;
+			LQ.endTime = Date.now() + 1000 * (time + 1);
+			res.send('Done');
+		} else {
+			return res.renderFile('events/quizzes_404.njk', { message: `STOP SNOOPING AROUND!` });
+		}
+	});
 	app.get('/live', async (req, res) => {
 		if (!req.loggedIn) {
 			if (!PARAMS.userless) req.session.returnTo = req.url;
 			return res.renderFile('events/quiz_login.njk');
 		}
-		const quiz = await dbh.getLiveQuiz(PARAMS.dev);
+		const quiz = await dbh.getLiveQuiz(PARAMS.dev ? '2022-11-12' : false);
 		if (!quiz) return res.renderFile('events/quizzes_404.njk', { message: `The quiz hasn't started, yet!` });
 		const QUIZ = quiz.questions;
 		const user = await dbh.getUser(req.user._id);
@@ -424,37 +468,34 @@ function handler (app, nunjEnv) {
 		}
 		if (!handlerContext.liveQuiz) handlerContext.liveQuiz = {};
 		const LQ = handlerContext.liveQuiz;
-		const quiz = await dbh.getLiveQuiz(PARAMS.dev);
+		const quiz = await dbh.getLiveQuiz(PARAMS.dev ? '2022-11-12' : false);
 		const QUIZ = quiz.questions;
 		const user = await dbh.getUser(req.user._id);
 		if (user.permissions?.includes('quizmaster')) {
-			const quizTime = { '10': 20, '5': 15, '3': 12 }[QUIZ[req.body.currentQ].points];
-			io.sockets.in('waiting-for-live-quiz').emit('question', {
-				currentQ: req.body.currentQ,
-				options: req.body.options,
-				time: quizTime
-			});
+			const { currentQ, options } = req.body;
+			const time = { '10': 20, '5': 15, '3': 12 }[QUIZ[currentQ].points];
+			io.sockets.in('waiting-for-live-quiz').emit('question', { currentQ, options, time });
 			setTimeout(() => {
-				const type = QUIZ[req.body.currentQ].options.type;
-				const solution = QUIZ[req.body.currentQ].solution;
+				const type = QUIZ[currentQ].options.type;
+				const solution = QUIZ[currentQ].solution;
 				setTimeout(() => io.sockets.in('waiting-for-live-quiz').emit('answer', {
 					answer: Array.isArray(solution) ? solution.join(' / ') : solution,
 					type
 				}), 2000); // Emit the actual event 3s after
-			}, 1000 * (quizTime + 1)); // Extra second to account for lag
+			}, 1000 * (time + 1)); // Extra second to account for lag
 			LQ.currentQ = req.body.currentQ;
-			LQ.endTime = Date.now() + 1000 * (quizTime + 1);
+			LQ.endTime = Date.now() + 1000 * (time + 1);
 			res.send('Done');
 		} else {
 			const answer = req.body.submittedAnswer;
-			if (answer === '') throw new Error('Missing answer');
+			if (answer === '') return res.error('Missing answer');
 			const currentQ = LQ.currentQ ?? - 1;
 			const Q = QUIZ[currentQ];
-			if (!Q) throw new Error('currentQ out of bounds');
+			if (!Q) return res.error('currentQ out of bounds');
 			const time = Math.round((LQ.endTime - Date.now()) / 1000);
-			if (time < 0) throw new Error('Too late!');
+			if (time < 0) return res.error('Too late!');
 			const alreadySubmitted = await dbh.getLiveResult(user._id, quiz.title, currentQ);
-			if (alreadySubmitted) throw new Error('Already attempted this question!');
+			if (alreadySubmitted) return res.error('Already attempted this question!');
 			const { points, timeLeft } = await checker.checkLiveQuiz(answer, Q.solution, Q.options.type, Q.points, time);
 			const result = points
 				? points < Q.points ? 'partial' : 'correct'
