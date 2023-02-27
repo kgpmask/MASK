@@ -4,13 +4,14 @@
 	"description": "Website for MASK",
 	"main": "./src/index.js",
 	"scripts": {
+		"start": "node src/mask.js",
 		"dev": "nodemon src/mask.js dev",
 		"du": "nodemon src/mask.js du",
 		"dm": "nodemon src/mask.js dm",
 		"lint": "eslint . --config .eslintrc.json --ext .js",
-		"start": "node src/mask.js",
 		"test": "npm run lint && npx mocha test --exit && echo \"Passing all tests.\" && exit 0",
-		"prepare": "husky install"
+		"prepare": "husky install",
+		"docker": "bash ./docker/docker.sh"
 	},
 	"repository": {
 		"type": "git",
