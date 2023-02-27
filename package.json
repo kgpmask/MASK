@@ -15,7 +15,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/mask-tech/MASK.git"
+		"url": "git+https://github.com/kgpmask/MASK.git"
 	},
 	"keywords": [
 		"MASK"
@@ -23,9 +23,9 @@
 	"author": "PartMan7",
 	"license": "MPL-2.0",
 	"bugs": {
-		"url": "https://github.com/mask-tech/MASK/issues"
+		"url": "https://github.com/kgpmask/MASK/issues"
 	},
-	"homepage": "https://github.com/mask-tech/MASK#readme",
+	"homepage": "https://github.com/kgpmask/MASK#readme",
 	"dependencies": {
 		"axios": "^0.21.1",
 		"connect-mongo": "^4.6.0",
