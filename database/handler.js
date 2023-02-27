@@ -108,20 +108,20 @@ function getPosts (postType) {
 async function getMembersbyYear (year) {
 	const data = await Member.find({ 'records.year': year }).sort('name').lean();
 	const yearData = [];
-	const teamsData = require("../src/teams.json");
+	const teamsData = require('../src/teams.json');
 	data.forEach(member => {
 		const rec = member.records.find(rec => rec.year === year);
 		let pos;
 		yearData.push({
 			name: member.name,
 			roll: member.roll,
-			image: "../assets/members/" + member.image,
+			image: '../assets/members/' + member.image,
 			teams: rec.teams.map(teamID => {
 				const team = {
 					name: teamsData[year][teamID[0]].name,
 					icon: teamsData[year][teamID[0]].icon
 				};
-				team.icon += teamID[1] === 'H' ? !(pos = "H") || "-head" : teamID[1] === 'S' ? !(pos = "S") || "-sub" : '';
+				team.icon += teamID[1] === 'H' ? !(pos = 'H') || '-head' : teamID[1] === 'S' ? !(pos = 'S') || '-sub' : '';
 				return team;
 			}),
 			position: pos ? rec.position === 'Governor' ? rec.position : pos === 'H' ? 'Team Heads' : 'Team Sub-Heads' : rec.position
