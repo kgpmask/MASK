@@ -5,5 +5,6 @@ RUN git clone https://github.com/kgpmask/MASK.git --depth 1 --single-branch --br
 WORKDIR /MASK
 COPY src/admin-credentials.json src/credentials.json
 RUN npm install
+ENV SITE_URL='https://kgpmask.club'
 CMD ["npm", "start", "prod"]
 EXPOSE 6969
