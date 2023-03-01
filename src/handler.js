@@ -727,6 +727,8 @@ function handler (app, nunjEnv) {
 	});
 	app.use((req, res) => {
 		// Catch-all 404
+		// bringing back the good ol' gag called 404... so...
+		console.log('404... so...');
 		res.notFound();
 	});
 }
