@@ -1,0 +1,110 @@
+
+<div class="page">
+	<div class="article-full">
+		<h2>Isekai Quiz</h2>
+		<br/>
+		<div class="article-author">By: Arjit Lohia</div>
+		{# <div class="article-end"></div> #}
+		{% set quizlets = [
+			{
+				q: 'Which anime is this location from?<br/><img src="/assets/releases/2021-09-2/quizlet1.webp" style="max-height:40vh;max-width:70%"><br/>',
+				opts: [
+					'Kenja no Mago',
+					'Konosuba',
+					'Tate no Yuusha',
+					'Overlord'
+				]
+			}, {
+				q: 'Who is the youngest of the 4 True Dragons? [Tensura]',
+				opts: [
+					'Veldora',
+					'Velzard',
+					'Velgrynd',
+					'Veldanava'
+				]
+			}, {
+				q: 'How old was Rimuru when he died in the human world?',
+				opts: [
+					'28',
+					'31',
+					'37',
+					'42'
+				]
+			}, {
+				q: 'Who is the guardian of the treasury at the tomb of Nazarick? [Overlord]',
+				opts: [
+					'Shalltear Bloodfallen',
+					"Pandora's Actor",
+					'Albedo',
+					'Sebas Tian'
+				]
+			}, {
+				q: 'What is the real name of Darkness? [Konosuba]',
+				opts: [
+					'Darkness',
+					'Dustiness Ford Latina',
+					'Dustiness Ford Lativa',
+					'Dustiness Ford Lalatina'
+				]
+			}, {
+				q: 'What is the name of Kirito’s black sword? [SAO]',
+				opts: [
+					'Dark Repulser',
+					'Elucidator',
+					'Anneal Blade',
+					'Lambent Light'
+				]
+			}, {
+				q: 'Jibril belongs to which race? [NGNL]',
+				opts: [
+					'Elf',
+					'Warbeast',
+					'Flugel',
+					'Imanity'
+				]
+			}, {
+				q: 'Who is this character?<br/><img src="/assets/releases/2021-09-2/quizlet2.webp" style="max-height:40vh;max-width:70%"><br/>',
+				opts: [
+					'Opera',
+					'Kalego Naberius',
+					'Andro Jazz',
+					'Alice Asmodeus'
+				]
+			}, {
+				q: 'Which of these is not a cardinal hero? [Tate no Yuusha]',
+				opts: [
+					'L’Arc Berg Sickle',
+					'Motoyasu Kitamura',
+					'Ren Amaki',
+					'Naofumi Iwatani'
+				]
+			}, {
+				q: 'Who is this beast girl? [Seirei Gensouki]<br/><img src="/assets/releases/2021-09-2/quizlet3.webp" style="max-height:40vh;max-width:70%"><br/>',
+				opts: [
+					'Raphtalia',
+					'Leone',
+					'Latifa',
+					'Blair'
+				]
+			}
+		] %}
+		{% for img in quizlets %}
+			{% set index = loop.index %}
+			{{ img.q | safe}}
+			<br/><br/>
+			{% for opt in img.opts %}
+				<table class="anime-ratings quiz-opts">
+					<tr>
+						<td class="quiz-opt"><input type="radio" id="2-{{ index }}-{{ loop.index }}" name="imgselect2{{ index }}" value="{{ opt }}"/></td>
+						<td><label for="2-{{ index }}-{{ loop.index }}">{{ opt }}</label>{{ '<br/>' | safe if not loop.last }}</td>
+					</tr>
+				</table>
+			{% endfor %}
+			<br/>
+			<button onclick="validateQuiz({{ index }}, 2)" class="quiz-button">Check!</button>
+			{# {% if not loop.last %} #}
+				<div class="article-end"></div>
+			{# {% endif %} #}
+		{% endfor %}
+	</div>
+</div>

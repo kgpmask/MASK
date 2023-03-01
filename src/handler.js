@@ -235,9 +235,8 @@ function handler (app, nunjEnv) {
 			if (index === -1) return res.notFound('newsletters_404.njk', { years: renderYears.reverse() });
 			const filepath = ['newsletters', letters[index], letters[index] + '.njk'];
 			const adjs = [letters[index - 1], letters[index + 1], letters[index]];
-			fs.readdir(
-				path.join(__dirname, '../templates/newsletters', target)).then(files => {
-				const pages = files.filter(file => !file.endsWith('.njk'));
+			fs.readdir(path.join(__dirname, '../templates/newsletters', target)).then(files => {
+				const pages = files.filter(file => file.includes('#'));
 				return res.renderFile(filepath, { adjs, pages, target });
 			});
 
