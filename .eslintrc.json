@@ -7,6 +7,9 @@
 		"ecmaVersion": 14
 	},
 	"rules": {
+		"array-bracket-newline": ["error", { "multiline": true }],
+		"array-bracket-spacing": ["error", "never"],
+		"array-element-newline": ["error", "consistent", { "multiline": true }],
 		"arrow-spacing": "error",
 		"block-spacing": "error",
 		"brace-style": "error",
@@ -26,11 +29,13 @@
 		"no-extra-semi": "error",
 		"no-extra-parens": "error",
 		"no-mixed-spaces-and-tabs": "error",
+		"no-multi-spaces": "error",
 		"no-tabs": 0,
 		"no-trailing-spaces": "error",
 		"no-unreachable": 2,
 		"no-unused-expressions": "error",
 		"no-var": "error",
+		"object-curly-newline": ["error", { "consistent": true, "multiline": true }],
 		"object-curly-spacing": ["error", "always"],
 		"prefer-const": ["error", {
 			"ignoreReadBeforeAssign": true
