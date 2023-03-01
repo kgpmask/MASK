@@ -70,6 +70,33 @@
 	color: #e8ce3d;
 }
 
+.icon-design-sub:before {
+	content: "\e900";
+	color: #30b868;
+}
+.icon-newsletter-sub:before {
+	content: "\e907";
+	color: #30b868;
+}
+.icon-amv-sub:before {
+	content: "\e913";
+	color: #30b868;
+}
+.icon-quiz-sub:before {
+	content: "☑";
+	font-size: 1.3em;
+	color: #30b868;
+}
+.icon-webdev-sub:before {
+	content: "\ea80";
+	color: #30b868;
+}
+
+.icon-music-sub:before {
+	content: "\e911";
+	color: #30b868;
+}
+
 .icon-download:before {
 	content: "\e933";
 }

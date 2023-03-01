@@ -4,10 +4,11 @@ const path = require('path');
 const aliases = {
 	d: 'dev',
 	l: 'local',
-	p: 'prod',
-	u: 'userless',
 	m: 'mongoless',
-	q: 'quiz'
+	p: 'prod',
+	q: 'quiz',
+	u: 'userless',
+	t: 'test'
 };
 const validParams = ['dev', 'local', 'prod', 'mongoless', 'userless', 'quiz', 'test'];
 if (!global.PARAMS) {
@@ -33,7 +34,9 @@ exports.init = () => {
 		process.exit(1);
 	} else if (PARAMS.mongoless) PARAMS.userless = true; // mongoless is a superset!
 	try {
-		const file = fs.readFileSync(path.join(__dirname, 'credentials.json'), 'utf8');
+		const credentialsFile = process.env.CREDS ? `${process.env.CREDS}-credentials.json` : 'credentials.json';
+		// Allow easy-switching between config files by running (for example) `CREDS=github npm start`
+		const file = fs.readFileSync(path.join(__dirname, credentialsFile), 'utf8');
 		if (file) {
 			const env = JSON.parse(file);
 			for (const key in env) {

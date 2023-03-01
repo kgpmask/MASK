@@ -1,20 +1,21 @@
 {
 	"name": "mask",
-	"version": "3.1.0",
+	"version": "3.1.1",
 	"description": "Website for MASK",
 	"main": "./src/index.js",
 	"scripts": {
+		"start": "node src/mask.js",
 		"dev": "nodemon src/mask.js dev",
 		"du": "nodemon src/mask.js du",
 		"dm": "nodemon src/mask.js dm",
 		"lint": "eslint . --config .eslintrc.json --ext .js",
-		"start": "node src/mask.js",
-		"test": "npm run lint && npx mocha test --timeout 3000 && echo \"Passing all tests.\" && exit 0",
-		"prepare": "husky install"
+		"test": "npm run lint && mocha test --exit && echo \"Passing all tests.\" && exit 0",
+		"prepare": "husky install",
+		"docker": "bash ./docker/docker.sh"
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/mask-tech/MASK.git"
+		"url": "git+https://github.com/kgpmask/MASK.git"
 	},
 	"keywords": [
 		"MASK"
@@ -22,9 +23,9 @@
 	"author": "PartMan7",
 	"license": "MPL-2.0",
 	"bugs": {
-		"url": "https://github.com/mask-tech/MASK/issues"
+		"url": "https://github.com/kgpmask/MASK/issues"
 	},
-	"homepage": "https://github.com/mask-tech/MASK#readme",
+	"homepage": "https://github.com/kgpmask/MASK#readme",
 	"dependencies": {
 		"axios": "^0.21.1",
 		"connect-mongo": "^4.6.0",

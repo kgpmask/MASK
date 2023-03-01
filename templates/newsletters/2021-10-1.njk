@@ -1,4 +1,4 @@
-{% extends "_newsletter.njk" %}
+{% extends '_newsletter.njk' %}
 
 {% set pagetitle = 'October - Issue 1' %}
 
@@ -155,8 +155,8 @@
 
 {% block prescript %}
 	<script>
-		"use strict";
-		const crossMatrix = [[" "," "," "," "," "," "," "," "," "," "," ","-","-","-"],[" ","-"," ","-","-","-","-","-","-","-","-","-","-","-"],[" ","-"," ","-","-"," ","-","-","-","-","-"," ","-","-"],[" ","-"," ","-","-"," ","-","-"," "," "," "," "," ","-"],["-","-"," ","-","-"," ","-","-","-","-","-"," ","-","-"],["-"," "," "," "," "," "," "," "," "," "," "," ","-","-"],["-","-"," ","-","-"," ","-","-","-","-","-"," ","-","-"],[" "," "," "," "," "," "," "," "," "," "," "," ","-","-"],[" ","-"," ","-","-"," ","-","-","-"," ","-"," ","-"," "],[" ","-","-","-","-"," ","-","-","-"," ","-","-","-"," "],[" ","-"," "," "," "," ","-"," ","-"," "," "," "," "," "],["-","-","-","-","-"," "," "," "," ","-","-","-","-"," "],["-","-","-","-","-","-","-","-","-","-","-","-","-"," "]];
+		'use strict';
+		const crossMatrix = [[' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','-','-','-'],[' ','-',' ','-','-','-','-','-','-','-','-','-','-','-'],[' ','-',' ','-','-',' ','-','-','-','-','-',' ','-','-'],[' ','-',' ','-','-',' ','-','-',' ',' ',' ',' ',' ','-'],['-','-',' ','-','-',' ','-','-','-','-','-',' ','-','-'],['-',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','-','-'],['-','-',' ','-','-',' ','-','-','-','-','-',' ','-','-'],[' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','-','-'],[' ','-',' ','-','-',' ','-','-','-',' ','-',' ','-',' '],[' ','-','-','-','-',' ','-','-','-',' ','-','-','-',' '],[' ','-',' ',' ',' ',' ','-',' ','-',' ',' ',' ',' ',' '],['-','-','-','-','-',' ',' ',' ',' ','-','-','-','-',' '],['-','-','-','-','-','-','-','-','-','-','-','-','-',' ']];
 		const wordMatrix = `P E T E L G E U S E O U L V A R
 			R F R B M T W U O T P K L M C G
 			I E U A E K R Z S K U M A I H A
@@ -165,13 +165,13 @@
 			I X W U I E L R S I Z U O R B I
 			L A S C L T E U I X R V R O Y E
 			L H K L E M F S A C P O L M A L
-			A S A M K A I L I M E K B I Y S`.replace(/\t/g, '').split("\n").map(line => line.split(" "));
+			A S A M K A I L I M E K B I Y S`.replace(/\t/g, '').split('\n').map(line => line.split(' '));
 		const letterSpaces = [];
 		(() => {
 			const maxDimension = Math.max(crossMatrix.length, crossMatrix[0].length);
 			const root = document.querySelector(':root');
-			root.style.setProperty('--crossword-cell-size', (40 * 10 / maxDimension - 4) + "px");
-			root.style.setProperty('--crossword-font-size', (10 / maxDimension) ** (1 / 2) + "em");
+			root.style.setProperty('--crossword-cell-size', (40 * 10 / maxDimension - 4) + 'px');
+			root.style.setProperty('--crossword-font-size', (10 / maxDimension) ** (1 / 2) + 'em');
 			crossMatrix.forEach((row, i) => {
 				row.forEach((char, j) => {
 					if (char === ' ') letterSpaces.push([i, j]);
@@ -186,49 +186,49 @@
 
 {% block letterjs %}
 	<script type="text/javascript">
-		const tempWords = `BEATRICE\nCRUSCH\nEMILIA\nFELIX\nFELT\nGARFIEL\nPETELGEUSE\nPRISCILLA\nPUCK\nRAM\nREM\nROM\nROSWALL\nSATELLA\nSUBARU`.split("\n").map(word => word.replace(/\t/g, '')), words = tempWords.map(word => word.replace(/[ ]/g, '').toUpperCase());
+		const tempWords = `BEATRICE\nCRUSCH\nEMILIA\nFELIX\nFELT\nGARFIEL\nPETELGEUSE\nPRISCILLA\nPUCK\nRAM\nREM\nROM\nROSWALL\nSATELLA\nSUBARU`.split('\n').map(word => word.replace(/\t/g, '')), words = tempWords.map(word => word.replace(/[ ]/g, '').toUpperCase());
 		const wordRows = wordMatrix.length;
 		const wordCols = wordMatrix[0].length;
 		let wordFound = [];
 		let wordClick = false;
 		function startWord () {
 			let max = Math.max(wordRows, wordCols);
-			let size = 40 * 10 / max - 3 + "px";
-			let fontsize = (10 / max) ** (1 / 2) + "em";
-			let mytablebody = document.getElementById("wordsearch-table");
+			let size = 40 * 10 / max - 3 + 'px';
+			let fontsize = (10 / max) ** (1 / 2) + 'em';
+			let mytablebody = document.getElementById('wordsearch-table');
 			for (let i = 0; i < wordRows; i++) {
-				let mycurrent_row = document.createElement("tr");
+				let mycurrent_row = document.createElement('tr');
 				for (let j = 0; j < wordCols; j++) {
-					let mycurrent_cell = document.createElement("td");
-					mycurrent_cell.classList.add("wordsearch-cell");
-					mycurrent_cell.setAttribute("id", `wordsearch-cell-${i}-${j}`);
-					mycurrent_cell.setAttribute("data-posI", i);
-					mycurrent_cell.setAttribute("data-posJ", j);
-					/*mycurrent_cell.style.width = size;
-					mycurrent_cell.style.minWidth = size;
-					mycurrent_cell.style.height = size;
-					mycurrent_cell.style.maxHeight = size;
-					mycurrent_cell.style.fontSize = fontsize;*/
-					let currenttext = document.createTextNode(wordMatrix[i][j]);
-					mycurrent_cell.addEventListener("click", function (event) {
+					const myCurrentCell = document.createElement('td');
+					myCurrentCell.classList.add('wordsearch-cell');
+					myCurrentCell.setAttribute('id', `wordsearch-cell-${i}-${j}`);
+					myCurrentCell.setAttribute('data-posI', i);
+					myCurrentCell.setAttribute('data-posJ', j);
+					/*myCurrentCell.style.width = size;
+					myCurrentCell.style.minWidth = size;
+					myCurrentCell.style.height = size;
+					myCurrentCell.style.maxHeight = size;
+					myCurrentCell.style.fontSize = fontsize;*/
+					let currentText = document.createTextNode(wordMatrix[i][j]);
+					myCurrentCell.addEventListener('click', function (event) {
 						if (wordClick) {
 							const start = wordClick;
-							const final = [~~this.getAttribute("data-posI"), ~~this.getAttribute("data-posJ")];
+							const final = [~~this.getAttribute('data-posI'), ~~this.getAttribute('data-posJ')];
 							wordClick = false;
 							if (start[0] === final[0] && start[1] === final[1]) return; //same position
 							if (start[0] === final[0] || start[1] === final[1] || (Math.abs(start[0] - final[0]) === Math.abs(start[1] - final[1]))) {
-								let word = "";
+								let word = '';
 								let offsets = [Math.sign(final[0] - start[0]), Math.sign(final[1] - start[1])];
 								for (let [i, j] = start; (i !== final[0] || j !== final[1]); [i += offsets[0], j += offsets[1]]) word += wordMatrix[i][j];
 								word += wordMatrix[final[0]][final[1]];
 								console.log(word);
 								if (words.includes(word) && !wordFound.includes(word)) {
 									wordFound.push(word);
-									document.getElementById(`wordsearch-word-${word.toLowerCase()}`).classList.add("found-word");
+									document.getElementById(`wordsearch-word-${word.toLowerCase()}`).classList.add('found-word');
 									if (words.length === wordFound.length) {
-										mytablebody.id = "table-complete";
+										mytablebody.id = 'table-complete';
 										const wordsList = document.getElementById('wordsearch-words');
-										wordsList.style.animation = "fadeOut 1.5s";
+										wordsList.style.animation = 'fadeOut 1.5s';
 										wordsList.style.opacity = 0.1;
 										setTimeout(function () {
 											document.getElementById(`wordsearch`).innerHTML = `<div class="wordsearch-complete">Completed!</div>`;
@@ -239,45 +239,45 @@
 							return; // invalid
 						}
 						else {
-							wordClick = [~~this.getAttribute("data-posI"), ~~this.getAttribute("data-posJ")];
+							wordClick = [~~this.getAttribute('data-posI'), ~~this.getAttribute('data-posJ')];
 						}
 					}, false);
-					mycurrent_cell.addEventListener("mouseover", function (event) {
+					myCurrentCell.addEventListener('mouseover', function (event) {
 						if (wordClick) {
 							const start = wordClick;
-							const final = [~~this.getAttribute("data-posI"), ~~this.getAttribute("data-posJ")];
+							const final = [~~this.getAttribute('data-posI'), ~~this.getAttribute('data-posJ')];
 							if (start[0] === final[0] && start[1] === final[1]) return; //same position
 							if (start[0] === final[0] || start[1] === final[1] || (Math.abs(start[0] - final[0]) === Math.abs(start[1] - final[1]))) {
 								let offsets = [Math.sign(final[0] - start[0]), Math.sign(final[1] - start[1])];
 								for (let [i, j] = start; (i !== final[0] + offsets[0] || j !== final[1] + offsets[1]); [i += offsets[0], j += offsets[1]]) {
 									let tempCell = document.getElementById(`wordsearch-cell-${i}-${j}`);
-									tempCell.classList.add("wordsearchCellS");
+									tempCell.classList.add('wordsearchCellS');
 								}
 							}
 						}
-						event.target.classList.add("wordsearchCellH");
+						event.target.classList.add('wordsearchCellH');
 					}, false);
-					mycurrent_cell.addEventListener("mouseleave", function (event) {
+					myCurrentCell.addEventListener('mouseleave', function (event) {
 						for (let i = 0; i < wordRows; i++) {
 							for (let j = 0; j < wordCols; j++) {
 								let tempCell = document.getElementById(`wordsearch-cell-${i}-${j}`);
-								tempCell.classList.remove("wordsearchCellH");
-								tempCell.classList.remove("wordsearchCellS");
+								tempCell.classList.remove('wordsearchCellH');
+								tempCell.classList.remove('wordsearchCellS');
 							}
 						}
 					}, false);
-					mycurrent_cell.appendChild(currenttext);
-					mycurrent_row.appendChild(mycurrent_cell);
+					myCurrentCell.appendChild(currentText);
+					mycurrent_row.appendChild(myCurrentCell);
 				}
 				mytablebody.appendChild(mycurrent_row);
 			}
 			let colnum = Math.ceil(words.length / 5);
-			let wordArea = document.getElementById("wordsearch-words");
-			wordArea.innerHTML = tempWords.map(word => `<div id="wordsearch-word-${word.replace(/[ \t]/g, '').toLowerCase()}" class="wordsearch-word">${word}</div>`).join("");
+			let wordArea = document.getElementById('wordsearch-words');
+			wordArea.innerHTML = tempWords.map(word => `<div id="wordsearch-word-${word.replace(/[ \t]/g, '').toLowerCase()}" class="wordsearch-word">${word}</div>`).join('');
 		}
 	</script>
 	<script>
-		"use strict";
+		'use strict';
 		const crossRows = crossMatrix.length;
 		const crossCols = crossMatrix[0].length;
 		const crossFound = crossMatrix.map(row => row.map(() => '-'));
@@ -285,37 +285,37 @@
 		let crossDir = false; // 1234 NESW
 		let crosswordVis = false;
 		function startCross () {
-			let mytablebody = document.getElementById("crossword-table");
+			let mytablebody = document.getElementById('crossword-table');
 			for (let i = 0; i < crossRows; i++) {
-				let mycurrent_row = document.createElement("tr");
+				let mycurrent_row = document.createElement('tr');
 				for (let j = 0; j < crossCols; j++) {
-					let mycurrent_cell = document.createElement("td");
-					if (crossMatrix[i][j] === "-") {
-						mycurrent_cell.classList.add("crossword-cell-blank");
-						mycurrent_cell.setAttribute("data-cell", "");
+					let myCurrentCell = document.createElement('td');
+					if (crossMatrix[i][j] === '-') {
+						myCurrentCell.classList.add('crossword-cell-blank');
+						myCurrentCell.setAttribute('data-cell', '');
 					} else {
-						mycurrent_cell.classList.add("crossword-cell");
-						mycurrent_cell.setAttribute("data-cell", "1");
+						myCurrentCell.classList.add('crossword-cell');
+						myCurrentCell.setAttribute('data-cell', '1');
 						if (((!i || crossMatrix[i - 1][j] === '-') && crossMatrix[i + 1] && crossMatrix[i + 1][j] === ' ') || ((!j || crossMatrix[i][j - 1] === '-') && crossMatrix[i][j + 1] === ' ')) {
-							mycurrent_cell.classList.add('crossword-count');
+							myCurrentCell.classList.add('crossword-count');
 						}
 					}
-					mycurrent_cell.setAttribute("id", `crossword-cell-${i}-${j}`);
-					mycurrent_cell.setAttribute("data-posI", i);
-					mycurrent_cell.setAttribute("data-posJ", j);
-					mycurrent_cell.addEventListener("click", function (event) {
+					myCurrentCell.setAttribute('id', `crossword-cell-${i}-${j}`);
+					myCurrentCell.setAttribute('data-posI', i);
+					myCurrentCell.setAttribute('data-posJ', j);
+					myCurrentCell.addEventListener('click', function (event) {
 						for (let i = 0; i < crossRows; i++) {
 							for (let j = 0; j < crossCols; j++) {
 								let tempCell = document.getElementById(`crossword-cell-${i}-${j}`);
-								tempCell.classList.remove("crosswordCellH");
-								tempCell.classList.remove("crosswordCellS");
+								tempCell.classList.remove('crosswordCellH');
+								tempCell.classList.remove('crosswordCellS');
 							}
 						}
-						crossClick = [~~this.getAttribute("data-posI"), ~~this.getAttribute("data-posJ")];
-						if (crossMatrix[crossClick[0]][crossClick[1]] === "-") crossClick = false;
-						else event.target.classList.add("crosswordCellH");
+						crossClick = [~~this.getAttribute('data-posI'), ~~this.getAttribute('data-posJ')];
+						if (crossMatrix[crossClick[0]][crossClick[1]] === '-') crossClick = false;
+						else event.target.classList.add('crosswordCellH');
 					}, false);
-					mycurrent_row.appendChild(mycurrent_cell);
+					mycurrent_row.appendChild(myCurrentCell);
 				}
 				mytablebody.appendChild(mycurrent_row);
 			}
@@ -324,14 +324,14 @@
 				if (crossClick) {
 					if ((e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 97 && e.keyCode <= 122)) {
 						let tempCell = document.getElementById(`crossword-cell-${crossClick[0]}-${crossClick[1]}`);
-						let currenttext = String.fromCharCode(e.keyCode).toUpperCase();
-						tempCell.innerHTML = currenttext;
-						crossFound[crossClick[0]][crossClick[1]] = currenttext;
+						let currentText = String.fromCharCode(e.keyCode).toUpperCase();
+						tempCell.innerHTML = currentText;
+						crossFound[crossClick[0]][crossClick[1]] = currentText;
 						// check if crossword is completed
 						if (!letterSpaces.find(([i, j]) => crossFound[i][j] === '-')) {
-							axios.post(`/checker/2021-10-1/crossword`, crossFound).then(res => {
+							axios.post(`/checker/2021-09-1/crossword`, crossFound).then(res => {
 								if (res.data) {
-									mytablebody.classList.add("table-complete-cross");
+									mytablebody.classList.add('table-complete-cross');
 									setTimeout(function () {
 										document.getElementById(`crossword`).innerHTML = `<div class="crossword-complete">Completed!</div>`;
 									}, 1600);
@@ -350,14 +350,14 @@
 						})();
 						return nexts.find(coords => {
 							const cell = document.getElementById(`crossword-cell-${coords.c[0]}-${coords.c[1]}`);
-							if (cell && cell.getAttribute("data-cell")) {
+							if (cell && cell.getAttribute('data-cell')) {
 								crossClick = coords.c;
 								crossDir = coords.d;
 								for (let i = 0; i < crossRows; i++) {
 									for (let j = 0; j < crossCols; j++) {
 										let tempCell = document.getElementById(`crossword-cell-${i}-${j}`);
-										tempCell.classList.remove("crosswordCellH");
-										tempCell.classList.remove("crosswordCellS");
+										tempCell.classList.remove('crosswordCellH');
+										tempCell.classList.remove('crosswordCellS');
 									}
 								}
 								cell.classList.add('crosswordCellH');
@@ -379,17 +379,17 @@
 						};
 						e.preventDefault();
 						const next = document.getElementById(`crossword-cell-${crossClick[0] + offsets[e.keyCode][0]}-${crossClick[1] + offsets[e.keyCode][1]}`);
-						if (next && next.getAttribute("data-cell")) {
+						if (next && next.getAttribute('data-cell')) {
 							crossClick[0] += offsets[e.keyCode][0];
 							crossClick[1] += offsets[e.keyCode][1];
 							for (let i = 0; i < crossRows; i++) {
 								for (let j = 0; j < crossCols; j++) {
 									let tempCell = document.getElementById(`crossword-cell-${i}-${j}`);
-									tempCell.classList.remove("crosswordCellH");
-									tempCell.classList.remove("crosswordCellS");
+									tempCell.classList.remove('crosswordCellH');
+									tempCell.classList.remove('crosswordCellS');
 								}
 							}
-							next.classList.add("crosswordCellH");
+							next.classList.add('crosswordCellH');
 							crossDir = keyDir[e.keyCode];
 							return;
 						}
