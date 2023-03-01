@@ -727,7 +727,6 @@ function handler (app, nunjEnv) {
 	});
 	app.use((req, res) => {
 		// Catch-all 404
-		console.log("404... so...");
 		res.notFound();
 	});
 }

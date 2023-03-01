@@ -149,8 +149,7 @@
 				timeLeft--;
 				if (timeLeft >= 0) {
 					setTimeout(decrement, 1000);
-				}
-				else {
+				} else {
 					nextButton.disabled = !(currentQ < qAmt - 1);
 					prevButton.disabled = !(currentQ > 0);
 					document.getElementById('count').style.display = 'none';
@@ -175,7 +174,7 @@
 			// Re-enable navigation buttons 2s AFTER timer ends
 			const quizTime = { '10': 20, '5': 15, '3': 12 }[quiz[currentQ].points];
 			startButton.disabled = true;
-			axios.post('/live{{ "-master" if dev else "" }}', { options: quiz[currentQ].options, currentQ }).then(() => {
+			axios.post('/live{{ '-master' if dev else '' }}', { options: quiz[currentQ].options, currentQ }).then(() => {
 				timer(quizTime);
 				startedQs.push(currentQ);
 			});

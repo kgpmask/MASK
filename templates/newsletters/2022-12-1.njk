@@ -1,4 +1,4 @@
-{% extends "_newsletter.njk" %}
+{% extends '_newsletter.njk' %}
 
 {% set pagetitle = 'December 2022 Issue' %}
 
@@ -12,7 +12,7 @@
 	<div class="page" id="cover-page"></div>
 {% endblock %}
 
-{# At the moment, most of it contains old newsletter's text. Edit them accordingly onegai. #}
+{# At the moment, most of them contain old newsletters' text. Edit them accordingly onegai. #}
 {% block article %}
 	{# Ao Ashi Review: done #}
 	<div class="page">
@@ -280,7 +280,7 @@
 	</div>
 {% endblock %}
 
-{# Thw work here is done #}
+{# The work here is done #}
 {% block prescript %}
 	<script>
 		crossMatrix = [
@@ -321,7 +321,7 @@
 {% block letterjs %}
 	{# Clues added, added compatibility for number input.#}
 	<script>
-		"use strict";
+		'use strict';
 		const crossRows = crossMatrix.length;
 		const crossCols = crossMatrix[0].length;
 		const crossFound = crossMatrix.map(row => row.map(() => '-'));
@@ -333,21 +333,21 @@
 			for (let i = 0; i < crossRows; i++) {
 				let mycurrent_row = document.createElement("tr");
 				for (let j = 0; j < crossCols; j++) {
-					let mycurrent_cell = document.createElement("td");
+					let myCurrentCell = document.createElement("td");
 					if (crossMatrix[i][j] === "-") {
-						mycurrent_cell.classList.add("crossword-cell-blank");
-						mycurrent_cell.setAttribute("data-cell", "");
+						myCurrentCell.classList.add("crossword-cell-blank");
+						myCurrentCell.setAttribute("data-cell", "");
 					} else {
-						mycurrent_cell.classList.add("crossword-cell");
-						mycurrent_cell.setAttribute("data-cell", "1");
+						myCurrentCell.classList.add("crossword-cell");
+						myCurrentCell.setAttribute("data-cell", "1");
 						if (((!i || crossMatrix[i - 1][j] === '-') && crossMatrix[i + 1] && crossMatrix[i + 1][j] === ' ') || ((!j || crossMatrix[i][j - 1] === '-') && crossMatrix[i][j + 1] === ' ')) {
-							mycurrent_cell.classList.add('crossword-count');
+							myCurrentCell.classList.add('crossword-count');
 						}
 					}
-					mycurrent_cell.setAttribute("id", `crossword-cell-${i}-${j}`);
-					mycurrent_cell.setAttribute("data-posI", i);
-					mycurrent_cell.setAttribute("data-posJ", j);
-					mycurrent_cell.addEventListener("click", function (event) {
+					myCurrentCell.setAttribute("id", `crossword-cell-${i}-${j}`);
+					myCurrentCell.setAttribute("data-posI", i);
+					myCurrentCell.setAttribute("data-posJ", j);
+					myCurrentCell.addEventListener("click", function (event) {
 						for (let i = 0; i < crossRows; i++) {
 							for (let j = 0; j < crossCols; j++) {
 								let tempCell = document.getElementById(`crossword-cell-${i}-${j}`);
@@ -359,7 +359,7 @@
 						if (crossMatrix[crossClick[0]][crossClick[1]] === "-") crossClick = false;
 						else event.target.classList.add("crosswordCellH");
 					}, false);
-					mycurrent_row.appendChild(mycurrent_cell);
+					mycurrent_row.appendChild(myCurrentCell);
 				}
 				mytablebody.appendChild(mycurrent_row);
 			}
@@ -368,9 +368,9 @@
 				if (crossClick) {
 					if ((e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105)) {
 						let tempCell = document.getElementById(`crossword-cell-${crossClick[0]}-${crossClick[1]}`);
-						let currenttext = e.keyCode < 96 ? String.fromCharCode(e.keyCode) : e.keyCode - 96;
-						tempCell.innerHTML = currenttext;
-						crossFound[crossClick[0]][crossClick[1]] = currenttext;
+						let currentText = e.keyCode < 96 ? String.fromCharCode(e.keyCode) : e.keyCode - 96;
+						tempCell.innerHTML = currentText;
+						crossFound[crossClick[0]][crossClick[1]] = currentText;
 						// check if crossword is completed
 						if (!letterSpaces.find(([i, j]) => crossFound[i][j] === '-')) {
 							axios.post(`/checker/2023-02-1/crossword`, crossFound).then(res => {
