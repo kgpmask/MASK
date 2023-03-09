@@ -4,14 +4,15 @@
 	"description": "Website for MASK",
 	"main": "./src/index.js",
 	"scripts": {
-		"start": "node src/mask.js",
 		"dev": "nodemon src/mask.js dev",
-		"du": "nodemon src/mask.js du",
 		"dm": "nodemon src/mask.js dm",
+		"docker": "bash ./docker/docker.sh",
+		"du": "nodemon src/mask.js du",
 		"lint": "eslint . --config .eslintrc.json --ext .js",
-		"test": "npm run lint && mocha test --exit && echo \"Passing all tests.\" && exit 0",
 		"prepare": "husky install",
-		"docker": "bash ./docker/docker.sh"
+		"start": "node src/mask.js",
+		"test": "npm run lint && mocha test --exit && echo \"Passing all tests.\" && exit 0",
+		"update-branch": "git fetch $(git rev-parse --symbolic-full-name --abbrev-ref @{upstream} | sed 's!/! !') && git merge FETCH_HEAD"
 	},
 	"repository": {
 		"type": "git",
