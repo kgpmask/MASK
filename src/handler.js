@@ -384,8 +384,7 @@ function handler (app, nunjEnv) {
 	});
 
 	app.get(['/quizzes/:arg', '/events/:arg'], async (req, res) => {
-		return res.redirect('https://event.kgpmask.club');
-		/* if (!req.loggedIn) {
+		if (!req.loggedIn) {
 			if (!PARAMS.userless) req.session.returnTo = req.url;
 			return res.renderFile('login.njk');
 		}
@@ -449,12 +448,11 @@ function handler (app, nunjEnv) {
 			questions: JSON.stringify(questions),
 			qAmt: questions.length,
 			id: req.params.arg
-		}); */
+		});
 	});
 	app.get(['/quizzes', '/events'], async (req, res) => {
-		return res.redirect('https://event.kgpmask.club');
 		// No specific event queried!
-		/* if (PARAMS.mongoless) return res.redirect('/');
+		if (PARAMS.mongoless) return res.redirect('/');
 		const user = req.loggedIn ? await dbh.getUserStats(req.user._id) : {};
 		const quizzed = user.quizData?.map(quiz => quiz.quizId) ?? [];
 		const qzs = await dbh.getQuizzes();
@@ -482,7 +480,7 @@ function handler (app, nunjEnv) {
 			quizzed,
 			years: renderYears.reverse(),
 			locked
-		}); */
+		});
 	});
 	app.post('/quizzes', async (req, res) => {
 		// TODO: Use a res.requireLogin(req) function
