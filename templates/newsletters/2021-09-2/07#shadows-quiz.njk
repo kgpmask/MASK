@@ -1,0 +1,93 @@
+
+<div class="page">
+	<div class="article-full">
+		<h2>Shadows Quiz</h2>
+		<br/>
+		<div class="article-author">By: Anshul Bankar</div>
+		{# <div class="article-end"></div> #}
+		{% set quizimgs = [
+			{
+				src: '/assets/releases/2021-09-2/quiz1.webp',
+				opts: [
+					'Itadori Yuji',
+					'Natsuki Subaru',
+					'Emiya Shirou',
+					'Okarin'
+				]
+			}, {
+				src: '/assets/releases/2021-09-2/quiz2.webp',
+				opts: [
+					'Darkness',
+					'Yunyun',
+					'Megumin',
+					'Aqua'
+				]
+			}, {
+				src: '/assets/releases/2021-09-2/quiz3.webp',
+				opts: [
+					'Kirigaya Kazuto',
+					'Kazuma Sato',
+					'Kyoya Mitsurugi',
+					'Natsuki Subaru'
+				]
+			}, {
+				src: '/assets/releases/2021-09-2/quiz4.webp',
+				opts: [
+					'Alice Zuberg',
+					'Asuna Yuki',
+					'Aqua',
+					'Asada Shino'
+				]
+			}, {
+				src: '/assets/releases/2021-09-2/quiz5.webp',
+				opts: [
+					'Shuvi',
+					'Jibril',
+					'Shiro',
+					'Izuna'
+				]
+			}, {
+				src: '/assets/releases/2021-09-2/quiz6.webp',
+				opts: [
+					'Zero Two',
+					'Ichigo',
+					'Kokoro',
+					"9'Y"
+				]
+			}, {
+				src: '/assets/releases/2021-09-2/quiz7.webp',
+				opts: [
+					'Shalltear Bloodfallen',
+					'Zesshi Zetsumei',
+					'CZ2128 Delta',
+					'Albedo'
+				]
+			}, {
+				src: '/assets/releases/2021-09-2/quiz8.webp',
+				opts: [
+					'Rem',
+					'Petra',
+					'Emilia',
+					'Felix'
+				]
+			}
+		] %}
+		{% for img in quizimgs %}
+			{% set index = loop.index %}
+			<img src="{{ img.src }}" style="max-height:40vh;max-width:70%"/><br/>
+			{% for opt in img.opts %}
+				<table class="anime-ratings quiz-opts">
+					<tr>
+						<td class="quiz-opt"><input type="radio" id="1-{{ index }}-{{ loop.index }}" name="imgselect1{{ index }}" value="{{ opt }}"/></td>
+						<td><label for="1-{{ index }}-{{ loop.index }}">{{ opt }}</label>{{ '<br/>' | safe if not loop.last }}</td>
+					</tr>
+				</table>
+			{% endfor %}
+			<br/>
+			<button onclick="validateQuiz({{ index }}, 1)" class="quiz-button">Check!</button>
+			{# {% if not loop.last %} #}
+				<div class="article-end"></div>
+			{# {% endif %} #}
+		{% endfor %}
+	</div>
+</div>
