@@ -3,7 +3,7 @@ const crypto = require('crypto');
 const fs = require('fs').promises;
 const { restart } = require('nodemon');
 const { render } = require('nunjucks');
-const { resolve } = require('path');
+
 const path = require('path');
 
 const checker = require('./checker.js');
