@@ -1,7 +1,6 @@
 {% extends "_base.njk" %}
 
 {% set thispage = 'newsletters' %}
-
 {% macro nextprev() %}
 	<div class="controls">
 		<a{% if adjs[0] %} href="/newsletters/{{ adjs[0] }}"{% endif %}><button class="rel" {{ 'disabled' if not adjs[0] }}><span class="buttonicon" id="flipped">&#x279C;</span><span class="buttontext">Previous</span></button></a>
@@ -9,6 +8,8 @@
 		<a{% if adjs[1] %} href="/newsletters/{{ adjs[1] }}"{% endif %}><button class="rel" {{ 'disabled' if not adjs[1] }}><span class="buttonicon">&#x279C;</span><span class="buttontext">Next</span></button></a>
 	</div>
 {% endmacro %}
+
+{% set pagecount = pages.length %}
 
 {% block pagecontent %}
 	{{ nextprev() }}
@@ -25,9 +26,25 @@
 		<span id="right-control-button">&#10095;</span>
 	</div></div>-->
 	<div id="pages-container"><div id="pages">
-	{% block coverpage %}<div class="page cover-default" id="cover-page"><img id="cover-logo" src="/assets/transparent_logo.png"/><br/>Manga & Anime<br/>Society, Kharagpur<br/><br/><div id="cover-page-title">{{ pagetitle }}</div></div>{% endblock %}
-		{% block article %}
+	{# {% block coverpage %}
+	<div class="page cover-default" id="cover-page">
+		<img id="cover-logo" src="/assets/transparent_logo.png"/>
+		<br/>Manga & Anime<br/>Society, Kharagpur<br/>
+		<br/>
+		<div id="cover-page-title">{{ pagetitle }}</div>
+		</div>
+	{% endblock %} #}
+		{% block coverpage %}
+			<div class="page" id="cover-page"></div>
+		{% endblock %}
+		{# {% block article %}
 			<div class="faded">This article hasn't been published yet - stay tuned!</div>
+		{% endblock %} #}
+		{% block article %}
+	
+			{% for page in pages %}
+				{% include thispage+'/'+target+'/'+page%}
+			{% endfor %}
 		{% endblock %}
 	</div></div>
 	<script>
@@ -351,3 +368,5 @@
 	</script>
 	{% block letterjs %}{% endblock %}
 {% endblock %}
+
+{% set scripts = ['https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'] %}
