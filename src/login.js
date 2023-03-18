@@ -5,7 +5,8 @@ exports.init = () => {
 	const dbh = require('../database/handler');
 
 	const port = require('./config.js').PORT;
-	const callbackURL = process.env['NODE_ENV'] === 'production' ? 'https://kgpmask.club' : `http://localhost:${port}`;
+	const fallbackUrl = process.env.NODE_ENV === 'production' ? 'https://kgpmask.club' : `http://localhost:${port}`;
+	const callbackURL = process.env.SITE_URL || fallbackUrl;
 
 	passport.use(new GoogleStrategy({
 		clientID: process.env['GOOGLE_CLIENT_ID'],

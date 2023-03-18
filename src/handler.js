@@ -15,72 +15,84 @@ const handlerContext = {}; // Store cross-request context here
 function handler (app, nunjEnv) {
 	// Main pages
 
+	// Set some common values
+	const months = [
+		'-',
+		'January',
+		'February',
+		'March',
+		'April',
+		'May',
+		'June',
+		'July',
+		'August',
+		'September',
+		'October',
+		'November',
+		'December'
+	];
+
 	app.get(['/', '/home'], async (req, res) => {
-		const sample = [{
-			name: 'How to get into MASK',
-			link: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-			type: 'youtube',
-			attr: ['Parth Mane'],
-			date: new Date('Oct 25, 2009'),
-			page: '_blank',
-			hype: true
-		},
-		{
-			name: 'Art - Tanjiro Kamado',
-			link: '0025.webp',
-			type: 'art',
-			attr: [ 'Sanjeev Raj Ganji' ],
-			date: new Date(1630261800000),
-			hype: true
-		},
-		{
-			name: 'Art - Saitama',
-			link: '0019.webp',
-			type: 'art',
-			attr: [ 'Garima Mendhe' ],
-			date: new Date(1628879400000),
-			hype: true
-		},
-		{
-			name: 'Art - Kirigakure Shinobi Massacre',
-			link: '0012.webp',
-			type: 'art',
-			attr: [ 'Arpit Das' ],
-			date: new Date(1589308200000),
-			hype: true
-		},
-		{
-			name: 'Art - Garou',
-			link: '0008.webp',
-			type: 'art',
-			attr: [ 'Pritam Mallick' ],
-			date: new Date(1572220800000),
-			hype: true
-		},
-		{
-			name: '「AMV」Phantasy Star Online 2 - Symphony',
-			link: 'https://www.youtube.com/watch?v=GX7TAigwZPw',
-			type: 'youtube',
-			attr: [ 'Hrishabh Kumar Tundwar' ],
-			date: new Date(1673289000000),
-			hype: true
-		},
-		{
-			name: '「AMV」The Garden of Words - A Thousand Years',
-			link: 'https://www.youtube.com/watch?v=9W4eyQ7LP7g',
-			type: 'youtube',
-			attr: [ 'Hrishabh Kumar Tundwar' ],
-			date: new Date(1673289000000),
-			hype: true
-		},
-		{
-			name: '「AMV」Assassination Classroom - Heathens',
-			link: 'https://www.youtube.com/watch?v=unITcghHNVI',
-			type: 'youtube',
-			attr: [ 'Chiranjeet Mishra' ],
-			date: new Date(1673289000000),
-			hype: true
-		}];
+		const sample = [
+			{
+				name: 'How to get into MASK',
+				link: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+				type: 'youtube',
+				attr: ['Parth Mane'],
+				date: new Date('Oct 25, 2009'),
+				page: '_blank',
+				hype: true
+			}, {
+				name: 'Art - Tanjiro Kamado',
+				link: '0025.webp',
+				type: 'art',
+				attr: ['Sanjeev Raj Ganji'],
+				date: new Date(1630261800000),
+				hype: true
+			}, {
+				name: 'Art - Saitama',
+				link: '0019.webp',
+				type: 'art',
+				attr: ['Garima Mendhe'],
+				date: new Date(1628879400000),
+				hype: true
+			}, {
+				name: 'Art - Kirigakure Shinobi Massacre',
+				link: '0012.webp',
+				type: 'art',
+				attr: ['Arpit Das'],
+				date: new Date(1589308200000),
+				hype: true
+			}, {
+				name: 'Art - Garou',
+				link: '0008.webp',
+				type: 'art',
+				attr: ['Pritam Mallick'],
+				date: new Date(1572220800000),
+				hype: true
+			}, {
+				name: '「AMV」Phantasy Star Online 2 - Symphony',
+				link: 'https://www.youtube.com/watch?v=GX7TAigwZPw',
+				type: 'youtube',
+				attr: ['Hrishabh Kumar Tundwar'],
+				date: new Date(1673289000000),
+				hype: true
+			}, {
+				name: '「AMV」The Garden of Words - A Thousand Years',
+				link: 'https://www.youtube.com/watch?v=9W4eyQ7LP7g',
+				type: 'youtube',
+				attr: ['Hrishabh Kumar Tundwar'],
+				date: new Date(1673289000000),
+				hype: true
+			}, {
+				name: '「AMV」Assassination Classroom - Heathens',
+				link: 'https://www.youtube.com/watch?v=unITcghHNVI',
+				type: 'youtube',
+				attr: ['Chiranjeet Mishra'],
+				date: new Date(1673289000000),
+				hype: true
+			}
+		];
 		const allPosts = PARAMS.mongoless ? sample : await dbh.getPosts();
 		const posts = PARAMS.mongoless ? allPosts.splice(0, 2) : allPosts.splice(0, 7);
 		posts.forEach(post => {
@@ -93,14 +105,16 @@ function handler (app, nunjEnv) {
 		return res.renderFile('home.njk', { posts, vids, art });
 	});
 	app.get('/art', async (req, res) => {
-		const sample = [{
-			name: 'Art - Tanjiro Kamado',
-			link: '0025.webp',
-			type: 'art',
-			attr: ['Sanjeev Raj Ganji'],
-			date: new Date(1630261800000),
-			hype: true
-		}];
+		const sample = [
+			{
+				name: 'Art - Tanjiro Kamado',
+				link: '0025.webp',
+				type: 'art',
+				attr: ['Sanjeev Raj Ganji'],
+				date: new Date(1630261800000),
+				hype: true
+			}
+		];
 		const art = PARAMS.mongoless ? sample : await dbh.getPosts('art');
 		return res.renderFile('art.njk', { art });
 	});
@@ -113,46 +127,173 @@ function handler (app, nunjEnv) {
 	app.get('/about', (req, res) => {
 		return res.renderFile('about.njk');
 	});
-	app.get('/members/:yearName?', (req, res) => {
-		const membersData = require('./members.json');
-		const yearName = req.params.yearName || membersData[0].name;
-		const yearIndex = membersData.findIndex(year => [year.name, year.baseYear].includes(yearName));
-		if (yearIndex === -1) return res.notFound();
-		const {
-			name,
-			baseYear,
-			teams,
-			members
-		} = membersData[yearIndex];
-		const ctx = { 'Governors': [], 'Former Members': [], 'Research Associate': [] };
-		members.sort((a, b) => -(a.name < b.name)).forEach(member => {
-			let target;
-			if (member.gov) target = 'Governors';
-			else if (member.inactive) target = 'Former Members';
-			else if (member.RA) target = 'Research Associate';
-			else target = `Batch of 20${member.roll.substr(0, 2)}`;
-			if (!ctx[target]) ctx[target] = [];
-			ctx[target].push({
-				name: member.name,
-				roll: member.roll,
-				href: member.id.startsWith('X') ? 'blank.webp' : `${member.id}.webp`,
-				teams: member.teams.map(teamID => {
-					const team = teams[teamID.toLowerCase()];
-					if (teamID === teamID.toUpperCase()) return { name: team.name, icon: team.icon + '-head' };
-					return team;
-				})
-			});
-		});
-		const prev = membersData[yearIndex + 1]?.name, next = membersData[yearIndex - 1]?.name;
-		const keys = [
-			'Governors',
-			'Research Associate',
-			...Object.keys(ctx).filter(key => key.startsWith('Batch of ')).sort(),
-			'Former Members'
+	app.get('/members/:yearName?', async (req, res) => {
+		const sample = [
+			{
+				name: 'Ankan Saha',
+				roll: '22EE10008',
+				image: '../assets/members/22_ankan.webp',
+				teams: [
+					{
+						name: 'Quiz',
+						icon: 'quiz'
+					},
+					{
+						name: 'WebDev',
+						icon: 'webdev'
+					}
+				],
+				position: 'Fresher'
+			}, {
+				name: 'Jai Sachdev',
+				roll: '22BT10011',
+				image: '../assets/members/22_jai.webp',
+				teams: [
+					{
+						name: 'WebDev',
+						icon: 'webdev'
+					}
+				],
+				position: 'Fresher'
+			}, {
+				name: 'Karthikeya S M Yelisetty',
+				roll: '21CS30060',
+				image: '../assets/members/21_karthikeya.webp',
+				teams: [
+					{
+						name: 'AMV & Music',
+						icon: 'amv'
+					},
+					{
+						name: 'WebDev',
+						icon: 'webdev'
+					}
+				],
+				position: 'Former Member'
+			}, {
+				name: 'Nishkal Prakash',
+				roll: '19CS91R05',
+				image: '../assets/members/19_nishkal.webp',
+				teams: [
+					{
+						name: 'AMV & Music',
+						icon: 'amv'
+					},
+					{
+						name: 'Design & Arts',
+						icon: 'design'
+					},
+					{
+						name: 'WebDev',
+						icon: 'webdev'
+					}
+				],
+				position: 'Research Associate'
+			}, {
+				name: 'Parth Mane',
+				roll: '19MF10022',
+				image: '../assets/members/19_parth.webp',
+				teams: [
+					{
+						name: 'AMV & Music',
+						icon: 'amv'
+					},
+					{
+						name: 'Media & Newsletter',
+						icon: 'newsletter'
+					},
+					{
+						name: 'Quiz',
+						icon: 'quiz'
+					},
+					{
+						name: 'WebDev',
+						icon: 'webdev-head'
+					}
+				],
+				position: 'Team Heads'
+			}, {
+				name: 'Saumyadip Nandy',
+				roll: '20EC10072',
+				image: '../assets/members/20_saumyadip.webp',
+				teams: [
+					{
+						name: 'WebDev',
+						icon: 'webdev'
+					}
+				],
+				position: 'Former Member'
+			}, {
+				name: 'Uday Srivastava',
+				roll: '22ME30072',
+				image: '../assets/members/22_uday.webp',
+				teams: [
+					{
+						name: 'WebDev',
+						icon: 'webdev'
+					}
+				],
+				position: 'Fresher'
+			}, {
+				name: 'Venkatsai Mokshith',
+				roll: '21CS10050',
+				image: '../assets/members/21_venkatsai.webp',
+				teams: [
+					{
+						name: 'WebDev',
+						icon: 'webdev'
+					}
+				],
+				position: 'Associate'
+			}, {
+				name: 'Vidunram A R',
+				roll: '21EE30033',
+				image: '../assets/members/21_vidunram.webp',
+				teams: [
+					{
+						name: 'Media & Newsletter',
+						icon: 'newsletter'
+					},
+					{
+						name: 'Quiz',
+						icon: 'quiz'
+					},
+					{
+						name: 'WebDev',
+						icon: 'webdev-sub'
+					}
+				],
+				position: 'Team Sub-Heads'
+			}
 		];
-		const membersObj = Object.fromEntries(keys.map(key => [key, ctx[key]]));
-		const membersTitle = name === membersData[0].name ? 'Our Members' : name;
-		return res.renderFile('members.njk', { members: membersObj, membersTitle, prev, next });
+		const yearName = parseInt(req.params.yearName) || 2022;
+		const membersData = PARAMS.mongoless ? sample : await dbh.getMembersbyYear(yearName);
+		const status = {
+			'Governors': [],
+			'Team Heads': [],
+			'Team Sub-Heads': [],
+			'Advisors': [],
+			'Research Associate': [],
+			'Executives': [],
+			'Associates': [],
+			'Freshers': [],
+			'Former Members': []
+		};
+		membersData.forEach(member => {
+			try {
+				status[member.position].push(member);
+			} catch {
+				status[member.position + 's'].push(member);
+			}
+		});
+		const membersObj = Object.entries(status);
+		const membersTitle = 'Our Members';
+		return res.renderFile('members.njk', {
+			membersObj,
+			membersTitle,
+			prev: yearName - 1 >= 2020 && !PARAMS.mongoless ? `${yearName - 1}-${yearName % 100}` : undefined,
+			next: yearName + 1 <= 2022 && !PARAMS.mongoless ? `${yearName + 1}-${yearName % 100 + 2}` : undefined
+		});
 	});
 
 
@@ -189,10 +330,6 @@ function handler (app, nunjEnv) {
 			picture: req.user.picture,
 			points: user.points,
 			quizzes: user.quizData.map(stamp => {
-				const months = [
-					'-', 'January', 'February', 'March', 'April', 'May', 'June',
-					'July', 'August', 'September', 'October', 'November', 'December'
-				];
 				const [year, month, date] = stamp.quizId.split('-');
 				return `${Tools.nth(~~date)} ${months[~~month]}`;
 			})
@@ -203,10 +340,6 @@ function handler (app, nunjEnv) {
 	// Newsletters, quizzes, and events
 
 	app.get('/newsletters/:target?', (req, res) => {
-		const months = [
-			'-', 'January', 'February', 'March', 'April', 'May', 'June',
-			'July', 'August', 'September', 'October', 'November', 'December'
-		];
 		return fs.readdir(path.join(__dirname, '../templates/newsletters')).then(letters => {
 			const years = {};
 			letters.sort();
@@ -265,10 +398,6 @@ function handler (app, nunjEnv) {
 		const qzs = await dbh.getQuizzes();
 		const QUIZZES = {};
 		qzs.forEach(qz => QUIZZES[qz.unlock.slice(0, 10)] = qz); // TODO Mokshith: Add a quizId field
-		const months = [
-			'-', 'January', 'February', 'March', 'April', 'May', 'June',
-			'July', 'August', 'September', 'October', 'November', 'December'
-		];
 		const quizzes = Object.keys(QUIZZES);
 		quizzes.sort();
 		const index = quizzes.indexOf(req.params.arg);
@@ -334,10 +463,6 @@ function handler (app, nunjEnv) {
 		const qzs = await dbh.getQuizzes();
 		const QUIZZES = {};
 		qzs.forEach(qz => QUIZZES[qz.unlock.slice(0, 10)] = qz); // TODO Mokshith: Add a quizId field
-		const months = [
-			'-', 'January', 'February', 'March', 'April', 'May', 'June',
-			'July', 'August', 'September', 'October', 'November', 'December'
-		];
 		const quizzes = Object.keys(QUIZZES);
 		const years = {};
 		quizzes.sort();
@@ -589,7 +714,7 @@ function handler (app, nunjEnv) {
 		}
 		const branch = process.env.WEBHOOK_BRANCH;
 		if (!branch) return res.send('No branch configured for webhooks');
-		if (branch !== 'docker') return res.send('Automatic webhook updates are only enabled on the dev branch');
+		if (branch !== 'dev') return res.send('Automatic webhook updates are only enabled on the dev branch');
 		await Tools.updateCode();
 		res.send('Success!');
 		return process.exit(0);
@@ -607,7 +732,6 @@ function handler (app, nunjEnv) {
 	});
 	app.use((req, res) => {
 		// Catch-all 404
-		console.log("404... so...");
 		res.notFound();
 	});
 }
