@@ -28,7 +28,7 @@
 		L I R Y U K Y U P Z D K Q L U X R J U X A B U`.replace(/\t/g, '').split("\n").map(line => line.split(" "));
 
 		const letterSpaces = [];
-
+		const tempWords = `ALL FOR ONE\nALL MIGHT\nBEST JEANIST\nCEMENTOSS\nDABI\nENDEAVOR\nERASER HEAD\nHAWKS\nKUROGIRI\nMIDNIGHT\nMIRKO\nMR COMPRESS\nPRESENT MIC\nRYUKYU\nTOMURA SHIGARAKI`.split("\n").map(word => word.replace(/\t/g, '')), words = tempWords.map(word => word.replace(/[ ]/g, '').toUpperCase());
 		(() => {
 			const maxDimension = Math.max(crossMatrix.length, crossMatrix[0].length);
 			const root = document.querySelector(':root');

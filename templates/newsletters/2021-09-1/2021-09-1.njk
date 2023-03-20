@@ -41,6 +41,7 @@
 			root.style.setProperty('--wordsearch-cell-height', (100 / wordMatrix.length) + '%');
 			root.style.setProperty('--wordsearch-cell-width', (100 / wordMatrix[0].length) + '%');
 		})();
+		const tempWords = `ALBIS\nBENIMARU\nCLAYMAN\nDIABLO\nFUZE\nGABIRU\nGAZEL\nGELD\nGOBTA\nGUY CRIMSON\nHAKUROU\nMILIM NAVA\nPHOBIO\nRAMIRIS\nRANGA\nSHION\nSHIZU\nSOUEI\nSUPHIA\nVELDORA`.split("\n").map(word => word.replace(/\t/g, '')), words = tempWords.map(word => word.replace(/[ ]/g, '').toUpperCase());
 	</script>
 {% endblock %}
 

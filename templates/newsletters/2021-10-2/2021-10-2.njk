@@ -34,6 +34,7 @@ M X S S O B Y U T O S A K I T
 I U E H E R I K O O Y X T P O
 S A L I B H Q S F V U K V L T`.replace(/\t/g, '').split("\n").map(line => line.split(" "));
 		const letterSpaces = [];
+		const tempWords = `CARLEY\nDOUGLAS\nERIKO\nIKUYA\nIZUMI\nKAITO\nKEI\nKOJI\nKONAKANO\nRITSU\nSATO\nSHINYA\nSOKABE\nTAKESHI\nYUTOSAKI\n`.split("\n").map(word => word.replace(/\t/g, '')), words = tempWords.map(word => word.replace(/[ -]/g, '').toUpperCase());
 		(() => {
 			const maxDimension = Math.max(crossMatrix.length, crossMatrix[0].length);
 			const root = document.querySelector(':root');
