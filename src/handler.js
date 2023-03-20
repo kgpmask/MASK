@@ -353,7 +353,6 @@ function handler (app, nunjEnv) {
 				});
 			});
 			const renderYears = Object.values(years);
-			console.log(renderYears);
 			renderYears.forEach(year => year.months = Object.values(year.months).reverse());
 
 			const target = req.params.target;
