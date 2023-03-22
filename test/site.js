@@ -6,6 +6,7 @@ const PORT = 42069;
 const pages = ['', 'home', 'art', 'videos', 'events', 'about', 'members', 'submissions'];
 
 before(() => server.ready());
+
 describe('Server', () => {
 	pages.forEach(page => {
 		it(`should serve page (${page || '/'})`, () => axios.get(`http://localhost:${PORT}/${page}`))

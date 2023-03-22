@@ -4,10 +4,13 @@ const server = require('../src/mask.js');
 const PORT = 42069;
 
 const pages = ['', 'home', 'art', 'videos', 'about', 'members', 'submissions'];
-const oldPARAMS = PARAMS;
-PARAMS.mongoless = true;
+const oldPARAMS = Object.assign({}, PARAMS);
 
-before(() => server.ready());
+before(async () => {
+	await server.ready();
+	PARAMS.mongoless = true;
+});
+
 describe('Server (Mongoless mode)', () => {
 	pages.forEach(page => {
 		it(`should serve page (${page || '/'})`, () => axios.get(`http://localhost:${PORT}/${page}`))
@@ -20,5 +23,7 @@ describe('Server (Mongoless mode)', () => {
 		.catch(res => assert.equal(res.response.status, 404)));
 });
 
-PARAMS = oldPARAMS;
-after(() => server.close());
+after(async () => {
+	await server.close();
+	PARAMS = oldPARAMS;
+});
