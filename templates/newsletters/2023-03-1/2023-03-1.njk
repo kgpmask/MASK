@@ -14,14 +14,14 @@
 			[' ',' ',' ',' ',' ',' ',' ',' ','-',' ',' ',' ',' ',' ',' ',' ',' '],
 			['-','-','-','-','-','-',' ','-',' ','-','-','-','-','-',' ','-','-'],
 			['-',' ',' ',' ',' ',' ',' ','-',' ','-','-','-','-','-',' ','-','-'],
-			['-','-','-','-','-','-',' ',' ',' ',' ',' ',' ',' ',' ','-','-','-'],
-			['-','-','-','-','-','-',' ','-',' ','-','-','-','-','-','-','-','-'],
-			['-','-','-','-','-','-','-','-',' ','-','-','-','-','-','-','-','-'],
-			['-','-','-','-','-','-','-',' ',' ',' ',' ',' ',' ','-','-','-','-'],
-			['-','-','-','-','-','-','-','-',' ','-','-','-','-','-','-','-','-'],
+			['-','-','-',' ','-','-',' ',' ',' ',' ',' ',' ',' ',' ','-','-','-'],
+			['-','-','-',' ','-','-',' ','-',' ','-','-','-','-','-','-','-','-'],
+			['-','-','-',' ','-','-','-','-',' ','-','-','-','-','-','-','-','-'],
+			['-','-','-',' ','-',' ','-',' ',' ',' ',' ',' ',' ','-','-','-','-'],
+			['-','-','-','-','-',' ','-','-',' ','-','-','-','-','-','-','-','-'],
 			['-','-','-','-',' ',' ',' ',' ',' ',' ',' ',' ','-','-','-','-','-'],
-			['-','-','-','-','-','-','-','-',' ','-','-','-','-','-','-','-','-'],
-			['-','-','-','-','-','-','-','-',' ',' ',' ',' ',' ',' ',' ','-','-'],
+			['-','-','-','-','-',' ','-','-',' ','-','-','-','-','-','-','-','-'],
+			['-','-','-','-','-',' ','-','-',' ',' ',' ',' ',' ',' ',' ','-','-'],
 		];
 		const letterSpaces = [];
 		(() => {
@@ -54,15 +54,17 @@
 			6. <b>Mairimashita iruma-kun:</b> Number of students in the misfit class (8)
 			7. <b>Devil is a part-timer:</b> Which demon general was sent to attack the south of Ente Isla? (9)
 			9. <b>Jobless reincarnation:</b> Roxanne&rsquo;s mother? (6)
-			10. <b>Rising of the shield hero:</b> Kingdom made by Shield hero (9)
-			11. <b>Rising of the shield hero:</b> Character who is referred as “loli-babaa” by naofumi (6)
-			12. <b>Re-Zero:</b> The Sin Archbishop that eats name and identity
-			13. <b>Re-Zero:</b> Witch of Greed's Name`.replace(/\t/g, '').split('\n').map(line => line.split(/\. (.*)/)));
+			11. <b>Rising of the shield hero:</b> Kingdom made by Shield hero (9)
+			13. <b>Rising of the shield hero:</b> Character who is referred as “loli-babaa” by naofumi (6)
+			14. <b>Re-Zero:</b> The Sin Archbishop that eats name and identity
+			15. <b>Re-Zero:</b> Witch of Greed's Name`.replace(/\t/g, '').split('\n').map(line => line.split(/\. (.*)/)));
 			clues.push(`1. <b>That time i got reincarnated as a slime:</b> Who achieved the status of Goblin King? (6)
 			2. <b>Shield Hero:</b> Who was the current Filolial Queen before Filo? (7)
 			3. <b>Log Horizon:</b> Shiroe was the _____ of Debauchery Tea Party of the game Elder Tale (10)
 			5. <b>Mairimashita iruma-kun:</b> The highest demon rank in the ranking system (4)
-			8. <b>Jobless reincarnation:</b> Full name of sylphy (10)`.replace(/\t/g, '').split('\n').map(line => line.split(/\. (.*)/)));
+			8. <b>Jobless reincarnation:</b> Full name of sylphy (10)
+			10. <b>That time i got reincarnated as a slime:</b> Benimaru turned to ________from ogre after transforming (5)
+			12. <b>Shield Hero:</b> Which princess betrayed the Sheild Hero ? (5)`.replace(/\t/g, '').split('\n').map(line => line.split(/\. (.*)/)));
 			document.getElementById('crossword-left').innerHTML = `<h3>Across</h3><br/><table class="cross-words">${clues[0].map(clue => `<tr><th>${clue[0]}</th><td>${clue[1]}</td></tr>`).join('')}</table>`;
 			document.getElementById('crossword-right').innerHTML = `<h3>Down</h3><br/><table class="cross-words">${clues[1].map(clue => `<tr><th>${clue[0]}</th><td>${clue[1]}</td></tr>`).join('')}</table>`;
 		}
