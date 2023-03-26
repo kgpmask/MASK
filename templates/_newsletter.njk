@@ -522,7 +522,8 @@
 						crossFound[crossClick[0]][crossClick[1]] = currenttext;
 						// check if crossword is completed
 						if (!letterSpaces.find(([i, j]) => crossFound[i][j] === '-')) {
-							axios.post(`/checker/2023-02-1/crossword`, crossFound).then(res => {
+							console.log("Sending POST request");
+							axios.post(`/checker/{{ target }}/crossword`, crossFound).then(res => {
 								if (res.data) {
 									mytablebody.classList.add("table-complete-cross");
 									setTimeout(function () {
