@@ -688,6 +688,13 @@ function handler (app, nunjEnv) {
 
 	// Assorted other stuff
 
+	app.get('/privacy', (req, res) => {
+		res.renderFile('privacy.njk');
+	});
+	app.get('/terms', (req, res) => {
+		res.renderFile('terms.njk');
+	});
+
 	app.get('/corsProxy', (req, res) => {
 		const base64Url = req.query.base64Url;
 		const url = atob(base64Url);
