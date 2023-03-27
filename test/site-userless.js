@@ -4,10 +4,14 @@ const server = require('../src/mask.js');
 const PORT = 42069;
 
 const pages = ['', 'home', 'art', 'videos', 'events', 'about', 'members', 'submissions'];
+const oldPARAMS = Object.assign({}, PARAMS);
 
-before(() => server.ready());
+before(async () => {
+	await server.ready();
+	PARAMS.userless = true;
+});
 
-describe('Server', () => {
+describe('Server (Userless mode)', () => {
 	pages.forEach(page => {
 		it(`should serve page (${page || '/'})`, () => axios.get(`http://localhost:${PORT}/${page}`))
 			.timeout(process.platform === 'win32' ? 5_000 : 1_500);
@@ -19,4 +23,7 @@ describe('Server', () => {
 		.catch(res => assert.equal(res.response.status, 404)));
 });
 
-after(() => server.close());
+after(async () => {
+	await server.close();
+	PARAMS = oldPARAMS;
+});
