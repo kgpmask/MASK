@@ -366,7 +366,240 @@
 		axios.defaults.withCredentials = true;
 		axios.defaults.headers.common['X-CSRF-TOKEN'] = '{{ csrfToken }}';
 	</script>
-	{% block letterjs %}{% endblock %}
+	{% block letterjs %}
+	<script>
+		function validateQuiz (index, which) {
+			const selected = document.querySelector(`input[name="imgselect${which}${index}"]:checked`);
+			if (!selected) return;
+			axios.post(`/checker/2021-09-2/quiz${which}`, { index: index }).then(correct => {
+				console.log(correct);
+				const correctLabel = document.querySelector(`label[for="${which}-${index}-${correct.data}"]`);
+				correctLabel.classList.add('correct-quiz-image');
+			}).catch(console.log);
+		}
+	</script>
+	<script type="text/javascript">
+		//const tempWords = `CARLEY\nDOUGLAS\nERIKO\nIKUYA\nIZUMI\nKAITO\nKEI\nKOJI\nKONAKANO\nRITSU\nSATO\nSHINYA\nSOKABE\nTAKESHI\nYUTOSAKI\n`.split("\n").map(word => word.replace(/\t/g, '')), words = tempWords.map(word => word.replace(/[ -]/g, '').toUpperCase());
+		const wordRows = wordMatrix.length;
+		const wordCols = wordMatrix[0].length;
+		let wordFound = [];
+		let wordClick = false;
+		function startWord () {
+			let max = Math.max(wordRows, wordCols);
+			let size = 40 * 10 / max - 3 + "px";
+			let fontsize = (10 / max) ** (1 / 2) + "em";
+			let mytablebody = document.getElementById("wordsearch-table");
+			for (let i = 0; i < wordRows; i++) {
+				let mycurrent_row = document.createElement("tr");
+				for (let j = 0; j < wordCols; j++) {
+					let mycurrent_cell = document.createElement("td");
+					mycurrent_cell.classList.add("wordsearch-cell");
+					mycurrent_cell.setAttribute("id", `wordsearch-cell-${i}-${j}`);
+					mycurrent_cell.setAttribute("data-posI", i);
+					mycurrent_cell.setAttribute("data-posJ", j);
+					/*mycurrent_cell.style.width = size;
+					mycurrent_cell.style.minWidth = size;
+					mycurrent_cell.style.height = size;
+					mycurrent_cell.style.maxHeight = size;
+					mycurrent_cell.style.fontSize = fontsize;*/
+					let currenttext = document.createTextNode(wordMatrix[i][j]);
+					mycurrent_cell.addEventListener("click", function (event) {
+						if (wordClick) {
+							const start = wordClick;
+							const final = [~~this.getAttribute("data-posI"), ~~this.getAttribute("data-posJ")];
+							wordClick = false;
+							if (start[0] === final[0] && start[1] === final[1]) return; //same position
+							if (start[0] === final[0] || start[1] === final[1] || (Math.abs(start[0] - final[0]) === Math.abs(start[1] - final[1]))) {
+								let word = "";
+								let offsets = [Math.sign(final[0] - start[0]), Math.sign(final[1] - start[1])];
+								for (let [i, j] = start; (i !== final[0] || j !== final[1]); [i += offsets[0], j += offsets[1]]) word += wordMatrix[i][j];
+								word += wordMatrix[final[0]][final[1]];
+								console.log(word);
+								if (words.includes(word) && !wordFound.includes(word)) {
+									wordFound.push(word);
+									document.getElementById(`wordsearch-word-${word.toLowerCase()}`).classList.add("found-word");
+									if (words.length === wordFound.length) {
+										mytablebody.id = "table-complete";
+										const wordsList = document.getElementById('wordsearch-words');
+										wordsList.style.animation = "fadeOut 1.5s";
+										wordsList.style.opacity = 0.1;
+										setTimeout(function () {
+											document.getElementById(`wordsearch`).innerHTML = `<div class="wordsearch-complete">Completed!</div>`;
+										}, 1500);
+									}
+								}
+							}
+							return; // invalid
+						}
+						else {
+							wordClick = [~~this.getAttribute("data-posI"), ~~this.getAttribute("data-posJ")];
+						}
+					}, false);
+					mycurrent_cell.addEventListener("mouseover", function (event) {
+						if (wordClick) {
+							const start = wordClick;
+							const final = [~~this.getAttribute("data-posI"), ~~this.getAttribute("data-posJ")];
+							if (start[0] === final[0] && start[1] === final[1]) return; //same position
+							if (start[0] === final[0] || start[1] === final[1] || (Math.abs(start[0] - final[0]) === Math.abs(start[1] - final[1]))) {
+								let offsets = [Math.sign(final[0] - start[0]), Math.sign(final[1] - start[1])];
+								for (let [i, j] = start; (i !== final[0] + offsets[0] || j !== final[1] + offsets[1]); [i += offsets[0], j += offsets[1]]) {
+									let tempCell = document.getElementById(`wordsearch-cell-${i}-${j}`);
+									tempCell.classList.add("wordsearchCellS");
+								}
+							}
+						}
+						event.target.classList.add("wordsearchCellH");
+					}, false);
+					mycurrent_cell.addEventListener("mouseleave", function (event) {
+						for (let i = 0; i < wordRows; i++) {
+							for (let j = 0; j < wordCols; j++) {
+								let tempCell = document.getElementById(`wordsearch-cell-${i}-${j}`);
+								tempCell.classList.remove("wordsearchCellH");
+								tempCell.classList.remove("wordsearchCellS");
+							}
+						}
+					}, false);
+					mycurrent_cell.appendChild(currenttext);
+					mycurrent_row.appendChild(mycurrent_cell);
+				}
+				mytablebody.appendChild(mycurrent_row);
+			}
+			let colnum = Math.ceil(words.length / 5);
+			let wordArea = document.getElementById("wordsearch-words");
+			wordArea.innerHTML = tempWords.map(word => `<div id="wordsearch-word-${word.replace(/[ \t-]/g, '').toLowerCase()}" class="wordsearch-word">${word}</div>`).join("");
+		}
+	</script>
+	<script>
+		"use strict";
+		const crossRows = crossMatrix.length;
+		const crossCols = crossMatrix[0].length;
+		const crossFound = crossMatrix.map(row => row.map(() => '-'));
+		let crossClick = false;
+		let crossDir = false; // 1234 NESW
+		let crosswordVis = false;
+		function startCross () {
+			let mytablebody = document.getElementById("crossword-table");
+			for (let i = 0; i < crossRows; i++) {
+				let mycurrent_row = document.createElement("tr");
+				for (let j = 0; j < crossCols; j++) {
+					let mycurrent_cell = document.createElement("td");
+					if (crossMatrix[i][j] === "-") {
+						mycurrent_cell.classList.add("crossword-cell-blank");
+						mycurrent_cell.setAttribute("data-cell", "");
+					} else {
+						mycurrent_cell.classList.add("crossword-cell");
+						mycurrent_cell.setAttribute("data-cell", "1");
+						if (((!i || crossMatrix[i - 1][j] === '-') && crossMatrix[i + 1] && crossMatrix[i + 1][j] === ' ') || ((!j || crossMatrix[i][j - 1] === '-') && crossMatrix[i][j + 1] === ' ')) {
+							mycurrent_cell.classList.add('crossword-count');
+						}
+					}
+					mycurrent_cell.setAttribute("id", `crossword-cell-${i}-${j}`);
+					mycurrent_cell.setAttribute("data-posI", i);
+					mycurrent_cell.setAttribute("data-posJ", j);
+					mycurrent_cell.addEventListener("click", function (event) {
+						for (let i = 0; i < crossRows; i++) {
+							for (let j = 0; j < crossCols; j++) {
+								let tempCell = document.getElementById(`crossword-cell-${i}-${j}`);
+								tempCell.classList.remove("crosswordCellH");
+								tempCell.classList.remove("crosswordCellS");
+							}
+						}
+						crossClick = [~~this.getAttribute("data-posI"), ~~this.getAttribute("data-posJ")];
+						if (crossMatrix[crossClick[0]][crossClick[1]] === "-") crossClick = false;
+						else event.target.classList.add("crosswordCellH");
+					}, false);
+					mycurrent_row.appendChild(mycurrent_cell);
+				}
+				mytablebody.appendChild(mycurrent_row);
+			}
+			document.addEventListener('keydown', function (e) {
+				if (!crosswordVis) return;
+				if (crossClick) {
+					if ((e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105)) {
+						let tempCell = document.getElementById(`crossword-cell-${crossClick[0]}-${crossClick[1]}`);
+						let currenttext = e.keyCode < 96 ? String.fromCharCode(e.keyCode) : e.keyCode - 96;
+						tempCell.innerHTML = currenttext;
+						crossFound[crossClick[0]][crossClick[1]] = currenttext;
+						// check if crossword is completed
+						if (!letterSpaces.find(([i, j]) => crossFound[i][j] === '-')) {
+							console.log("Sending POST request");
+							axios.post(`/checker/{{ target }}/crossword`, crossFound).then(res => {
+								if (res.data) {
+									mytablebody.classList.add("table-complete-cross");
+									setTimeout(function () {
+										document.getElementById(`crossword`).innerHTML = `<div class="crossword-complete">Completed!</div>`;
+									}, 1600);
+								}
+							}).catch(err => console.log(err));
+						}
+						const nexts = [];
+						(() => {
+							const a = crossClick;
+							nexts.push({ c: [a[0] + 1, a[1]], d: 3 });
+							nexts.push({ c: [a[0], a[1] + 1], d: 2 });
+							if (crossDir) {
+								const o = [null, [-1, 0], [0, 1], [1, 0], [0, -1]][crossDir];
+								nexts.unshift({ c: [a[0] + o[0], a[1] + o[1]], d: crossDir });
+							}
+						})();
+						return nexts.find(coords => {
+							const cell = document.getElementById(`crossword-cell-${coords.c[0]}-${coords.c[1]}`);
+							if (cell && cell.getAttribute("data-cell")) {
+								crossClick = coords.c;
+								crossDir = coords.d;
+								for (let i = 0; i < crossRows; i++) {
+									for (let j = 0; j < crossCols; j++) {
+										let tempCell = document.getElementById(`crossword-cell-${i}-${j}`);
+										tempCell.classList.remove("crosswordCellH");
+										tempCell.classList.remove("crosswordCellS");
+									}
+								}
+								cell.classList.add('crosswordCellH');
+								return true;
+							}
+						});
+					}
+					if ((e.keyCode >= 48 && e.keyCode <= 57) && (e.keyCode >= 96 && e.keyCode <= 105)) {
+						e
+					}
+					if (e.keyCode >= 37 && e.keyCode <= 40) {
+						const offsets = {
+							'37': [0, -1],
+							'38': [-1, 0],
+							'39': [0, +1],
+							'40': [+1, 0]
+						}, keyDir = {
+							'37': 4,
+							'38': 1,
+							'39': 2,
+							'40': 3
+						};
+						e.preventDefault();
+						const next = document.getElementById(`crossword-cell-${crossClick[0] + offsets[e.keyCode][0]}-${crossClick[1] + offsets[e.keyCode][1]}`);
+						if (next && next.getAttribute("data-cell")) {
+							crossClick[0] += offsets[e.keyCode][0];
+							crossClick[1] += offsets[e.keyCode][1];
+							for (let i = 0; i < crossRows; i++) {
+								for (let j = 0; j < crossCols; j++) {
+									let tempCell = document.getElementById(`crossword-cell-${i}-${j}`);
+									tempCell.classList.remove("crosswordCellH");
+									tempCell.classList.remove("crosswordCellS");
+								}
+							}
+							next.classList.add("crosswordCellH");
+							crossDir = keyDir[e.keyCode];
+							return;
+						}
+					}
+					if ([8, 46].includes(e.keyCode)) {
+						document.getElementById(`crossword-cell-${crossClick[0]}-${crossClick[1]}`).innerHTML = '';
+						crossFound[crossClick[0]][crossClick[1]] = '-';
+					}
+				}
+			});}
+		</script>
+	{% endblock %}
+	{% block cluejs %}{% endblock %}
 {% endblock %}
 
 {% set scripts = ['https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'] %}
