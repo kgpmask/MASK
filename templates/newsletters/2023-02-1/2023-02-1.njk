@@ -1,0 +1,144 @@
+{% extends "_newsletter.njk" %}
+
+{% set pagetitle = 'February 2023 Issue' %}
+
+{# {% set pagecount = 24 %}
+
+{% block coverpage %}
+	<div class="page" id="cover-page"></div>
+{% endblock %} #}
+
+{# {% block article %} #}
+{# {% endblock %} #}
+
+{% block prescript %}
+	<script>
+		crossMatrix = [
+			['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', ' ', '-', '-', '-', '-', '-'],
+			['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', ' ', '-', '-', '-', '-', '-'],
+			['-', '-', '-', '-', '-', ' ', '-', '-', '-', '-', '-', '-', '-', ' ', '-', '-', ' ', '-', '-', '-', '-', '-'],
+			['-', '-', '-', '-', '-', ' ', '-', '-', '-', '-', '-', '-', '-', ' ', '-', '-', ' ', '-', '-', ' ', '-', '-'],
+			['-', '-', '-', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '-', ' ', '-', '-'],
+			['-', '-', '-', '-', '-', ' ', '-', '-', '-', '-', '-', '-', '-', ' ', '-', '-', ' ', '-', '-', ' ', '-', '-'],
+			['-', '-', '-', '-', '-', ' ', '-', '-', '-', '-', '-', '-', '-', ' ', '-', '-', ' ', '-', '-', ' ', '-', '-'],
+			['-', '-', '-', '-', '-', ' ', '-', '-', '-', '-', '-', '-', '-', ' ', '-', '-', ' ', '-', '-', ' ', '-', '-'],
+			['-', '-', '-', '-', '-', ' ', '-', '-', ' ', '-', '-', '-', '-', ' ', '-', '-', '-', '-', '-', ' ', '-', '-'],
+			['-', '-', '-', '-', '-', ' ', '-', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+			['-', '-', '-', '-', '-', ' ', '-', '-', ' ', '-', '-', '-', '-', '-', ' ', '-', '-', '-', '-', ' ', '-', '-'],
+			['-', '-', '-', '-', '-', '-', ' ', ' ', ' ', ' ', '-', '-', '-', '-', ' ', '-', '-', '-', '-', ' ', '-', '-'],
+			['-', '-', '-', '-', '-', '-', '-', '-', ' ', '-', '-', '-', '-', ' ', ' ', ' ', ' ', '-', '-', ' ', '-', '-'],
+			['-', '-', '-', '-', ' ', '-', '-', '-', ' ', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+			['-', '-', '-', '-', ' ', '-', '-', '-', ' ', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+			[' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+			['-', '-', '-', '-', ' ', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+			['-', '-', '-', '-', ' ', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+			['-', '-', '-', '-', ' ', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+			['-', '-', '-', '-', ' ', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-']
+		];
+		const letterSpaces = [];
+		(() => {
+				const maxDimension = Math.max(crossMatrix.length, crossMatrix[0].length);
+				const root = document.querySelector(':root');
+				root.style.setProperty('--crossword-cell-size', (40 * 10 / maxDimension - 4) + "px");
+				root.style.setProperty('--crossword-font-size', (10 / maxDimension) ** (1 / 2) + "em");
+				crossMatrix.forEach((row, i) => {
+					row.forEach((char, j) => {
+						if (char === ' ') letterSpaces.push([i, j]);
+					});
+				});
+			})();
+	</script>
+{% endblock %}
+
+{% block cluejs %}
+	{# Clues added, added compatibility for number input.#}
+	<script>
+		function startClues() {
+			new IntersectionObserver(([crossword]) => {
+				if (crossword.isIntersecting && crossword.intersectionRatio > 0.8) {
+					crosswordVis = true;
+				} else {
+					crosswordVis = false;
+				}
+			}, { threshold: [0.99] }).observe(document.getElementById('crossword-table'));
+			const clues = [];
+			clues.push(`5. <b>Komi-San Can't Communicate:</b> The literal meaning of Osana Najimi is (9, 6)
+			7. <b>Love, Chuunibyou and other delusions</b> What did Yuta Togashi call himself back in his chuunibyou days? (4, 5, 6)
+			9. <b>Horimiya:</b> What was the flavour of the candy Miyamura took from Hori by kissing her? (4)
+			10. <b>My Dress-Up Darling:</b> What is Sajuna Inui's cosplay nickname? (4)
+			12. <b>Toradora:</b> What is Taiga Aisaka's nickname? (4, 3, 5)`.replace(/\t/g, '').split('\n').map(line => line.split(/\. (.*)/)));
+			clues.push(`1. <b>Rent a Girlfriend:</b> What is Chizuru Mizuhara's real surname? (8)
+			2. <b>Snow White with the Red Hair:</b> What is the name of the character the title of the anime is referencing? (9)
+			3. <b>Kaguya-sama: Love is War:</b> The name of Ai Hayasaka's male alias? (8)
+			4. <b>Oregairu:</b> "Allow me the privilege of _ your life (10)
+			6. <b>Don't toy with me, Miss Nagatoro:</b> What do Nagatoro's friends call her? (8)
+			8. <b>Quintessential Quintuplets:</b> Who was the middle child among the quintuplets? (4)
+			11. <b>Guess the Anime:</b> Fujoshis enjoy pairing their boyfriends (7)`.replace(/\t/g, '').split('\n').map(line => line.split(/\. (.*)/)));
+			document.getElementById('crossword-left').innerHTML = `<h3>Across</h3><br/><table class="cross-words">${clues[0].map(clue => `<tr><th>${clue[0]}</th><td>${clue[1]}</td></tr>`).join('')}</table>`;
+			document.getElementById('crossword-right').innerHTML = `<h3>Down</h3><br/><table class="cross-words">${clues[1].map(clue => `<tr><th>${clue[0]}</th><td>${clue[1]}</td></tr>`).join('')}</table>`;
+		}
+	
+		window.onload = () => {
+			startCross();
+			startClues();
+		}
+	</script>
+{% endblock %}
+
+{% block lettercss %}
+	<style>
+		:root {
+			--black-blue   : #121920;
+			--dark-blue    : #112f3f;
+			--teal         : #006280;
+			--dirty-green  : #4d5843;
+			--dirty-yellow : #a98135;
+		}
+		.page {
+			color: var(--dark-blue);
+		}
+		#cover-page {
+			background-image: url(/assets/releases/2023-02-1/cover.webp);
+			background-position: center;
+			background-size: contain;
+			background-repeat: no-repeat;
+			background-color: rgba(0, 0, 0, 0) !important;
+		}
+		.article-full, .article-half, #crossword-left, #crossword-right {
+			scrollbar-color: var(--teal) var(--off-white) !important;
+		}
+		.article-full > h2, .article-half > h2, .article-header {
+			text-shadow: 0 0 2px var(--teal) !important;
+		}
+		
+		.wordsearchCellS {
+			background-color: var(--dirty-yellow) !important;
+		}
+		.found-word {
+			color: var(--teal) !important;
+		}
+		.wordsearch-complete {
+			color: var(--teal) !important;
+		}
+		.spoiler:before {
+			color: var(--teal);
+			background: var(--dirty-yellow);
+		}
+		.quote {
+			color: var(--teal);
+			{# font-size: 120%; #}
+			font-style: italic;
+			text-align: center;
+		}
+		li {
+			margin: 7px 0px;
+		}
+		#crossword-left, #crossword-right {
+			min-height: 75px !important;
+			height: calc(90vh - 480px) !important;
+		}
+	</style>
+	<link rel="stylesheet" type="text/css" href="/assets/styles/wordsearch.css"/>
+	<link rel="stylesheet" type="text/css" href="/assets/styles/crossword.css"/>
+{% endblock %}
+
