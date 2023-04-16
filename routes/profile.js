@@ -12,8 +12,19 @@ router.get('/', async (req, res) => {
 		points: user.points,
 		quizzes: user.quizData.map(stamp => {
 			const months = [
-				'-', 'January', 'February', 'March', 'April', 'May', 'June',
-				'July', 'August', 'September', 'October', 'November', 'December'
+				'-',
+				'January',
+				'February',
+				'March',
+				'April',
+				'May',
+				'June',
+				'July',
+				'August',
+				'September',
+				'October',
+				'November',
+				'December'
 			];
 			const [year, month, date] = stamp.quizId.split('-');
 			return `${Tools.nth(~~date)} ${months[~~month]}`;

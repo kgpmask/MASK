@@ -12,8 +12,19 @@ router.get('/', async (req, res) => {
 	const QUIZZES = {};
 	qzs.forEach(qz => QUIZZES[qz.unlock.slice(0, 10)] = qz); // TODO Mokshith: Add a quizId field
 	const months = [
-		'-', 'January', 'February', 'March', 'April', 'May', 'June',
-		'July', 'August', 'September', 'October', 'November', 'December'
+		'-',
+		'January',
+		'February',
+		'March',
+		'April',
+		'May',
+		'June',
+		'July',
+		'August',
+		'September',
+		'October',
+		'November',
+		'December'
 	];
 	const quizzes = Object.keys(QUIZZES);
 	const years = {};
@@ -51,8 +62,19 @@ router.get('/:arg', async (req, res) => {
 	const QUIZZES = {};
 	qzs.forEach(qz => QUIZZES[qz.unlock.slice(0, 10)] = qz); // TODO Mokshith: Add a quizId field
 	const months = [
-		'-', 'January', 'February', 'March', 'April', 'May', 'June',
-		'July', 'August', 'September', 'October', 'November', 'December'
+		'-',
+		'January',
+		'February',
+		'March',
+		'April',
+		'May',
+		'June',
+		'July',
+		'August',
+		'September',
+		'October',
+		'November',
+		'December'
 	];
 	const quizzes = Object.keys(QUIZZES);
 	quizzes.sort();

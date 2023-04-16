@@ -176,7 +176,8 @@ router.get('/:yearName?', async (req, res) => {
 		membersObj,
 		membersTitle,
 		prev: yearName - 1 >= 2020 && !PARAMS.mongoless ? `${yearName - 1}-${yearName % 100}` : undefined,
-		next: yearName + 1 <= 2022 && !PARAMS.mongoless ? `${yearName + 1}-${yearName % 100 + 2}` : undefined });
+		next: yearName + 1 <= 2022 && !PARAMS.mongoless ? `${yearName + 1}-${yearName % 100 + 2}` : undefined
+	});
 });
 
 module.exports = router;

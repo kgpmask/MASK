@@ -5,8 +5,19 @@ const path = require('path');
 
 router.get('/:target?', (req, res) => {
 	const months = [
-		'-', 'January', 'February', 'March', 'April', 'May', 'June',
-		'July', 'August', 'September', 'October', 'November', 'December'
+		'-',
+		'January',
+		'February',
+		'March',
+		'April',
+		'May',
+		'June',
+		'July',
+		'August',
+		'September',
+		'October',
+		'November',
+		'December'
 	];
 	return fs.readdir(path.join(__dirname, '../templates/newsletters')).then(letters => {
 		const years = {};
