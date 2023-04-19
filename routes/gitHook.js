@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
 	}
 	const branch = process.env.WEBHOOK_BRANCH;
 	if (!branch) return res.send('No branch configured for webhooks');
-	if (branch !== 'docker') return res.send('Automatic webhook updates are only enabled on the dev branch');
+	if (branch !== 'dev') return res.send('Automatic webhook updates are only enabled on the dev branch');
 	await Tools.updateCode();
 	res.send('Success!');
 	return process.exit(0);

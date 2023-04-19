@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
 		if (!PARAMS.userless) req.session.returnTo = req.url;
 		return res.renderFile('events/quiz_login.njk');
 	}
-	const quiz = await dbh.getLiveQuiz(PARAMS.dev);
+	const quiz = await dbh.getLiveQuiz(PARAMS.dev ? '2022-11-12' : false);
 	if (!quiz) return res.renderFile('events/quizzes_404.njk', { message: `The quiz hasn't started, yet!` });
 	const QUIZ = quiz.questions;
 	const user = await dbh.getUser(req.user._id);
@@ -68,37 +68,34 @@ router.post('/', async (req, res) => {
 	}
 	if (!handlerContext.liveQuiz) handlerContext.liveQuiz = {};
 	const LQ = handlerContext.liveQuiz;
-	const quiz = await dbh.getLiveQuiz(PARAMS.dev);
+	const quiz = await dbh.getLiveQuiz(PARAMS.dev ? '2022-11-12' : false);
 	const QUIZ = quiz.questions;
 	const user = await dbh.getUser(req.user._id);
 	if (user.permissions?.includes('quizmaster')) {
-		const quizTime = { '10': 20, '5': 15, '3': 12 }[QUIZ[req.body.currentQ].points];
-		io.sockets.in('waiting-for-live-quiz').emit('question', {
-			currentQ: req.body.currentQ,
-			options: req.body.options,
-			time: quizTime
-		});
+		const { currentQ, options } = req.body;
+		const time = { '10': 20, '5': 15, '3': 12 }[QUIZ[currentQ].points];
+		io.sockets.in('waiting-for-live-quiz').emit('question', { currentQ, options, time });
 		setTimeout(() => {
-			const type = QUIZ[req.body.currentQ].options.type;
-			const solution = QUIZ[req.body.currentQ].solution;
+			const type = QUIZ[currentQ].options.type;
+			const solution = QUIZ[currentQ].solution;
 			setTimeout(() => io.sockets.in('waiting-for-live-quiz').emit('answer', {
 				answer: Array.isArray(solution) ? solution.join(' / ') : solution,
 				type
 			}), 2000); // Emit the actual event 3s after
-		}, 1000 * (quizTime + 1)); // Extra second to account for lag
+		}, 1000 * (time + 1)); // Extra second to account for lag
 		LQ.currentQ = req.body.currentQ;
-		LQ.endTime = Date.now() + 1000 * (quizTime + 1);
+		LQ.endTime = Date.now() + 1000 * (time + 1);
 		res.send('Done');
 	} else {
 		const answer = req.body.submittedAnswer;
-		if (answer === '') throw new Error('Missing answer');
+		if (answer === '') return res.error('Missing answer');
 		const currentQ = LQ.currentQ ?? - 1;
 		const Q = QUIZ[currentQ];
-		if (!Q) throw new Error('currentQ out of bounds');
+		if (!Q) return res.error('currentQ out of bounds');
 		const time = Math.round((LQ.endTime - Date.now()) / 1000);
-		if (time < 0) throw new Error('Too late!');
+		if (time < 0) return res.error('Too late!');
 		const alreadySubmitted = await dbh.getLiveResult(user._id, quiz.title, currentQ);
-		if (alreadySubmitted) throw new Error('Already attempted this question!');
+		if (alreadySubmitted) return res.error('Already attempted this question!');
 		const { points, timeLeft } = await checker.checkLiveQuiz(answer, Q.solution, Q.options.type, Q.points, time);
 		const result = points
 			? points < Q.points ? 'partial' : 'correct'

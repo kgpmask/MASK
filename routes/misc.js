@@ -29,4 +29,12 @@ router.get('/success', (req, res) => {
 	return res.renderFile('events/quiz_success.njk');
 });
 
+router.get('/privacy', (req, res) => {
+	res.renderFile('privacy.njk');
+});
+
+router.get('/terms', (req, res) => {
+	res.renderFile('terms.njk');
+});
+
 module.exports = router;

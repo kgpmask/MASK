@@ -20,8 +20,7 @@ router.get('/:yearName?', async (req, res) => {
 				}
 			],
 			position: 'Fresher'
-		},
-		{
+		}, {
 			name: 'Jai Sachdev',
 			roll: '22BT10011',
 			image: '../assets/members/22_jai.webp',
@@ -32,8 +31,7 @@ router.get('/:yearName?', async (req, res) => {
 				}
 			],
 			position: 'Fresher'
-		},
-		{
+		}, {
 			name: 'Karthikeya S M Yelisetty',
 			roll: '21CS30060',
 			image: '../assets/members/21_karthikeya.webp',
@@ -48,19 +46,18 @@ router.get('/:yearName?', async (req, res) => {
 				}
 			],
 			position: 'Former Member'
-		},
-		{
+		}, {
 			name: 'Nishkal Prakash',
 			roll: '19CS91R05',
 			image: '../assets/members/19_nishkal.webp',
 			teams: [
 				{
-					name: 'AMV & Music',
-					icon: 'amv'
+					name: 'Media & Newsletter',
+					icon: 'newsletter'
 				},
 				{
-					name: 'Design & Arts',
-					icon: 'design'
+					name: 'Quiz',
+					icon: 'quiz'
 				},
 				{
 					name: 'WebDev',
@@ -68,8 +65,7 @@ router.get('/:yearName?', async (req, res) => {
 				}
 			],
 			position: 'Research Associate'
-		},
-		{
+		}, {
 			name: 'Parth Mane',
 			roll: '19MF10022',
 			image: '../assets/members/19_parth.webp',
@@ -92,8 +88,7 @@ router.get('/:yearName?', async (req, res) => {
 				}
 			],
 			position: 'Team Heads'
-		},
-		{
+		}, {
 			name: 'Saumyadip Nandy',
 			roll: '20EC10072',
 			image: '../assets/members/20_saumyadip.webp',
@@ -104,8 +99,7 @@ router.get('/:yearName?', async (req, res) => {
 				}
 			],
 			position: 'Former Member'
-		},
-		{
+		}, {
 			name: 'Uday Srivastava',
 			roll: '22ME30072',
 			image: '../assets/members/22_uday.webp',
@@ -116,8 +110,7 @@ router.get('/:yearName?', async (req, res) => {
 				}
 			],
 			position: 'Fresher'
-		},
-		{
+		}, {
 			name: 'Venkatsai Mokshith',
 			roll: '21CS10050',
 			image: '../assets/members/21_venkatsai.webp',
@@ -128,8 +121,7 @@ router.get('/:yearName?', async (req, res) => {
 				}
 			],
 			position: 'Associate'
-		},
-		{
+		}, {
 			name: 'Vidunram A R',
 			roll: '21EE30033',
 			image: '../assets/members/21_vidunram.webp',
