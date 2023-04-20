@@ -29,6 +29,25 @@ router.get('/', async (req, res) => {
 	}
 });
 
+router.get('/master', async (req, res) => {
+	if (PARAMS.dev) {
+		// TODO: In the future, set a 'daily' script to run at midnight and update a process.env.LIVE_QUIZ parameter
+		const quiz = await dbh.getLiveQuiz('2022-11-12');
+		console.log("Hello");
+		// if (!quiz) return res.renderFile('events/quizzes_404.njk', { message: `The quiz hasn't started, yet!` });
+		const QUIZ = quiz.questions;
+
+		return res.renderFile('events/live_master.njk', {
+			quiz: JSON.stringify(QUIZ),
+			qAmt: QUIZ.length,
+			id: 'live',
+			dev: PARAMS.dev
+		});
+	} else {
+		return res.renderFile('events/quizzes_404.njk', { message: `STOP SNOOPING AROUND!` });
+	}
+});
+
 router.get('/results', async (req, res) => {
 	const quizId = new Date().toISOString().slice(0, 10);
 	const RES = await dbh.getAllLiveResults(quizId);
@@ -105,6 +124,33 @@ router.post('/', async (req, res) => {
 	}
 });
 
+router.post('/master', async (req, res) => {
+	if (PARAMS.dev) {
+		// LQ keeps track of which question is currently being asked
+		if (!handlerContext.liveQuiz) handlerContext.liveQuiz = {};
+		const LQ = handlerContext.liveQuiz;
+		const quiz = await dbh.getLiveQuiz('2022-11-12');
+		const QUIZ = quiz.questions;
+		// console.log(req.body);
+		const { currentQ, options } = req.body;
+
+		const time = { '10': 20, '5': 15, '3': 12 }[QUIZ[currentQ].points];
+		io.sockets.in('waiting-for-live-quiz').emit('question', { currentQ, options, time });
+		setTimeout(() => {
+			const type = QUIZ[currentQ].options.type;
+			const solution = QUIZ[currentQ].solution;
+			setTimeout(() => io.sockets.in('waiting-for-live-quiz').emit('answer', {
+				answer: Array.isArray(solution) ? solution.join(' / ') : solution,
+				type
+			}), 2000); // Emit the actual event 3s after
+		}, 1000 * (time + 1)); // Extra second to account for lag
+		LQ.currentQ = req.body.currentQ;
+		LQ.endTime = Date.now() + 1000 * (time + 1);
+		res.send('Done');
+	} else {
+		return res.renderFile('events/quizzes_404.njk', { message: `STOP SNOOPING AROUND!` });
+	}
+});
 
 router.post('/end', async (req, res) => {
 	if (!req.loggedIn) {
