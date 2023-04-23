@@ -45,7 +45,7 @@ exports.init = () => {
 			}
 		}
 	} catch (e) {
-		console.log(e.code === 'ENOENT' ? 'Unable to find credentials.json' : e);
+		if (!PARAMS.test) console.log(e.code === 'ENOENT' ? 'Unable to find credentials.json' : e);
 	}
 	if (!process.env.MONGO_TEST_URL && !process.env.MONGO_URL) {
 		PARAMS.mongoless = PARAMS.userless = true;
