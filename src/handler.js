@@ -648,7 +648,7 @@ function handler (app, nunjEnv) {
 			next(error);
 		}
 	});
-	app.post('/live', async (req, res) => {
+	app.post('/live', async (req, res, next) => {
 		try {
 			if (!req.loggedIn) {
 				if (!PARAMS.userless) req.session.returnTo = req.url;
