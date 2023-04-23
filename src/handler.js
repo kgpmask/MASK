@@ -33,7 +33,7 @@ function handler (app, nunjEnv) {
 		'December'
 	];
 	app.get(['/', '/home'], async (req, res, next) => {
-		try{
+		try {
 			const sample = [
 				{
 					name: 'How to get into MASK',
@@ -105,13 +105,12 @@ function handler (app, nunjEnv) {
 			const vids = allPosts.filter(post => post.type === 'youtube' && post.hype).splice(0, toBeDisplayed);
 			return res.renderFile('home.njk', { posts, vids, art });
 
-		} catch(error){
+		} catch (error) {
 			next(error);
 		}
-		
 	});
 	app.get('/art', async (req, res, next) => {
-		try{
+		try {
 			const sample = [
 				{
 					name: 'Art - Tanjiro Kamado',
@@ -124,33 +123,30 @@ function handler (app, nunjEnv) {
 			];
 			const art = PARAMS.mongoless ? sample : await dbh.getPosts('art');
 			return res.renderFile('art.njk', { art });
-		}catch(error){
+		} catch (error) {
 			next(error);
 		}
 	});
-
 	app.get('/videos', async (req, res, next) => {
-		try{
+		try {
 			const sample = [{ name: 'How to get into MASK', link: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', type: 'youtube' }];
 			const vids = PARAMS.mongoless ? sample : await dbh.getPosts('youtube');
 			vids.forEach(vid => vid.embed = `https://www.youtube.com/embed/${vid.link.split('?v=')[1]}?playsinline=1`);
 			return res.renderFile('videos.njk', { vids });
 
-		} catch(error) {
+		} catch (error) {
 			next(error);
 		}
-		
 	});
 	app.get('/about', (req, res, next) => {
-		try{
+		try {
 			return res.renderFile('about.njk');
-		} catch(error){
+		} catch (error) {
 			next(error);
 		}
-		
 	});
 	app.get('/members/:yearName?', async (req, res, next) => {
-		try{
+		try {
 			const sample = [
 				{
 					name: 'Ankan Saha',
@@ -317,14 +313,11 @@ function handler (app, nunjEnv) {
 				prev: yearName - 1 >= 2020 && !PARAMS.mongoless ? `${yearName - 1}-${yearName % 100}` : undefined,
 				next: yearName + 1 <= 2022 && !PARAMS.mongoless ? `${yearName + 1}-${yearName % 100 + 2}` : undefined
 			});
-		} catch(error){
+		} catch (error) {
 			next(error);
 		}
 	});
-
-
 	// Links to external stuff
-
 	app.get('/apply', (req, res) => {
 		return res.renderFile('applications.njk');
 	});
@@ -336,32 +329,25 @@ function handler (app, nunjEnv) {
 		// TODO: Fix this!
 		return res.redirect(`https://maskiitkgp.blogspot.com${url}.html`);
 	});
-
-
 	// User stuff
-
 	app.get('/login', (req, res, next) => {
-		try{
+		try {
 			if (req.loggedIn) return res.redirect('/');
 			res.renderFile('login.njk');
-		} catch(error){
+		} catch (error) {
 			next(error);
 		}
-		
 	});
-
 	app.get('/logout', (req, res, next) => {
-		try{
+		try {
 			if (!req.loggedIn) return res.redirect('/login');
 			return req.logout(() => res.redirect('/'));
-		} catch(error){
+		} catch (error) {
 			next(error);
 		}
-		
 	});
-
 	app.get('/profile', async (req, res, next) => {
-		try{
+		try {
 			if (!req.loggedIn) return res.redirect('/');
 			const user = await dbh.getUserStats(req.user._id);
 			return res.renderFile('profile.njk', {
@@ -374,18 +360,13 @@ function handler (app, nunjEnv) {
 				})
 			});
 
-		} catch(error){
+		} catch (error) {
 			next(error);
 		}
-		
 	});
-
-
 	// Newsletters, quizzes, and events
-
 	app.get('/newsletters/:target?', (req, res, next) => {
-
-		try{
+		try {
 			return fs.readdir(path.join(__dirname, '../templates/newsletters')).then(letters => {
 				const years = {};
 				letters.sort();
@@ -400,7 +381,6 @@ function handler (app, nunjEnv) {
 				});
 				const renderYears = Object.values(years);
 				renderYears.forEach(year => year.months = Object.values(year.months).reverse());
-	
 				const target = req.params.target;
 				if (!target) return res.renderFile('newsletters.njk', {
 					years: renderYears.reverse()
@@ -418,18 +398,16 @@ function handler (app, nunjEnv) {
 					const pages = files.filter(file => file.includes('#'));
 					return res.renderFile(filepath, { adjs, pages, target });
 				});
-	
 			}).catch(err => {
 				console.log(err);
 				return res.notFound();
 			});
-		} catch(error){
+		} catch (error) {
 			next(error);
 		}
-		
 	});
 	app.post('/checker/:newsletter/:puzzleType', async (req, res, next) => {
-		try{
+		try {
 			const { solutions } = await dbh.getNewsletter(req.params.newsletter);
 			const response = checker.checkNewsletterPuzzle(req.params.puzzleType, req.body, solutions);
 			switch (response) {
@@ -437,13 +415,12 @@ function handler (app, nunjEnv) {
 				case false: return res.send('');
 				default: return res.send(response);
 			}
-		} catch(error){
+		} catch (error) {
 			next(error);
 		}
 	});
-
 	app.get(['/quizzes/:arg', '/events/:arg'], async (req, res, next) => {
-		try{
+		try {
 			if (!req.loggedIn) {
 				if (!PARAMS.userless) req.session.returnTo = req.url;
 				return res.renderFile('login.njk');
@@ -509,12 +486,12 @@ function handler (app, nunjEnv) {
 				qAmt: questions.length,
 				id: req.params.arg
 			});
-		} catch(error){
+		} catch (error) {
 			next(error);
 		}
 	});
 	app.get(['/quizzes', '/events'], async (req, res, next) => {
-		try{
+		try {
 			// No specific event queried!
 			if (PARAMS.mongoless) return res.redirect('/');
 			const user = req.loggedIn ? await dbh.getUserStats(req.user._id) : {};
@@ -545,12 +522,12 @@ function handler (app, nunjEnv) {
 				years: renderYears.reverse(),
 				locked
 			});
-		} catch(error){
+		} catch (error) {
 			next(error);
 		}
 	});
 	app.post('/quizzes', async (req, res, next) => {
-		try{
+		try {
 			// TODO: Use a res.requireLogin(req) function
 			if (!req.loggedIn) {
 				if (!PARAMS.userless) req.session.returnTo = req.url;
@@ -582,27 +559,26 @@ function handler (app, nunjEnv) {
 			dbh.updateUserQuizRecord({ userId: req.user._id, quizId, score: points[0], time: Date.now() });
 			// Despite the above function being async, we don't need the result to continue, so no point in 'await' here
 			return res.renderFile('events/quiz_success.njk', { score: points[0], totalScore: points[1] });
-		} catch(error){
+		} catch (error) {
 			next(error);
 		}
 	});
 	app.get('/success', (req, res, next) => {
-		try{
+		try {
 			// TODO: Rename this to /quiz/success
 			return res.renderFile('events/quiz_success.njk');
-		} catch(error){
+		} catch (error) {
 			next(error);
 		}
 	});
 	// Live master endpoint
 	app.get('/live-master', async (req, res, next) => {
-		try{
+		try {
 			if (PARAMS.dev) {
 				// TODO: In the future, set a 'daily' script to run at midnight and update a process.env.LIVE_QUIZ parameter
 				const quiz = await dbh.getLiveQuiz('2022-11-12');
 				// if (!quiz) return res.renderFile('events/quizzes_404.njk', { message: `The quiz hasn't started, yet!` });
 				const QUIZ = quiz.questions;
-	
 				return res.renderFile('events/live_master.njk', {
 					quiz: JSON.stringify(QUIZ),
 					qAmt: QUIZ.length,
@@ -612,12 +588,12 @@ function handler (app, nunjEnv) {
 			} else {
 				return res.renderFile('events/quizzes_404.njk', { message: `STOP SNOOPING AROUND!` });
 			}
-		} catch(error){
+		} catch (error) {
 			next(error);
 		}
 	});
 	app.post('/live-master', async (req, res, next) => {
-		try{
+		try {
 			if (PARAMS.dev) {
 				// LQ keeps track of which question is currently being asked
 				if (!handlerContext.liveQuiz) handlerContext.liveQuiz = {};
@@ -626,7 +602,6 @@ function handler (app, nunjEnv) {
 				const QUIZ = quiz.questions;
 				// console.log(req.body);
 				const { currentQ, options } = req.body;
-	
 				const time = { '10': 20, '5': 15, '3': 12 }[QUIZ[currentQ].points];
 				io.sockets.in('waiting-for-live-quiz').emit('question', { currentQ, options, time });
 				setTimeout(() => {
@@ -643,12 +618,12 @@ function handler (app, nunjEnv) {
 			} else {
 				return res.renderFile('events/quizzes_404.njk', { message: `STOP SNOOPING AROUND!` });
 			}
-		} catch(error){
+		} catch (error) {
 			next(error);
 		}
 	});
 	app.get('/live', async (req, res, next) => {
-		try{
+		try {
 			if (!req.loggedIn) {
 				if (!PARAMS.userless) req.session.returnTo = req.url;
 				return res.renderFile('events/quiz_login.njk');
@@ -669,12 +644,12 @@ function handler (app, nunjEnv) {
 					userId: req.user._id
 				});
 			}
-		} catch(error){
+		} catch (error) {
 			next(error);
 		}
 	});
 	app.post('/live', async (req, res) => {
-		try{
+		try {
 			if (!req.loggedIn) {
 				if (!PARAMS.userless) req.session.returnTo = req.url;
 				return res.renderFile('events/quiz_login.njk');
@@ -716,12 +691,12 @@ function handler (app, nunjEnv) {
 				const functionArgs = [user._id, quiz.title, currentQ, points, answer, timeLeft, result];
 				dbh.addLiveResult(...functionArgs).then(() => res.send('Submitted')).catch(e => console.log(e) && res.error(e));
 			}
-		} catch(error){
+		} catch (error) {
 			next(error);
 		}
 	});
 	app.post('/live-end', async (req, res, next) => {
-		try{
+		try {
 			if (!req.loggedIn) {
 				if (!PARAMS.userless) req.session.returnTo = req.url;
 				return res.renderFile('events/quiz_login.njk');
@@ -730,13 +705,12 @@ function handler (app, nunjEnv) {
 			if (!user.permissions.find(perm => perm === 'quizmaster')) throw new Error('Access denied');
 			io.sockets.in('waiting-for-live-quiz').emit('end-quiz');
 			return res.send('Ended!');
-		} catch(error){
+		} catch (error) {
 			next(error);
 		}
 	});
-
 	app.get('/live-results', async (req, res, next) => {
-		try{
+		try {
 			const quizId = new Date().toISOString().slice(0, 10);
 			const RES = await dbh.getAllLiveResults(quizId);
 			if (!RES) return res.notFound();
@@ -766,69 +740,64 @@ function handler (app, nunjEnv) {
 				delete results[result].id;
 			}
 			return res.renderFile('events/results.njk', { results });
-		} catch(error){
+		} catch (error) {
 			next(error);
 		}
 	});
 	app.get('/prizes', (req, res, next) => {
-		try{	
+		try {
 			const prizes = require('./rewards.json');
 			return res.renderFile('events/prizes.njk', { prizes });
-		} catch(error){
+		} catch (error) {
 			next(error);
 		}
 	});
-
 	app.get('/fandom', (req, res, next) => {
-		try{
+		try {
 			return res.error(`...uhh I don't think you're supposed to be here...`);
 			// eslint-disable-next-line no-unreachable
 			return res.renderFile('fandom_quiz.njk');
-		} catch(error){
+		} catch (error) {
 			next(error);
 		}
 	});
-
 	// Assorted other stuff
-
 	app.get('/privacy', (req, res, next) => {
-		try{
+		try {
 			res.renderFile('privacy.njk');
-		} catch(error){
+		} catch (error) {
 			next(error);
 		}
 	});
 	app.get('/terms', (req, res, next) => {
-		try{
+		try {
 			res.renderFile('terms.njk');
-		}catch(error){
+		} catch (error) {
 			next(error);
-		}		
+		}
 	});
-
 	app.get('/corsProxy', (req, res, next) => {
-		try{
+		try {
 			const base64Url = req.query.base64Url;
 			const url = atob(base64Url);
 			return axios.get(url, { headers: { 'Access-Control-Allow-Origin': '*' } }).then(response => {
 				return res.send(response.data);
 			});
-		} catch(error){
+		} catch (error) {
 			next(error);
 		}
 	});
-
 	app.get('/rebuild', (req, res, next) => {
-		try{
+		try {
 			nunjEnv.loaders.forEach(loader => loader.cache = {});
 			['./members.json', './posts.json', './rewards.json'].forEach(cache => delete require.cache[require.resolve(cache)]);
 			return res.renderFile('rebuild.njk');
-		} catch(error){
+		} catch (error) {
 			next(error);
 		}
 	});
 	app.post('/git-hook', async (req, res, next) => {
-		try{
+		try {
 			const secret = process.env.WEBHOOK_SECRET;
 			if (!secret) return res.send('Disabled due to no webhook secret being configured');
 			// Validate secret
@@ -846,32 +815,35 @@ function handler (app, nunjEnv) {
 			await Tools.updateCode();
 			res.send('Success!');
 			return process.exit(0);
-		} catch(error){
+		} catch (error) {
 			next(error);
 		}
 	});
-
-	
-	app.use((error, req, res, next) => {
-		if (PARAMS.dev){
-			if (req.method === "POST"){
-				console.error(error.stack);
-			}
-			else if (req.method === "GET"){
-				res.status(500).send('404.njk', { message: 'Server error! This may or may not be due to invalid input.' });
-			}	
-		}
-		// Make POST errors show only the data, and GET errors show the page with the error message
-	});
-
 	app.post((req, res) => {
-		// If propagation hasn't stopped, switch to GET!
-		return res.redirect(req.url);
+		try {
+			// If propagation hasn't stopped, switch to GET!
+			return res.redirect(req.url);
+		} catch (error) {
+			next(error);
+		}
 	});
 	app.use((req, res) => {
-		// Catch-all 404
-		res.notFound();
+		try {
+			// Catch-all 404
+			res.notFound();
+		} catch (error) {
+			next(error);
+		}
+	});
+	// Make POST errors show only the data, and GET errors show the page with the error message
+	app.use((error, req, res, next) => {
+		if (PARAMS.dev) {
+			if (req.method === "POST") {
+				console.error(error.stack);
+			} else if (req.method === "GET") {
+				res.status(500).send('404.njk', { message: 'Server error! This may or may not be due to invalid input.' });
+			}
+		}
 	});
 }
-
 module.exports = handler;
