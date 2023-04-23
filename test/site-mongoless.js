@@ -1,5 +1,3 @@
-global.mode = 'MONGOLESS';
-
 const PORT = 42070;
 process.env.PORT = PORT;
 global.PARAMS = { mongoless: true, test: true, userless: true };

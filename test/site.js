@@ -1,5 +1,3 @@
-global.mode = 'DEFAULT';
-
 const PORT = 42069;
 process.env.PORT = PORT;
 

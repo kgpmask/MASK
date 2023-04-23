@@ -1,5 +1,3 @@
-global.mode = 'USERLESS';
-
 const PORT = 42071;
 process.env.PORT = PORT;
 global.PARAMS = { test: true, userless: true };
