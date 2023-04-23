@@ -819,7 +819,7 @@ function handler (app, nunjEnv) {
 			next(error);
 		}
 	});
-	app.post((req, res) => {
+	app.post((req, res, next) => {
 		try {
 			// If propagation hasn't stopped, switch to GET!
 			return res.redirect(req.url);
@@ -827,7 +827,7 @@ function handler (app, nunjEnv) {
 			next(error);
 		}
 	});
-	app.use((req, res) => {
+	app.use((req, res, next) => {
 		try {
 			// Catch-all 404
 			res.notFound();
