@@ -10,7 +10,7 @@ exports.init = async () => {
 			if (PARAMS.test) {
 				console.log('HOLY SHIT WHY ARE YOU CONNECTING TO PROD IN A TEST SUITE AAAAAA');
 				console.log('*defenestrates to prevent damage*');
-				process.exit();
+				process.exit(1);
 			}
 			console.log('___________________________________________');
 			console.log('| \x1b[31mYOU ARE CONNECTING TO THE PRODUCTION DB\x1b[0m |');
