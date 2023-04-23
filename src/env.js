@@ -14,7 +14,7 @@ const validParams = ['dev', 'local', 'prod', 'mongoless', 'userless', 'quiz', 't
 if (!global.PARAMS) {
 	if (process.env['NODE_ENV'] === 'production') process.env.prod = true;
 	const shorts = new Set();
-	const entries = process.argv.slice(2).map(arg => {
+	const entries = process.argv[1]?.includes('mocha') ? [['test', true]] : process.argv.slice(2).map(arg => {
 		if (!validParams.includes(arg)) {
 			arg.split('').forEach(a => shorts.add(a));
 			return false;
@@ -56,5 +56,4 @@ exports.init = () => {
 	}
 	if (!PARAMS.prod) process.env.MONGO_URL = process.env.MONGO_TEST_URL;
 	if (PARAMS.local) process.env.MONGO_URL = 'mongodb://127.0.0.1/mask';
-	if (PARAMS.test) PARAMS.port = 42069;
 };
