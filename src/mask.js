@@ -15,7 +15,7 @@ const socketio = require('socket.io')();
 const initMiddleware = require('./middleware.js');
 
 global.app = express();
-const waitForDB = PARAMS.mongoless ? Promise.resolve({ handler: {} }) : DB.init();
+const waitForDB = PARAMS.mongoless ? Promise.resolve({}) : DB.init();
 
 const nunjEnv = nunjucks.configure(path.join(__dirname, '../templates'), {
 	express: app,
