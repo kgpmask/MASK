@@ -733,7 +733,7 @@ function handler (app, nunjEnv) {
 		// If propagation hasn't stopped, switch to GET!
 		return res.redirect(req.url);
 	});
-	app.get('/', (req, res) => {
+	app.use((req, res) => {
 		// Catch-all 404
 		res.notFound();
 	});
