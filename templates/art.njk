@@ -9,7 +9,7 @@
 <section id="photos">
 	{% for img in art %}
 	<div class="img-container">
-		<img id="img-{{ loop.index }}" src="/assets/art/{{ img.link }}" loading="lazy"/>
+		<img id="img-{{ loop.index }}" src="/assets/art/{{ img.link }}" style="height: calc(var(--col-width)*{{ img.metadata.height }}/{{ img.metadata.width }});" loading="lazy"/>
 		<div class="overlay">
 			<h1>{{ img.name | replace('Art - ', '') }}</h1>
 			<h3>{{ img.attr | join(', ') }}</h3>
@@ -21,6 +21,10 @@
 
 {% block customcss %}
 <style>
+	:root {
+		--col-width: calc((100vw - 256px)/3);
+	}
+
 	.link {
 		color: var(--off-white);
 	}
