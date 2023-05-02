@@ -728,6 +728,9 @@ function handler (app, nunjEnv) {
 		res.send('Success!');
 		return process.exit(0);
 	});
+	app.use('/error', async () => {
+		throw new Error('Sensitive error');
+	});
 
 
 	app.use((req, res, next) => {
