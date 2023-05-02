@@ -721,25 +721,27 @@ function handler (app, nunjEnv) {
 		}
 		const branch = process.env.WEBHOOK_BRANCH;
 		if (!branch) return res.send('No branch configured for webhooks');
-		if (branch !== 'dev') return res.send('Automatic webhook updates are only enabled on the dev branch');
+		if (branch !== 'dev' && branch !== 'main') {
+			return res.send('Automatic webhook updates are only enabled on dev and main branch');
+		}
 		await Tools.updateCode();
 		res.send('Success!');
 		return process.exit(0);
 	});
 
-	app.use((err, req, res, next) => {
-		if (PARAMS.dev) console.error(err.stack);
-		// Make POST errors show only the data, and GET errors show the page with the error message
-		res.status(500).renderFile('404.njk', { message: 'Server error! This may or may not be due to invalid input.' });
-	});
-
-	app.post((req, res) => {
+	app.post('/', (req, res) => {
 		// If propagation hasn't stopped, switch to GET!
 		return res.redirect(req.url);
 	});
 	app.use((req, res) => {
 		// Catch-all 404
 		res.notFound();
+	});
+
+	app.use((err, req, res, next) => {
+		if (PARAMS.dev) console.error(err.stack);
+		// Make POST errors show only the data, and GET errors show the page with the error message
+		res.status(500).renderFile('404.njk', { message: 'Server error! This may or may not be due to invalid input.' });
 	});
 }
 
