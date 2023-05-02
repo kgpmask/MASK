@@ -24,7 +24,7 @@ module.exports = function setMiddleware (app) {
 		app.use(passport.authenticate('session'));
 
 		app.use((req, res, next) => {
-			if (req.url !== '/git-hook') {
+			if (!['/git-hook', '/error'].includes(req.url)) {
 				csrf()(req, res, next);
 				res.locals.csrfToken = req.csrfToken();
 			} else next();
