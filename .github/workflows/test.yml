@@ -30,7 +30,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm install
     - run: npm run lint
-    - run: npm run mocha-one ${{ matrix.mocha-test-file }}
+    - run: npm run mocha-one test/${{ matrix.mocha-test-file }}
       env:
         GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
         GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
