@@ -729,6 +729,7 @@ function handler (app, nunjEnv) {
 		return process.exit(0);
 	});
 
+
 	app.use((req, res, next) => {
 		// If propagation hasn't stopped, switch to GET!
 		if (req.method === "POST") {

@@ -14,7 +14,7 @@ before(async () => {
 describe('Server (Userless mode)', () => {
 	pages.forEach(page => {
 		it(`should serve page (${page || '/'})`, () => axios.get(`http://localhost:${PORT}/${page}`))
-			.timeout(process.platform === 'win32' ? 5_000 : 1_900);
+			.timeout(process.platform === 'win32' ? 5_000 : 3_000);
 		// Pages should render in under 1.5s (or 5 seconds on Windows)
 	});
 

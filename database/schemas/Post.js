@@ -6,7 +6,13 @@ const postSchema = new mongoose.Schema({
 	attr: { type: [String] },
 	date: { type: Date, required: true },
 	page: String,
-	hype: Boolean
+	hype: Boolean,
+	metadata: {
+		type: {
+			height: Number,
+			width: Number
+		}
+	}
 });
 
 postSchema.set('collection', 'posts');
