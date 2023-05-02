@@ -1,6 +1,5 @@
 const checkerRouter = require("../routes/checker");
 const corsProxyRouter = require("../routes/corsProxy");
-const fandomRouter = require("../routes/fandom");
 const gitHookRouter = require("../routes/gitHook");
 const homeRouter = require("../routes/home");
 const liveRouter = require("../routes/live");
@@ -43,7 +42,6 @@ function link (app, nunjEnv) {
 
 	app.use('/checker', checkerRouter);
 	app.use('/corsProxy', corsProxyRouter);
-	app.use('/fandom', fandomRouter);
 	app.use('/git-hook', gitHookRouter);
 	app.use('/', homeRouter);
 	app.use('/home', homeRouter);
