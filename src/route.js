@@ -1,6 +1,7 @@
 const checkerRouter = require("../routes/checker");
 const corsProxyRouter = require("../routes/corsProxy");
 const gitHookRouter = require("../routes/gitHook");
+const govPortalRouter = require("../routes/govportal");
 const homeRouter = require("../routes/home");
 const liveRouter = require("../routes/live");
 const mediaRouter = require("../routes/media");
@@ -43,6 +44,7 @@ function link (app, nunjEnv) {
 	app.use('/checker', checkerRouter);
 	app.use('/corsProxy', corsProxyRouter);
 	app.use('/git-hook', gitHookRouter);
+	app.use('/gov-portal', govPortalRouter);
 	app.use('/', homeRouter);
 	app.use('/home', homeRouter);
 	app.use('/live', liveRouter);
