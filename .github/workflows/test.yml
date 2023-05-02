@@ -14,6 +14,14 @@ on:
 
 jobs:
   test:
+
+    env:
+      GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+      GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+      MONGO_TEST_URL: ${{ secrets.MONGO_TEST_URL }}
+      MONGO_URL: ${{ secrets.MONGO_URL }}
+      SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
+
     strategy:
       matrix:
         node-version: [16.x]
@@ -30,10 +38,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm install
     - run: npm run lint
-    - run: npm run mocha-one test/${{ matrix.mocha-test-file }}
-      env:
-        GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
-        GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
-        MONGO_TEST_URL: ${{ secrets.MONGO_TEST_URL }}
-        MONGO_URL: ${{ secrets.MONGO_URL }}
-        SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
+    - run: npm run mocha-one test/site.js
+    - run: npm run mocha-one test/site-userless.js
+    - run: npm run mocha-one test/site-mongoless.js
+    - run: npm run mocha-one test/tools.js
