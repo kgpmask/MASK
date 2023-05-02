@@ -11,7 +11,9 @@
 		"lint": "eslint . --config .eslintrc.json --ext .js",
 		"prepare": "husky install",
 		"start": "node src/mask.js",
-		"test": "npm run lint && cross-env NODE_ENV=test mocha test/**.js --parallel --exit && echo \"Passing all tests.\" && exit 0",
+		"mocha": "cross-env NODE_ENV=test mocha test/**.js --parallel --exit",
+		"mocha-one": "cross-env NODE_ENV=test mocha test/$1 --exit",
+		"test": "npm run lint && npm run mocha && echo \"Passing all tests.\" && exit 0",
 		"update-branch": "git fetch $(git rev-parse --symbolic-full-name --abbrev-ref @{upstream} | sed 's!/! !') && git merge FETCH_HEAD"
 	},
 	"repository": {

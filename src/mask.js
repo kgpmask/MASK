@@ -32,7 +32,6 @@ global.io = socketio.listen(server);
 require('./socket.js');
 
 server.listen(PORT, () => {
-	console.log(PORT); // This line is only for debugging CI, please remove afterwards
 	if (!PARAMS.test) console.log(`The MASK server's up at http://localhost:${PORT}/`);
 });
 
