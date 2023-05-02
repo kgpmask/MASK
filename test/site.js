@@ -39,6 +39,25 @@ describe('Server', () => {
 		.then(() => Promise.resolve(false))
 		.catch(res => assert.equal(res.response.status, 404)));
 
+	describe('Errors', () => {
+		it('should handle uncaught GET errors', () => {
+			return axios.get(`http://localhost:${PORT}/error`).then(() => Promise.resolve(false)).catch(res => {
+				assert.equal(res.response.status, 500);
+				assert(res.response.data.includes('<h1> Server error! This may or may not be due to invalid input. </h1>'));
+			});
+		});
+		it('should handle uncaught POST errors', () => {
+			return axios.post(`http://localhost:${PORT}/error`).then(() => Promise.resolve(false)).catch(res => {
+				assert.equal(res.response.status, 500);
+				assert(res.response.data === 'Error: Sensitive error');
+				// We're fine with the error being broadcast, but NOT the error stack
+				// This is because we internally throw context errors to let the user
+				// (or the browser) know why their request went wrong if they mess up
+			});
+		});
+	});
+});
+
 	after(() => server.close());
 
 });

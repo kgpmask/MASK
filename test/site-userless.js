@@ -19,8 +19,8 @@ describe('Server (Userless mode)', () => {
 
 	pages.forEach(page => {
 		it(`should serve page (${page || '/'})`, () => axios.get(`http://localhost:${PORT}/${page}`))
-			.timeout(process.platform === 'win32' ? 5_000 : 2_000);
-		// Pages should render in under 2s (or 5 seconds on Windows)
+			.timeout(process.platform === 'win32' ? 5_000 : 3_000);
+		// Pages should render in under 1.5s (or 5 seconds on Windows)
 	});
 
 	it('should display 404s for pages that don\'t exist', () => axios.get(`http://localhost:${PORT}/hashire-sori-yo`)

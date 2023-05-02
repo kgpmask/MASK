@@ -174,7 +174,7 @@
 			// Re-enable navigation buttons 2s AFTER timer ends
 			const quizTime = { '10': 20, '5': 15, '3': 12 }[quiz[currentQ].points];
 			startButton.disabled = true;
-			axios.post('/live{{ '-master' if dev else '' }}', { options: quiz[currentQ].options, currentQ }).then(() => {
+			axios.post('/live{{ '/master' if dev else '' }}', { options: quiz[currentQ].options, currentQ }).then(() => {
 				timer(quizTime);
 				startedQs.push(currentQ);
 			});
@@ -192,8 +192,8 @@
 
 		function endQuiz () {
 			if (!confirm('End the quiz?')) return;
-			axios.post('/live-end').then(() => {
-				window.location.href = '/live-results';
+			axios.post('/live/end').then(() => {
+				window.location.href = '/live/results';
 			});
 		}
 	</script>
