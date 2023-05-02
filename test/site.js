@@ -56,7 +56,6 @@ describe('Server', () => {
 			});
 		});
 	});
-});
 
 	after(() => server.close());
 
