@@ -1,6 +1,6 @@
 {
 	"name": "mask",
-	"version": "3.1.6",
+	"version": "3.2.0",
 	"description": "Website for MASK",
 	"main": "./src/index.js",
 	"scripts": {
@@ -11,7 +11,9 @@
 		"lint": "eslint . --config .eslintrc.json --ext .js",
 		"prepare": "husky install",
 		"start": "node src/mask.js",
-		"test": "npm run lint && mocha test --exit && echo \"Passing all tests.\" && exit 0",
+		"mocha": "cross-env NODE_ENV=test mocha test/**.js --parallel --exit",
+		"mocha-one": "cross-env NODE_ENV=test mocha --exit",
+		"test": "npm run lint && npm run mocha && echo \"Passing all tests.\" && exit 0",
 		"update-branch": "git fetch $(git rev-parse --symbolic-full-name --abbrev-ref @{upstream} | sed 's!/! !') && git merge FETCH_HEAD"
 	},
 	"repository": {
@@ -32,7 +34,7 @@
 		"connect-mongo": "^4.6.0",
 		"cookie-parser": "^1.4.6",
 		"csurf": "^1.11.0",
-		"express": "^4.17.1",
+		"express": "^5.0.0-beta.1",
 		"express-session": "^1.17.2",
 		"mongodb": "^4.8.0",
 		"mongoose": "^6.2.4",
@@ -43,9 +45,10 @@
 		"socket.io": "^4.5.3"
 	},
 	"devDependencies": {
+		"cross-env": "^7.0.3",
 		"eslint": "^8.32.0",
 		"husky": "^8.0.1",
-		"mocha": "^9.0.3",
+		"mocha": "^10.2.0",
 		"nodemon": "^2.0.19"
 	}
 }

@@ -9,13 +9,13 @@ const path = require('path');
 
 global.Tools = require('./tools.js');
 const DB = require('../database/database.js');
-const PORT = PARAMS.port ?? require('./config.js').PORT;
-const appHandler = require('./handler.js');
+const PORT = PARAMS.test ? process.env.PORT : require('./config.js').PORT;
+const route = require("./route.js");
 const socketio = require('socket.io')();
 const initMiddleware = require('./middleware.js');
 
 global.app = express();
-const waitForDB = PARAMS.mongoless ? Promise.resolve() : DB.init();
+const waitForDB = PARAMS.mongoless ? Promise.resolve({}) : DB.init();
 
 const nunjEnv = nunjucks.configure(path.join(__dirname, '../templates'), {
 	express: app,
@@ -24,7 +24,7 @@ const nunjEnv = nunjucks.configure(path.join(__dirname, '../templates'), {
 
 initMiddleware(app);
 
-appHandler(app, nunjEnv);
+route(app, nunjEnv);
 
 const server = http.createServer(app);
 global.io = socketio.listen(server);
@@ -32,14 +32,12 @@ global.io = socketio.listen(server);
 require('./socket.js');
 
 server.listen(PORT, () => {
-	console.log(`The MASK server's up at http://localhost:${PORT}/`);
+	if (!PARAMS.test) console.log(`The MASK server's up at http://localhost:${PORT}/`);
 });
 
 const sass = childProcess.exec(`npx sass assets${PARAMS.dev ? ' --watch' : ''} --no-source-map --style compressed`);
 
-exports.ready = async () => {
-	await waitForDB;
-};
+exports.ready = () => waitForDB;
 
 exports.close = () => {
 	server.close();
