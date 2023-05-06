@@ -1,6 +1,6 @@
 const checkerRouter = require("../routes/checker");
 const corsProxyRouter = require("../routes/corsProxy");
-const gitHookRouter = require("../routes/gitHook");
+const gitHookRouter = require("../routes/git-hook");
 const homeRouter = require("../routes/home");
 const liveRouter = require("../routes/live");
 const mediaRouter = require("../routes/media");
