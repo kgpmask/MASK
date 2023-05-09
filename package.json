@@ -2,7 +2,7 @@
 	"name": "mask",
 	"version": "3.2.1",
 	"description": "Website for MASK",
-	"main": "./src/index.js",
+	"main": "./src/mask.js",
 	"scripts": {
 		"dev": "nodemon src/mask.js dev",
 		"dm": "nodemon src/mask.js dm",
