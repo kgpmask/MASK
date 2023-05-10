@@ -1,0 +1,48 @@
+{% extends "govportal/govportal.njk" %}
+
+{% set thispage = 'govportal' %}
+{% set pagetitle = 'Governor Portal | Post Management' %}
+{% set actionname = 'Post Management' %}
+
+{% block actioncontent %}
+	<div class="form">
+		<form action="">
+			<div>
+				<label for="">Name</label>
+				<input type="text" id="name">
+			</div>
+			<div>
+				<label for="link">Link</label>
+				<input type="text" id="link">
+			</div>
+			<div>
+				<label for="type">Type</label>
+				<input type="text" id="type">
+			</div>
+			<div>
+				<label for="attr">Author</label>
+				<input type="text" id="attr">
+			</div>
+			<div>
+				<label for="date">Date</label>
+				<input type="text" id="date">
+			</div>
+			<div>
+				<label for="page">Page</label>
+				<input type="text" id="page" value="_blank">
+			</div>
+			<div>
+				<label for="hype">Hype</label>
+				<input type="text" id="hype" value="true">
+			</div>
+		</form>
+	</div>
+{% endblock %}
+
+{% block customjs %}
+	<script>
+		window.onload = () => {
+			document.getElementById('date').value = new Date().toISOString();
+		}
+	</script>
+{% endblock %}
