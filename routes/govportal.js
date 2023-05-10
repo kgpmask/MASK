@@ -6,4 +6,9 @@ router.get(['/', '/:action'], (req, res) => {
 	res.renderFile(`govportal/${req.params.action ? req.params.action : 'govportal'}.njk`);
 });
 
+router.post('/post', (req, res) => {
+	// if (!req.loggedIn) return res.renderFile('/');
+	console.log(req.body);
+});
+
 module.exports = router;
