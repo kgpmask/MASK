@@ -7,39 +7,41 @@
 {% set scripts = ['https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'] %}
 
 {% block actioncontent %}
-	<div class="form">
-		<div>
-			<label for="">Name</label>
-			<input type="text" id="name">
-		</div>
-		<div>
-			<label for="link">Link</label>
-			<input type="text" id="link">
-		</div>
-		<div>
-			<label for="type">Type</label>
-			<select name="type" id="type">
-				<option value="youtube">Youtube</option>
-				<option value="letter">Newsletter</option>
-			</select>
-		</div>
-		<div>
-			<label for="attr">Author</label>
-			<input type="text" id="attr">
-		</div>
-		<div>
-			<label for="date">Date</label>
-			<input type="text" id="date">
-		</div>
-		<div>
-			<label for="page">Page</label>
-			<input type="text" id="page" value="_blank">
-		</div>
-		<div>
-			<label for="hype">Hype</label>
-			<input type="text" id="hype" value="true">
-		</div>
-		<button type="button" onclick="submit()">Submit</button>
+	<div class="form-container">
+		<form>
+			<div class="item">
+				<label for="">Name</label>
+				<input type="text" id="name">
+			</div>
+			<div class="item">
+				<label for="link">Link</label>
+				<input type="text" id="link">
+			</div>
+			<div class="item">
+				<label for="type">Type</label>
+				<select name="type" id="type">
+					<option value="youtube">Youtube</option>
+					<option value="letter">Newsletter</option>
+				</select>
+			</div>
+			<div class="item">
+				<label for="attr">Author</label>
+				<input type="text" id="attr">
+			</div>
+			<div class="item">
+				<label for="date">Date</label>
+				<input type="text" id="date">
+			</div>
+			<div class="item">
+				<label for="page">Page</label>
+				<input type="text" id="page" value="_blank">
+			</div>
+			<div class="item">
+				<label for="hype">Hype</label>
+				<input type="text" id="hype" value="true">
+			</div>
+			<button type="button" onclick="updatePost()">Post</button>
+		<form>
 	</div>
 {% endblock %}
 
@@ -48,10 +50,11 @@
 		axios.defaults.withCredentials = true;
         axios.defaults.headers.common['X-CSRF-TOKEN'] = '{{ csrfToken }}';
 		
-		async function submit() {
+		async function updatePost() {
 			const data = {
 				name: document.getElementById('name').value,
 				link: document.getElementById('link').value,
+				type: document.getElementById('type').value,
 				attr: [document.getElementById('attr').value],
 				date: document.getElementById('date').value,
 				page: document.getElementById('name').value,
@@ -68,12 +71,55 @@
 
 {% block customcss %}
 	<style>
-		.form{
-			margin: 7vh auto;
+		.form-container{
+			padding: 23px 25px;
 			display: flex;
 			flex-direction: column;
 			align-items: center;
 			justify-content: center;
 		}
+		form {
+			border: 2px solid rgba(255,255,255,0.1);
+			border-radius: 12px;
+			padding: 12px 5px;
+			width: 60%;
+			background-color: rgba(255,255,255,0.13);
+			backdrop-filter: blur(5px);
+		}
+		form * {
+			outline: none;
+			border: none;
+		}
+		.item {
+			display: flex;
+			flex-direction: row;
+			margin: 10px;
+		}
+		.item > label {
+			align-items: center;
+			width: 50px;
+		}
+		input {
+			padding: 0px 10px;
+			font-size: 17px;
+    		font-weight: 300;
+			height: 50px;
+			width: -moz-available;
+			width: -webkit-fill-available;
+			background-color: rgba(255,255,255,0.07);
+			border-radius: 12px;
+		}
+		form > button {
+			margin-top: 19px;
+			width: 44%;
+			background-color: var(--red);
+			color: white;
+			padding: 12px 0;
+			font-size: 18px;
+			font-weight: 600;
+			border-radius: 12px;
+			cursor: pointer;
+		}
+		
 	</style>
 {% endblock %}
