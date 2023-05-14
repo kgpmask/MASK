@@ -1,0 +1,45 @@
+{% extends "_base.njk" %}
+
+{% set thispage = 'prev_events' %}
+{% set pagetitle = 'Previous Events' %}
+
+{% block pagecontent %}
+<h1>Previous Events</h1>
+<div class="TransparentBox">
+		<h2>OPEN ANIME CAMPUS QUIZ</h2>
+		<br>
+		<h3>Date: November 11,2023</h3>
+		<h3>Venue: V3 Vikramshila</h3>
+		<br>
+		<p> The first open campus event conducted by MASK, the Open Anime Campus Quiz was conducted a few days after the arrival of the freshers, serving as an introductory event to MASK.
+			 With an attendance of over 150 people, the first event was a grand success which made MASK known for its events.
+		</p>
+		<br>
+		<div class="Images">
+			<img src="assets/MaskEvent1.jpg" alt="">
+			<img src="assets/MaskEvent1_1.jpg" alt="">
+			<img src="assets/MaskEvent1_2.jpg" alt="">
+		</div>
+</div>
+{% endblock %}
+
+{% block customcss %}
+<style>
+	.TransparentBox {
+		    color: var(--light-gray);
+    		background-color: rgba(255,255,255,.2);
+    		padding: 30px 60px;
+    		border-radius: 20px;
+    		margin: 20px 10%;
+	}
+
+	.Images > img {
+		border-radius: 8px;
+		margin: 10px;
+		width: 300px;
+  		height: 200px;
+	}
+</style>
+
+{% endblock %}
+

@@ -40,6 +40,10 @@ function link (app, nunjEnv) {
 		}
 	}, mediaRouter);
 
+	app.use('/prev-events', (req, res) => {
+		res.renderFile("py_events.njk");
+	});
+
 	app.use('/checker', checkerRouter);
 	app.use('/corsProxy', corsProxyRouter);
 	app.use('/git-hook', gitHookRouter);
