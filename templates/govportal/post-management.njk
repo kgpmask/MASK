@@ -86,7 +86,7 @@
 			padding: 12px 5px;
 			width: 60%;
 			background-color: rgba(255,255,255,0.13);
-			{# backdrop-filter: blur(5px); #}
+			backdrop-filter: blur(5px);
 		}
 		form * {
 			outline: none;
@@ -139,13 +139,13 @@
 			font-size: 16px;
 			color: var(--red);
 			padding: 0 2px;
-			background-color: inherit;
+			background-color: rgba(0, 0, 0, 0);
 		}
 		.item > input:valid ~ label{
 			top: 0;
 			font-size: 16px;
 			padding: 0 2px;
-			background-color: inherit;
+			background-color: rgba(0, 0, 0, 0);
 		}
 		form > button {
 			margin-top: 19px;
