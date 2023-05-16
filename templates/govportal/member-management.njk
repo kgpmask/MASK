@@ -1,0 +1,97 @@
+{% extends "govportal/govportal.njk" %}
+
+{% set thispage = 'govportal' %}
+{% set pagetitle = 'Governor Portal | Member Management' %}
+{% set actionname = 'Member Management' %}
+
+{% block customjs %}
+	<script>
+		function toggleButtonColor(button) {
+			if (button.style.backgroundColor == "red") {
+				button.style.backgroundColor = "green";
+			} else {
+				button.style.backgroundColor = "red";
+			}
+		}
+	</script>
+{% endblock %}
+
+{% block actioncontent %}
+	<table>
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Position</th>
+				<th>AMV</th>
+				<th>DNA</th>
+				<th>WEB</th>
+				<th>MN</th>
+				<th>Quiz</th>
+				<th>Change Teams</th>
+				<th>Submit Changes</th>
+			</tr>
+		</thead>
+		<tbody>
+			{# <tr>
+				<td>Goos</td>
+				<td>Bossman</td>
+				<td><button class = "teambutton" onclick = "toggleButtonColor(this)" style = "background-color:red;" >AMV</button></td>
+				<td><button class = "teambutton" onclick = "toggleButtonColor(this)" style = "background-color:red;" >DNA</button></td>
+				<td><button class = "teambutton" onclick = "toggleButtonColor(this)" style = "background-color:red;" >Web</button></td>
+				<td><button class = "teambutton" onclick = "toggleButtonColor(this)" style = "background-color:red;" >MN</button></td>
+				<td><button class = "teambutton" onclick = "toggleButtonColor(this)" style = "background-color:red;" >Quiz</button></td>
+				<td><button class = "changeTeams" onclick = "enableChanges()" style = "background-color:#464646;">Change Teams</button>
+				<td><button class = "submit" onclick = "submitChanges()" style = "background-color:#464646;">Submit Changes</button>
+			</tr> #}
+			{% for member in currentMembers %}
+				<tr>
+					<td>{{ member.name }}</td>
+					<td>{{ member.position }}</td>
+					{% for team in member.teams %}
+						{% if team.name == 'AMV & Music' %}
+							<td><button class = "teambutton" onclick = "toggleButtonColor(this)" style = "background-color:green;" >AMV</button></td>
+						{% else if team.name == 'Design & Arts' %}
+							<td><button class = "teambutton" onclick = "toggleButtonColor(this)" style = "background-color:green;" >DNA</button></td>
+						{% else if team.name == 'WebDev' %}
+							<td><button class = "teambutton" onclick = "toggleButtonColor(this)" style = "background-color:green;" >Web</button></td>
+						{% else if team.name == 'Media & Newsletter' %}
+							<td><button class = "teambutton" onclick = "toggleButtonColor(this)" style = "background-color:green;" >MN</button></td>
+						{% else if team.name == 'Quiz' %}
+							<td><button class = "teambutton" onclick = "toggleButtonColor(this)" style = "background-color:green;" >Quiz</button></td>
+						{% endif %}
+					{% endfor %}
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}
+
+{% block customcss %}
+	<style>
+		table {
+			border-collapse: collapse;
+			width: 100%;
+		}
+		th, td {
+			border: 1px solid grey;
+			padding: 8px;
+			text-align: left;
+		}
+		.changeTeams, .submit {
+			padding: 5px 10px;
+			border-radius: 5px;
+			border : 0px;
+			cursor: pointer;
+			color: white;
+		}
+		.teambutton {
+			padding: 5px 10px;
+			border-radius: 5px;
+			border : 0px;
+			cursor: pointer;
+			color: white;
+			background-color : red;
+		}
+	</style>
+{% endblock %}
+
