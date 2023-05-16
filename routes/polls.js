@@ -17,10 +17,11 @@ router.get('/:pollId?', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
+	console.log(req.user._id);
 	await dbh.updatePoll({
 		pollId: req.body.pollId,
 		userId: req.user._id,
-		userChoice: req.body.choice
+		userChoice: req.body.userChoice
 	});
 	return res.send("Successfully voted.");
 });

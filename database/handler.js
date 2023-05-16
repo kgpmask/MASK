@@ -139,6 +139,7 @@ async function getActivePolls () {
 
 async function updatePoll (ctx) {
 	// ctx = { pollId, userId, userChoice }
+	console.log(ctx);
 	const poll = await Poll.findById(ctx.pollId);
 	// Yeet vote if exists
 	poll.records.forEach(val => (ind = val.votes.findIndex(id => id === ctx.userId)) && val.votes.splice(ind, 1));
@@ -146,7 +147,7 @@ async function updatePoll (ctx) {
 		value: ctx.userChoice,
 		votes: []
 	});
-	poll.records.find(val => val.value === ctx.userChoice).votes.push(userId);
+	poll.records.find(val => val.value === ctx.userChoice).votes.push(ctx.userId);
 	await poll.save();
 	return true;
 }
