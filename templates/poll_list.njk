@@ -1,0 +1,44 @@
+{% extends '_base.njk' %}
+
+{% block pagecontent %}
+<div>
+	<h1> Polls </h1>
+	<div class="poll-container">
+		{% for poll in activePolls %}
+			<a href="/poll/{{ poll._id }}"> {{ poll.title }} </a>
+		{% endfor %}
+	</div>
+</div>
+{% endblock %}
+
+{% block customcss %}
+<style>
+	.poll-container {
+		display: flex;
+		flex-direction: column;
+		margin: 0 5%;
+		border-radius: 10px;
+		padding: 40px 5%;
+		width: 80%;
+		background-color: var(--medium-gray);
+	}
+
+	.poll-container > a {
+		display: block;
+		margin: 5px auto;
+		width: 70%;
+		padding: 5% 2%;
+		border: solid 2px var(--off-white);
+		border-radius: 10px;
+		background-color: var(--shadow-gray);
+		color: var(--off-white);
+		font-size: 120%;
+	}
+
+	.poll-container > a:hover {
+		border: solid 2px var(--white);
+		background-color: var(--darker-gray);
+		color: var(--white);
+	}
+</style>
+{% endblock %}
