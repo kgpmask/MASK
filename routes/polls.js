@@ -7,7 +7,10 @@ router.get('/:pollId?', async (req, res) => {
 	if (!req.loggedIn) return res.redirect('/login');
 	const pollId = req.params.pollId;
 	const activePolls = await dbh.getActivePolls();
-	if (!pollId) return res.renderFile('poll_list.njk', { activePolls });
+	if (!pollId) return res.renderFile('poll_list.njk', {
+		activePolls,
+		message: !activePolls.length ? 'No polls active right now' : undefined
+	});
 	const poll = activePolls.find(poll => poll._id === pollId);
 	if (!poll) return res.notFound('Poll unavailable');
 	const votedFor = poll.records.find(record => record.votes.find(voter => voter === req.user._id))?.value;

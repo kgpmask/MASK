@@ -49,7 +49,7 @@ function link (app, nunjEnv) {
 	app.use('/live', liveRouter);
 	app.use('/members', membersRouter);
 	app.use('/newsletters', newsletterRouter);
-	app.use('/poll', pollRouter);
+	app.use('/polls', pollRouter);
 	app.use('/profile', profileRouter);
 	app.use(['/quizzes', '/events'], quizzesRouter);
 	app.use('/rebuild', (req, res) => {

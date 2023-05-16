@@ -1,11 +1,19 @@
 {% extends '_base.njk' %}
 
+{% set thispage = 'polls' %}
+{% set pagetitle = 'Active Polls' %}
+
 {% block pagecontent %}
 <div>
 	<h1> Polls </h1>
+	{% if message %}
+	<div style="background-color:var(--red);color:var(--off-white);opacity:0.8" class="text">
+		{{ message }}
+	</div>
+	{% endif %}
 	<div class="poll-container">
 		{% for poll in activePolls %}
-			<a href="/poll/{{ poll._id }}"> {{ poll.title }} </a>
+			<a href="/polls/{{ poll._id }}"> {{ poll.title }} </a>
 		{% endfor %}
 	</div>
 </div>
