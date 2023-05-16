@@ -86,7 +86,7 @@
 			padding: 12px 5px;
 			width: 60%;
 			background-color: rgba(255,255,255,0.13);
-			backdrop-filter: blur(5px);
+			{# backdrop-filter: blur(5px); #}
 		}
 		form * {
 			outline: none;
@@ -105,7 +105,7 @@
 		.item label{
 			position: absolute;
 			top: 50%;
-			left: 35px;
+			left: 5%;
 			transform: translateY(-50%);
 			color: #fff;
 			font-weight: 600;
@@ -128,8 +128,8 @@
     		font-weight: 300;
 			height: 50px;
 			width: 90%;
-  			border-radius: 12px;
-  			padding: 0 15px;
+  			border-radius: 8px;
+  			padding: 0 15px 0px 15px;
   			border: 2px solid var(--light-gray);
   			color: #fff;
   			outline: none;
@@ -137,12 +137,12 @@
 		input:focus{
   			border: 2px solid var(--red);
 		}
-		input:focus ~ label,
-		input:valid ~ label{
+		input:focus ~ label{
 			top: 0;
-			font-size: 20px;
+			font-size: 16px;
+			color: var(--red);
 			padding: 0 2px;
-			background-color: transparent;
+			background-color: rgba(255,255,255,0.13);
 		}
 		form > button {
 			margin-top: 19px;
