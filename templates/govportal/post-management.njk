@@ -10,11 +10,11 @@
 	<div class="form-container">
 		<form>
 			<div class="item">
-				<input type="text" id="name">
+				<input type="text" required id="name">
 				<label>Name</label>
 			</div>
 			<div class="item">
-				<input type="text" id="link">
+				<input type="text" required id="link">
 				<label>Link</label>
 			</div>
 			<div class="item">
@@ -25,19 +25,19 @@
 				</select>
 			</div>
 			<div class="item">
-				<input type="text" id="attr">
+				<input type="text" required id="attr">
 				<label>Author</label>
 			</div>
 			<div class="item">
-				<input type="text" id="date">
+				<input type="text" required id="date">
 				<label>Date</label>
 			</div>
 			<div class="item">
-				<input type="text" id="page" value="_blank">
+				<input type="text" id="page" required value="_blank">
 				<label>Page</label>
 			</div>
 			<div class="item">
-				<input type="text" id="hype" value="true">
+				<input type="text" id="hype" required value="true"> 
 				<label>Hype</label>
 			</div>
 			<button type="button" onclick="updatePost()">Post</button>
@@ -96,12 +96,6 @@
 			position: relative;
 			margin: 10px;
 		}
-		{# .item > label {
-			margin: 0px 10px;
-			width: 50px;
-			font-size: 18px;
-			font-weight: 600;
-		} #}
 		.item label{
 			position: absolute;
 			top: 50%;
@@ -113,18 +107,9 @@
 			pointer-events: none;
 			transition: 0.3s;
 		}
-		{# input {
-			padding: 0px 10px;
-			font-size: 17px;
-    		font-weight: 300;
-			height: 50px;
-			width: 90%;
-			background-color: rgba(255,255,255,0.07);
-			border-radius: 12px;
-		} #}
 		.item input{
 			background-color: rgba(255,255,255,0.07);
-   			font-size: 17px;
+   			font-size: 18px;
     		font-weight: 300;
 			height: 50px;
 			width: 90%;
@@ -134,15 +119,33 @@
   			color: #fff;
   			outline: none;
 		}
-		input:focus{
+		.item select{
+			background-color: rgba(255,255,255,0.07);
+   			font-size: 18px;
+    		font-weight: 300;
+			height: 50px;
+			width: 90%;
+  			border-radius: 8px;
+  			padding: 0 15px 0px 15px;
+  			border: 2px solid var(--light-gray);
+  			color: #fff;
+  			outline: none;
+		}
+		.item > input:focus{
   			border: 2px solid var(--red);
 		}
-		input:focus ~ label{
+		.item > input:focus ~ label{
 			top: 0;
 			font-size: 16px;
 			color: var(--red);
 			padding: 0 2px;
-			background-color: rgba(255,255,255,0.13);
+			background-color: inherit;
+		}
+		.item > input:valid ~ label{
+			top: 0;
+			font-size: 16px;
+			padding: 0 2px;
+			background-color: inherit;
 		}
 		form > button {
 			margin-top: 19px;
