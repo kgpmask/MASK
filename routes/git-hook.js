@@ -5,6 +5,7 @@ const crypto = require('crypto');
 const Tools = require("../src/tools");
 
 router.post('/', async (req, res) => {
+	console.log(`git-hook request sent at: ${new Date()}`);
 	const secret = process.env.WEBHOOK_SECRET;
 	if (!secret) return res.send('Disabled due to no webhook secret being configured');
 	// Validate secret
