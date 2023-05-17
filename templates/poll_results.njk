@@ -1,0 +1,42 @@
+{% extends '_base.njk' %}
+
+{% set thispage = 'polls' %}
+{% set pagetitle = 'Live Poll Result' %}
+
+{% block pagecontent %}
+	<h1> {{ title }} </h1>
+	<div class="poll-container">
+		<table>
+			<tr>
+				<th> Choice </th> <td> Votes </td>
+			</tr>
+			{% for record in records %}
+				<tr>
+					<th> {{ record.value }} </th> <td> {{ record.votes }} </td>
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
+{% endblock %}
+
+{% block customcss %}
+	<style>
+		table {
+			margin: 0px auto;
+			min-width: 80%;
+		}
+
+		th {
+			margin: 0px;
+			border-spacing: 0px;
+			border: solid 1px var(--off-white);
+			width: 70%;
+		}
+		td {
+			margin: 0px;
+			border-spacing: 0px;
+			border: solid 1px var(--off-white);
+			width: 30%;
+		}
+	</style>
+{% endblock %}

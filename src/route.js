@@ -1,13 +1,14 @@
 const checkerRouter = require("../routes/checker");
 const corsProxyRouter = require("../routes/corsProxy");
-const gitHookRouter = require("../routes/gitHook");
 const govPortalRouter = require("../routes/govportal");
+const gitHookRouter = require("../routes/git-hook");
 const homeRouter = require("../routes/home");
 const liveRouter = require("../routes/live");
 const mediaRouter = require("../routes/media");
 const membersRouter = require("../routes/members");
 const miscRouter = require("../routes/misc");
 const newsletterRouter = require("../routes/newsletter");
+const pollRouter = require("../routes/polls");
 const profileRouter = require("../routes/profile");
 const quizzesRouter = require("../routes/quizzes");
 const userRouter = require("../routes/user");
@@ -50,6 +51,7 @@ function link (app, nunjEnv) {
 	app.use('/live', liveRouter);
 	app.use('/members', membersRouter);
 	app.use('/newsletters', newsletterRouter);
+	app.use('/polls', pollRouter);
 	app.use('/profile', profileRouter);
 	app.use(['/quizzes', '/events'], quizzesRouter);
 	app.use('/rebuild', (req, res) => {
