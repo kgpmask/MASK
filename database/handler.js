@@ -3,6 +3,7 @@ const Quiz = require('./schemas/Quiz');
 const { LiveQuiz, LiveResult } = require('./schemas/LiveQuiz');
 const Member = require('./schemas/Member');
 const Newsletter = require('./schemas/Newsletter');
+const Poll = require('./schemas/Poll');
 const Post = require('./schemas/Post');
 
 // Handle newly registered user or normal login
@@ -136,6 +137,26 @@ async function getMembersbyYear (year) {
 	return yearData;
 }
 
+async function getActivePolls () {
+	const polls = await Poll.find({ endTime: { '$gt': new Date() } });
+	// console.log(polls);
+	return polls;
+}
+
+async function updatePoll (ctx) {
+	// ctx = { pollId, userId, userChoice }
+	const poll = await Poll.findById(ctx.pollId);
+	// Yeet vote if exists
+	poll.records.forEach(val => (ind = val.votes.findIndex(id => id === ctx.userId)) || val.votes.splice(ind, ind + 1 ? 1 : 0));
+	if (!poll.records.find(val => val.value === ctx.userChoice)) poll.records.push({
+		value: ctx.userChoice,
+		votes: []
+	});
+	poll.records.find(val => val.value === ctx.userChoice).votes.push(ctx.userId);
+	await poll.save();
+	return true;
+}
+
 module.exports = {
 	createNewUser,
 	getUser,
@@ -150,5 +171,7 @@ module.exports = {
 	getNewsletter,
 	getPosts,
 	addPost,
-	getMembersbyYear
+	getMembersbyYear,
+	getActivePolls,
+	updatePoll
 };
