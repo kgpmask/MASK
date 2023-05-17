@@ -8,7 +8,7 @@ router.get(['/', '/:action'], (req, res) => {
 });
 
 router.post('/post', async (req, res) => {
-	// if (!req.loggedIn) return res.renderFile('/');
+	if (!req.loggedIn) return res.renderFile('/');
 	const data = req.body.data;
 	if (!Object.values(data).some(e => e)) {
 		return res.send("Empty Data");
