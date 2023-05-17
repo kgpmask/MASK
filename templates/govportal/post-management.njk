@@ -48,7 +48,7 @@
 {% block customjs %}
 	<script>
 		axios.defaults.withCredentials = true;
-        axios.defaults.headers.common['X-CSRF-TOKEN'] = '{{ csrfToken }}';
+		axios.defaults.headers.common['X-CSRF-TOKEN'] = '{{ csrfToken }}';
 		
 		async function updatePost() {
 			const data = {
@@ -84,7 +84,7 @@
 			border: 2px solid rgba(255,255,255,0.1);
 			border-radius: 12px;
 			padding: 12px 5px;
-			width: 60%;
+			width: 40%;
 			background-color: rgba(255,255,255,0.13);
 			backdrop-filter: blur(5px);
 		}
@@ -124,7 +124,7 @@
    			font-size: 18px;
     		font-weight: 300;
 			height: 50px;
-			width: 90%;
+			width: 95%;
   			border-radius: 8px;
   			padding: 0 15px 0px 15px;
   			border: 2px solid var(--light-gray);
@@ -132,6 +132,9 @@
   			outline: none;
 		}
 		.item > input:focus{
+  			border: 2px solid var(--red);
+		}
+		.item > select:focus{
   			border: 2px solid var(--red);
 		}
 		.item > input:focus ~ label{
@@ -148,6 +151,7 @@
 			background-color: rgba(0, 0, 0, 0);
 		}
 		form > button {
+			align-self: center;
 			margin-top: 19px;
 			width: 44%;
 			background-color: var(--red);
@@ -158,6 +162,23 @@
 			border-radius: 12px;
 			cursor: pointer;
 		}
-		
+
+		@media (max-width: 1600px) {
+			form {
+				width: 50%;
+			}
+		}
+
+		@media (max-width: 1300px) {
+			form {
+				width: 65%;
+			}
+		}
+
+		@media (max-width: 1000px) {
+			form {
+				width: 75%;
+			}
+		}
 	</style>
 {% endblock %}
