@@ -105,6 +105,12 @@ function getPosts (postType) {
 	return Post.find(postType ? { type: postType } : {}).sort({ date: -1 });
 }
 
+async function addPost (data) {
+	const post = new Post(data);
+	await post.save();
+	return post.toObject();
+}
+
 async function getMembersbyYear (year) {
 	const data = await Member.find({ 'records.year': year }).sort('name').lean();
 	const yearData = [];
@@ -130,12 +136,6 @@ async function getMembersbyYear (year) {
 	return yearData;
 }
 
-async function addPost (data) {
-	const post = new Post(data);
-	await post.save();
-	return post.toObject();
-}
-
 module.exports = {
 	createNewUser,
 	getUser,
@@ -149,6 +149,6 @@ module.exports = {
 	addLiveResult,
 	getNewsletter,
 	getPosts,
-	getMembersbyYear,
-	addPost
+	addPost,
+	getMembersbyYear
 };
