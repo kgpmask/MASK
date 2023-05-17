@@ -130,6 +130,12 @@ async function getMembersbyYear (year) {
 	return yearData;
 }
 
+async function addPost (data) {
+	const post = new Post(data);
+	await post.save();
+	return post.toObject();
+}
+
 module.exports = {
 	createNewUser,
 	getUser,
@@ -143,5 +149,6 @@ module.exports = {
 	addLiveResult,
 	getNewsletter,
 	getPosts,
-	getMembersbyYear
+	getMembersbyYear,
+	addPost
 };
