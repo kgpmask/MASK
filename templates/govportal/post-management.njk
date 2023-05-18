@@ -58,10 +58,10 @@
 				attr: [document.getElementById('attr').value],
 				date: document.getElementById('date').value,
 				page: document.getElementById('name').value,
-				hype: document.getElementById('name').value
+				hype: eval(document.getElementById('hype').value)
 			}
-			console.log(data);
-			const res = await axios.post('/gov-portal/post', { data: data });
+			// console.log(data);
+			console.log((await axios.post('/gov-portal/post', { data: data })).data);
 		}
 		window.onload = () => {
 			if (!axios.defaults.headers.common['X-CSRF-TOKEN']) axios.defaults.headers.common['X-CSRF-TOKEN'] = document.cookie.split('=')[1];
