@@ -54,7 +54,7 @@ function link (app, nunjEnv) {
 	app.use(['/quizzes', '/events'], quizzesRouter);
 	app.use('/rebuild', (req, res) => {
 		nunjEnv.loaders.forEach(loader => loader.cache = {});
-		['./members.json', './rewards.json'].forEach(cache => delete require.cache[require.resolve(cache)]);
+		['./rewards.json'].forEach(cache => delete require.cache[require.resolve(cache)]);
 		return res.renderFile('rebuild.njk');
 	});
 
