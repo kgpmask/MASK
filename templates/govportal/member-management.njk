@@ -22,11 +22,7 @@
 			<tr>
 				<th>Name</th>
 				<th>Position</th>
-				<th>AMV</th>
-				<th>DNA</th>
-				<th>WEB</th>
-				<th>MN</th>
-				<th>Quiz</th>
+				{% for team in teams %} <th> {{ team.name }} </th> {% endfor %}
 				<th>Change Teams</th>
 				<th>Submit Changes</th>
 			</tr>
@@ -47,18 +43,19 @@
 				<tr>
 					<td>{{ member.name }}</td>
 					<td>{{ member.position }}</td>
-					{% for team in member.teams %}
-						{% if team.name == 'AMV & Music' %}
+					{% for team in teams %}
+						<td> <input type="checkbox" {{ 'checked' if team.name in member.teams }} name="{{ member.roll }}-{{ team.icon }}"> </td>
+						{# {% if team.name == 'AMV & Music' %}
 							<td><button class = "teambutton" onclick = "toggleButtonColor(this)" style = "background-color:green;" >AMV</button></td>
-						{% else if team.name == 'Design & Arts' %}
+						{% elif team.name == 'Design & Arts' %}
 							<td><button class = "teambutton" onclick = "toggleButtonColor(this)" style = "background-color:green;" >DNA</button></td>
-						{% else if team.name == 'WebDev' %}
+						{% elif team.name == 'WebDev' %}
 							<td><button class = "teambutton" onclick = "toggleButtonColor(this)" style = "background-color:green;" >Web</button></td>
-						{% else if team.name == 'Media & Newsletter' %}
+						{% elif team.name == 'Media & Newsletter' %}
 							<td><button class = "teambutton" onclick = "toggleButtonColor(this)" style = "background-color:green;" >MN</button></td>
-						{% else if team.name == 'Quiz' %}
+						{% elif team.name == 'Quiz' %}
 							<td><button class = "teambutton" onclick = "toggleButtonColor(this)" style = "background-color:green;" >Quiz</button></td>
-						{% endif %}
+						{% endif %} #}
 					{% endfor %}
 				</tr>
 			{% endfor %}
@@ -91,6 +88,17 @@
 			cursor: pointer;
 			color: white;
 			background-color : red;
+		}
+
+		input[type="checkbox"] {
+			appearance: none;
+			width: 15px;
+			height: 15px;
+			background-color: red;
+		}
+
+		input[type="checkbox"]:checked {
+			background-color: green;
 		}
 	</style>
 {% endblock %}
