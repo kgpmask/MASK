@@ -64,6 +64,7 @@
 			const res = await axios.post('/gov-portal/post', { data: data });
 		}
 		window.onload = () => {
+			if (!axios.defaults.headers.common['X-CSRF-TOKEN']) axios.defaults.headers.common['X-CSRF-TOKEN'] = document.cookie.split('=')[1];
 			document.getElementById('date').value = new Date().toISOString();
 		}
 	</script>
