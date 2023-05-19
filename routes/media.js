@@ -1,19 +1,13 @@
 const express = require('express');
 const router = express.Router();
 
+const fs = require('fs');
+const path = require('path');
+
 const dbh = PARAMS.mongoless ? {} : require('../database/handler');
 
 router.get('/art', async (req, res) => {
-	const sample = [
-		{
-			name: 'Art - Tanjiro Kamado',
-			link: '0025.webp',
-			type: 'art',
-			attr: ['Sanjeev Raj Ganji'],
-			date: new Date(1630261800000),
-			hype: true
-		}
-	];
+	const sample = JSON.parse(fs.readFileSync(path.join(__dirname, "../src/samples/media.json"), 'utf8'));
 	const art = PARAMS.mongoless ? sample : await dbh.getPosts('art');
 	return res.renderFile('art.njk', { art });
 });
