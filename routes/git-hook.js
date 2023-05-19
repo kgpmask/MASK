@@ -22,7 +22,7 @@ router.post('/', async (req, res) => {
 	if (branch !== 'dev' && branch !== 'main') {
 		return res.send('Automatic webhook updates are only enabled on dev and main branch');
 	}
-	await Tools.updateCode();
+	console.log(await Tools.updateCode());
 	res.send('Success!');
 	return process.exit(0);
 });
