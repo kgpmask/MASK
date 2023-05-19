@@ -44,6 +44,10 @@ function link (app, nunjEnv) {
 		res.renderFile("py_events.njk");
 	});
 
+	app.use('/cosplay23', (req, res) => {
+		res.renderFile("cosplay23.njk");
+	});
+
 	app.use('/checker', checkerRouter);
 	app.use('/corsProxy', corsProxyRouter);
 	app.use('/git-hook', gitHookRouter);
