@@ -6,12 +6,9 @@
 
 {% block customjs %}
 	<script>
-		function toggleButtonColor(button) {
-			if (button.style.backgroundColor == "red") {
-				button.style.backgroundColor = "green";
-			} else {
-				button.style.backgroundColor = "red";
-			}
+		function showModal (id) {
+			modal = document.getElementById(id);
+				modal.style.display = "block";
 		}
 	</script>
 {% endblock %}
@@ -22,41 +19,27 @@
 			<tr>
 				<th>Name</th>
 				<th>Position</th>
-				{% for team in teams %} <th> {{ team.name }} </th> {% endfor %}
-				<th>Change Teams</th>
-				<th>Submit Changes</th>
 			</tr>
 		</thead>
 		<tbody>
-			{# <tr>
-				<td>Goos</td>
-				<td>Bossman</td>
-				<td><button class = "teambutton" onclick = "toggleButtonColor(this)" style = "background-color:red;" >AMV</button></td>
-				<td><button class = "teambutton" onclick = "toggleButtonColor(this)" style = "background-color:red;" >DNA</button></td>
-				<td><button class = "teambutton" onclick = "toggleButtonColor(this)" style = "background-color:red;" >Web</button></td>
-				<td><button class = "teambutton" onclick = "toggleButtonColor(this)" style = "background-color:red;" >MN</button></td>
-				<td><button class = "teambutton" onclick = "toggleButtonColor(this)" style = "background-color:red;" >Quiz</button></td>
-				<td><button class = "changeTeams" onclick = "enableChanges()" style = "background-color:#464646;">Change Teams</button>
-				<td><button class = "submit" onclick = "submitChanges()" style = "background-color:#464646;">Submit Changes</button>
-			</tr> #}
 			{% for member in currentMembers %}
 				<tr>
-					<td>{{ member.name }}</td>
+					<td class = "member-name" onclick = "showModal(`{{ member.roll }}`)"><div class = "name"><b>{{ member.name }}</b></div>
+					<div id = "{{ member.roll }}" class = "modal" style = "display:none">
+						<div class = "modal-content">
+							</br>
+							<div class = "member-details" style = "display:block;">{{ member.roll }}</div>
+							<div class = "member-details" style = "display:block;"> 
+								{% for team in member.teams %}
+									<span class = "team-span">{{ team }}  <span class = "cross" onclick = "removeTeam(member,team)">  &times;</span></span>
+								{% endfor %}
+							</div>
+							<div class = "member-details" style = "display:block;">{{ member.position }}</div>
+							<div class = "member-details" style = "display:block;"><button class = "changeMemberDetails">save</button></div>
+						</div>
+					</div>
+					</td> 
 					<td>{{ member.position }}</td>
-					{% for team in teams %}
-						<td> <input type="checkbox" {{ 'checked' if team.name in member.teams }} name="{{ member.roll }}-{{ team.icon }}"> </td>
-						{# {% if team.name == 'AMV & Music' %}
-							<td><button class = "teambutton" onclick = "toggleButtonColor(this)" style = "background-color:green;" >AMV</button></td>
-						{% elif team.name == 'Design & Arts' %}
-							<td><button class = "teambutton" onclick = "toggleButtonColor(this)" style = "background-color:green;" >DNA</button></td>
-						{% elif team.name == 'WebDev' %}
-							<td><button class = "teambutton" onclick = "toggleButtonColor(this)" style = "background-color:green;" >Web</button></td>
-						{% elif team.name == 'Media & Newsletter' %}
-							<td><button class = "teambutton" onclick = "toggleButtonColor(this)" style = "background-color:green;" >MN</button></td>
-						{% elif team.name == 'Quiz' %}
-							<td><button class = "teambutton" onclick = "toggleButtonColor(this)" style = "background-color:green;" >Quiz</button></td>
-						{% endif %} #}
-					{% endfor %}
 				</tr>
 			{% endfor %}
 		</tbody>
@@ -65,6 +48,24 @@
 
 {% block customcss %}
 	<style>
+		.cross:hover {
+			background-color : white;
+		}
+		.cross {
+			border-radius : 200px;
+			padding : 0px 5px 0px 5px;
+		}
+		.changeMemberDetails {
+			border-radius : 5px;
+			padding: 4px 3px 13px 3px;
+  			height : 30px;
+			width : 50px;
+		}
+		.team-span {
+			padding : 3px 8px 3px 8px;
+			border : solid;
+			border-radius :5px;
+		}
 		table {
 			border-collapse: collapse;
 			width: 100%;
@@ -74,32 +75,16 @@
 			padding: 8px;
 			text-align: left;
 		}
-		.changeTeams, .submit {
-			padding: 5px 10px;
-			border-radius: 5px;
-			border : 0px;
-			cursor: pointer;
-			color: white;
+		td.member-name:hover {
+			background-color : #464646;
+			cursor : pointer;
 		}
-		.teambutton {
-			padding: 5px 10px;
-			border-radius: 5px;
-			border : 0px;
-			cursor: pointer;
-			color: white;
-			background-color : red;
+		.member-details {
+			font-color : white;
+			padding : 1px 0px 10px 0px;
 		}
-
-		input[type="checkbox"] {
-			appearance: none;
-			width: 15px;
-			height: 15px;
-			background-color: red;
-		}
-
-		input[type="checkbox"]:checked {
-			background-color: green;
+		.name {
+			font-size : 22px;
 		}
 	</style>
 {% endblock %}
-
