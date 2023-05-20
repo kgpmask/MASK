@@ -36,7 +36,7 @@
 					<label>Page</label>
 				</div>
 				<div class="item">
-					<input type="checkbox" id="hype"> 
+					<input type="checkbox" id="hype" checked> 
 					<label>Hype</label>
 				</div>
 			</div>
@@ -59,7 +59,6 @@
 				page: document.getElementById('name').checked ? '_blank' : '',
 				hype: document.getElementById('hype').checked
 			}
-			// console.log(data);
 			console.log((await axios.post('/gov-portal/post-management', { data: data })).data);
 		}
 		window.onload = () => {
