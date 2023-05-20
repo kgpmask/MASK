@@ -1,10 +1,5 @@
 # MASK
-<<<<<<< HEAD
 The website for the Manga & Anime Society Kharagpur
-=======
-
-The website for the Manga & Anime Society, Kharagpur
->>>>>>> 27b54eb (Update README.md)
 
 ## Contributing
 
