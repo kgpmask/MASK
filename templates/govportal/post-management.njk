@@ -9,36 +9,36 @@
 {% block actioncontent %}
 	<div class="form-container">
 		<form>
-			<div class="item">
-				<input type="text" required id="name">
-				<label>Name</label>
+			<div class="part1">
+				<div class="item">
+					<input type="text" required id="name">
+					<label>Name</label>
+				</div>
+				<div class="item">
+					<input type="text" required id="link">
+					<label>Link</label>
+				</div>
+				<div class="item">
+					<select name="type" id="type">
+					<label>Type</label>
+						<option value="youtube">Youtube</option>
+						<option value="letter">Newsletter</option>
+					</select>
+				</div>
+				<div class="item">
+					<input type="text" required id="attr">
+					<label>Author</label>
+				</div>
 			</div>
-			<div class="item">
-				<input type="text" required id="link">
-				<label>Link</label>
-			</div>
-			<div class="item">
-				<select name="type" id="type">
-				<label>Type</label>
-					<option value="youtube">Youtube</option>
-					<option value="letter">Newsletter</option>
-				</select>
-			</div>
-			<div class="item">
-				<input type="text" required id="attr">
-				<label>Author</label>
-			</div>
-			<div class="item">
-				<input type="text" required id="date">
-				<label>Date</label>
-			</div>
-			<div class="item">
-				<input type="text" id="page" required value="_blank">
-				<label>Page</label>
-			</div>
-			<div class="item">
-				<input type="text" id="hype" required value="true"> 
-				<label>Hype</label>
+			<div class="part2">
+				<div class="item">
+					<input type="checkbox" id="page">
+					<label>Page</label>
+				</div>
+				<div class="item">
+					<input type="checkbox" id="hype"> 
+					<label>Hype</label>
+				</div>
 			</div>
 			<button type="button" onclick="updatePost()">Post</button>
 		<form>
@@ -56,16 +56,14 @@
 				link: document.getElementById('link').value,
 				type: document.getElementById('type').value,
 				attr: [document.getElementById('attr').value],
-				date: document.getElementById('date').value,
-				page: document.getElementById('name').value,
-				hype: eval(document.getElementById('hype').value)
+				page: document.getElementById('name').checked ? '_blank' : '',
+				hype: document.getElementById('hype').checked
 			}
 			// console.log(data);
-			console.log((await axios.post('/gov-portal/post', { data: data })).data);
+			console.log((await axios.post('/gov-portal/post-management', { data: data })).data);
 		}
 		window.onload = () => {
 			if (!axios.defaults.headers.common['X-CSRF-TOKEN']) axios.defaults.headers.common['X-CSRF-TOKEN'] = document.cookie.split('=')[1];
-			document.getElementById('date').value = new Date().toISOString();
 		}
 	</script>
 {% endblock %}
@@ -89,15 +87,19 @@
 			background-color: rgba(255,255,255,0.13);
 			backdrop-filter: blur(5px);
 		}
+		.part1 {
+			display: flex;
+			flex-direction: column;
+		}
 		form * {
 			outline: none;
 			border: none;
 		}
-		.item {
+		.part1 > .item {
 			position: relative;
 			margin: 10px;
 		}
-		.item label{
+		.part1 > .item > label{
 			position: absolute;
 			top: 50%;
 			left: 5%;
@@ -108,7 +110,7 @@
 			pointer-events: none;
 			transition: 0.3s;
 		}
-		.item input{
+		.part1 > .item > input{
 			background-color: rgba(255,255,255,0.07);
    			font-size: 18px;
     		font-weight: 300;
@@ -120,7 +122,7 @@
   			color: #fff;
   			outline: none;
 		}
-		.item select{
+		.part1 > .item > select{
 			background-color: rgba(255,255,255,0.07);
    			font-size: 18px;
     		font-weight: 600;
@@ -132,21 +134,21 @@
   			color: #fff;
   			outline: none;
 		}
-		.item > input:focus{
+		.part1 > .item > input:focus{
   			border: 2px solid var(--red);
 		}
-		.item > select:focus{
+		.part1 > .item > select:focus{
   			border: 2px solid var(--red);
 			color: var(--red);
 		}
-		.item > input:focus ~ label{
+		.part1 > .item > input:focus ~ label{
 			top: 0;
 			font-size: 16px;
 			color: var(--red);
 			padding: 0 2px;
 			background-color: rgba(0, 0, 0, 0);
 		}
-		.item > input:valid ~ label{
+		.part1 > .item > input:valid ~ label{
 			top: 0;
 			font-size: 16px;
 			padding: 0 2px;
@@ -165,6 +167,37 @@
 			cursor: pointer;
 		}
 
+		.part2 {
+			display: grid;
+			grid-template-columns: auto auto;
+			column-gap: 50px;
+			margin: 10px;
+		}
+
+		.part2 > .item > input {
+   			font-size: 18px;
+    		font-weight: 300;
+			height: 25px;
+			width: 25px;
+  			border-radius: 12px;
+  			color: #fff;
+			accent-color: var(--red);
+		}
+
+		.part2 > .item > label {
+    		position: relative;
+			top: -6px;
+    		left: 5px;
+			color: #fff;
+			font-weight: 600;
+			font-size: 18px;
+			pointer-events: none;
+			transition: 0.3s;
+		}
+		
+		.part2 > .item > input:checked ~ label{
+			color: var(--red);
+		}
 		@media (max-width: 1600px) {
 			form {
 				width: 50%;

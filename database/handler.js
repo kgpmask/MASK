@@ -107,6 +107,7 @@ function getPosts (postType) {
 }
 
 async function addPost (data) {
+	if (data.page === '') delete data.page;
 	const post = new Post(data);
 	await post.save();
 	return post.toObject();
