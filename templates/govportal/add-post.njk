@@ -59,7 +59,7 @@
 				page: document.getElementById('name').checked ? '_blank' : '',
 				hype: document.getElementById('hype').checked
 			}
-			console.log((await axios.post('/gov-portal/post-management', { data: data })).data);
+			console.log((await axios.post('/gov-portal/add-post', { data: data })).data);
 		}
 		window.onload = () => {
 			if (!axios.defaults.headers.common['X-CSRF-TOKEN']) axios.defaults.headers.common['X-CSRF-TOKEN'] = document.cookie.split('=')[1];

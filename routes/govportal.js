@@ -7,12 +7,12 @@ router.get('/', (req, res) => {
 	return res.renderFile(`govportal/govportal.njk`);
 });
 
-router.get('/post-management', (req, res) => {
+router.get('/add-post', (req, res) => {
 	// if (!req.loggedIn) return res.redirect('/login');
-	return res.renderFile(`govportal/post-management.njk`);
+	return res.renderFile(`govportal/add-post.njk`);
 });
 
-router.post('/post-management', async (req, res) => {
+router.post('/add-post', async (req, res) => {
 	// if (!req.loggedIn) return res.redirect('/');
 	const data = req.body.data;
 	if (!Object.values(data).some(e => e)) {
