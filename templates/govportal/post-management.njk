@@ -6,6 +6,14 @@
 
 {% set scripts = ['https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'] %}
 
+{% block extrainfo %}
+	{% if success %}
+		<div class="success info"> Successfully Updated Post Database </div>
+	{% elif error %}
+		<div class="error info"> Something Went Wrong </div>
+	{% endif %}
+{% endblock %}
+
 {% block actioncontent %}
 	<div class="form-container">
 		<form>
@@ -59,16 +67,37 @@
 				page: document.getElementById('name').checked ? '_blank' : '',
 				hype: document.getElementById('hype').checked
 			}
-			console.log((await axios.post('/gov-portal/post-management', { data: data })).data);
+			await axios.post('/gov-portal/post-management', { data: data });
 		}
 		window.onload = () => {
 			if (!axios.defaults.headers.common['X-CSRF-TOKEN']) axios.defaults.headers.common['X-CSRF-TOKEN'] = document.cookie.split('=')[1];
+			{% if success %}
+				setTimeout(function () {
+					document.getElementsByClassName('success')[0].remove();
+				}, 5000);
+			{% endif %}
 		}
 	</script>
 {% endblock %}
 
 {% block customcss %}
 	<style>
+		.info {
+			align-items: center;
+			justify-content: center;
+			width: 80%;
+			padding: 30px 5px;
+			border-radius: 15px;
+			color: #fff;
+			font-weight: 600;
+		}
+		.success {
+			background-color: green;
+		}
+		.error {
+			background-color: var(--red);
+		}
+
 		.form-container{
 			padding: 23px 25px;
 			display: flex;

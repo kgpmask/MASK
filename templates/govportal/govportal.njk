@@ -55,6 +55,7 @@
 {% endblock %}
 
 {% block pagecontent %}
+	{% block extrainfo %}{% endblock %}
 	<h1>Governor Portal{% if actionname %} - {{ actionname }} {% endif %}</h1>
 	<div class="action">
 		{% block actioncontent %}{% endblock %}

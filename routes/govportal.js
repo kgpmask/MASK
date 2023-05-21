@@ -19,8 +19,14 @@ router.post('/post-management', async (req, res) => {
 		return res.send("Empty Data");
 	}
 	data.date = new Date().toISOString();
-	const response = await dbh.addPost(data);
-	return res.send(response);
+	try {
+		response = await dbh.addPost(data);
+	} catch (e) {
+		console.log(e);
+		response = false;
+	}
+	console.log(response);
+	return res.renderFile(`govportal/post-management.njk`);
 });
 
 module.exports = router;
