@@ -22,11 +22,9 @@ router.post('/add-post', async (req, res) => {
 	try {
 		response = await dbh.addPost(data);
 	} catch (e) {
-		console.log(e);
 		response = false;
 	}
-	console.log(response);
-	return res.renderFile(`govportal/post-management.njk`);
+	return res.send(response);
 });
 
 module.exports = router;
