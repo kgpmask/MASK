@@ -1,0 +1,139 @@
+{% extends "_newsletter.njk" %}
+
+{% set pagetitle = 'May 2023 Issue' %}
+
+{% block prescript %}
+	<script>
+		crossMatrix = [
+			['-','-','-','-','-','-','-','-',' ','-',' ','-','-','-','-','-','-'],
+			['-','-','-','-','-','-',' ','-',' ','-',' ','-','-','-','-','-','-'],
+			['-','-','-','-','-','-',' ','-',' ','-',' ','-','-','-','-','-','-'],
+			['-','-','-','-','-','-',' ','-',' ','-',' ','-','-','-','-','-','-'],
+			['-','-','-','-','-','-',' ',' ',' ',' ',' ',' ','-','-','-','-','-'],
+			['-','-','-','-','-','-',' ','-',' ','-',' ','-','-','-',' ','-','-'],
+			[' ',' ',' ',' ',' ',' ',' ',' ','-',' ',' ',' ',' ',' ',' ',' ',' '],
+			['-','-','-','-','-','-',' ','-',' ','-','-','-','-','-',' ','-','-'],
+			['-',' ',' ',' ',' ',' ',' ','-',' ','-','-','-','-','-',' ','-','-'],
+			['-','-','-',' ','-','-',' ',' ',' ',' ',' ',' ',' ',' ','-','-','-'],
+			['-','-','-',' ','-','-',' ','-',' ','-','-','-','-','-','-','-','-'],
+			['-','-','-',' ','-','-','-','-',' ','-','-','-','-','-','-','-','-'],
+			['-','-','-',' ','-',' ','-',' ',' ',' ',' ',' ',' ','-','-','-','-'],
+			['-','-','-','-','-',' ','-','-',' ','-','-','-','-','-','-','-','-'],
+			['-','-','-','-',' ',' ',' ',' ',' ',' ',' ',' ','-','-','-','-','-'],
+			['-','-','-','-','-',' ','-','-',' ','-','-','-','-','-','-','-','-'],
+			['-','-','-','-','-',' ','-','-',' ',' ',' ',' ',' ',' ',' ','-','-'],
+		];
+		const letterSpaces = [];
+		(() => {
+				const maxDimension = Math.max(crossMatrix.length, crossMatrix[0].length);
+				const root = document.querySelector(':root');
+				root.style.setProperty('--crossword-cell-size', (40 * 10 / maxDimension - 4) + "px");
+				root.style.setProperty('--crossword-font-size', (10 / maxDimension) ** (1 / 2) + "em");
+				crossMatrix.forEach((row, i) => {
+					row.forEach((char, j) => {
+						if (char === ' ') letterSpaces.push([i, j]);
+					});
+				});
+			})();
+	</script>
+{% endblock %}
+
+{% block cluejs %}
+	{# Clues added, added compatibility for number input.#}
+	<script>
+		function startClues() {
+			new IntersectionObserver(([crossword]) => {
+				if (crossword.isIntersecting && crossword.intersectionRatio > 0.8) {
+					crosswordVis = true;
+				} else {
+					crosswordVis = false;
+				}
+			}, { threshold: [0.99] }).observe(document.getElementById('crossword-table'));
+			const clues = [];
+			clues.push(`4. <b>The Eminence in Shadow:</b> Witch of Calamity (6)
+			6. <b>Mairimashita Iruma-kun:</b> Number of students in the Misfit Class (8)
+			7. <b>Devil is a Part-Timer:</b> Which demon general was sent to attack the south of Ente Isla? (9)
+			9. <b>Jobless Reincarnation:</b> Roxy&rsquo;s mother? (6)
+			11. <b>Rising of the Shield Hero:</b> Kingdom made by Shield Hero (9)
+			13. <b>Rising of the Shield Hero:</b> Character who is referred as “Loli-Baba” by Naofumi (6)
+			14. <b>Re-Zero:</b> The Sin Archbishop that eats name and identity
+			15. <b>Re-Zero:</b> Witch of Greed's Name`.replace(/\t/g, '').split('\n').map(line => line.split(/\. (.*)/)));
+			clues.push(`1. <b>That time I got Reincarnated as a Slime:</b> Who achieved the status of Goblin King? (6)
+			2. <b>Rising of the Shield Hero:</b> Who was the current Filolial Queen before Filo? (7)
+			3. <b>Log Horizon:</b> Shiroe was the _____ of Debauchery Tea Party of the game Elder Tale (10)
+			5. <b>Mairimashita Iruma-kun:</b> The highest demon rank in the ranking system (4)
+			8. <b>Jobless Reincarnation:</b> Full name of Sylphy (10)
+			10. <b>That time I got Reincarnated as a Slime:</b> Benimaru turned to ________from ogre after transforming (5)
+			12. <b>Rising of the Shield Hero:</b> Which princess betrayed the Sheild Hero ? (5)`.replace(/\t/g, '').split('\n').map(line => line.split(/\. (.*)/)));
+			document.getElementById('crossword-left').innerHTML = `<h3>Across</h3><br/><table class="cross-words">${clues[0].map(clue => `<tr><th>${clue[0]}</th><td>${clue[1]}</td></tr>`).join('')}</table>`;
+			document.getElementById('crossword-right').innerHTML = `<h3>Down</h3><br/><table class="cross-words">${clues[1].map(clue => `<tr><th>${clue[0]}</th><td>${clue[1]}</td></tr>`).join('')}</table>`;
+		}
+	
+		window.onload = () => {
+			startCross();
+			startClues();
+		}
+	</script>
+{% endblock %}
+
+{% block lettercss %}
+	<style>
+		:root {
+			--black-blue   : #121920;
+			--dark-blue    : #112f3f;
+			--teal         : #006280;
+			--dirty-green  : #4d5843;
+			--dirty-yellow : #a98135;
+		}
+		.page {
+			color: var(--dark-blue);
+		}
+		#cover-page {
+			background-image: url(/assets/releases/2023-04-1/cover.webp);
+			background-position: center;
+			background-size: contain;
+			background-repeat: no-repeat;
+			background-color: rgba(0, 0, 0, 0) !important;
+		}
+		.article-full, .article-half, #crossword-left, #crossword-right {
+			scrollbar-color: var(--teal) var(--off-white) !important;
+		}
+		.article-full > h2, .article-half > h2, .article-header {
+			text-shadow: 0 0 2px var(--teal) !important;
+		}
+		
+		.wordsearchCellS {
+			background-color: var(--dirty-yellow) !important;
+		}
+		.found-word {
+			color: var(--teal) !important;
+		}
+		.wordsearch-complete {
+			color: var(--teal) !important;
+		}
+		.spoiler:before {
+			color: var(--teal);
+			background: var(--dirty-yellow);
+		}
+		.quote {
+			color: var(--teal);
+			{# font-size: 120%; #}
+			font-style: italic;
+			text-align: center;
+		}
+		li {
+			margin: 7px 0px;
+		}
+		#crossword-left, #crossword-right {
+			min-height: 75px !important;
+			height: calc(80vh - 520px) !important;
+		}
+		.cross-words{
+			text-align: left;
+			padding: 0px 10px 0px 5px;
+		}
+	</style>
+	<link rel="stylesheet" type="text/css" href="/assets/styles/wordsearch.css"/>
+	<link rel="stylesheet" type="text/css" href="/assets/styles/crossword.css"/>
+{% endblock %}
+
