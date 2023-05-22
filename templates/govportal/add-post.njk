@@ -13,6 +13,14 @@
 		<form>
 			<div class="part1">
 				<div class="item">
+					<select name="type" id="type" onchange='check(this);'>
+						<option value="youtube">Youtube</option>
+						<option value="instagram">Instagram</option>
+						<option value="letter">Newsletter</option>
+						<option value="event">Event</option>
+					</select>
+				</div>
+				<div class="item">
 					<input type="text" required id="name">
 					<label>Name</label>
 				</div>
@@ -21,22 +29,15 @@
 					<label>Link</label>
 				</div>
 				<div class="item">
-					<select name="type" id="type">
-					<label>Type</label>
-						<option value="youtube">Youtube</option>
-						<option value="letter">Newsletter</option>
-					</select>
-				</div>
-				<div class="item">
 					<input type="text" required id="attr">
 					<label>Author</label>
 				</div>
 			</div>
 			<div class="part2">
-				<div class="item">
+				{# <div class="item">
 					<input type="checkbox" id="page">
 					<label>Page</label>
-				</div>
+				</div> #}
 				<div class="item">
 					<input type="checkbox" id="hype" checked> 
 					<label>Hype</label>
@@ -52,23 +53,36 @@
 		axios.defaults.withCredentials = true;
 		axios.defaults.headers.common['X-CSRF-TOKEN'] = '{{ csrfToken }}';
 		
-		async function updatePost() {
+		function check (select) {
+			if (['letter', 'event'].includes(select.options[select.selectedIndex].value)) {
+				document.getElementById('attr').value = '';
+				document.getElementById('attr').disabled = true;
+			}
+			else {
+				document.getElementById('attr').disabled = false;
+			}
+		}
+
+		async function updatePost () {
 			const data = {
 				name: document.getElementById('name').value,
 				link: document.getElementById('link').value,
 				type: document.getElementById('type').value,
 				attr: [document.getElementById('attr').value],
-				page: document.getElementById('name').checked ? '_blank' : '',
+				page: ['instagram', 'youtube', 'event'].includes(document.getElementById('type').value) ? '_blank' : '',
 				hype: document.getElementById('hype').checked
 			}
 			var response = (await axios.post('/gov-portal/add-post', { data: data })).data;
 			console.log(response);
-			response = response === 'Empty Data' ? false : response;
+			{# response = response === 'Empty Data' ? false : response; #}
 			const e = document.getElementsByClassName('message')[0];
 			e.innerHTML = response ? 'Succesfully Added Post' : 'Something Went Wrong';
 			e.classList.add(response ? 'success' : 'error');
 			e.classList.remove('hidden');
-			setTimeout(function () {window.location.href = window.location.href}, 2500);
+			setTimeout(function () {e.classList.add('hidden')}, 2000);
+			if (response) {
+				setTimeout(function () {window.location.href = window.location.href}, 3000);
+			}
 		}
 		window.onload = () => {
 			if (!axios.defaults.headers.common['X-CSRF-TOKEN']) axios.defaults.headers.common['X-CSRF-TOKEN'] = document.cookie.split('=')[1];
@@ -90,6 +104,8 @@
 			width: 400px;
 			transform-origin: top;
 			transition: transform 0.3s ease;
+			border-bottom-left-radius: 6px;
+			border-bottom-right-radius: 6px;
 		}
 		.error {
 			background-color: rgba(255, 51, 51, 0.85);
@@ -185,6 +201,9 @@
 			padding: 0 2px;
 			background-color: rgba(0, 0, 0, 0);
 		}
+		.part1 > .item > input:disabled ~ label{
+			color: var(--light-gray);
+		}
 		form > button {
 			align-self: center;
 			margin-top: 19px;
@@ -200,7 +219,7 @@
 
 		.part2 {
 			display: grid;
-			grid-template-columns: auto auto;
+			grid-template-columns: auto;
 			column-gap: 50px;
 			margin: 10px;
 		}
