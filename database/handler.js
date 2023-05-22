@@ -138,6 +138,35 @@ async function getMembersbyYear (year) {
 	return yearData;
 }
 
+async function getCurrentMembers () {
+	const yearData = [];
+	const teamsData = require('../src/teams.json');
+	const years = Object.keys(teamsData);
+	const year = Number(years[years.length - 1]);
+	const data = await Member.find({ 'records.year': year }).sort('name');
+	data.forEach(member => {
+		const rec = member.records.find(rec => rec.year === year);
+		let pos;
+		yearData.push({
+			_id: member._id,
+			name: member.name,
+			roll: member.roll,
+			image: '../assets/members/' + member.image,
+			teams: rec.teams.map(teamID => {
+				const team = {
+					name: teamsData[year][teamID[0]].name,
+					icon: teamsData[year][teamID[0]].icon
+				};
+				team.icon += teamID[1] === 'H' ? !(pos = 'H') || '-head' : teamID[1] === 'S' ? !(pos = 'S') || '-sub' : '';
+				return team;
+			}),
+			position: pos ? rec.position === 'Governor' ? rec.position : pos === 'H' ? 'Team Heads' : 'Team Sub-Heads' : rec.position
+		});
+	});
+	return yearData;
+}
+
+
 async function getActivePolls () {
 	const polls = await Poll.find({ endTime: { '$gt': new Date() } });
 	// console.log(polls);
@@ -160,7 +189,7 @@ async function updatePoll (ctx) {
 
 async function removeTeam (rollNumber, teamToRemove, year) {
 	console.log(`roll number = ${rollNumber}`);
-	const member = await Member.find({ "name": "Jai Sachdev" });
+	const member = Member.find({ roll: "22BT10011" });
 	console.log(member);
 }
 
@@ -181,5 +210,6 @@ module.exports = {
 	getMembersbyYear,
 	getActivePolls,
 	updatePoll,
-	removeTeam
+	removeTeam,
+	getCurrentMembers
 };
