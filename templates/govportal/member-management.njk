@@ -10,6 +10,25 @@
 			modal = document.getElementById(id);
 				modal.style.display = "block";
 		}
+
+		function removeMemberTeam(name, roll, team) {
+			if(confirm(`Are you sure you want to remove ${name} from ${team}`)) {
+				console.log("confirm")
+			}
+		}
+
+		function addTeam(memberTeams) {
+			console.log(memberTeams);
+			console.log(typeof memberTeams[0]);
+
+			const teamNames = ["AMV & Music", "Media & Newsletter", "Quiz", "WebDev", "Design & Arts"];
+			const memberTeamsArray = memberTeams.split(',').map(team => team.trim());
+
+			const toAdd = teamNames.filter(team => !memberTeamsArray.includes(team));
+
+			console.log(toAdd);
+		}
+
 	</script>
 {% endblock %}
 
@@ -31,11 +50,11 @@
 							<div class = "member-details" style = "display:block;">{{ member.roll }}</div>
 							<div class = "member-details" style = "display:block;"> 
 								{% for team in member.teams %}
-									<span class = "team-span">{{ team }}  <span class = "cross" onclick = "removeTeam(member,team)">  &times;</span></span>
+									<span class = "team-span">{{ team }}  <span class = "cross" onclick = "removeMemberTeam(`{{ member.name }}`,`{{ member.roll }}`, `{{ team }}`)">  &times;</span></span>
 								{% endfor %}
+								<span class = "add-team" onclick = "addTeam(`{{ member.teams }}`)">&plus;</span>
 							</div>
 							<div class = "member-details" style = "display:block;">{{ member.position }}</div>
-							<div class = "member-details" style = "display:block;"><button class = "changeMemberDetails">save</button></div>
 						</div>
 					</div>
 					</td> 
@@ -49,7 +68,7 @@
 {% block customcss %}
 	<style>
 		.cross:hover {
-			background-color : white;
+			background-color : lightgrey;
 		}
 		.cross {
 			border-radius : 200px;
@@ -65,6 +84,14 @@
 			padding : 3px 8px 3px 8px;
 			border : solid;
 			border-radius :5px;
+		}
+		.add-team {
+			padding : 3px 8px 3px 8px;
+			border : solid;
+			border-radius :5px;
+		}
+		.add-team:hover {
+			background-color: lightgrey;
 		}
 		table {
 			border-collapse: collapse;

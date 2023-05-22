@@ -151,6 +151,12 @@ async function updatePoll (ctx) {
 	return true;
 }
 
+async function removeTeam (rollNumber, teamToRemove, year) {
+	console.log(`roll number = ${rollNumber}`);
+	const member = await Member.find({ "name": "Jai Sachdev" });
+	console.log(member);
+}
+
 module.exports = {
 	createNewUser,
 	getUser,
@@ -166,5 +172,6 @@ module.exports = {
 	getPosts,
 	getMembersbyYear,
 	getActivePolls,
-	updatePoll
+	updatePoll,
+	removeTeam
 };

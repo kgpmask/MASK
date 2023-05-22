@@ -1,4 +1,5 @@
 const express = require('express');
+const { removeTeam } = require('../database/handler');
 const router = express.Router();
 const dbh = PARAMS.mongoless ? {} : require('../database/handler');
 
@@ -22,7 +23,11 @@ router.get('/member-management', async (req, res) => {
 		member.teams = member.teams.map(team => team.name);
 	});
 
-	res.renderFile('/govportal/member-management.njk', { currentMembers, teams: Object.values(teamsData[years[years.length - 1]]) });
+	dbh.removeTeam("18IE10025", "WebDev");
+	res.renderFile('/govportal/member-management.njk', {
+		currentMembers,
+		teams: Object.values(teamsData[years[years.length - 1]])
+	});
 });
 
 router.get('/', (req, res) => {
@@ -33,5 +38,11 @@ router.get('/', (req, res) => {
 router.get('/image-upload', (req, res) => {
 	res.renderFile('/govportal/image-upload.njk');
 });
+
+
+router.post('/member-management', async (req, res) => {
+	console.log("fine");
+});
+
 
 module.exports = router;
