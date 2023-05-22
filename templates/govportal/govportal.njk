@@ -1,7 +1,7 @@
 {% extends "_base.njk" %}
 
 {% set thispage = 'govportal' %}
-{% set pagetitle = 'Governor Portal' %}
+{% set pagetitle = pagetitle if pagetitle else 'Governor Portal' %}
 
 {% set navlink=[{
 	href: 'gov-portal/image-upload',

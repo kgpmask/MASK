@@ -1,9 +1,9 @@
 
 {% extends "govportal/govportal.njk" %}
 
-{% set thispage = 'govportal' %}
-{% set pagetitle = 'Governor Portal | Post Management' %}
-{% set actionname = 'Post Management' %}
+{% set thispage = 'govportal/add-post' %}
+{% set pagetitle = 'Governor Portal | Add Post' %}
+{% set actionname = 'Add Post' %}
 
 {% set scripts = ['https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'] %}
 
@@ -81,7 +81,7 @@
 			e.classList.remove('hidden');
 			setTimeout(function () {e.classList.add('hidden')}, 2000);
 			if (response) {
-				setTimeout(function () {window.location.href = window.location.href}, 3000);
+				setTimeout(function () { location.reload() }, 3000);
 			}
 		}
 		window.onload = () => {
@@ -144,7 +144,7 @@
 		}
 		.part1 > .item {
 			position: relative;
-			margin: 10px;
+			margin: 20px 10px;
 		}
 		.part1 > .item > label{
 			position: absolute;
@@ -189,7 +189,7 @@
 			color: var(--red);
 		}
 		.part1 > .item > input:focus ~ label{
-			top: 0;
+			top: -7px;
 			font-size: 16px;
 			color: var(--red);
 			padding: 0 2px;

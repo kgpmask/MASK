@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const dbh = PARAMS.mongoless ? {} : require('../database/handler');
 
+// Todo: Add a middleware which throws an error when permissions are missing.
+// Basically, an app.use checking for user perms
+
 router.get('/', (req, res) => {
 	// if (!req.loggedIn) return res.redirect('/login');
 	return res.renderFile(`govportal/govportal.njk`);
