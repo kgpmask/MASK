@@ -1,15 +1,14 @@
 {% extends "_base.njk" %}
 
 {% set thispage = 'govportal' %}
-{% set pagetitle = 'Governor Portal' %}
+{% set pagetitle = pagetitle if pagetitle else 'Governor Portal' %}
 
 {% set navlink=[{
 	href: 'gov-portal/image-upload',
 	name: 'Image Upload'
-},
-{
-	href: 'gov-portal/test',
-	name: 'Test1'
+},{
+	href: 'gov-portal/add-post',
+	name: 'Add Post'
 },{
 	href: 'gov-portal/test',
 	name: 'Test2'
@@ -59,6 +58,7 @@
 {% endblock %}
 
 {% block pagecontent %}
+	{% block extrainfo %}{% endblock %}
 	<h1>Governor Portal{% if actionname %} - {{ actionname }} {% endif %}</h1>
 	<div class="action">
 		{% block actioncontent %}{% endblock %}

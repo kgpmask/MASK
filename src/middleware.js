@@ -27,6 +27,7 @@ module.exports = function setMiddleware (app) {
 			if (!['/git-hook', '/error'].includes(req.url)) {
 				csrf()(req, res, next);
 				res.locals.csrfToken = req.csrfToken();
+				res.cookie('csrfToken', res.locals.csrfToken);
 			} else next();
 			// git-hook ignores CSRF
 		});
