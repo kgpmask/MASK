@@ -3,55 +3,82 @@
 {% set thispage = 'govportal' %}
 {% set pagetitle = 'Governor Portal | Image Upload' %}
 {% set actionname = 'Image Upload' %}
+{% set scripts = ['https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'] %}
 
 {% block actioncontent %}
-	<form enctype="multipart/form-data">
-		<div>
-			<label for="image">Select Image:</label>
-			<input type="file" name="image" id="image" accept=".png,.jpeg,.jpg" required>
-		</div>
-		<div>
-			<label for="desc">Alt Text:</label>
-			<textarea id="desc" name="desc" rows="5" cols="50" required></textarea>
-		</div>
-		<button name="submit" id="submit" onclick="uploadImage()">Upload Image</button>
-	</form>
+	<div class="container">
+		<form enctype="multipart/form-data">
+			<div>
+				<label for="image">Select Image:</label>
+				<input type="file" name="image" id="image" accept=".jpeg" required>
+			</div>
+			<div>
+				<label for="desc">Description:</label>
+				<textarea id="desc" name="desc" rows="5" cols="50" required></textarea>
+			</div>
+			<button type="button" id="submit" onclick="uploadImage()">Upload Image</button>
+		</form>
+	</div>
 {% endblock %}
 
 {% block customcss %}
 	<style>
-		form {
-			background-color: rgba(255,255,255,.2);
+		.container{
+			padding: 23px 25px;
 			display: flex;
 			flex-direction: column;
 			align-items: center;
-			gap: 1rem;
-			width: 30%;
-			border-radius: 5px;
-			margin-left: 35%;
-			padding-top: 10px;
-			padding-bottom: 10px;
-			color: var(--off-white);
-			font-size: 1.2em;
+			justify-content: center;
+			transform: 0.3s;
 		}
-		button {
-		border: 2px solid var(--off-white);
-		border-radius: 4px;
-		background: var(--ghost-gray);
-		padding: 5px 7px;
-		color: var(--white);
-		transition: 0.4s;
-		cursor: pointer;
-		font-size: 1.1em;
+		form {
+			display: flex;
+			flex-direction: column;
+			border: 2px solid rgba(255,255,255,0.1);
+			border-radius: 12px;
+			padding: 12px 5px;
+			width: 40%;
+			background-color: rgba(255,255,255,0.13);
+			backdrop-filter: blur(5px);
 		}
-		button:hover {
-			background-color: var(--middle-gray);
+		form > button {
+			align-self: center;
+			margin-top: 19px;
+			width: 44%;
+			background-color: var(--red);
+			color: white;
+			padding: 12px 0;
+			font-size: 18px;
+			font-weight: 600;
+			border-radius: 12px;
+			cursor: pointer;
+			outline: none;
+			border: none;
+		}
+		@media (max-width: 1600px) {
+			form {
+				width: 50%;
+			}
+		}
+
+		@media (max-width: 1300px) {
+			form {
+				width: 65%;
+			}
+		}
+
+		@media (max-width: 1000px) {
+			form {
+				width: 75%;
+			}
 		}
 	</style>
 {% endblock %}
 
 {% block customjs %}
 	<script>
+		axios.defaults.withCredentials = true;
+		axios.defaults.headers.common['X-CSRF-TOKEN'] = '{{ csrfToken }}';
 		function uploadImage(e) {
 			var image = document.getElementById("image").files[0];
 			var desc = document.getElementById("desc").value;
@@ -59,9 +86,27 @@
 			formdata.append("image", image);
 			formdata.append("desc", desc);
 			console.log(formdata);
-			var ajax = new XMLHttpRequest();
-			ajax.open("POST", "/uploadimage");
-			ajax.send(formdata);
+			axios.post('/api/instaupload', formdata, {
+				headers: {
+					'Content-Type': 'multipart/form-data'
+				},
+			}).then((res) => {
+				console.log(res);
+				if (res.status == 200) {
+					alert("Image Uploaded Successfully");
+					window.location.href = "/gov-portal";
+				} else {
+					alert("Image Upload Failed");
+				}
+			}).catch((err) => {
+				console.log(err);
+				alert("Image Upload Failed");
+			});
+		}
+		window.onload = () => {
+			if (!axios.defaults.headers.common['X-CSRF-TOKEN']){ 
+				axios.defaults.headers.common['X-CSRF-TOKEN'] = document.cookie.split('=')[1];
+			}
 		}
 	</script>
 {% endblock %}

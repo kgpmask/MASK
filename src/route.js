@@ -12,10 +12,8 @@ const pollRouter = require("../routes/polls");
 const profileRouter = require("../routes/profile");
 const quizzesRouter = require("../routes/quizzes");
 const userRouter = require("../routes/user");
-const multer = require("multer");
-const upload = multer({ dest: "uploads/" });
+const fileupload = require("express-fileupload");
 const postToInsta = require("../routes/instaupload");
-const cors = require("cors");
 
 function link (app, nunjEnv) {
 	const smallerRoutes = [
@@ -42,8 +40,7 @@ function link (app, nunjEnv) {
 		},
 		miscRouter
 	);
-	app.use(cors());
-
+	app.use(fileupload());
 	app.use(
 		"/",
 		(req, res, next) => {
@@ -87,10 +84,10 @@ function link (app, nunjEnv) {
 		);
 		return res.renderFile("rebuild.njk");
 	});
-	app.use("/instaupload", upload.single("file"), async (req, res) => {
-		console.log(req.file);
-		await postToInsta(req.file);
-		res.redirect("/gov-portal");
+	app.use("/api/instaupload", async (req, res) => {
+		const files = req.files.image;
+		await postToInsta(files);
+		res.send({ success: true });
 	});
 
 	app.use("/error", async () => {

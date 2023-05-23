@@ -36,6 +36,7 @@
 		"csurf": "^1.11.0",
 		"dotenv": "^16.0.3",
 		"express": "^5.0.0-beta.1",
+		"express-fileupload": "^1.4.0",
 		"express-session": "^1.17.2",
 		"instagram-private-api": "^1.45.3",
 		"mongodb": "^4.8.0",
