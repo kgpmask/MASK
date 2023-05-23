@@ -8,7 +8,7 @@ const postToInsta = async (file) => {
 
 		await ig.publish.photo({
 			file: file.buffer,
-			caption: "Really nice photo from the internet!",
+			caption: "Really nice photo from the internet!"
 		});
 	} catch (err) {
 		console.log(err);

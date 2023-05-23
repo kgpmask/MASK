@@ -17,7 +17,7 @@ const upload = multer({ dest: "uploads/" });
 const postToInsta = require("../routes/instaupload");
 const cors = require("cors");
 
-function link(app, nunjEnv) {
+function link (app, nunjEnv) {
 	const smallerRoutes = [
 		"/about",
 		"/apply",
@@ -26,7 +26,7 @@ function link(app, nunjEnv) {
 		"/submissions",
 		"/success",
 		"/privacy",
-		"/terms",
+		"/terms"
 	];
 	const userRoutes = ["/login", "/logout"];
 	const mediaRoutes = ["/art", "/videos"];
@@ -81,7 +81,7 @@ function link(app, nunjEnv) {
 	app.use("/profile", profileRouter);
 	app.use(["/quizzes", "/events"], quizzesRouter);
 	app.use("/rebuild", (req, res) => {
-		nunjEnv.loaders.forEach((loader) => (loader.cache = {}));
+		nunjEnv.loaders.forEach((loader) => loader.cache = {});
 		["./rewards.json"].forEach(
 			(cache) => delete require.cache[require.resolve(cache)]
 		);
@@ -115,7 +115,7 @@ function link(app, nunjEnv) {
 		res.status(500);
 		if (req.method === "GET")
 			res.renderFile("404.njk", {
-				message: "Server error! This may or may not be due to invalid input.",
+				message: "Server error! This may or may not be due to invalid input."
 			});
 		else res.send(err.toString());
 	});
