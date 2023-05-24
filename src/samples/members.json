@@ -28,6 +28,38 @@
 		"position": "Fresher"
 	},
 	{
+		"name": "Sahil Patel",
+		"roll": "22NA30028",
+		"image": "../assets/members/22_sahil.webp",
+		"teams": [
+			{
+				"name": "Design & Arts",
+				"icon": "design"
+			},
+			{
+				"name": "WebDev",
+				"icon": "webdev"
+			}
+		],
+		"position": "Fresher"
+	},
+	{
+		"name": "Soumil Maiti",
+		"roll": "22ME10082",
+		"image": "../assets/members/22_soumil.webp",
+		"teams": [
+			{
+				"name": "Quiz",
+				"icon": "quiz"
+			},
+			{
+				"name": "WebDev",
+				"icon": "webdev"
+			}
+		],
+		"position": "Fresher"
+	},
+	{
 		"name": "Karthikeya S M Yelisetty",
 		"roll": "21CS30060",
 		"image": "../assets/members/21_karthikeya.webp",
@@ -100,16 +132,24 @@
 		"position": "Former Member"
 	},
 	{
-		"name": "Uday Srivastava",
-		"roll": "22ME30072",
-		"image": "../assets/members/22_uday.webp",
+		"name": "Chaitanya Srinivas",
+		"roll": "21EC10021",
+		"image": "../assets/members/21_dommeti.webp",
 		"teams": [
+			{
+				"name": "AMV & Music",
+				"icon": "amv"
+			},
+			{
+				"name": "Design & Arts",
+				"icon": "design"
+			},
 			{
 				"name": "WebDev",
 				"icon": "webdev"
 			}
 		],
-		"position": "Fresher"
+		"position": "Associate"
 	},
 	{
 		"name": "Venkatsai Mokshith",
@@ -142,21 +182,5 @@
 			}
 		],
 		"position": "Team Sub-Heads"
-	},
-	{
-		"name": "Sahil Patel",
-		"roll": "22NA30028",
-		"image": "../assets/members/22_sahil.webp",
-		"teams": [
-			{
-				"name": "WebDev",
-				"icon": "webdev"
-			},
-			{
-				"name": "Dna",
-				"icon": "dna"
-			}
-		],
-		"position": "Fresher"
 	}
 ]
