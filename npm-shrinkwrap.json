@@ -1,12 +1,12 @@
 {
 	"name": "mask",
-	"version": "3.2.1",
+	"version": "3.2.2",
 	"lockfileVersion": 2,
 	"requires": true,
 	"packages": {
 		"": {
 			"name": "mask",
-			"version": "3.2.1",
+			"version": "3.2.2",
 			"license": "MPL-2.0",
 			"dependencies": {
 				"axios": "^0.21.1",

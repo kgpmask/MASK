@@ -5,6 +5,7 @@ const crypto = require('crypto');
 const Tools = require("../src/tools");
 
 router.post('/', async (req, res) => {
+	console.log(`git-hook request sent at: ${new Date()}`);
 	const secret = process.env.WEBHOOK_SECRET;
 	if (!secret) return res.send('Disabled due to no webhook secret being configured');
 	// Validate secret
@@ -21,7 +22,7 @@ router.post('/', async (req, res) => {
 	if (branch !== 'dev' && branch !== 'main') {
 		return res.send('Automatic webhook updates are only enabled on dev and main branch');
 	}
-	await Tools.updateCode();
+	console.log(await Tools.updateCode());
 	res.send('Success!');
 	return process.exit(0);
 });

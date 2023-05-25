@@ -7,6 +7,8 @@ const mediaRouter = require("../routes/media");
 const membersRouter = require("../routes/members");
 const miscRouter = require("../routes/misc");
 const newsletterRouter = require("../routes/newsletter");
+const pollRouter = require("../routes/polls");
+
 const profileRouter = require("../routes/profile");
 const quizzesRouter = require("../routes/quizzes");
 const userRouter = require("../routes/user");
@@ -48,11 +50,12 @@ function link (app, nunjEnv) {
 	app.use('/live', liveRouter);
 	app.use('/members', membersRouter);
 	app.use('/newsletters', newsletterRouter);
+	app.use('/polls', pollRouter);
 	app.use('/profile', profileRouter);
 	app.use(['/quizzes', '/events'], quizzesRouter);
 	app.use('/rebuild', (req, res) => {
 		nunjEnv.loaders.forEach(loader => loader.cache = {});
-		['./members.json', './rewards.json'].forEach(cache => delete require.cache[require.resolve(cache)]);
+		['./rewards.json'].forEach(cache => delete require.cache[require.resolve(cache)]);
 		return res.renderFile('rebuild.njk');
 	});
 
