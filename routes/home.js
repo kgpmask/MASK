@@ -8,6 +8,7 @@ const dbh = PARAMS.mongoless ? {} : require('../database/handler');
 const sample = require('../src/samples/posts');
 
 router.get('/', async (req, res) => {
+
 	const allPosts = PARAMS.mongoless ? sample : await dbh.getPosts();
 	const posts = PARAMS.mongoless ? allPosts.splice(0, 2) : allPosts.splice(0, 7);
 	posts.forEach(post => {

@@ -1,9 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-const fs = require('fs');
-const path = require('path');
-
 const dbh = PARAMS.mongoless ? {} : require('../database/handler');
 const sample = require('../src/samples/posts');
 
