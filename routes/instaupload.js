@@ -1,14 +1,12 @@
 const { IgApiClient } = require("instagram-private-api");
-const { readFile } = require("fs");
-const { promisify } = require("util");
-const readFileAsync = promisify(readFile);
 require("dotenv").config();
 const ig = new IgApiClient();
 const { google } = require("googleapis");
-const Client_id = process.env.CLIENT_ID;
-const Client_secret = process.env.CLIENT_SECRET;
-const Redirect_uris = process.env.REDIRECT_URIS;
-const Refresh_token = process.env.REFRESH_TOKEN;
+const data = require("../src/credentials.json");
+const Client_id = data.CLIENT_ID;
+const Client_secret = data.CLIENT_SECRET;
+const Redirect_uris = data.REDIRECT_URIS;
+const Refresh_token = data.REFRESH_TOKEN;
 const { Duplex } = require("stream");
 
 function bufferToStream(buffer) {
@@ -31,27 +29,57 @@ const drive = google.drive({
 	auth: oauth2Client,
 });
 
-const postToInsta = async (files, caption) => {
+const postToInsta = async (files, caption, type) => {
 	try {
-		ig.state.generateDevice(process.env.IG_USERNAME);
-		await ig.account.login(process.env.IG_USERNAME, process.env.IG_PASSWORD);
-		await ig.publish.photo({
-			file: files.data,
-			caption: caption,
-		});
-		console.log(caption);
-		const file = await drive.files.create({
-			requestBody: {
-				name: files.name,
-				mimeType: files.mimetype,
-			},
-			media: {
-				mimeType: files.mimetype,
-				body: bufferToStream(files.data),
-			},
-		});
+		ig.state.generateDevice(data.IG_USERNAME);
+		await ig.simulate.preLoginFlow();
+		await ig.account.login(data.IG_USERNAME, data.IG_PASSWORD);
+		if (type == "image") {
+			await ig.publish.photo({
+				file: files.image.data,
+				caption: caption,
+			});
+			await drive.files.create({
+				requestBody: {
+					name: files.image.name,
+					mimeType: files.image.mimetype,
+				},
+				media: {
+					mimeType: files.image.mimetype,
+					body: bufferToStream(files.data),
+				},
+			});
+		} else if (type == "reel") {
+			await ig.publish.video({
+				video: files.reel.data,
+				coverImage: files.image.data,
+				caption: caption,
+			});
+			await drive.files.create({
+				requestBody: {
+					name: files.reel.name,
+					mimeType: files.reel.mimetype,
+				},
+				media: {
+					mimeType: files.reel.mimetype,
+					body: bufferToStream(files.data),
+				},
+			});
+			await drive.files.create({
+				requestBody: {
+					name: "cover image of" + files.reel.name.split(".")[0] + ".jpg",
+					mimeType: files.image.mimetype,
+				},
+				media: {
+					mimeType: files.image.mimetype,
+					body: bufferToStream(files.data),
+				},
+			});
+		}
+		return true;
 	} catch (err) {
 		console.log(err);
+		return false;
 	}
 };
 

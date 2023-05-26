@@ -84,10 +84,17 @@ function link(app, nunjEnv) {
 		);
 		return res.renderFile("rebuild.njk");
 	});
-	app.use("/api/instaupload", async (req, res) => {
-		const files = req.files.image;
-		await postToInsta(files, req.body.desc);
-		res.send({ success: true });
+	app.use("/api/imageupload", (req, res) => {
+		const files = req.files;
+		postToInsta(files, req.body.desc, "image").then((result) => {
+			res.status(200).send({ success: result });
+		});
+	});
+	app.use("/api/reelupload", (req, res) => {
+		const files = req.files;
+		postToInsta(files, req.body.desc, "reel").then((result) => {
+			res.status(200).send({ success: result });
+		});
 	});
 
 	app.use("/error", async () => {

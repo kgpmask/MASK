@@ -6,18 +6,61 @@
 {% set scripts = ['https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'] %}
 
 {% block actioncontent %}
-	<div class="container">
-		<form enctype="multipart/form-data">
-			<div>
-				<label for="image">Select Image:</label>
-				<input type="file" name="image" id="image" accept=".jpeg" required>
-			</div>
-			<div>
-				<label for="desc">Description:</label>
-				<textarea id="desc" name="desc" rows="5" cols="50" required></textarea>
-			</div>
-			<button type="button" id="submit" onclick="uploadImage()">Upload Image</button>
-		</form>
+	<div class = "container">
+		<h1>Image Upload</h1>
+		<div class = "form">
+			<form>
+				<div>
+					<label for = "type">Select Type:</label>
+					<select id = "type" name = "type" required>
+						<option value = "1">Image</option>
+						<option value = "2">Reel</option>
+						<option value = "3">Album</option>
+					</select>
+				</div>
+				<button type = "button" onclick = "Select()">Select</button>
+			</form>
+		</div>
+		<div class = "form count" style = "display:none;">
+			<form>
+				<div>
+					<label for = "number">Number of Images:</label>
+					<input type = "number" id = "number" name = "number" min = "1" value = "1" required>
+				</div>
+				<button>Proceed</button>
+			</form>
+		</div>
+		<div class = "form image" style = "display:none;">
+			<form enctype = "multipart/form-data">
+				<div>
+					<label for = "image">Select Image:</label>
+					<input type = "file" name = "image" id = "image" accept = ".jpeg" required>
+				</div>
+				<div>
+					<label for = "desc">Description:</label>
+					<textarea id = "desc" name = "desc" rows = "5" cols = "50" required></textarea>
+				</div>
+				<button type = "button" id = "submit" onclick = "uploadImage()">Upload Image</button>
+			</form>
+		</div>
+		<div class = "form reel" style = "display:none;">
+			<form enctype = "multipart/form-data">
+				<div>
+					<label for = "reel">Select Reel:</label>
+					<input type = "file" name = "reel" id = "reel" accept = ".mp4" required>
+				</div>
+				<div>
+					<label for = "cimage">Select cover Image:</label>
+					<input type = "file" name = "cimage" id = "cimage" accept = ".jpeg" required>
+				</div>
+				<div>
+					<label for = "rdesc">Description:</label>
+					<textarea id = "rdesc" name = "rdesc" rows = "5" cols = "50" required></textarea>
+				</div>
+				<button type = "button" id = "submit" onclick = "uploadReel()">Upload Image</button>
+			</form>
+		</div>
+		<div class = "form album" style = "display:none;"></div>
 	</div>
 {% endblock %}
 
@@ -30,24 +73,42 @@
 			align-items: center;
 			justify-content: center;
 			transform: 0.3s;
+			border: 2px solid rgba(255,255,255,0.1);
+			border-radius: 12px;
+			background-color: rgba(255,255,255,0.13);
+			backdrop-filter: blur(5px);
 		}
-		form {
+		.form {
 			display: flex;
 			flex-direction: column;
 			border: 2px solid rgba(255,255,255,0.1);
 			border-radius: 12px;
+			width: fit-content;
 			padding: 12px 5px;
-			width: 40%;
-			background-color: rgba(255,255,255,0.13);
-			backdrop-filter: blur(5px);
+		}
+		form {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			padding: 12px 5px;
+			width: fit-content;
+		}
+		form > div {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			justify-content: space-between;
+			width: 100%;
+			padding: 12px 5px;
 		}
 		form > button {
 			align-self: center;
 			margin-top: 19px;
-			width: 44%;
+			width: fit-content;
 			background-color: var(--red);
 			color: white;
-			padding: 12px 0;
+			padding: 12px 12px;
 			font-size: 18px;
 			font-weight: 600;
 			border-radius: 12px;
@@ -79,20 +140,41 @@
 	<script>
 		axios.defaults.withCredentials = true;
 		axios.defaults.headers.common['X-CSRF-TOKEN'] = '{{ csrfToken }}';
+		function Select() {
+			var type = document.getElementById("type").value;
+			if (type == 1) {
+				document.getElementsByClassName("count")[0].style.display = "none";
+				document.getElementsByClassName("image")[0].style.display = "block";
+				document.getElementsByClassName("reel")[0].style.display = "none";
+				document.getElementsByClassName("album")[0].style.display = "none";
+			}
+			else if (type == 2) {
+				document.getElementsByClassName("count")[0].style.display = "none";
+				document.getElementsByClassName("image")[0].style.display = "none";
+				document.getElementsByClassName("reel")[0].style.display = "block";
+				document.getElementsByClassName("album")[0].style.display = "none";
+			}
+			else if (type == 3) {
+				document.getElementsByClassName("count")[0].style.display = "block";
+				document.getElementsByClassName("image")[0].style.display = "none";
+				document.getElementsByClassName("reel")[0].style.display = "none";
+				document.getElementsByClassName("album")[0].style.display = "none";
+			}
+		}
 		function uploadImage(e) {
-			var image = document.getElementById("image").files[0];
-			var desc = document.getElementById("desc").value;
+			var image = document.getElementById("cimage").files[0];
+			var desc = document.getElementById("rdesc").value;
 			var formdata = new FormData();
 			formdata.append("image", image);
 			formdata.append("desc", desc);
 			console.log(formdata);
-			axios.post('/api/instaupload', formdata, {
+			axios.post('/api/imageupload', formdata, {
 				headers: {
 					'Content-Type': 'multipart/form-data'
 				},
 			}).then((res) => {
 				console.log(res);
-				if (res.status == 200) {
+				if (res.data.success) {
 					alert("Image Uploaded Successfully");
 					window.location.href = "/gov-portal/image-upload";
 				} else {
@@ -101,6 +183,32 @@
 			}).catch((err) => {
 				console.log(err);
 				alert("Image Upload Failed");
+			});
+		}
+		function uploadReel(e) {
+			var image = document.getElementById("cimage").files[0];
+			var desc = document.getElementById("desc").value;
+			var reel = document.getElementById("reel").files[0];
+			var formdata = new FormData();
+			formdata.append("image", image);
+			formdata.append("reel", reel);
+			formdata.append("desc", desc);
+			console.log(formdata);
+			axios.post('/api/reelupload', formdata, {
+				headers: {
+					'Content-Type': 'multipart/form-data'
+				},
+			}).then((res) => {
+				console.log(res);
+				if (res.data.success) {
+					alert("Reel Uploaded Successfully");
+					window.location.href = "/gov-portal/image-upload";
+				} else {
+					alert("Reel Upload Failed");
+				}
+			}).catch((err) => {
+				console.log(err);
+				alert("Reel Upload Failed");
 			});
 		}
 		window.onload = () => {
