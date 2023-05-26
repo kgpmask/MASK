@@ -3,7 +3,7 @@ The website for the Manga & Anime Society Kharagpur
 
 ## Contributing
 
-The owner of this repository is @PartMan7(?), who also runs the server. He's also running the server cost (at the time of writing he's in his final year, but it'll carry on even after graduation).
+The owner of this repository is @PartMan7, who also runs the server. He's also running the server cost (at the time of writing he's in his final year, but it'll carry on even after graduation).
 
 All non-trivial changes are done through PULL REQUESTS ONLY. The WebDev Team Head is responsible for testing and merging all PRs. Feel free to pester them to look at the changes you've prepared.
 
