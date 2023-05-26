@@ -11,7 +11,7 @@ const postToInsta = async (files) => {
 
 		await ig.publish.photo({
 			file: files.data,
-			caption: "Really nice photo from the internet!",
+			caption: "Really nice photo from the internet!"
 		});
 	} catch (err) {
 		console.log(err);
