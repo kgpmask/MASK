@@ -137,9 +137,12 @@ exports.shell = async function exec (command) {
 exports.updateCode = async function () {
 	const shell = exports.shell;
 	const gitFetch = await shell(`git fetch $(git rev-parse --symbolic-full-name --abbrev-ref @{upstream} | sed 's!/! !')`);
+	console.log('1:\n\t', gitFetch);
 	// Look I know it looks scary, but we only need to ever pull the current branch!
 	const gitMerge = await shell(`git merge FETCH_HEAD`);
+	console.log('2:\n\t', gitMerge);
 	const npmInstall = await shell('npm install');
+	console.log('3:\n\t', npmInstall);
 	return { gitFetch, gitMerge, npmInstall };
 };
 
