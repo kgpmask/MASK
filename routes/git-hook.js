@@ -17,12 +17,15 @@ router.post('/', async (req, res) => {
 	if (signature.length !== digest.length || !crypto.timingSafeEqual(digest, signature)) {
 		return res.error(new Error(`Request body digest (${digest}) did not match ${sigHeader} (${signature})`));
 	}
+	console.log('Secret\'s good.');
 	const branch = process.env.WEBHOOK_BRANCH;
 	if (!branch) return res.send('No branch configured for webhooks');
 	if (branch !== 'dev' && branch !== 'main') {
 		return res.send('Automatic webhook updates are only enabled on dev and main branch');
 	}
-	console.log(await Tools.updateCode());
+	console.log('Updating code');
+	await Tools.updateCode();
+	console.log('Code updated');
 	res.send('Success!');
 	return process.exit(0);
 });
