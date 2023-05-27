@@ -28,9 +28,10 @@ router.post('/', async (req, res) => {
 	}
 	// We don't need it to restart unless the branch is same
 	if (branch !== pushBranch) return res.send('Not for current docker.');
+	res.send('Hook received. Starting code update.');
+	// Note: This needs to be inside a timeout with a hook to Discord if it fails
 	await Tools.updateCode();
-	console.log('Code updated. Sending response.');
-	res.send('Success!');
+	console.log('Code updated. Restarting.');
 	return process.exit(0);
 });
 
