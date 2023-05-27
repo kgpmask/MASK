@@ -5,7 +5,7 @@ The website for the Manga & Anime Society Kharagpur
 
 The owner of this repository is @PartMan7, who also runs the server. He's also running the server cost (at the time of writing he's in his final year, but it'll carry on even after graduation).
 
-All non-trivial changes are done through PULL REQUESTS ONLY. The WebDev Team Head is responsible for testing and merging all PRs. Feel free to pester them to look at the changes you've prepared.
+All non-trivial changes are done through PULL REQUESTS ONLY. The WebDev Team Head (currently @Goose-Of-War) is responsible for testing and merging all PRs. Feel free to pester them to look at the changes you've prepared.
 
 To create a pull request, navigate to the `dev` branch (clicking on the GitHub client, or `git checkout dev` on the CLI) and create a new branch based on it (`New Branch` button (based on the `dev` branch, again!) on the GitHub client's branches page, or `git checkout -b [branch-name]` on the CLI). Pull requests will _never_ be merged directly to `main`; they will be first merged to `dev` and batches of changes and/or patches will be merged from `dev` to `main` alongside version increments.
 
@@ -125,6 +125,7 @@ Take a look at existing articles for the various classes and where they're used.
 - <a href="https://github.com/MokshithPV" target="_blank">Venkatsai Mokshith</a> (Contributor)<br />
 - <a href="https://github.com/SachdevJai" target="_blank">Jai Sachdev</a> (Contributor)<br />
 - <a href="https://github.com/ItsAnkan" target="_blank">Ankan Saha</a> (Contributor)<br />
+- <a href="https://github.com/Symbiot01" target="_blank">Sahil Patel</a> (Contributor)<br />
 - <a href="https://github.com/anjaniit23" target="_blank">Anjani Kumar</a> (Contributor)<br />
 - <a href="https://github.com/lurkingryuu" target="_blank">Karthikeya Y M</a> (Contributor)<br />
 - <a href="https://github.com/Yureien" target="_blank">Soham Sen</a> (Contributor)<br />

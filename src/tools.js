@@ -1,3 +1,4 @@
+const axios = require('axios');
 const childProcess = require('child_process');
 const util = require('util');
 
@@ -130,7 +131,7 @@ exports.levenshteinDamerau = function levenshteinDamerau (str1, str2, weights) {
 
 exports.shell = async function exec (command) {
 	const { stdout, stderr } = await util.promisify(childProcess.exec)(command);
-	if (stderr) throw stderr;
+	// if (stderr) throw stderr; | Commenting this out since stderr in our case is just warnings
 	return stdout.trim();
 };
 
@@ -143,7 +144,29 @@ exports.updateCode = async function () {
 	return { gitFetch, gitMerge, npmInstall };
 };
 
-
+exports.alertToDiscord = async function (env, commit, err) {
+	// env: prod | dev
+	const webhookLink = require('./credentials').DISCORD_WEBHOOK_LINK;
+	const webhookObject = {
+		embeds: [
+			{
+				title: `Deploy failed in ${env}`,
+				fields: [
+					{
+						name: 'Error',
+						value: `${err}`
+					},
+					{
+						name: 'Commit',
+						value: `\`${commit.id.slice(0, 7)}\` ${commit.message}`
+					}
+				]
+			}
+		]
+	};
+	await axios.post(webhookLink, webhookObject);
+	return 'Success';
+};
 
 /*************
 * Prototypes *
