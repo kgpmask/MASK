@@ -5,7 +5,7 @@ const assert = require('assert');
 const axios = require('axios');
 const server = require('../src/mask.js');
 
-const pages = ['', 'home', 'art', 'videos', 'events', 'about', 'members', 'submissions'];
+const pages = ['', 'home', 'art', 'videos', 'about', 'members', 'submissions', 'privacy', 'terms'];
 
 describe('Server', () => {
 
