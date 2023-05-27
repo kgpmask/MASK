@@ -206,7 +206,7 @@ async function addTeam (rollNumber, teamToAdd) {
 	const memberToUpdate = await Member.findOne({ 'roll': rollNumber.trim() });
 	console.log(memberToUpdate.records);
 	const yearIndex = memberToUpdate.records.length - 1;
-	memberToUpdate.records[yearIndex].teams = memberToUpdate.records[yearIndex].teams.push(teamToAdd);
+	memberToUpdate.records[yearIndex].teams.push(teamToAdd);
 	await Member.updateOne({ '_id': memberToUpdate._id }, { 'records': memberToUpdate.records });
 }
 
