@@ -5,6 +5,7 @@ const crypto = require('crypto');
 const Tools = require("../src/tools");
 
 router.post('/', async (req, res) => {
+	// Console log git hook requests
 	console.log(`git-hook request sent at: ${new Date()}`);
 	const pushBranch = req.body.ref.split('/')[2];
 	console.log(`\tRef branch: ${pushBranch}`);
