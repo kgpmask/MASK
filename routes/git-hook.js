@@ -30,7 +30,11 @@ router.post('/', async (req, res) => {
 	if (branch !== pushBranch) return res.send('Not for current docker.');
 	res.send('Hook received. Starting code update.');
 	// Note: This needs to be inside a timeout with a hook to Discord if it fails
-	await Tools.updateCode();
+	await new Promise(async (resolve, reject) => {
+		setTimeout(() => reject(new Error('60 seconds time out')), 60_000);
+		await Tools.updateCode();
+		return resolve('Successfully updated');
+	});
 	console.log('Code updated. Restarting.');
 	return process.exit(0);
 });
