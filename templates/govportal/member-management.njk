@@ -17,7 +17,7 @@
 		<tbody>
 			{% for member in currentMembers %}
 				<tr>
-					<td class = "member-name" onclick = "showModal(`{{ member.roll }}`)"><div class = "name"><b>{{ member.name }}</b></div>
+					<td class = "member-name" onclick = "toggleModal(`{{ member.roll }}`)"><div class = "name"><b>{{ member.name }}</b></div>
 					<div id = "{{ member.roll }}" class = "modal" style = "display:none">
 						<div class = "modal-content">
 							</br>
@@ -129,9 +129,13 @@
 			}
 		}
 
-		function showModal (id) {
+		function toggleModal (id) {
 			modal = document.getElementById(id);
-				modal.style.display = "block";
+			if(modal.style.display === 'block') {
+				modal.style.display = 'none';
+			} else {
+				modal.style.display = 'block';
+			}
 		}
 
 		async function postData (data) {
