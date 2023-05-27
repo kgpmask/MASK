@@ -9,90 +9,61 @@ const membersRouter = require("../routes/members");
 const miscRouter = require("../routes/misc");
 const newsletterRouter = require("../routes/newsletter");
 const pollRouter = require("../routes/polls");
+
 const profileRouter = require("../routes/profile");
 const quizzesRouter = require("../routes/quizzes");
 const userRouter = require("../routes/user");
-const fileupload = require("express-fileupload");
-const postToInsta = require("../routes/instaupload");
 
 function link (app, nunjEnv) {
-	const smallerRoutes = [
-		"/about",
-		"/apply",
-		"/blog",
-		"/prizes",
-		"/submissions",
-		"/success",
-		"/privacy",
-		"/terms"
-	];
+	const smallerRoutes = ["/about", "/apply", "/blog", "/prizes", "/submissions", "/success", "/privacy", "/terms"];
 	const userRoutes = ["/login", "/logout"];
 	const mediaRoutes = ["/art", "/videos"];
 
-	app.use(
-		"/",
-		(req, res, next) => {
-			if (req.url in smallerRoutes) {
-				next();
-			} else {
-				next("route");
-			}
-		},
-		miscRouter
-	);
-	app.use(fileupload());
-	app.use(
-		"/",
-		(req, res, next) => {
-			if (req.url in userRoutes) {
-				next();
-			} else {
-				next("route");
-			}
-		},
-		userRouter
-	);
+	app.use('/', (req, res, next) => {
+		if (req.url in smallerRoutes) {
+			next();
+		} else {
+			next('route');
+		}
+	}, miscRouter);
 
-	app.use(
-		"/",
-		(req, res, next) => {
-			if (req.url in mediaRoutes) {
-				next();
-			} else {
-				next("route");
-			}
-		},
-		mediaRouter
-	);
+	app.use('/', (req, res, next) => {
+		if (req.url in userRoutes) {
+			next();
+		} else {
+			next('route');
+		}
+	}, userRouter);
 
-	app.use("/checker", checkerRouter);
-	app.use("/corsProxy", corsProxyRouter);
-	app.use("/git-hook", gitHookRouter);
-	app.use("/gov-portal", govPortalRouter);
-	app.use("/", homeRouter);
-	app.use("/home", homeRouter);
-	app.use("/live", liveRouter);
-	app.use("/members", membersRouter);
-	app.use("/newsletters", newsletterRouter);
-	app.use("/polls", pollRouter);
-	app.use("/profile", profileRouter);
-	app.use(["/quizzes", "/events"], quizzesRouter);
-	app.use("/rebuild", (req, res) => {
-		nunjEnv.loaders.forEach((loader) => loader.cache = {});
-		["./rewards.json"].forEach(
-			(cache) => delete require.cache[require.resolve(cache)]
-		);
-		return res.renderFile("rebuild.njk");
-	});
-	app.use("/api/instaupload", async (req, res) => {
-		const files = req.files.image;
-		await postToInsta(files);
-		res.send({ success: true });
+	app.use('/', (req, res, next) => {
+		if (req.url in mediaRoutes) {
+			next();
+		} else {
+			next('route');
+		}
+	}, mediaRouter);
+
+	app.use('/checker', checkerRouter);
+	app.use('/corsProxy', corsProxyRouter);
+	app.use('/git-hook', gitHookRouter);
+	app.use('/', homeRouter);
+	app.use('/home', homeRouter);
+	app.use('/live', liveRouter);
+	app.use('/members', membersRouter);
+	app.use('/newsletters', newsletterRouter);
+	app.use('/polls', pollRouter);
+	app.use('/profile', profileRouter);
+	app.use(['/quizzes', '/events'], quizzesRouter);
+	app.use('/rebuild', (req, res) => {
+		nunjEnv.loaders.forEach(loader => loader.cache = {});
+		['./rewards.json'].forEach(cache => delete require.cache[require.resolve(cache)]);
+		return res.renderFile('rebuild.njk');
 	});
 
-	app.use("/error", async () => {
-		throw new Error("Sensitive error");
+	app.use('/error', async () => {
+		throw new Error('Sensitive error');
 	});
+
 
 	app.use((req, res, next) => {
 		// If propagation hasn't stopped, switch to GET!
