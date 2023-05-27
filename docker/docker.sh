@@ -3,6 +3,7 @@ if [ "$1" == "dev" ] ; then
 	then
 		exit 1
 	fi
+	command docker container kill mask_dev
 	command docker container rm mask_dev
 	command docker run --name mask_dev --restart always -d -p 6971:6969 mask_dev_image &&
 	command docker update --restart always mask_dev
@@ -12,6 +13,7 @@ elif [ "$1" == "prod" ] ; then
 	then
 		exit 1
 	fi
+	command docker container kill mask
 	command docker container rm mask
 	command docker run --name mask --restart always -d -p 6969:6969 mask_image &&
 	command docker update --restart always mask
