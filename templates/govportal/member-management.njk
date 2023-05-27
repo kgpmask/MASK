@@ -4,6 +4,8 @@
 {% set pagetitle = 'Governor Portal | Member Management' %}
 {% set actionname = 'Member Management' %}
 
+{% set scripts = ['https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'] %}
+
 {% block actioncontent %}
 	<table>
 		<thead>
@@ -24,7 +26,7 @@
 								{% for team in member.teams %}
 									<span class = "team-span">{{ team }}  <span class = "cross" onclick = "removeMemberTeam(`{{ member.name }}`,`{{ member.roll }}`, `{{ team }}`)">  &times;</span></span>
 								{% endfor %}
-								<span class = "add-team" id = "cross_`{{ member.roll }}`" onclick = "addTeam(this, `{{ member.teams }}`)">&plus;</span>
+								<span class = "add-team" id = "cross_`{{ member.roll }}`" onclick = "addTeam(this, `{{ member.teams }}`, `{{ member.name }}`, `{{ member.roll }}`)">&plus;</span>
 							</div>
 							<div class = "member-details" style = "display:block;">{{ member.position }}</div>
 						</div>
@@ -90,18 +92,36 @@
 
 {% block customjs %}
 	<script>
+		axios.defaults.withCredentials = true;
+		axios.defaults.headers.common['X-CSRF-TOKEN'] = '{{ csrfToken }}';
+
+		window.onload = () => {
+			if (!axios.defaults.headers.common['X-CSRF-TOKEN']) axios.defaults.headers.common['X-CSRF-TOKEN'] = document.cookie.split('=')[1];
+		}
+
 		function showModal (id) {
 			modal = document.getElementById(id);
 				modal.style.display = "block";
 		}
 
-		function removeMemberTeam(name, roll, team) {
+		async function postData (data) {
+			//console.log(data);
+			await axios.post('/gov-portal/member-management', { data: data }).data.then(() => {
+				window.location.reload();
+			});
+		}
+
+		function removeMemberTeam(name, rollNumber, team) {
+			//console.log(rollNumber);
 			if(confirm(`Are you sure you want to remove ${name} from ${team}`)) {
-				console.log("confirm")
+				team = team[0].toLowerCase();
+				const data = { functionType: 'removeTeam' , roll: `${rollNumber}`, team: `${team}` };
+				postData(data);
 			}
 		}
 
-		function addTeam(spanElement, memberTeams) {
+		function addTeam(spanElement, memberTeams, memberName, memberRoll) {
+			//console.log('start'+ memberRoll);
 			const teamNames = ["AMV & Music", "Media & Newsletter", "Quiz", "WebDev", "Design & Arts"];
 			memberTeams = memberTeams.split(',').map(team => team.trim());
 			const toAdd = teamNames.filter(team => !memberTeams.includes(team));
@@ -118,6 +138,16 @@
 				option.text = team;
 				dropDown.add(option);
 			});
+
+			dropDown.addEventListener("change", function(event) {
+				let selectedTeam = event.target.value;
+				if (confirm(`Are you sure you want to add ${memberName} to ${selectedTeam}`)) {
+					selectedTeam = selectedTeam[0].toLowerCase();
+					console.log(memberRoll);
+					const data = { functionType: 'addTeam', roll: `${memberRoll}`, team: `${selectedTeam}` };
+					postData(data);
+				}
+			})
 
 			spanElement.parentNode.replaceChild(dropDown, spanElement);
 		}

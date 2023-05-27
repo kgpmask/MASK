@@ -32,6 +32,21 @@ router.get('/member-management', async (req, res) => {
 	});
 });
 
+router.post('/member-management', async (req, res) => {
+	const data = req.body.data;
+	// console.log(data);
+	let response;
+	switch (data.functionType) {
+		case 'removeTeam':
+			response = await dbh.removeTeam(data.roll, data.team);
+			break;
+		case 'addTeam':
+			response = await dbh.addTeam(data.roll, data.team);
+			break;
+	}
+	return res.send(response);
+});
+
 router.get('/add-post', (req, res) => {
 	// if (!req.loggedIn) return res.redirect('/login');
 	return res.renderFile(`govportal/add-post.njk`);
@@ -51,6 +66,5 @@ router.post('/add-post', async (req, res) => {
 	}
 	return res.send(response);
 });
-
 
 module.exports = router;

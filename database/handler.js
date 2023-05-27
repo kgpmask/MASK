@@ -190,24 +190,27 @@ async function updatePoll (ctx) {
 
 // remove a member from a team
 async function removeTeam (rollNumber, teamToRemove) {
-	console.log(rollNumber.trim());
+	// console.log(rollNumber.trim());
 	const memberToUpdate = await Member.findOne({ 'roll': rollNumber.trim() });
-	console.log(memberToUpdate.records);
+	// console.log('membertoupdate' + memberToUpdate);
+	// console.log(memberToUpdate.records);
 	const yearIndex = memberToUpdate.records.length - 1;
 	memberToUpdate.records[yearIndex].teams = memberToUpdate.records[yearIndex].teams.filter(function (team) {
 		return team !== teamToRemove;
 	});
-	await Member.updateOne({ '_id': memberToUpdate._id }, { 'records': memberToUpdate.records });
+	// console.log("NEWRmemberToUpdate.records);
+	await Member.updateOne({ 'roll': memberToUpdate.roll }, { 'records': memberToUpdate.records });
 }
 
 // add a member to a team
 async function addTeam (rollNumber, teamToAdd) {
-	console.log(rollNumber.trim());
+	// console.log(rollNumber.trim());
 	const memberToUpdate = await Member.findOne({ 'roll': rollNumber.trim() });
-	console.log(memberToUpdate.records);
+	// console.log(memberToUpdate.records);
 	const yearIndex = memberToUpdate.records.length - 1;
 	memberToUpdate.records[yearIndex].teams.push(teamToAdd);
-	await Member.updateOne({ '_id': memberToUpdate._id }, { 'records': memberToUpdate.records });
+	// console.log(memberToUpdate.records);
+	await Member.updateOne({ 'roll': memberToUpdate.roll }, { 'records': memberToUpdate.records });
 }
 
 
