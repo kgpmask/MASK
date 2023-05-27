@@ -17,14 +17,13 @@ router.post('/', async (req, res) => {
 	if (signature.length !== digest.length || !crypto.timingSafeEqual(digest, signature)) {
 		return res.error(new Error(`Request body digest (${digest}) did not match ${sigHeader} (${signature})`));
 	}
-	const branch = process.env.WEBHOOK_BRANCH;
-	console.log('Webhook Branch:', branch);
-	const pushBranch = req.body.ref.split('/')[2];
-	console.log('Pushed to', pushBranch);
 	if (!branch) return res.send('No branch configured for webhooks');
 	if (branch !== 'dev' && branch !== 'main') {
 		return res.send('Automatic webhook updates are only enabled on dev and main branch');
 	}
+	const pushBranch = req.body.ref.split('/')[2];
+	console.log(`\tref branch: ${pushBranch}`);
+	if (branch !== pushBranch) return res.send('Not for current docker.');
 	await Tools.updateCode();
 	console.log('Code updated. Sending response.');
 	res.send('Success!');
