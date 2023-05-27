@@ -6,6 +6,9 @@ const Tools = require("../src/tools");
 
 router.post('/', async (req, res) => {
 	console.log(`git-hook request sent at: ${new Date()}`);
+	const pushBranch = req.body.ref.split('/')[2];
+	console.log(`\tRef branch: ${pushBranch}`);
+	console.log(`\tHead commit: ${ref.body.head_commit?.message}`);
 	const secret = process.env.WEBHOOK_SECRET;
 	if (!secret) return res.send('Disabled due to no webhook secret being configured');
 	// Validate secret
@@ -22,8 +25,7 @@ router.post('/', async (req, res) => {
 	if (branch !== 'dev' && branch !== 'main') {
 		return res.send('Automatic webhook updates are only enabled on dev and main branch');
 	}
-	const pushBranch = req.body.ref.split('/')[2];
-	console.log(`\tref branch: ${pushBranch}`);
+
 	if (branch !== pushBranch) return res.send('Not for current docker.');
 	await Tools.updateCode();
 	console.log('Code updated. Sending response.');
