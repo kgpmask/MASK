@@ -37,6 +37,7 @@
 			{% endfor %}
 		</tbody>
 	</table>
+	<button onclick = "exportToNextYear()">Export to Next Year</button>
 {% endblock %}
 
 {% block customcss %}
@@ -97,6 +98,11 @@
 
 		window.onload = () => {
 			if (!axios.defaults.headers.common['X-CSRF-TOKEN']) axios.defaults.headers.common['X-CSRF-TOKEN'] = document.cookie.split('=')[1];
+		}
+
+		function exportToNextYear () {
+			const data = { functionType: 'export' };
+			postData (data);
 		}
 
 		function showModal (id) {

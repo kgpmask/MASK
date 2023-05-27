@@ -215,40 +215,46 @@ async function addTeam (rollNumber, teamToAdd) {
 
 
 // export current year's data to the next year
-async function expToNextYear () {
+async function exportToNextYear () {
 	const members = await Member.find().exec();
 	let newRecord;
+	const teamsData = require('../src/teams.json');
+	const years = Object.keys(teamsData);
+	const thisYear = Number(years[years.length - 1]);
+
 	for (let i = 0; i < members.length; i++) {
 		const member = members[i];
+		if (member.records[member.records.length - 1].year !== thisYear) continue;
 		const currentRecord = member.records[member.records.length - 1];
 		switch (currentRecord.position) {
 			case 'Fresher':
 				newRecord = {
-					_id: currentRecord._id,
-					year: currentRecord.year + 1,
-					position: 'Associate',
-					teams: currentRecord.teams
+					'_id': currentRecord._id,
+					'year': currentRecord.year + 1,
+					'position': 'Associate',
+					'teams': currentRecord.teams
 				};
 				member.records.push(newRecord);
-				await Member.updateOne({ _id: member._id }, { records: member.records });
+				await Member.updateOne({ 'roll': member.roll }, { 'records': member.records });
 				break;
 
 			case 'Associate':
+				console.log(member.records);
 				newRecord = {
-					_id: currentRecord._id,
-					year: currentRecord.year + 1,
-					position: 'Executive',
-					teams: currentRecord.teams.map(function (team) {
+					'_id': currentRecord._id,
+					'year': currentRecord.year + 1,
+					'position': 'Executive',
+					'teams': currentRecord.teams.map(function (team) {
 						if (team.length === 1) {
 							return team;
 						} else {
-							team[team.length - 1] = 'H';
-							return team;
+							const newTeam = team[0] + 'H';
+							return newTeam;
 						}
 					})
 				};
 				member.records.push(newRecord);
-				await Member.updateOne({ _id: member._id }, { records: member.records });
+				await Member.updateOne({ 'roll': member.roll }, { 'records': member.records });
 				break;
 		}
 	}
@@ -276,6 +282,6 @@ module.exports = {
 	updatePoll,
 	removeTeam,
 	getCurrentMembers,
-	expToNextYear,
+	exportToNextYear,
 	addTeam
 };

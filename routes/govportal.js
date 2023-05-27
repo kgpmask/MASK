@@ -43,6 +43,10 @@ router.post('/member-management', async (req, res) => {
 		case 'addTeam':
 			response = await dbh.addTeam(data.roll, data.team);
 			break;
+		case 'export':
+			console.log(data);
+			response = await dbh.exportToNextYear();
+			break;
 	}
 	return res.send(response);
 });
