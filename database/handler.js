@@ -5,6 +5,7 @@ const Member = require('./schemas/Member');
 const Newsletter = require('./schemas/Newsletter');
 const Poll = require('./schemas/Poll');
 const Post = require('./schemas/Post');
+const { findOne } = require('./schemas/User');
 
 // Handle newly registered user or normal login
 async function createNewUser (profile) {
@@ -187,11 +188,71 @@ async function updatePoll (ctx) {
 	return true;
 }
 
-async function removeTeam (rollNumber, teamToRemove, year) {
-	console.log(`roll number = ${rollNumber}`);
-	const member = Member.find({ roll: "22BT10011" });
-	console.log(member);
+// remove a member from a team
+async function removeTeam (rollNumber, teamToRemove) {
+	console.log(rollNumber.trim());
+	const memberToUpdate = await Member.findOne({ 'roll': rollNumber.trim() });
+	console.log(memberToUpdate.records);
+	const yearIndex = memberToUpdate.records.length - 1;
+	memberToUpdate.records[yearIndex].teams = memberToUpdate.records[yearIndex].teams.filter(function (team) {
+		return team !== teamToRemove;
+	});
+	await Member.updateOne({ '_id': memberToUpdate._id }, { 'records': memberToUpdate.records });
 }
+
+// add a member to a team
+async function addTeam (rollNumber, teamToAdd) {
+	console.log(rollNumber.trim());
+	const memberToUpdate = await Member.findOne({ 'roll': rollNumber.trim() });
+	console.log(memberToUpdate.records);
+	const yearIndex = memberToUpdate.records.length - 1;
+	memberToUpdate.records[yearIndex].teams = memberToUpdate.records[yearIndex].teams.push(teamToAdd);
+	await Member.updateOne({ '_id': memberToUpdate._id }, { 'records': memberToUpdate.records });
+}
+
+
+// export current year's data to the next year
+async function expToNextYear () {
+	const members = await Member.find().exec();
+	let newRecord;
+	for (let i = 0; i < members.length; i++) {
+		const member = members[i];
+		const currentRecord = member.records[member.records.length - 1];
+		switch (currentRecord.position) {
+			case 'Fresher':
+				newRecord = {
+					_id: currentRecord._id,
+					year: currentRecord.year + 1,
+					position: 'Associate',
+					teams: currentRecord.teams
+				};
+				member.records.push(newRecord);
+				await Member.updateOne({ _id: member._id }, { records: member.records });
+				break;
+
+			case 'Associate':
+				newRecord = {
+					_id: currentRecord._id,
+					year: currentRecord.year + 1,
+					position: 'Executive',
+					teams: currentRecord.teams.map(function (team) {
+						if (team.length === 1) {
+							return team;
+						} else {
+							team[team.length - 1] = 'H';
+							return team;
+						}
+					})
+				};
+				member.records.push(newRecord);
+				await Member.updateOne({ _id: member._id }, { records: member.records });
+				break;
+		}
+	}
+}
+
+
+
 
 module.exports = {
 	createNewUser,
@@ -211,5 +272,7 @@ module.exports = {
 	getActivePolls,
 	updatePoll,
 	removeTeam,
-	getCurrentMembers
+	getCurrentMembers,
+	expToNextYear,
+	addTeam
 };

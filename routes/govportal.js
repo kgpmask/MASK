@@ -22,12 +22,10 @@ router.get('/member-management', async (req, res) => {
 	const teamsData = require('../src/teams.json');
 	const years = Object.keys(teamsData);
 	const currentMembers = await dbh.getCurrentMembers();
-	console.log(currentMembers[20]);
 	currentMembers.sort((a, b) => -(hierarchy.indexOf(a.position) < hierarchy.indexOf(b.position))).forEach(member => {
 		member.teams = member.teams.map(team => team.name);
 	});
 	// dbh.removeTeam("22BT10011", "WebDev", 2022);
-	dbh.removeTeam("21", '12', 12);
 	return res.renderFile('/govportal/member-management.njk', {
 		currentMembers,
 		teams: Object.values(teamsData[years[years.length - 1]])

@@ -105,9 +105,10 @@
 			const teamNames = ["AMV & Music", "Media & Newsletter", "Quiz", "WebDev", "Design & Arts"];
 			memberTeams = memberTeams.split(',').map(team => team.trim());
 			const toAdd = teamNames.filter(team => !memberTeams.includes(team));
-			const dropDown = document.createElement("select");			
+			const dropDown = document.createElement("select");
+			dropDown.style = "height:28.5px;padding-left:5px;"		
 			const defaultOption = document.createElement("option");
-			
+
 			defaultOption.text = "Select Team";
 			dropDown.add(defaultOption);
 
