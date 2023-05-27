@@ -6,7 +6,6 @@ const Tools = require("../src/tools");
 
 router.post('/', async (req, res) => {
 	console.log(`git-hook request sent at: ${new Date()}`);
-	console.log(req);
 	const secret = process.env.WEBHOOK_SECRET;
 	if (!secret) return res.send('Disabled due to no webhook secret being configured');
 	// Validate secret
@@ -19,6 +18,9 @@ router.post('/', async (req, res) => {
 		return res.error(new Error(`Request body digest (${digest}) did not match ${sigHeader} (${signature})`));
 	}
 	const branch = process.env.WEBHOOK_BRANCH;
+	console.log('Webhook Branch:', branch);
+	const pushBranch = req.body.ref.split('/')[2];
+	console.log('Pushed to', pushBranch);
 	if (!branch) return res.send('No branch configured for webhooks');
 	if (branch !== 'dev' && branch !== 'main') {
 		return res.send('Automatic webhook updates are only enabled on dev and main branch');
