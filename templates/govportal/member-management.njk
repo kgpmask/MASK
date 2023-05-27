@@ -24,9 +24,9 @@
 							<div class = "member-details" style = "display:block;">{{ member.roll }}</div>
 							<div class = "member-details" style = "display:block;"> 
 								{% for team in member.teams %}
-									<span class = "team-span">{{ team }}  <span class = "cross" onclick = "removeMemberTeam(`{{ member.name }}`,`{{ member.roll }}`, `{{ team }}`)">  &times;</span></span>
+									<div class = "span-div"><span class = "team-span">{{ team }}  <span class = "cross" onclick = "removeMemberTeam(`{{ member.name }}`,`{{ member.roll }}`, `{{ team }}`)">  &times;</span></span></div>
 								{% endfor %}
-								<span class = "add-team" id = "cross_`{{ member.roll }}`" onclick = "addTeam(this, `{{ member.teams }}`, `{{ member.name }}`, `{{ member.roll }}`)">&plus;</span>
+								<div class = "span-div-plus"><span class = "add-team" id = "cross_`{{ member.roll }}`" onclick = "addTeam(this, `{{ member.teams }}`, `{{ member.name }}`, `{{ member.roll }}`)">&plus;</span></div>
 							</div>
 							<div class = "member-details" style = "display:block;"></div>
 						</div>
@@ -55,10 +55,18 @@
   			height : 30px;
 			width : 50px;
 		}
+		.span-div {
+			margin: 10px;
+		}
+		.span-div-plus {
+			margin: 15px 0px 0px 10px;
+		}
 		.team-span {
 			padding : 3px 8px 3px 8px;
 			border : solid;
 			border-radius :5px;
+			display: block;
+			width: fit-content;
 		}
 		.add-team {
 			padding : 3px 8px 3px 8px;
@@ -92,7 +100,7 @@
 		.exportButton {
 			align-self: center;
 			margin: 1% 0% 2% 0%;
-			width: 13%;
+			width: fit-content;
 			background-color: var(--red);
 			color: white;
 			padding: 12px 0;
@@ -100,6 +108,7 @@
 			font-weight: 600;
 			border-radius: 12px;
 			cursor: pointer;
+			padding: 1% 2% 1% 2%;
 		}
 </style>
 {% endblock %}
