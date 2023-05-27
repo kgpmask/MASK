@@ -24,8 +24,8 @@ if ! command docker build -t mask_image -f ./docker/Dockerfile .
 }
 
 if [ "$1" == "all" ] ; then 
-	deploy_dev
 	deploy_prod
+	deploy_dev
 elif [ "$1" == "dev" ] ; then
 	deploy_dev
 elif [ "$1" == "prod" ] ; then
