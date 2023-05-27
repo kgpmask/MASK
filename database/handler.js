@@ -229,7 +229,6 @@ async function exportToNextYear () {
 		switch (currentRecord.position) {
 			case 'Fresher':
 				newRecord = {
-					'_id': currentRecord._id,
 					'year': currentRecord.year + 1,
 					'position': 'Associate',
 					'teams': currentRecord.teams
@@ -241,7 +240,6 @@ async function exportToNextYear () {
 			case 'Associate':
 				console.log(member.records);
 				newRecord = {
-					'_id': currentRecord._id,
 					'year': currentRecord.year + 1,
 					'position': 'Executive',
 					'teams': currentRecord.teams.map(function (team) {

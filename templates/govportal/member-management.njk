@@ -28,7 +28,7 @@
 								{% endfor %}
 								<span class = "add-team" id = "cross_`{{ member.roll }}`" onclick = "addTeam(this, `{{ member.teams }}`, `{{ member.name }}`, `{{ member.roll }}`)">&plus;</span>
 							</div>
-							<div class = "member-details" style = "display:block;">{{ member.position }}</div>
+							<div class = "member-details" style = "display:block;"></div>
 						</div>
 					</div>
 					</td> 
@@ -37,7 +37,7 @@
 			{% endfor %}
 		</tbody>
 	</table>
-	<button onclick = "exportToNextYear()">Export to Next Year</button>
+	<button onclick = "exportToNextYear()" class = "exportButton">Export to Next Year</button>
 {% endblock %}
 
 {% block customcss %}
@@ -70,7 +70,8 @@
 		}
 		table {
 			border-collapse: collapse;
-			width: 100%;
+			width: 70%;
+			margin: 4% 0% 1% 14%;
 		}
 		th, td {
 			border: 1px solid grey;
@@ -88,6 +89,18 @@
 		.name {
 			font-size : 22px;
 		}
+		.exportButton {
+			align-self: center;
+			margin: 1% 0% 2% 0%;
+			width: 13%;
+			background-color: var(--red);
+			color: white;
+			padding: 12px 0;
+			font-size: 18px;
+			font-weight: 600;
+			border-radius: 12px;
+			cursor: pointer;
+		}
 </style>
 {% endblock %}
 
@@ -101,8 +114,10 @@
 		}
 
 		function exportToNextYear () {
-			const data = { functionType: 'export' };
-			postData (data);
+			if(confirm("Are you sure you want to export current year's data to next year ?")){
+				const data = { functionType: 'export' };
+				postData (data);
+			}
 		}
 
 		function showModal (id) {
