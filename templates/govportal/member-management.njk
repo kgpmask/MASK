@@ -106,7 +106,7 @@
 
 		async function postData (data) {
 			//console.log(data);
-			await axios.post('/gov-portal/member-management', { data: data }).data.then(() => {
+			axios.post('/gov-portal/member-management', { data: data }).then(() => {
 				window.location.reload();
 			});
 		}
