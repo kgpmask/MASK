@@ -154,13 +154,11 @@ exports.alertToDiscord = async function (env, commit, err) {
 				fields: [
 					{
 						name: 'Error',
-						value: `${err}`,
-						inline: true
+						value: `${err}`
 					},
 					{
 						name: 'Commit',
-						value: `\`${commit.id.slice(0, 7)}\` ${commit.message}`,
-						inline: true
+						value: `\`${commit.id.slice(0, 7)}\` ${commit.message}`
 					}
 				]
 			}

@@ -40,6 +40,7 @@ router.post('/', async (req, res) => {
 		console.log('Code updated. Restarting.');
 		return process.exit(0);
 	} catch (err) {
+		console.log(`updateCode failed\n\tReason: ${err}`);
 		await Tools.alertToDiscord(pushBranch === 'dev' ? 'dev' : 'prod', req.body.head_commit, err);
 	}
 });
