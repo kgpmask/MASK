@@ -25,7 +25,7 @@ router.post('/', async (req, res) => {
 	if (branch !== 'dev' && branch !== 'main') {
 		return res.send('Automatic webhook updates are only enabled on dev and main branch');
 	}
-
+	// We don't need it to restart unless the branch is same
 	if (branch !== pushBranch) return res.send('Not for current docker.');
 	await Tools.updateCode();
 	console.log('Code updated. Sending response.');
