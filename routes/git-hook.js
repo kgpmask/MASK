@@ -9,8 +9,7 @@ router.post('/', async (req, res) => {
 	// Console log git hook requests
 	console.log(`git-hook request sent at: ${new Date()}`);
 	const pushBranch = req.body.ref.split('/')[2];
-	console.log(`\tRef branch: ${pushBranch}`);
-	console.log(`\tHead commit: ${req.body.head_commit?.message}`);
+	console.log(`\tRef branch: ${pushBranch}\n\tHead commit: ${req.body.head_commit?.message}`);
 	// Validate secret
 	const secret = process.env.WEBHOOK_SECRET;
 	if (!secret) return res.send('Disabled due to no webhook secret being configured');
