@@ -153,12 +153,14 @@ exports.alertToDiscord = async function (env, commit, err) {
 				title: `Deploy failed in ${env}`,
 				fields: [
 					{
-						name: 'err-info',
-						value: `Error: ${err}`
+						name: 'Error',
+						value: `${err}`,
+						inline: true
 					},
 					{
-						name: 'commit-info',
-						value: `Commit: \`${commit.id}\` ${commit.message}`
+						name: 'Commit',
+						value: `\`${commit.id.slice(0, 7)}\` ${commit.message}`,
+						inline: true
 					}
 				]
 			}
