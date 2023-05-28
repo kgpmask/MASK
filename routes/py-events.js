@@ -17,4 +17,8 @@ router.get('/qatq', (req, res) => {
 	return res.renderFile("qatq.njk");
 });
 
+router.get('/suzume', (req, res) => {
+	return res.renderFile("suzumetrip.njk");
+});
+
 module.exports = router;
