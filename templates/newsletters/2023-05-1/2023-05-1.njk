@@ -148,11 +148,21 @@
 		#crossword-left, #crossword-right {
 			min-height: 75px !important;
 			font-size: 0.75em;
-			height: calc(80vh - 520px) !important;
+			height: calc(80vh - 630px) !important;
 		}
 		.cross-words{
 			text-align: left;
 			padding: 0px 10px 0px 5px;
+		}
+
+		@media (max-height: 830px) {
+			#cross-wrapper {
+				display: none;
+			}
+
+			#cross-alt {
+				display: block !important;
+			}
 		}
 	</style>
 	<link rel="stylesheet" type="text/css" href="/assets/styles/wordsearch.css"/>
