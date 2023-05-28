@@ -16,7 +16,7 @@
 					<label>Title</label>
 				</div>
 				<div class="item">
-					<input type="date" id="date">
+					<input type="date" id="date" value="{{ date }}">
 					<label>End Date</label>
 				</div>
 			</div>
@@ -53,13 +53,6 @@
 			const parent = element.parentNode;
 			parent.previousElementSibling.lastElementChild.disabled = false; // enabling the previous remove option button
 			parent.remove();
-		}
-
-		window.onload = () => {
-			var now = new Date();
-			document.getElementById('date').value = now.getFullYear() + "-" + ("0" + (now.getMonth() + 1)).slice(-2) + "-" + ("0" + now.getDate()).slice(-2);
-			console.log(now);
-
 		}
 	</script>
 {% endblock %}
