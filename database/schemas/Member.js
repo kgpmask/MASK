@@ -5,6 +5,7 @@ const memberSchema = new mongoose.Schema({
 	_id: { type: String, required: true },
 	name: { type: String, required: true },
 	imageLink: String,
+	roll: { type: String, required: true },
 	records: [
 		{
 			year: { type: Number, required: true },
