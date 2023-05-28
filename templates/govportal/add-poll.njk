@@ -25,17 +25,20 @@
 				<div class="option">
 					<input type="text" required>
 					<label>Option 1</label>
-					<button type="button" onclick="removeOption(this)" class="removeoption">-</button>
+					<button type="button" onclick="removeOption(this)" class="removeoption">&#10006;</button>
 				</div>
-				<button type="button" onclick="addOption()" class="addoption">+ Add Option</button>
+				<button type="button" onclick="addOption()" class="addoption">&#10010; Add Option</button>
 			</div>
-			<button type="button" onclick="addPoll()">Add Poll</button>
+			<button type="button" onclick="addPoll()" style="width: 60%;">Add Poll</button>
 		<form>
 	</div>
 {% endblock %}
 
 {% block customjs %}
 	<script>
+		axios.defaults.withCredentials = true;
+		axios.defaults.headers.common['X-CSRF-TOKEN'] = '{{ csrfToken }}';
+
 		function addOption() {
 			const parent = document.getElementsByClassName('options')[0];
 			parent.lastElementChild.previousElementSibling.lastElementChild.disabled = true; // disabling the last remove option button
@@ -44,21 +47,76 @@
             div.innerHTML = `
 				<input type="text" required>
 				<label>Option ${parent.children.length - 1}</label>
-				<button type="button" onclick="removeOption(this)" class="removeoption">-</button>
+				<button type="button" onclick="removeOption(this)" class="removeoption">&#10006;</button>
 			`
 			parent.insertBefore(div,document.getElementsByClassName('addoption')[0]);
 		}
 
 		function removeOption(element) {
 			const parent = element.parentNode;
-			parent.previousElementSibling.lastElementChild.disabled = false; // enabling the previous remove option button
-			parent.remove();
+			try {
+				parent.previousElementSibling.lastElementChild.disabled = false; // enabling the previous remove option button
+				parent.remove();
+			} catch (e) {
+				parent.firstElementChild.value = '';
+			}
+		}
+
+		async function addPoll() {
+			const data = {
+				title: document.getElementById('title').value,
+				endTime: document.getElementById('date').value,
+				records: [...document.getElementsByClassName('option')].map(e => {
+					return e.firstElementChild.value ? {
+						value: e.firstElementChild.value,
+						votes: []
+					} : null;
+				}).filter(e => e)
+			};
+			var response = (await axios.post('/gov-portal/add-poll', { data: data })).data;
+			console.log(response);
+			const e = document.getElementsByClassName('message')[0];
+			e.innerHTML = response.message;
+			e.classList.add(response.success ? 'success' : 'error');
+			e.classList.remove('hidden');
+			setTimeout(function () {e.classList.add('hidden')}, 2000);
+			if (response.success) {
+				setTimeout(function () { location.reload() }, 3000);
+			}
+		}
+
+		window.onload = () => {
+			if (!axios.defaults.headers.common['X-CSRF-TOKEN']) axios.defaults.headers.common['X-CSRF-TOKEN'] = document.cookie.split('=')[1];
 		}
 	</script>
 {% endblock %}
 
 {% block customcss %}
 	<style>
+		.message {
+			position: absolute;
+			top: 0;
+			right: calc(50vw - 220px);
+			padding: 20px;
+			z-index: 1;
+			color: #fff;
+			font-weight: 600;
+			font-size: 18px;
+			width: 400px;
+			transform-origin: top;
+			transition: transform 0.3s ease;
+			border-bottom-left-radius: 6px;
+			border-bottom-right-radius: 6px;
+		}
+		.error {
+			background-color: rgba(255, 51, 51, 0.85);
+		}
+		.success {
+			background-color: rgba(75, 189, 67, 0.85);
+		}
+		.hidden {
+			transform: scaleY(0);
+		}
 		.form-container{
 			padding: 23px 25px;
 			display: flex;
@@ -76,6 +134,10 @@
 			width: 40%;
 			background-color: rgba(255,255,255,0.13);
 			backdrop-filter: blur(5px);
+		}
+		form * {
+			outline: none;
+			border: none;
 		}
 		.description {
 			display: flex;
@@ -101,6 +163,9 @@
 		}
 		.option > label {
 			left: 7%;
+		}
+		.addoption {
+			background-color: rgb(75, 189, 67);
 		}
 		.removeoption {
 			padding: 10px;
@@ -146,6 +211,21 @@
 			font-size: 16px;
 			padding: 0 2px;
 			background-color: rgba(0, 0, 0, 0);
+		}
+		button {
+			align-self: center;
+			margin-top: 19px;
+			width: 44%;
+			background-color: var(--red);
+			color: white;
+			padding: 12px 0;
+			font-size: 18px;
+			font-weight: 600;
+			border-radius: 12px;
+			cursor: pointer;
+		}
+		button:disabled {
+			background-color: var(--light-gray);
 		}
 		@media (max-width: 1600px) {
 			form {

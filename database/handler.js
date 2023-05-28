@@ -138,9 +138,28 @@ async function getMembersbyYear (year) {
 	return yearData;
 }
 
+async function addPoll (data) {
+	const poll = new Poll(data);
+	await poll.save();
+	return poll.toObject();
+}
+
 async function getActivePolls () {
 	const polls = await Poll.find({ endTime: { '$gt': new Date() } });
 	// console.log(polls);
+	return polls;
+}
+
+async function getMonthlyPolls (month) {
+	const date = new Date();
+	const polls = await Poll.find(
+		{
+			'_id': {
+				"$regex": `${date.getFullYear() + "-" + ("0" + (month ? month : date.getMonth() + 1)).slice(-2) + "-"}`,
+				"$options": "i"
+			}
+		}
+	).lean();
 	return polls;
 }
 
@@ -173,6 +192,8 @@ module.exports = {
 	getPosts,
 	addPost,
 	getMembersbyYear,
+	addPoll,
 	getActivePolls,
+	getMonthlyPolls,
 	updatePoll
 };
