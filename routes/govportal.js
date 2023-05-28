@@ -26,16 +26,17 @@ router.post('/add-post', async (req, res) => {
 	await new Promise(r => r());
 	// if (!req.loggedIn) return res.redirect('/');
 	const data = req.body.data;
-	if (!Object.values(data).some(e => e)) {
-		return res.send("Empty Data");
+	if (!data.name || !data.link || !data.attr[0] && ['youtube', 'instagram'].includes(data.type)) {
+		return res.send({ success: false, message: "Empty Data Provided" });
 	}
 	data.date = new Date().toISOString();
 	try {
 		response = await dbh.addPost(data);
+		return res.send({ success: true, message: "Successfully Added Post", response: response });
 	} catch (e) {
-		response = false;
+		console.log(e);
+		return res.send({ success: false, message: "Something Went Wrong" });
 	}
-	return res.send(response);
 });
 
 router.post('/add-poll', async (req, res) => {
@@ -47,7 +48,7 @@ router.post('/add-poll', async (req, res) => {
 	const now = new Date();
 	if (!(now < new Date(data.endTime))) return res.send({ success: false, message: "Invalid End Date" });
 	try {
-		data._id = now.getFullYear() + "-" + ("0" + (now.getMonth() + 1)).slice(-2) + "-" + (dbh.getMonthlyPolls().length + 1);
+		data._id = now.getFullYear() + "-" + ("0" + (now.getMonth() + 1)).slice(-2) + "-" + ((await dbh.getMonthlyPolls()).length + 1);
 		console.log(data);
 		response = await dbh.addPoll(data);
 		return res.send({ success: true, message: "Successfully Added Poll", response: response });

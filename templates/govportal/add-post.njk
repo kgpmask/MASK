@@ -69,13 +69,12 @@
 			}
 			var response = (await axios.post('/gov-portal/add-post', { data: data })).data;
 			console.log(response);
-			{# response = response === 'Empty Data' ? false : response; #}
 			const e = document.getElementsByClassName('message')[0];
-			e.innerHTML = response ? 'Succesfully Added Post' : 'Something Went Wrong';
-			e.classList.add(response ? 'success' : 'error');
+			e.innerHTML = response.message;
+			e.classList.add(response.success ? 'success' : 'error');
 			e.classList.remove('hidden');
 			setTimeout(function () {e.classList.add('hidden')}, 2000);
-			if (response) {
+			if (response.success) {
 				setTimeout(function () { location.reload() }, 3000);
 			}
 		}
