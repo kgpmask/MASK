@@ -10,6 +10,7 @@ const newsletterRouter = require("../routes/newsletter");
 const profileRouter = require("../routes/profile");
 const quizzesRouter = require("../routes/quizzes");
 const userRouter = require("../routes/user");
+const eventsRouter = require("../routes/py-events");
 
 function link (app, nunjEnv) {
 	const smallerRoutes = ["/about", "/apply", "/blog", "/prizes", "/submissions", "/success", "/privacy", "/terms"];
@@ -40,13 +41,6 @@ function link (app, nunjEnv) {
 		}
 	}, mediaRouter);
 
-	app.use('/prev-events', (req, res) => {
-		res.renderFile("py_events.njk");
-	});
-
-	app.use('/cosplay23', (req, res) => {
-		res.renderFile("cosplay23.njk");
-	});
 
 	app.use('/checker', checkerRouter);
 	app.use('/corsProxy', corsProxyRouter);
@@ -57,6 +51,7 @@ function link (app, nunjEnv) {
 	app.use('/members', membersRouter);
 	app.use('/newsletters', newsletterRouter);
 	app.use('/profile', profileRouter);
+	app.use('/py-events', eventsRouter);
 	app.use(['/quizzes', '/events'], quizzesRouter);
 	app.use('/rebuild', (req, res) => {
 		nunjEnv.loaders.forEach(loader => loader.cache = {});
