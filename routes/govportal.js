@@ -15,6 +15,11 @@ router.get('/add-post', (req, res) => {
 	return res.renderFile(`govportal/add-post.njk`);
 });
 
+router.get('/add-poll', (req, res) => {
+	// if (!req.loggedIn) return res.redirect('/login');
+	return res.renderFile(`govportal/add-poll.njk`);
+});
+
 router.post('/add-post', async (req, res) => {
 	// if (!req.loggedIn) return res.redirect('/');
 	const data = req.body.data;

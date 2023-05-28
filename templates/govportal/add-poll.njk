@@ -1,0 +1,176 @@
+{% extends "govportal/govportal.njk" %}
+
+{% set thispage = 'govportal/add-poll' %}
+{% set pagetitle = 'Governor Portal | Add Poll' %}
+{% set actionname = 'Add Poll' %}
+
+{% set scripts = ['https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'] %}
+
+{% block actioncontent %}
+	<div class="message hidden"></div>
+	<div class="form-container">
+		<form>
+			<div class="description">
+				<div class="item">
+					<input type="text" required id="title">
+					<label>Title</label>
+				</div>
+				<div class="item">
+					<input type="date" id="date">
+					<label>End Date</label>
+				</div>
+			</div>
+			<div class="options">
+				<h2>Options</h2>
+				<div class="option">
+					<input type="text" required>
+					<label>Option 1</label>
+					<button type="button" onclick="removeOption(this)" class="removeoption">-</button>
+				</div>
+				<button type="button" onclick="addOption()" class="addoption">+ Add Option</button>
+			</div>
+			<button type="button" onclick="addPoll()">Add Poll</button>
+		<form>
+	</div>
+{% endblock %}
+
+{% block customjs %}
+	<script>
+		function addOption() {
+			const parent = document.getElementsByClassName('options')[0];
+			parent.lastElementChild.previousElementSibling.lastElementChild.disabled = true; // disabling the last remove option button
+			const div = document.createElement('div');
+            div.className = 'option'
+            div.innerHTML = `
+				<input type="text" required>
+				<label>Option ${parent.children.length - 1}</label>
+				<button type="button" onclick="removeOption(this)" class="removeoption">-</button>
+			`
+			parent.insertBefore(div,document.getElementsByClassName('addoption')[0]);
+		}
+
+		function removeOption(element) {
+			const parent = element.parentNode;
+			parent.previousElementSibling.lastElementChild.disabled = false; // enabling the previous remove option button
+			parent.remove();
+		}
+
+		window.onload = () => {
+			var now = new Date();
+			document.getElementById('date').value = now.getFullYear() + "-" + ("0" + (now.getMonth() + 1)).slice(-2) + "-" + ("0" + now.getDate()).slice(-2);
+			console.log(now);
+
+		}
+	</script>
+{% endblock %}
+
+{% block customcss %}
+	<style>
+		.form-container{
+			padding: 23px 25px;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			transform: 0.3s;
+		}
+		form {
+			display: flex;
+			flex-direction: column;
+			border: 2px solid rgba(255,255,255,0.1);
+			border-radius: 12px;
+			padding: 12px 5px;
+			width: 40%;
+			background-color: rgba(255,255,255,0.13);
+			backdrop-filter: blur(5px);
+		}
+		.description {
+			display: flex;
+			flex-direction: column;
+		}
+		.item {
+			position: relative;
+			margin: 20px 10px;
+		}
+		.options {
+			display: flex;
+			flex-direction: column;
+		}
+		.option {
+			display: flex;
+			position: relative;
+			margin: 12px 10px;
+			justify-content: center;
+    		align-items: center;
+		}
+		.option > input {
+			width: 75%;
+		}
+		.option > label {
+			left: 7%;
+		}
+		.removeoption {
+			padding: 10px;
+			margin: 10px;
+			height: 50px;
+			width: 50px;
+		}
+		label{
+			position: absolute;
+			top: 50%;
+			left: 5%;
+			transform: translateY(-50%);
+			color: #fff;
+			font-weight: 600;
+			font-size: 18px;
+			pointer-events: none;
+			transition: 0.3s;
+		}
+		input{
+			background-color: rgba(255,255,255,0.07);
+   			font-size: 18px;
+    		font-weight: 300;
+			height: 50px;
+			width: 90%;
+  			border-radius: 8px;
+  			padding: 0 15px 0px 15px;
+  			border: 2px solid var(--light-gray);
+  			color: #fff;
+  			outline: none;
+		}
+		input:focus{
+  			border: 2px solid var(--red);
+		}
+		input:focus ~ label{
+			top: -7px;
+			font-size: 16px;
+			color: var(--red);
+			padding: 0 2px;
+			background-color: rgba(0, 0, 0, 0);
+		}
+		input:valid ~ label{
+			top: -7px;
+			font-size: 16px;
+			padding: 0 2px;
+			background-color: rgba(0, 0, 0, 0);
+		}
+		@media (max-width: 1600px) {
+			form {
+				width: 50%;
+			}
+		}
+
+		@media (max-width: 1300px) {
+			form {
+				width: 65%;
+			}
+		}
+
+		@media (max-width: 1000px) {
+			form {
+				width: 75%;
+			}
+		}
+
+	</style>
+{% endblock %}
