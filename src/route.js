@@ -45,6 +45,7 @@ function link (app, nunjEnv) {
 
 	app.use('/checker', checkerRouter);
 	app.use('/corsProxy', corsProxyRouter);
+	app.use('/gov-portal', govPortalRouter);
 	app.use('/git-hook', gitHookRouter);
 	app.use('/', homeRouter);
 	app.use('/home', homeRouter);
