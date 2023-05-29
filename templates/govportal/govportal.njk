@@ -10,6 +10,9 @@
 	href: 'gov-portal/add-post',
 	name: 'Add Post'
 },{
+	href: 'gov-portal/add-poll',
+	name: 'Add Poll'
+},{
 	href: 'gov-portal/member-management',
 	name: 'Member Management'
 }] %}
@@ -57,6 +60,7 @@
 {% block pagecontent %}
 	{% block extrainfo %}{% endblock %}
 	<h1>Governor Portal{% if actionname %} - {{ actionname }} {% endif %}</h1>
+	{# This looks kinda empty, maybe we can have stuff here #}
 	<div class="action">
 		{% block actioncontent %}{% endblock %}
 	</div>

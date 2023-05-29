@@ -114,6 +114,45 @@ async function addPost (data) {
 	return post.toObject();
 }
 
+async function addPoll (data) {
+	const poll = new Poll(data);
+	await poll.save();
+	return poll.toObject();
+}
+
+async function getActivePolls () {
+	const polls = await Poll.find({ endTime: { '$gt': new Date() } });
+	// console.log(polls);
+	return polls;
+}
+
+async function getMonthlyPolls (month) {
+	const date = new Date();
+	const polls = await Poll.find(
+		{
+			'_id': {
+				"$regex": `${date.getFullYear() + "-" + ("0" + (month ? month : date.getMonth() + 1)).slice(-2) + "-"}`,
+				"$options": "i"
+			}
+		}
+	).lean();
+	return polls;
+}
+
+async function updatePoll (ctx) {
+	// ctx = { pollId, userId, userChoice }
+	const poll = await Poll.findById(ctx.pollId);
+	// Yeet vote if exists
+	poll.records.forEach(val => (ind = val.votes.findIndex(id => id === ctx.userId)) || val.votes.splice(ind, ind + 1 ? 1 : 0));
+	if (!poll.records.find(val => val.value === ctx.userChoice)) poll.records.push({
+		value: ctx.userChoice,
+		votes: []
+	});
+	poll.records.find(val => val.value === ctx.userChoice).votes.push(ctx.userId);
+	await poll.save();
+	return true;
+}
+
 async function getMembersbyYear (year) {
 	const data = await Member.find({ 'records.year': year }).sort('name').lean();
 	const yearData = [];
@@ -167,27 +206,6 @@ async function getCurrentMembers () {
 	return yearData;
 }
 
-
-async function getActivePolls () {
-	const polls = await Poll.find({ endTime: { '$gt': new Date() } });
-	// console.log(polls);
-	return polls;
-}
-
-async function updatePoll (ctx) {
-	// ctx = { pollId, userId, userChoice }
-	const poll = await Poll.findById(ctx.pollId);
-	// Yeet vote if exists
-	poll.records.forEach(val => (ind = val.votes.findIndex(id => id === ctx.userId)) || val.votes.splice(ind, ind + 1 ? 1 : 0));
-	if (!poll.records.find(val => val.value === ctx.userChoice)) poll.records.push({
-		value: ctx.userChoice,
-		votes: []
-	});
-	poll.records.find(val => val.value === ctx.userChoice).votes.push(ctx.userId);
-	await poll.save();
-	return true;
-}
-
 // remove a member from a team
 async function removeTeam (rollNumber, teamToRemove) {
 	// console.log(rollNumber.trim());
@@ -212,7 +230,6 @@ async function addTeam (rollNumber, teamToAdd) {
 	// console.log(memberToUpdate.records);
 	await Member.updateOne({ 'roll': memberToUpdate.roll }, { 'records': memberToUpdate.records });
 }
-
 
 // export current year's data to the next year
 async function exportToNextYear () {
@@ -276,7 +293,9 @@ module.exports = {
 	getPosts,
 	addPost,
 	getMembersbyYear,
+	addPoll,
 	getActivePolls,
+	getMonthlyPolls,
 	updatePoll,
 	removeTeam,
 	getCurrentMembers,
