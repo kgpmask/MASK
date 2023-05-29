@@ -19,8 +19,8 @@ router.get('/add-post', (req, res) => {
 
 router.get('/add-poll', (req, res) => {
 	// if (!req.loggedIn) return res.redirect('/login');
-	const now = new Date();
-	date = now.getFullYear() + "-" + ("0" + (now.getMonth() + 1)).slice(-2) + "-" + ("0" + now.getDate()).slice(-2);
+	const date = new Date();
+	date.setDate(date.getDate() + 7);
 	return res.renderFile(`govportal/add-poll.njk`, { date: date });
 });
 
