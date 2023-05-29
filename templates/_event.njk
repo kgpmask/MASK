@@ -1,0 +1,49 @@
+{% extends '_base.njk' %}
+
+{% set thispage = 'events' %}
+
+{% block pagecontent %}
+	<h1> {{ eventTitle if eventTitle else 'MASK Event' }} </h1>
+	<div class="transparent-box">
+		{% block eventContent %}
+		{% endblock %}
+	</div>
+{% endblock %}
+
+{% block customjs %}
+<script>
+	let nextSlideTime = 5_000;
+
+	function nextSlide (slideshowContainer) {
+		let activeSlide;
+		do {
+			activeSlide = slideshowContainer.firstChild
+			slideshowContainer.removeChild(activeSlide);
+			slideshowContainer.append(activeSlide);
+		} while (activeSlide.nodeName !== 'div');
+	};
+
+	window.addEventListener('load', () => {
+		const slideshowContainer = document.querySelector('.slideshow-container');
+		setInterval(() => {
+			nextSlideTime -= 25;
+			if (nextSlideTime > 0) return;
+			nextSlide(slideshowContainer);
+			nextSlideTime = 5_000;
+		} , 25)
+	});
+</script>
+{% endblock %}
+
+{% block customcss %}
+<style>
+	.TransparentBox {
+		color: var(--light-gray);
+		background-color: rgba(255,255,255,.2);
+		padding: 30px 60px;
+		border-radius: 20px;
+		margin: 20px 10%;
+		text-align: left;
+	}
+</style>
+{% endblock %}
