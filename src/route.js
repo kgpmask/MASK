@@ -19,6 +19,11 @@ function link (app, nunjEnv) {
 	const userRoutes = ["/login", "/logout"];
 	const mediaRoutes = ["/art", "/videos"];
 
+	app.use(async (_, __, next) => {
+		await new Promise(r => r());
+		next();
+	});
+
 	app.use('/', (req, res, next) => {
 		if (req.url in smallerRoutes) {
 			next();

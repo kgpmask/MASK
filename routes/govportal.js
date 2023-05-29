@@ -61,7 +61,7 @@ router.post('/add-post', async (req, res) => {
 	const data = req.body.data;
 	if (!data.name || !data.link || !data.attr[0] && ['youtube', 'instagram'].includes(data.type)) {
 		return res.send({ success: false, message: "Empty Data Provided" });
-  }
+	}
 	data.date = new Date().toISOString();
 	try {
 		response = await dbh.addPost(data);
