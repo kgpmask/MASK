@@ -9,6 +9,7 @@ const membersRouter = require("../routes/members");
 const miscRouter = require("../routes/misc");
 const newsletterRouter = require("../routes/newsletter");
 const pollRouter = require("../routes/polls");
+
 const profileRouter = require("../routes/profile");
 const quizzesRouter = require("../routes/quizzes");
 const userRouter = require("../routes/user");
@@ -44,8 +45,8 @@ function link (app, nunjEnv) {
 
 	app.use('/checker', checkerRouter);
 	app.use('/corsProxy', corsProxyRouter);
-	app.use('/git-hook', gitHookRouter);
 	app.use('/gov-portal', govPortalRouter);
+	app.use('/git-hook', gitHookRouter);
 	app.use('/', homeRouter);
 	app.use('/home', homeRouter);
 	app.use('/live', liveRouter);
@@ -81,7 +82,10 @@ function link (app, nunjEnv) {
 		if (PARAMS.dev) console.error(err.stack);
 		// Make POST errors show only the data, and GET errors show the page with the error message
 		res.status(500);
-		if (req.method === 'GET') res.renderFile('404.njk', { message: 'Server error! This may or may not be due to invalid input.' });
+		if (req.method === "GET")
+			res.renderFile("404.njk", {
+				message: "Server error! This may or may not be due to invalid input."
+			});
 		else res.send(err.toString());
 	});
 }

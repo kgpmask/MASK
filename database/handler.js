@@ -5,6 +5,7 @@ const Member = require('./schemas/Member');
 const Newsletter = require('./schemas/Newsletter');
 const Poll = require('./schemas/Poll');
 const Post = require('./schemas/Post');
+const { findOne } = require('./schemas/User');
 
 // Handle newly registered user or normal login
 async function createNewUser (profile) {
@@ -113,31 +114,6 @@ async function addPost (data) {
 	return post.toObject();
 }
 
-async function getMembersbyYear (year) {
-	const data = await Member.find({ 'records.year': year }).sort('name').lean();
-	const yearData = [];
-	const teamsData = require('../src/teams.json');
-	data.forEach(member => {
-		const rec = member.records.find(rec => rec.year === year);
-		let pos;
-		yearData.push({
-			name: member.name,
-			roll: member.roll,
-			image: '../assets/members/' + member.image,
-			teams: rec.teams.map(teamID => {
-				const team = {
-					name: teamsData[year][teamID[0]].name,
-					icon: teamsData[year][teamID[0]].icon
-				};
-				team.icon += teamID[1] === 'H' ? !(pos = 'H') || '-head' : teamID[1] === 'S' ? !(pos = 'S') || '-sub' : '';
-				return team;
-			}),
-			position: pos ? rec.position === 'Governor' ? rec.position : pos === 'H' ? 'Team Heads' : 'Team Sub-Heads' : rec.position
-		});
-	});
-	return yearData;
-}
-
 async function addPoll (data) {
 	const poll = new Poll(data);
 	await poll.save();
@@ -177,6 +153,131 @@ async function updatePoll (ctx) {
 	return true;
 }
 
+async function getMembersbyYear (year) {
+	const data = await Member.find({ 'records.year': year }).sort('name').lean();
+	const yearData = [];
+	const teamsData = require('../src/teams.json');
+	data.forEach(member => {
+		const rec = member.records.find(rec => rec.year === year);
+		let pos;
+		yearData.push({
+			name: member.name,
+			roll: member.roll,
+			image: '../assets/members/' + member.image,
+			teams: rec.teams.map(teamID => {
+				const team = {
+					name: teamsData[year][teamID[0]].name,
+					icon: teamsData[year][teamID[0]].icon
+				};
+				team.icon += teamID[1] === 'H' ? !(pos = 'H') || '-head' : teamID[1] === 'S' ? !(pos = 'S') || '-sub' : '';
+				return team;
+			}),
+			position: pos ? rec.position === 'Governor' ? rec.position : pos === 'H' ? 'Team Heads' : 'Team Sub-Heads' : rec.position
+		});
+	});
+	return yearData;
+}
+
+async function getCurrentMembers () {
+	const yearData = [];
+	const teamsData = require('../src/teams.json');
+	const years = Object.keys(teamsData);
+	const year = Number(years[years.length - 1]);
+	const data = await Member.find({ 'records.year': year }).sort('name');
+	data.forEach(member => {
+		const rec = member.records.find(rec => rec.year === year);
+		let pos;
+		yearData.push({
+			_id: member._id,
+			name: member.name,
+			roll: member.roll,
+			image: '../assets/members/' + member.image,
+			teams: rec.teams.map(teamID => {
+				const team = {
+					name: teamsData[year][teamID[0]].name,
+					icon: teamsData[year][teamID[0]].icon
+				};
+				team.icon += teamID[1] === 'H' ? !(pos = 'H') || '-head' : teamID[1] === 'S' ? !(pos = 'S') || '-sub' : '';
+				return team;
+			}),
+			position: pos ? rec.position === 'Governor' ? rec.position : pos === 'H' ? 'Team Heads' : 'Team Sub-Heads' : rec.position
+		});
+	});
+	return yearData;
+}
+
+// remove a member from a team
+async function removeTeam (rollNumber, teamToRemove) {
+	// console.log(rollNumber.trim());
+	const memberToUpdate = await Member.findOne({ 'roll': rollNumber.trim() });
+	// console.log('membertoupdate' + memberToUpdate);
+	// console.log(memberToUpdate.records);
+	const yearIndex = memberToUpdate.records.length - 1;
+	memberToUpdate.records[yearIndex].teams = memberToUpdate.records[yearIndex].teams.filter(function (team) {
+		return team !== teamToRemove;
+	});
+	// console.log("NEWRmemberToUpdate.records);
+	await Member.updateOne({ 'roll': memberToUpdate.roll }, { 'records': memberToUpdate.records });
+}
+
+// add a member to a team
+async function addTeam (rollNumber, teamToAdd) {
+	// console.log(rollNumber.trim());
+	const memberToUpdate = await Member.findOne({ 'roll': rollNumber.trim() });
+	// console.log(memberToUpdate.records);
+	const yearIndex = memberToUpdate.records.length - 1;
+	memberToUpdate.records[yearIndex].teams.push(teamToAdd);
+	// console.log(memberToUpdate.records);
+	await Member.updateOne({ 'roll': memberToUpdate.roll }, { 'records': memberToUpdate.records });
+}
+
+// export current year's data to the next year
+async function exportToNextYear () {
+	const members = await Member.find().exec();
+	let newRecord;
+	const teamsData = require('../src/teams.json');
+	const years = Object.keys(teamsData);
+	const thisYear = Number(years[years.length - 1]);
+
+	for (let i = 0; i < members.length; i++) {
+		const member = members[i];
+		if (member.records[member.records.length - 1].year !== thisYear) continue;
+		const currentRecord = member.records[member.records.length - 1];
+		switch (currentRecord.position) {
+			case 'Fresher':
+				newRecord = {
+					'year': currentRecord.year + 1,
+					'position': 'Associate',
+					'teams': currentRecord.teams
+				};
+				member.records.push(newRecord);
+				await Member.updateOne({ 'roll': member.roll }, { 'records': member.records });
+				break;
+
+			case 'Associate':
+				console.log(member.records);
+				newRecord = {
+					'year': currentRecord.year + 1,
+					'position': 'Executive',
+					'teams': currentRecord.teams.map(function (team) {
+						if (team.length === 1) {
+							return team;
+						} else {
+							const newTeam = team[0] + 'H';
+							return newTeam;
+						}
+					})
+				};
+				member.records.push(newRecord);
+				await Member.updateOne({ 'roll': member.roll }, { 'records': member.records });
+				break;
+		}
+	}
+}
+
+
+
+
 module.exports = {
 	createNewUser,
 	getUser,
@@ -195,5 +296,9 @@ module.exports = {
 	addPoll,
 	getActivePolls,
 	getMonthlyPolls,
-	updatePoll
+	updatePoll,
+	removeTeam,
+	getCurrentMembers,
+	exportToNextYear,
+	addTeam
 };
