@@ -40,6 +40,7 @@ router.get('/results/:id?', async (req, res) => {
 	const activePolls = await dbh.getActivePolls();
 	const poll = activePolls.find(poll => poll._id === pollId);
 	if (!poll) return res.notFound('No poll with this ID.');
+	const votedFor = poll.records.find(record => record.votes.find(voter => voter === req.user._id))?.value;
 	return res.renderFile('poll_results.njk', {
 		_id: pollId,
 		title: poll.title,
@@ -48,7 +49,8 @@ router.get('/results/:id?', async (req, res) => {
 				value: record.value,
 				votes: record.votes.length
 			};
-		}).sort((a, b) => -(a.votes > b.votes))
+		}),
+		votedFor: votedFor
 	});
 });
 
