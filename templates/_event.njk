@@ -3,47 +3,93 @@
 {% set thispage = 'events' %}
 
 {% block pagecontent %}
-	<h1> {{ eventTitle if eventTitle else 'MASK Event' }} </h1>
+	<h1> {{ pagetitle if pagetitle else 'MASK Event' }} </h1>
 	<div class="transparent-box">
 		{% block eventContent %}
 		{% endblock %}
 	</div>
+	<a href="/py-events" style="color: var(--error-red);">Click here</a> to go back
+	<br><br>
 {% endblock %}
 
 {% block customjs %}
-<script>
-	let nextSlideTime = 5_000;
+	<script>
+		let nextSlideTime = 5_000;
 
-	function nextSlide (slideshowContainer) {
-		let activeSlide;
-		do {
-			activeSlide = slideshowContainer.firstChild
-			slideshowContainer.removeChild(activeSlide);
-			slideshowContainer.append(activeSlide);
-		} while (activeSlide.nodeName !== 'div');
-	};
-
-	window.addEventListener('load', () => {
-		const slideshowContainer = document.querySelector('.slideshow-container');
-		setInterval(() => {
-			nextSlideTime -= 25;
-			if (nextSlideTime > 0) return;
-			nextSlide(slideshowContainer);
+		function nextSlide (slideshowContainer) {
+			let activeSlide;
+			do {
+				activeSlide = slideshowContainer.firstChild;
+				slideshowContainer.removeChild(activeSlide);
+				slideshowContainer.append(activeSlide);
+			} while (activeSlide.nodeName !== 'DIV');
 			nextSlideTime = 5_000;
-		} , 25)
-	});
-</script>
+		};
+
+		window.onload = () => {
+			const slideshowContainer = document.querySelector('.slideshow-container');
+			function checkForSlideChange () {
+				nextSlideTime -= 25;
+				if (nextSlideTime < 0) nextSlide(slideshowContainer);
+				setTimeout(checkForSlideChange, 25);
+			};
+			checkForSlideChange();
+		};
+	</script>
 {% endblock %}
 
 {% block customcss %}
-<style>
-	.TransparentBox {
-		color: var(--light-gray);
-		background-color: rgba(255,255,255,.2);
-		padding: 30px 60px;
-		border-radius: 20px;
-		margin: 20px 10%;
-		text-align: left;
-	}
-</style>
+	<style>
+		h1, h2 {
+			color: var(--red);
+			margin-block-start: 0.8em;
+			margin-block-end: 0.8em;
+		}
+		.transparent-box {
+			color: var(--light-gray);
+			background-color: rgba(255,255,255,.2);
+			padding: 30px calc(10px + 4vw);
+			border-radius: 20px;
+			margin: 20px 3vw;
+			text-align: left;
+		}
+
+		.transparent-box > p {
+			margin-bottom: 12px;
+		}
+
+		.event-info{
+
+			max-width: calc(min(500px, 70vw));
+			
+			margin: auto;
+			border: 2px solid #8e8484;
+			border-radius: 10px;
+			padding: 10px 10px;
+			
+			font-size: 13px; 
+		}
+
+		.event-info > .heading {
+			color: var(--error-red);
+			font-weight: bold;
+			line-height: 1.4;
+		}
+
+		.slideshow-container {
+			{# display: inline; #}
+			overflow: hidden;
+			margin: auto;
+			width: calc(min(80vw, 750px));
+			height: calc(min(60vw, 450px));
+		}
+
+		.slideshow-container > .slide {
+			{# display: inline-block; #}
+			width: calc(min(80vw, 750px));
+			height: calc(min(60vw, 450px));
+		}
+	</style>
+	{% block eventCSS %}
+	{% endblock %}
 {% endblock %}

@@ -1,67 +1,50 @@
-{% extends "_base.njk" %}
+{% extends '_event.njk' %}
 
-{% set thispage = 'cosplay_event_23' %}
 {% set pagetitle = 'Cosplay Event 2023' %}
 
-{% block pagecontent %}
-<h1>23' Cosplay Event Coverage</h1>
-<div class="TransparentBox">
-		<br>
-		<p class="Event_info">Event Name: Cosplay 2023 <br>
-		Date: April 28, 2023 <br>
-		Location: In front of Main Academic Building, IIT Kharagpur <br>
-		Attendance: 1000+ <br>
-		Cosplayers: Over 100 <br>
-		Costumes: A wide variety of costumes from anime, manga, video games, Traditional deities/heroes, and other pop culture media <br>
-		Activities: Meet-and-Greets with cosplayers (the graduating students) <br>
-		</p>
-		<br>
-		<h2>Overall Impression: </h2>
-		<br>
-		<p>The Cosplay 2023 was a huge success. 
-		The event was well-attended.
-		The cosplayers were all very talented.
-		The costumes were amazing, 
-		The atmosphere was electric. </p>
-		<br>
-		<h2>Highlights:</h2>
-		<br>
-		<p>The cosplayers themselves were the highlight of the event. Cosplayers could be spotted, and attendees were glad to have their pictures taken with their favourite characters. Fans were excited to meet their favourite characters in person. The overall atmosphere of the event was very positive. Everyone was having a great time, and there was a lot of excitement in the air. The event was a great way for anime, manga, and video game fans to come together and celebrate their love of their hobbies.
-			MASK was on the scene to interview characters from anime and manga by using a special device that allowed them to travel to the world of the characters. Once they arrived in the world of the characters, they interviewed them and learn more about their lives and their stories. The team was able to interview various characters, including Luffy, Tanjiro, Ash & Pikachu, Another Luffy, Naruto, Levi, yet another Luffy and many others. The interviews were a great way for fans of anime and manga to learn more about their favourite characters and to get a glimpse into their lives.
-			<br> <br>
-			Here are the questions that MASK asked the characters: <br>
-			<br>
-			1. Please introduce yourself and your character in <br>
-			2. What do you like the most about your character? Something that makes them unique. What made you cosplay them?<br>
-			3. One underrated anime you think our viewers should watch. An anime you recommend those to watch who are just starting out on your anime journey. <br>
-			4. If your character was a professor, which subject would they teach? <br>
-			5. How has watching anime influenced your college life? What's your favourite memory of your college years? <br>
-			6. A word of advice for the KGP junta and your juniors. <br>
-			7. If you had to give an anime title to your college life, what would it be? <br>
-			<br>
-			The characters were all very open and honest in their interviews. They shared their hopes, dreams, and fears. They also talked about the challenges they faced and how they overcame them. The interviews were a great way for fans to connect with the characters on a personal level.
-			MASK was able to interview a wide variety of characters from various anime and manga series. This allowed fans to learn more about their favourite characters and to get a glimpse into their lives. The interviews were a great success.
-		</p>
-</div>
+{% block eventContent %}
+	<div class="event-info">
+		<span class="heading">Date:</span> April 28, 2023 <br>
+		<span class="heading">Location:</span> In front of Main Academic Building, IIT Kharagpur <br>
+		<span class="heading">Attendance:</span> 1000+ <br>
+		<span class="heading">Cosplayers:</span> Over 100 <br>
+		<span class="heading">Costumes:</span> A wide variety of costumes from anime, manga, video games, Traditional deities/heroes, and other pop culture media <br>
+		<span class="heading">Activities:</span> Meet-and-Greets with cosplayers (the graduating students) <br>
+	</div>
+	<h2>Overall Impression: </h2>
+	<p>
+		The Cosplay 2023 was a huge success. The event was well-attended. The cosplayers were all very talented. The costumes were amazing. The atmosphere was electric.
+	</p>
+	<h2>Highlights:</h2>
+	<p>
+		The cosplayers themselves were the highlight of the event. Cosplayers could be spotted, and attendees were glad to have their pictures taken with their favourite characters. Fans were excited to meet their favourite characters in person. The overall atmosphere of the event was very positive.Everyone was having a great time, and there was a lot of excitement in the air. The event was a great way for anime, manga, and video game fans to come together and celebrate their love of their hobbies.
+	</p>
+	<p>
+		MASK was on the scene to interview characters from anime and manga by using a special device that allowed them to travel to the world of the characters. Once they arrived in the world of the characters, they interviewed them and learn more about their lives and their stories. The team was able to interview various characters, including Luffy, Tanjiro, Ash & Pikachu, Another Luffy, Naruto, Levi, yet another Luffy and many others. The interviews were a great way for fans of anime and manga to learn more about their favourite characters and to get a glimpse into their lives.
+	</p>
+	<p>
+		Here are the questions that MASK asked the characters: <br>
+		<ol style="padding: 5px calc(min(7vw, 60px));">
+			<li>Please introduce yourself and your character in </li>
+			<li>What do you like the most about your character? Something that makes them unique. What made you cosplay them?</li>
+			<li>One underrated anime you think our viewers should watch. An anime you recommend those to watch who are just starting out on your anime journey. </li>
+			<li>If your character was a professor, which subject would they teach? </li>
+			<li>How has watching anime influenced your college life? What's your favourite memory of your college years? </li>
+			<li>A word of advice for the KGP junta and your juniors. </li>
+			<li>If you had to give an anime title to your college life, what would it be? </li>
+		</ol>
+	</p>
+	<p>
+		The characters were all very open and honest in their interviews. They shared their hopes, dreams, and fears. They also talked about the challenges they faced and how they overcame them. The interviews were a great way for fans to connect with the characters on a personal level.
+	</p>
+	<p>
+		MASK was able to interview a wide variety of characters from various anime and manga series. This allowed fans to learn more about their favourite characters and to get a glimpse into their lives. The interviews were a great success.
+	</p>
+	<div class="slideshow-container">
+		<div class="slide" style="background-color: red"></div>
+		<div class="slide" style="background-color: blue"></div>
+		<div class="slide" style="background-color: green"></div>
+		<div class="slide" style="background-color: black"></div>
+	</div>
 {% endblock %}
 
-{% block customcss %}
-<style>
-	.TransparentBox {
-		color: var(--light-gray);
-		background-color: rgba(255,255,255,.2);
-		padding: 30px 60px;
-		border-radius: 20px;
-		margin: 20px 10%;
-		text-align: left;
-	}
-	.Event_info{
-		font-size: 13px; 
-		border: 2px solid #8e8484;
-		padding: 10px 10px;
-		border-radius: 10px;
-		
-	}
-</style>
-
-{% endblock %}
