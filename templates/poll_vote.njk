@@ -7,22 +7,24 @@
 	<div>
 		<h1> {{ poll.title }} </h1>
 		<div class="poll-container">
-			<h3> Choose one of the following (or make your own choice) </h3>
-			<br>
-			<div>Click here to see the <a href="/polls/results/{{ poll._id }}" style="color: var(--dark-red);">current poll results</a></div>
-			<br>
-			{% for choice in poll.records %}
+			<div class="poll">
+				<h3> Choose one of the following (or make your own choice) </h3>
+				<br>
+				<div>Click here to see the <a href="/polls/results/{{ poll._id }}" style="color: var(--dark-red);">current poll results</a></div>
+				<br>
+				{% for choice in poll.records %}
+					<div class="choice-container">
+						<input type="radio" name="poll-value" value="{{ choice._id }}" id="{{ choice._id }}" {{ 'checked' if votedFor === choice.value else '' }}>
+						<label for="{{ choice._id }}">{{ choice.value }}</label>
+					</div>
+				{% endfor %}
 				<div class="choice-container">
-					<input type="radio" name="poll-value" value="{{ choice._id }}" id="{{ choice._id }}" {{ 'checked' if votedFor === choice.value else '' }}>
-					<label for="{{ choice._id }}">{{ choice.value }}</label>
+					<input type="radio" name="poll-value" value="null" id="null">
+					<label for="null"><input type="text" onclick="document.querySelector('#null').checked = true"></label>
 				</div>
-			{% endfor %}
-			<div class="choice-container">
-				<input type="radio" name="poll-value" value="null" id="null">
-				<label for="null"><input type="text" onclick="document.querySelector('#null').checked = true"></label>
+				<br>
+				<button type="button" onclick="submitVote()"> Submit </button>
 			</div>
-			<br>
-			<button type="button" onclick="submitVote()"> Submit </button>
 		</div>
 	</div>
 {% endblock %}
@@ -51,14 +53,23 @@
 
 {% block customcss %}
 	<style>
-		.poll-container {
+		.poll-container{
+			padding: 23px 25px;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+
+		.poll {
 			display: flex;
 			flex-direction: column;
 			margin: 0 5%;
 			border-radius: 10px;
 			padding: 40px 5%;
-			width: 80%;
-			background-color: var(--darker-gray);
+			width: 60%;
+			background-color: rgba(50, 50, 50, 0.5);
+			border: 2px solid rgba(255,255,255,0.1);
+			backdrop-filter: blur(5px);
 		}
 
 		.choice-container {
@@ -91,7 +102,7 @@
 			height: 90%;
 		}
 
-		.poll-container > button {
+		.poll > button {
 			margin: auto;
 			width: 15%;
 			max-width: 220px;
