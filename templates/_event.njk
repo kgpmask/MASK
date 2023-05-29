@@ -26,7 +26,7 @@
 			nextSlideTime = 5_000;
 		};
 
-		window.onload = () => {
+		window.addEventListener('load', () => {
 			const slideshowContainer = document.querySelector('.slideshow-container');
 			function checkForSlideChange () {
 				nextSlideTime -= 25;
@@ -34,8 +34,18 @@
 				setTimeout(checkForSlideChange, 25);
 			};
 			checkForSlideChange();
-		};
+		});
 	</script>
+	<script>
+		window.addEventListener('load', () => {
+			[...document.querySelectorAll('.image-container')].forEach(imageContainer => {
+				const [img, p] = [...imageContainer.children];
+				p.style.width = getComputedStyle(img).getPropertyValue('width');
+			});
+		});
+	</script>
+	{% block eventJS %}
+	{% endblock %}
 {% endblock %}
 
 {% block customcss %}
@@ -57,6 +67,34 @@
 		.transparent-box > p {
 			margin-bottom: 12px;
 		}
+		
+		.transparent-box > img {
+			max-width: 100%;
+			max-height: 40vh;
+			border-radius: 5px;
+		}
+		
+		.image-container {
+			width: -moz-fit-content;
+			width: fit-content;
+			margin: 10px auto;
+			border: solid 2px;
+			border-radius: 10px;
+		}
+
+
+		.image-container > img {
+			max-width: 100%;
+			max-height: 45vh;
+			border-radius: 10px;
+			margin-bottom: 3px; 
+		}
+
+		.image-container > p {
+			color: var(--error-red);
+			text-align: center;
+			margin-bottom: 5px;
+		}
 
 		.event-info{
 
@@ -77,7 +115,6 @@
 		}
 
 		.slideshow-container {
-			{# display: inline; #}
 			overflow: hidden;
 			margin: auto;
 			width: calc(min(80vw, 750px));
@@ -85,7 +122,6 @@
 		}
 
 		.slideshow-container > .slide {
-			{# display: inline-block; #}
 			width: calc(min(80vw, 750px));
 			height: calc(min(60vw, 450px));
 		}
