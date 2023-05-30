@@ -3,7 +3,7 @@
 {% set thispage = 'events' %}
 
 {% macro slide(folder, img) %}
-	<div class="slide"> <img src="/assets/PreviousEvent/{{ folder }}/{{ img }}"> </div>
+	<div class="slide"> <img src="/assets/PreviousEvents/{{ folder }}/{{ img }}"> </div>
 {% endmacro %}
 
 {% block pagecontent %}
@@ -102,17 +102,15 @@
 			max-width: 100%;
 			max-height: 45vh;
 			border-radius: 10px;
-			margin-bottom: 3px; 
 		}
 
 		.image-container > p {
 			color: var(--error-red);
 			text-align: center;
-			margin-bottom: 5px;
+			margin: 5px auto;
 		}
 
 		.event-info{
-
 			max-width: calc(min(500px, 70vw));
 			
 			margin: auto;
@@ -134,6 +132,7 @@
 			margin: auto;
 			width: calc(min(80vw, 750px));
 			height: calc(min(60vw, 450px));
+			border-radius: 10px;
 		}
 
 		.slideshow-container > .slide {
