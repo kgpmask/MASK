@@ -2,6 +2,10 @@
 
 {% set thispage = 'events' %}
 
+{% macro slide(img) %}
+	<div class="slide"> <img src="{{ img }}"> </div>
+{% endmacro %}
+
 {% block pagecontent %}
 	<h1> {{ pagetitle if pagetitle else 'MASK Event' }} </h1>
 	<div class="transparent-box">
@@ -14,7 +18,7 @@
 
 {% block customjs %}
 	<script>
-		let nextSlideTime = 5_000;
+		let nextSlideTime = 2_000;
 
 		function nextSlide (slideshowContainer) {
 			let activeSlide;
@@ -23,7 +27,7 @@
 				slideshowContainer.removeChild(activeSlide);
 				slideshowContainer.append(activeSlide);
 			} while (activeSlide.nodeName !== 'DIV');
-			nextSlideTime = 5_000;
+			nextSlideTime = 2_000;
 		};
 
 		window.addEventListener('load', () => {
@@ -133,8 +137,17 @@
 		}
 
 		.slideshow-container > .slide {
+			background-color: var(--abyss);
 			width: calc(min(80vw, 750px));
 			height: calc(min(60vw, 450px));
+			border-radius: 10px;
+		}
+
+		.slide > img {
+			display: block;
+			max-width: calc(min(80vw, 750px));
+			max-height: calc(min(60vw, 450px));
+			margin: 0 auto;
 		}
 	</style>
 	{% block eventCSS %}
