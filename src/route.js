@@ -54,7 +54,7 @@ function link (app, nunjEnv) {
 	app.use('/newsletters', newsletterRouter);
 	app.use('/polls', pollRouter);
 	app.use('/profile', profileRouter);
-	app.use('/py-events', eventsRouter);
+	app.use('/events', eventsRouter);
 	app.use(['/quizzes', '/events'], quizzesRouter);
 	app.use('/rebuild', (req, res) => {
 		nunjEnv.loaders.forEach(loader => loader.cache = {});
