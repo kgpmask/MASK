@@ -12,6 +12,7 @@ const pollRouter = require("../routes/polls");
 const profileRouter = require("../routes/profile");
 const quizzesRouter = require("../routes/quizzes");
 const userRouter = require("../routes/user");
+const eventsRouter = require("../routes/py-events");
 
 function link (app, nunjEnv) {
 	const smallerRoutes = ["/about", "/apply", "/blog", "/prizes", "/submissions", "/success", "/privacy", "/terms"];
@@ -42,6 +43,7 @@ function link (app, nunjEnv) {
 		}
 	}, mediaRouter);
 
+
 	app.use('/checker', checkerRouter);
 	app.use('/corsProxy', corsProxyRouter);
 	app.use('/git-hook', gitHookRouter);
@@ -52,6 +54,7 @@ function link (app, nunjEnv) {
 	app.use('/newsletters', newsletterRouter);
 	app.use('/polls', pollRouter);
 	app.use('/profile', profileRouter);
+	app.use('/py-events', eventsRouter);
 	app.use(['/quizzes', '/events'], quizzesRouter);
 	app.use('/rebuild', (req, res) => {
 		nunjEnv.loaders.forEach(loader => loader.cache = {});

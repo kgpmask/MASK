@@ -1,0 +1,49 @@
+{% extends "_event.njk" %}
+
+{% set pagetitle = "Anime Seekers' Quest" %}
+
+{% block eventContent %}
+	<div class="highlight">
+		<p>
+			Hey, MASK. I know you've been conducting some quizzes for a while now. It's all good, but I feel like something has changed.<br>
+			I mean, it's kinda boring how we just sit in Vikramshila with our computers, attempting a quiz in a room full of people, without really discussing with our friends.<br>
+			Wouldn't it be better if you did something, I don't know, which I can enjoy with my friends or something?
+		</p><br>
+		&emsp;- Nobody. This narration is fixtional. The next part, not so much.</span>
+	</div>
+	<p>
+	With this line of thought, we decided that it was time we let go of our online link and proceed with a completely offline event for teams. The <b>Anime Seekers' Quest</b> was a treasure hunt planned shortly after the <a href="/py-events/qatq" title="Quad Anime Trivia Quiz">Quad Anime Trivia Quiz</a>. Teams of upto 3 people spent 2 hours, using the clues provided and their anime knowledge (and Google... yes, we allowed it. ) around 2.2 covering various locations in a quest to claim their prizes from a treasure curated just for the anime fans. 
+	</p>
+	<div class="image-container">
+		<div class="slideshow-container">
+			{{ slide('seekers-quest', '1.jpg') }}
+			{{ slide('seekers-quest', '2.jpg') }}
+			{{ slide('seekers-quest', '3.jpg') }}
+			{{ slide('seekers-quest', '4.jpg') }}
+		</div>
+		<p> Gallery of the winning teams </p>
+	</div>
+	<p>
+	With everything going on in the campus, we had a wonderful response from the participants. As the sun went down, the event ended as a beautiful success. We would like to congratulate those who won the event:
+	<ol style="padding: 5px calc(min(7vw, 60px));">
+		<li>Team STEINS</li>
+		<li>Team Dabi</li>
+		<li>Team Uchiha Alchemists</li>
+		<li>Team Whitebeard</li>
+	</ol>
+	<div class="image-container">
+		<img src="/assets/PreviousEvents/seekers-quest/5.jpg">
+		<p> Yo Team! </p>
+	</div>
+	</p>
+{% endblock %}
+
+{% block eventCSS %}
+	<style>
+		.highlight {
+			margin: 10px;
+			font-style: italic;
+			color: var(--off-white);
+		}
+	</style>
+{% endblock %}
