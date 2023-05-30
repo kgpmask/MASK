@@ -2,8 +2,8 @@
 
 {% set thispage = 'events' %}
 
-{% macro slide(img) %}
-	<div class="slide"> <img src="{{ img }}"> </div>
+{% macro slide(folder, img) %}
+	<div class="slide"> <img src="/assets/PreviousEvent/{{ folder }}/{{ img }}"> </div>
 {% endmacro %}
 
 {% block pagecontent %}
