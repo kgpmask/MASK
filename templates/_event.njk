@@ -21,23 +21,28 @@
 		let nextSlideTime = 2_000;
 
 		function nextSlide (slideshowContainer) {
+			const scrollPosition = document.documentElement.scrollTop ;
 			let activeSlide;
 			do {
 				activeSlide = slideshowContainer.firstChild;
 				slideshowContainer.removeChild(activeSlide);
 				slideshowContainer.append(activeSlide);
 			} while (activeSlide.nodeName !== 'DIV');
+			document.documentElement.scrollTop = scrollPosition;
 			nextSlideTime = 2_000;
 		};
 
 		window.addEventListener('load', () => {
 			const slideshowContainer = document.querySelector('.slideshow-container');
-			function checkForSlideChange () {
+			if (!slideshowContainer) return;
+			setInterval(() => {
 				nextSlideTime -= 25;
 				if (nextSlideTime < 0) nextSlide(slideshowContainer);
+			}, 25);
+			{# function checkForSlideChange () {
 				setTimeout(checkForSlideChange, 25);
 			};
-			checkForSlideChange();
+			checkForSlideChange(); #}
 		});
 	</script>
 	<script>
