@@ -1,109 +1,130 @@
 {% extends "_base.njk" %}
 
-{% set thispage = 'prev_events' %}
+{% set thispage = 'events' %}
 {% set pagetitle = 'Previous Events' %}
 
-{% block pagecontent %}
-<h1>Previous Events</h1>
-<div class="TransparentBox">
-		<h2>OPEN ANIME CAMPUS QUIZ</h2>
-		<br>
-		<h3>Date: November 11,2022</h3>
-		<h3>Venue: V3 Vikramshila</h3>
-		<br>
-		<p> The first open campus event conducted by MASK, the Open Anime Campus Quiz was conducted a few days after the arrival of the freshers, serving as an introductory event to MASK.
-			 With an attendance of over 150 people, the first event was a grand success which made MASK known for its events.
-		</p>
-		<br>
-		<div class="Images">
-			<img src="assets/PreviousEvents/MaskEvent1_2.jpg" alt="">
-		</div>
-</div>
-
-<div class="TransparentBox">
-		<h2>QUAD ANIME TRIVIA QUIZ</h2>
-		<br>
-		<h3>Date: March 12,2023</h3>
-		<h3>Venue: V3 Vikramshila</h3>
-		<br>
-		<p> 
-			Event Triumphs Despite Last-Minute Challenges. <a href= "/py-events/qatq">Read More...</a>
-		</p>
-		<br>
-		<div class="Images">
-			<img src="assets/PreviousEvents/Qatq.jpg" alt="">
-		</div>
-</div>
-
-<div class="TransparentBox">
-		<h2>23' COSPLAY EVENT COVERAGE</h2>
-		<br>
-		<h3>Date: April 28,2023</h3>
-		<h3>Venue: In front of Main Academic Building, IIT Kharagpur</h3>
-		<br>
-		<p> 
-			The memories of college life condensed over long years, come to an explosive close, with the graduating batch cosplaying as their favourite characters. 
-			<a href= "/py-events/cosplay23">Read More...</a>
-		</p>
-		<br>
-		<div class="Images">
-			<img src="assets/PreviousEvents/Cosplay1.jpg" alt="">
-		</div>
-</div>
-
-<div class="TransparentBox">
-		<h2>INTRA-SOC ANIME QUIZ EXTRAVAGANZA</h2>
-		<br>
-		<h3>Date: April 28,2023</h3>
-		<h3>Venue: Seminar Room, Takshashila</h3>
-		<br>
-		<p> 
-			The Intra-Society Anime Quiz was an EPIC showdown, and the results? 
-			Mind-blowing! From jaw-dropping trivia to intense battles of otaku knowledge, we witnessed friendships forged and rivalries born! 
-			<a href= "/py-events/intrasoc">Read More...</a>
-		</p>
-		<br>
-		<div class="Images">
-			<img src="assets/PreviousEvents/Intrasoc1.jpg" alt="">
-		</div>
-</div>
-
-<div class="TransparentBox">
-		<h2>SUZUME NO TOJIMARI TRIP</h2>
-		<br>
-		<h3>Date: April 30,2023</h3>
-		<h3>Venue: South City Mall, Kolkata</h3>
-		<br>
-		<p> 
-			How far would you go to watch a movie with the gang? Answer: At least Kolkata.
+{% macro event(_title, _date, _venue, _desc, _link) %}
+	<div class="event-container">
+		<img src="/assets/PreviousEvents/{{ _link }}.jpg" alt="{{ _title }}">
+		<div class="details">
+			<h2> {{ _title }} </h2>
+			<p> 
+				<span> Date: </span> {{ _date }} <br>
+				<span> Venue: </span> {{ _venue }} 
+			</p> 
+			<p> {{ _desc | safe }} </p>
 			<br>
-			To watch the new Makoto Shinkai movie, Suzume no Tojimari, we went to South City Mall. From toto races, early Sunday morning trains, 
-			bus rides full of jokes, and a wonderful cinematic experience, this trip was our last big thing for this semester.
-			<a href= "/py-events/suzume">Read More...</a>
-		</p>
-		<br>
-		<div class="Images">
-			<img src="assets/PreviousEvents/Suzume2.jpg" alt="">
+			<a href="/py-events/{{ _link }}" title="{{ _title }}"> Read More... </a>
 		</div>
-</div>
+	</div>
+{% endmacro %}
+
+{% block pagecontent %}
+	<h1>Previous Events</h1>
+	<div id="events">
+		{{ event (
+			"Quad Anime Trivia Quiz",
+			"March 12, 2023",
+			"V3, Vikramshila",
+			"Event triumphs despite last-minute challenges",
+			"qatq"
+		) }}
+		{{ event (
+			"Cosplay 2023 Coverage",
+			"March 28, 2023",
+			"In front of Main Building",
+			"The memories of college life condensed over long years, come to an explosive close, with the graduating batch cosplaying as their favourite characters.",
+			"cosplay23"
+		) }}
+		{{ event (
+			"Intra-Soc Anime Quiz Extravaganza",
+			"March 28, 2023",
+			"Classified",
+			"The Intra-Society Anime Quiz was an EPIC showdown, and the results? Mind-blowing!<br> From jaw-dropping trivia to intense battles of otaku knowledge, we witnessed friendships forged and rivalries born!",
+			"intrasoc"
+		) }}
+		{{ event (
+			"Suzume no Tojimari Trip",
+			"March 30, 2023",
+			"South City Mall, Kolkata",
+			"How far would you go to watch a movie with the gang? Answer: At least Kolkata.<br> To watch the new Makoto Shinkai movie, Suzume no Tojimari, we went to South City Mall. From toto races, early Sunday morning trains, bus rides full of jokes, and a wonderful cinematic experience, this trip was our last big thing for this semester.",
+			"suzume"
+		) }}
+	</div>
+{% endblock %}
+
+{% block customjs %}
+	<script>
+		window.onload = () => {
+			[...document.querySelector('#events').children].filter((_, i) => i%2).forEach(eventContainer => {
+				eventContainer.style.setProperty('flex-direction', 'row-reverse');
+			});
+		}
+	</script>
 {% endblock %}
 
 {% block customcss %}
 <style>
-	.TransparentBox {
-		color: var(--light-gray);
-		background-color: rgba(255,255,255,.2);
-		padding: 30px 60px;
+	.event-container {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		
+		margin: 20px 3vw;
 		border-radius: 20px;
-		margin: 20px 10%;
+		padding: 30px calc(10px + 4vw);
+		
+		background-color: rgba(255,255,255,.2);
+		color: var(--light-gray);
+		text-align: left;
+	}
+	
+	.event-container > img {
+		margin: 10px;
+		display: block;
+		max-width: 40vw;
+		max-height: 42vh;
 	}
 
-	.Images > img {
-		border-radius: 16px;
-		margin: 20px;
-		aspect-ratio: 3 / 2;
-		width: 90%;
-		max-width: 550px; 
+	.event-container > .details {
+		margin: 10px;
+		width: 50vw;
+
+		{# display: flex;
+		flex-direction: column;
+		justify-content: space-between; #}
+
+		font-size: 1.04em;
+	}
+
+	.details > h2 {
+		margin-block-end: 0.8em;
+		text-align: center;
+	}
+
+	.details > p {
+		margin-bottom: 15px;
+	}
+
+	.details a {
+		color: var(--off-white);
+		transition: color 0.3s;
+	}
+
+	.details span, .details h2, .details a:hover {
+		color: var(--error-red);
+	}
+
+	@media (max-width: 750px) {
+		.event-container {
+			flex-direction: column !important;
+		}
+
+		.event-container > * {
+			max-height: 100% !important;
+			width: 100% !important;
+			max-width: 100% !important;
+		}
 	}
 </style>
 
