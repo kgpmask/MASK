@@ -48,7 +48,7 @@ describe('Tools.Levenshtein', () => {
 		return assert(Tools.levenshtein(strs[0], strs[2]) === 1 && Tools.levenshtein(strs[0], strs[3]) === 1);
 	});
 	it('should work with switch', () => assert(Tools.levenshtein(strs[0], strs[4]) === 1));
-	it('should show swap as two operations', () => assert(Tools.levenshtein(strs[0], strs[1]) === 2));
+	it('should show swap as one operation', () => assert(Tools.levenshtein(strs[0], strs[1]) === 1));
 });
 
 describe('Tools.LevenshteinDamerau', () => {
