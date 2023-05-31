@@ -135,25 +135,26 @@
 		.slideshow-container {
 			overflow: hidden;
 			margin: auto;
-			width: calc(min(500px, 70vw));
+			width: calc(min(700px, 70vw));
 			height: calc(min(60vw, 450px));
 			border-radius: 10px;
 		}
 
 		.slideshow-container > .slide {
 			background-color: var(--abyss);
-			width: calc(min(500px, 70vw));
+			width: calc(min(700px, 70vw));
 			height: calc(min(60vw, 450px));
 			border-radius: 10px;
-			display: flex;
-			justify-content: center;
 		}
 
 		.slide > img {
 			display: block;
-			max-width: calc(min(500px, 70vw));
+			max-width: calc(min(700px, 70vw));
 			max-height: calc(min(60vw, 450px));
-			margin: 0 auto;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
 		}
 	</style>
 	{% block eventCSS %}
