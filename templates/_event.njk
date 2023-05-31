@@ -96,7 +96,7 @@
 		
 		.image-container {
 			max-width: 70vw;
-			width: calc(min(500px, 70vw));
+			width: calc(min(700px, 70vw));
 			margin: 10px auto;
 			border: solid 2px;
 			border-radius: 10px;
@@ -104,7 +104,7 @@
 
 
 		.image-container > img {
-			width: calc(min(500px, 70vw));
+			width: calc(min(700px, 70vw));
 			max-height: 45vh;
 			border-radius: 10px;
 		}
@@ -117,13 +117,15 @@
 
 		.event-info{
 			max-width: calc(min(500px, 70vw));
-			
-			margin: auto;
-			border: 2px solid #8e8484;
+			width: -moz-fit-content;
+			width: fit-content;
+
+			margin: 20px auto;
+			border: 2px solid var(--off-white);
 			border-radius: 10px;
-			padding: 10px 10px;
-			
-			font-size: 13px; 
+			padding: 8px;
+
+			font-size: 13px;
 		}
 
 		.event-info > .heading {
