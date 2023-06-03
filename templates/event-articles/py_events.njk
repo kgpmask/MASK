@@ -20,8 +20,11 @@
 {% endmacro %}
 
 {% block pagecontent %}
+	<div id="loading" style="text-align: center; font-size: 2em;">
+		Loading... >_<
+	</div>
+	<div id="events" style="display: none;">
 	<h1>Previous Events</h1>
-	<div id="events">
 		{{ event (
 			"Quad Anime Trivia Quiz",
 			"March 12, 2023",
@@ -66,6 +69,9 @@
 			[...document.querySelector('#events').children].filter((_, i) => i%2).forEach(eventContainer => {
 				eventContainer.style.setProperty('flex-direction', 'row-reverse');
 			});
+
+			document.querySelector('#loading').style.setProperty('display', 'none');
+			document.querySelector('#events').style.removeProperty('display');
 		}
 	</script>
 {% endblock %}
