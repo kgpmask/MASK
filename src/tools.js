@@ -66,7 +66,6 @@ exports.fakeRandom = function fakeRandom (seed) {
 };
 
 exports.levenshtein = function levenshtein (str1, str2) {
-	// needs some maintenance
 	if (!str1.length) return t.length;
 	if (!str2.length) return str1.length;
 	const arr = [];
@@ -84,7 +83,6 @@ exports.levenshtein = function levenshtein (str1, str2) {
 };
 
 exports.levenshteinDamerau = function levenshteinDamerau (a, b) {
-	// needs some maintenance
 	const d = Array.from({ length: a.length + 1 }, () => Array(b.length + 1).fill(0));
 	for (let i = 0; i < a.length + 1; i++) d[i][0] = i;
 	for (let j = 0; j < b.length + 1; j++) d[0][j] = j;
