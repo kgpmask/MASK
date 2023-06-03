@@ -119,7 +119,7 @@ exports.updateCode = async function () {
 
 exports.alertToDiscord = async function (env, commit, err) {
 	// env: prod | dev
-	const webhookLink = require('./credentials').DISCORD_WEBHOOK_LINK;
+	const webhookLink = process.env.DISCORD_WEBHOOK_LINK;
 	const webhookObject = {
 		embeds: [
 			{
