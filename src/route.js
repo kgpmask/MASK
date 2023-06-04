@@ -85,6 +85,7 @@ function link (app, nunjEnv) {
 		return res.renderFile("rebuild.njk");
 	});
 	app.use("/api/imageupload", (req, res) => {
+		const postToInsta = require('../routes/instaupload');
 		const files = req.files;
 		postToInsta(files, req.body.desc, "image").then((result) => {
 			res.status(200).send({ success: result });

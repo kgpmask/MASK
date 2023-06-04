@@ -2,11 +2,6 @@ const { IgApiClient } = require("instagram-private-api");
 require("dotenv").config();
 const ig = new IgApiClient();
 const { google } = require("googleapis");
-const data = require("../src/credentials.json");
-const clientId = data.CLIENT_ID;
-const clientSecret = data.CLIENT_SECRET;
-const redirectURIs = data.REDIRECT_URIS;
-const refreshToken = data.REFRESH_TOKEN;
 const { Duplex } = require("stream");
 
 function bufferToStream (buffer) {
@@ -17,12 +12,18 @@ function bufferToStream (buffer) {
 }
 
 const oauth2Client = new google.auth.OAuth2(
-	clientId,
-	clientSecret,
-	redirectURIs
+	process.env['GOOGLE_CLIENT_ID'],
+	process.env['GOOGLE_CLIENT_SECRET'],
+	(process.env.SITE_URL ?? process.env.NODE_ENV === 'production' ? 'https://kgpmask.club' : `http://localhost:6969`)
+		+ '/oauth2/redirect/google'
 );
 
-oauth2Client.setCredentials({ 'refresh_token': refreshToken });
+const url = oauth2Client.generateAuthUrl({
+	'access_type': 'offline',
+	'scopes': 'https://www.googleapis.com/auth/drive'
+});
+
+console.log(`url: ${url}`);
 
 const drive = google.drive({
 	version: "v3",
@@ -31,14 +32,14 @@ const drive = google.drive({
 
 const postToInsta = async (files, caption, type) => {
 	try {
-		ig.state.generateDevice(data.IG_USERNAME);
-		await ig.simulate.preLoginFlow();
-		await ig.account.login(data.IG_USERNAME, data.IG_PASSWORD);
+		// ig.state.generateDevice(data.IG_USERNAME);
+		// await ig.simulate.preLoginFlow();
+		// await ig.account.login(data.IG_USERNAME, data.IG_PASSWORD);
 		if (type === "image") {
-			await ig.publish.photo({
-				file: files.image.data,
-				caption: caption
-			});
+			// await ig.publish.photo({
+			// 	file: files.image.data,
+			// 	caption: caption
+			// });
 			await drive.files.create({
 				requestBody: {
 					name: files.image.name,
@@ -50,11 +51,11 @@ const postToInsta = async (files, caption, type) => {
 				}
 			});
 		} else if (type === "reel") {
-			await ig.publish.video({
-				video: files.reel.data,
-				coverImage: files.image.data,
-				caption: caption
-			});
+			// await ig.publish.video({
+			// 	video: files.reel.data,
+			// 	coverImage: files.image.data,
+			// 	caption: caption
+			// });
 			await drive.files.create({
 				requestBody: {
 					name: files.reel.name,

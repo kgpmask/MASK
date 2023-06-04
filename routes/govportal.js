@@ -50,7 +50,8 @@ router.get('/member-management', async (req, res) => {
 	});
 });
 
-router.get("/image-upload", (req, res) => {
+router.get("/image-upload", async (req, res) => {
+	await new Promise(r => r());
 	// if (!req.loggedIn) return res.redirect('/login');
 	return res.renderFile(`govportal/image-upload.njk`);
 });
