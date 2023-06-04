@@ -25,12 +25,16 @@ router.get('/:pollId?', async (req, res) => {
 // Route for updating vote in poll
 router.post('/', async (req, res) => {
 	// Need to add validation
-	await dbh.updatePoll({
-		pollId: req.body.pollId,
-		userId: req.user._id,
-		userChoice: req.body.userChoice
-	});
-	return res.send('Successfully voted.');
+	try {
+		await dbh.updatePoll({
+			pollId: req.body.pollId,
+			userId: req.user._id,
+			userChoice: req.body.userChoice
+		});
+		return res.send({ success: true, message: "Successfully Voted" });
+	} catch (e) {
+		return res.send({ success: false, message: "Something Went Wrong" });
+	}
 });
 
 // Route for displaying poll results

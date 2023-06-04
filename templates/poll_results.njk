@@ -83,7 +83,7 @@
 			}));
 			[...document.getElementsByClassName('bar')].map(ele => {
 				const votes = eval(ele.nextElementSibling.innerHTML.split(" ")[0]);
-				if (votes === maxVotes) document.getElementsByClassName('bar')[0].parentNode.parentNode.classList.add('winning');
+				if (votes === maxVotes) ele.parentNode.parentNode.classList.add('winning');
 				if (votes) ele.style.width = `${votes*100/totalVotes}%`;
 				ele.firstElementChild.innerHTML = `${Math.round(votes*100/totalVotes)}%`;
 			});

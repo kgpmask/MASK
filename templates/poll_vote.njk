@@ -4,23 +4,26 @@
 {% set pagetitle = poll.title %}
 
 {% block pagecontent %}
+	<div class="message hidden"></div>
 	<div>
 		<h1> {{ poll.title }} </h1>
 		<div class="poll-container">
 			<div class="poll">
 				<h3> Choose one of the following (or make your own choice) </h3>
 				<br>
-				<div>Click here to see the <a href="/polls/results/{{ poll._id }}" style="color: var(--dark-red);">current poll results</a></div>
+				<div>Click here to see the <a href="/polls/results/{{ poll._id }}" style="color: var(--dark-red); font-weight: 600;">current poll results</a></div>
 				<br>
-				{% for choice in poll.records %}
-					<div class="choice-container">
-						<input type="radio" name="poll-value" value="{{ choice._id }}" id="{{ choice._id }}" {{ 'checked' if votedFor === choice.value else '' }}>
-						<label for="{{ choice._id }}">{{ choice.value }}</label>
-					</div>
-				{% endfor %}
 				<div class="choice-container">
-					<input type="radio" name="poll-value" value="null" id="null">
-					<label for="null"><input type="text" onclick="document.querySelector('#null').checked = true"></label>
+					{% for choice in poll.records %}
+						<div class="choice">
+							<input type="radio" name="poll-value" value="{{ choice._id }}" id="{{ choice._id }}" {{ 'checked' if votedFor === choice.value else '' }}>
+							<label for="{{ choice._id }}">{{ choice.value }}</label>
+						</div>
+					{% endfor %}
+					<div class="choice make-choice">
+						<input type="radio" name="poll-value" value="null" id="null">
+						<label for="null"><input type="text" onclick="document.querySelector('#null').checked = true" required></label>
+					</div>
 				</div>
 				<br>
 				<button type="button" onclick="submitVote()"> Submit </button>
@@ -42,10 +45,16 @@
 			const id = [...document.querySelectorAll('input[name="poll-value"]')].filter(inp => inp.checked)[0]?.id;
 			const userChoice = document.querySelector(`label[for="${id}"]`).firstChild.value ?? document.querySelector(`label[for="${id}"]`).innerText;
 			{# console.log(userChoice); #}
-			const response = await axios.post('/polls/', { pollId, userChoice });
-			if (response.data === 'Successfully voted.') {
-				alert('Successfully updated your vote.');
-				location.reload();
+			const response = (await axios.post('/polls/', { pollId, userChoice })).data;
+			const e = document.getElementsByClassName('message')[0];
+			e.innerHTML = response.message;
+			e.classList.add(response.success ? 'success' : 'error');
+			e.classList.remove('hidden');
+			setTimeout(function () {e.classList.add('hidden')}, 2000);
+			if (response.success) {
+				setTimeout(function () {
+					window.location.href  = "/polls/results/{{ poll._id }}";
+				}, 3000);
 			}
 		}
 	</script>
@@ -53,6 +62,30 @@
 
 {% block customcss %}
 	<style>
+		.message {
+			position: absolute;
+			top: 0;
+			right: calc(50vw - 220px);
+			padding: 20px;
+			z-index: 1;
+			color: #fff;
+			font-weight: 600;
+			font-size: 18px;
+			width: 400px;
+			transform-origin: top;
+			transition: transform 0.3s ease;
+			border-bottom-left-radius: 6px;
+			border-bottom-right-radius: 6px;
+		}
+		.error {
+			background-color: rgba(255, 51, 51, 0.85);
+		}
+		.success {
+			background-color: rgba(75, 189, 67, 0.85);
+		}
+		.hidden {
+			transform: scaleY(0);
+		}
 		.poll-container{
 			padding: 23px 25px;
 			display: flex;
@@ -71,37 +104,53 @@
 			border: 2px solid rgba(255,255,255,0.1);
 			backdrop-filter: blur(5px);
 		}
-
-		.choice-container {
+		.poll *{
+			outline: none;
+			border: none;
+		}
+		.choice-container{
 			display: flex;
-			flex-direction: row;
-			justify-content: space-around;
-
-			margin: 10px auto;
-			width: 80%;
+			flex-direction: column;
+			justify-content: center;
 		}
-
-		.choice-container > input {
+		.choice > label {
+			font-size: 18px;
+			position: relative;
+			top: -38px;
+			transition: all 0.5s ease;
+		}
+		.choice > input[type='radio'] {
 			appearance: none;
-			width: 20px;
-			height: 20px;
-			{# border: solid 5px var(--red); #}
-			border-radius: 10px;
-			background-color: var(--off-white);
-			color: var(--red);
+    		border: 2px solid var(--light-gray);
+			border-radius: 6px;
+    		padding: 10px;
+			width: -webkit-fill-available;
+			height: 50px;
+			color: var(--light-gray);
+			background-image: linear-gradient(to right, var(--red) 50%, transparent 50%);
+			background-size: 200% 200%;
+			background-position: right;
+			transition: all 0.4s ease;
+			font-weight: 600;
 		}
-
-		.choice-container > input:checked {
-			border: solid 5px var(--red);
-			background-color: var(--abyss);
-		
+		.choice > input[type='radio']:checked {
+			background-position: left;
 		}
-
-		.choice-container > label {
-			width: 90%;
-			height: 90%;
+		.choice > input[type='radio']:checked ~ label{
+			color: var(--white);
+			font-weight: 600;
 		}
-
+		.make-choice > label > input {
+			background-color: transparent;
+			font-size: 18px;
+			font-weight: 600;
+			text-align: center;
+			color: var(--light-gray);
+		}
+		.make-choice > input[type='radio']:checked ~ label > input{
+			color: var(--white);
+			font-weight: 600;
+		}
 		.poll > button {
 			margin: auto;
 			width: 15%;
