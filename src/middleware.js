@@ -3,6 +3,7 @@ const cookieParser = require('cookie-parser');
 const csrf = require('csurf');
 const express = require('express');
 const session = require('express-session');
+const fileupload = require('express-fileupload');
 const fs = require('fs').promises;
 const passport = require('passport');
 const path = require('path');
@@ -27,7 +28,7 @@ module.exports = function setMiddleware (app) {
 			if (!['/git-hook', '/error'].includes(req.url)) {
 				csrf()(req, res, next);
 				res.locals.csrfToken = req.csrfToken();
-				res.cookie('csrfToken', res.locals.csrfToken);
+				// res.cookie('csrfToken', res.locals.csrfToken);
 			} else next();
 			// git-hook ignores CSRF
 		});
@@ -42,6 +43,7 @@ module.exports = function setMiddleware (app) {
 			successReturnToOrRedirect: '/',
 			failureRedirect: '/login'
 		}));
+		app.use(fileupload());
 	}
 
 	app.use('/assets', express.static(path.join(__dirname, '..', 'assets')));

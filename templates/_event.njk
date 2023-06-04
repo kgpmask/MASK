@@ -1,0 +1,164 @@
+{% extends '_base.njk' %}
+
+{% set thispage = 'events' %}
+
+{% macro slide(folder, img) %}
+	<div class="slide"> <img src="/assets/PreviousEvents/{{ folder }}/{{ img }}"> </div>
+{% endmacro %}
+
+{% block pagecontent %}
+	<h1> {{ pagetitle if pagetitle else 'MASK Event' }} </h1>
+	<div class="transparent-box">
+		{% block eventContent %}
+		{% endblock %}
+	</div>
+	<a href="/events" style="color: var(--error-red);">Click here</a> to go back
+	<br><br>
+{% endblock %}
+
+{% block customjs %}
+	<script>
+		let nextSlideTime = 2_000;
+
+		function nextSlide (slideshowContainer) {
+			const scrollPosition = document.documentElement.scrollTop ;
+			let activeSlide;
+			do {
+				activeSlide = slideshowContainer.firstChild;
+				slideshowContainer.removeChild(activeSlide);
+				slideshowContainer.append(activeSlide);
+			} while (activeSlide.nodeName !== 'DIV');
+			document.documentElement.scrollTop = scrollPosition;
+			nextSlideTime = 2_000;
+		};
+
+		window.addEventListener('load', () => {
+			const slideshowContainer = document.querySelector('.slideshow-container');
+			if (!slideshowContainer) return;
+			setInterval(() => {
+				nextSlideTime -= 25;
+				if (nextSlideTime < 0) nextSlide(slideshowContainer);
+			}, 25);
+			{# function checkForSlideChange () {
+				setTimeout(checkForSlideChange, 25);
+			};
+			checkForSlideChange(); #}
+		});
+	</script>
+	{# <script>
+		window.addEventListener('load', () => {
+			[...document.querySelectorAll('.image-container')].forEach(imageContainer => {
+				const [img, p] = [...imageContainer.children];
+				p.style.width = getComputedStyle(img).getPropertyValue('width');
+			});
+		});
+	</script> #}
+	{% block eventJS %}
+	{% endblock %}
+{% endblock %}
+
+{% block customcss %}
+	<style>
+		h1, h2 {
+			color: var(--red);
+			margin-block-start: 0.8em;
+			margin-block-end: 0.8em;
+		}
+		.transparent-box {
+			color: var(--light-gray);
+			background-color: rgba(255,255,255,.2);
+			padding: 30px calc(10px + 4vw);
+			border-radius: 20px;
+			margin: 20px 3vw;
+			text-align: left;
+		}
+
+		.transparent-box a {
+			color: var(--off-white);
+			transition: color 0.3s;
+		}
+
+		.transparent-box a:hover {
+			color: var(--error-red);
+		}
+
+		.transparent-box > p {
+			margin-bottom: 12px;
+		}
+		
+		.transparent-box > img {
+			display: block;
+			max-width: 100%;
+			max-height: 40vh;
+			margin: 5px auto;
+			border-radius: 5px;
+		}
+		
+		.image-container {
+			max-width: 70vw;
+			width: calc(min(700px, 70vw));
+			margin: 10px auto;
+			border: solid 2px;
+			border-radius: 10px;
+		}
+
+
+		.image-container > img {
+			width: calc(min(700px, 70vw));
+			max-height: 45vh;
+			border-radius: 10px;
+		}
+
+		.image-container > p {
+			color: var(--error-red);
+			text-align: center;
+			margin: 5px auto;
+		}
+
+		.event-info{
+			max-width: calc(min(500px, 70vw));
+			width: -moz-fit-content;
+			width: fit-content;
+
+			margin: 20px auto;
+			border: 2px solid var(--off-white);
+			border-radius: 10px;
+			padding: 8px;
+
+			font-size: 13px;
+		}
+
+		.event-info > .heading {
+			color: var(--error-red);
+			font-weight: bold;
+			line-height: 1.4;
+		}
+
+		.slideshow-container {
+			overflow: hidden;
+			margin: auto;
+			width: calc(min(700px, 70vw));
+			height: calc(min(60vw, 450px));
+			border-radius: 10px;
+		}
+
+		.slideshow-container > .slide {
+			background-color: var(--abyss);
+			width: calc(min(700px, 70vw));
+			height: calc(min(60vw, 450px));
+			border-radius: 10px;
+		}
+
+		.slide > img {
+			display: block;
+			max-width: calc(min(700px, 70vw));
+			max-height: calc(min(60vw, 450px));
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+	</style>
+	{% block eventCSS %}
+	{% endblock %}
+{% endblock %}

@@ -7,5 +7,5 @@ WORKDIR /MASK
 COPY src/member-credentials.json src/credentials.json
 RUN npm install
 ENV SITE_URL='https://test.kgpmask.club'
-CMD ["npm", "run", "dev"]
+CMD ["npm", "start", "dev"]
 EXPOSE 6969

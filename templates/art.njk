@@ -80,6 +80,10 @@
 			-webkit-column-count: 2;
 			column-count: 2;
 		}
+
+		:root {
+			--col-width: calc((100vw - 256px)/2);
+		}
 	}
 
 	@media (max-width: 480px) {
@@ -88,6 +92,10 @@
 			-moz-column-count: 1;
 			-webkit-column-count: 1;
 			column-count: 1;
+		}
+
+		:root {
+			--col-width: calc((100vw - 64px));
 		}
 	}
 </style>

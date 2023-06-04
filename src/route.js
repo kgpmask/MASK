@@ -9,13 +9,13 @@ const membersRouter = require("../routes/members");
 const miscRouter = require("../routes/misc");
 const newsletterRouter = require("../routes/newsletter");
 const pollRouter = require("../routes/polls");
+
 const profileRouter = require("../routes/profile");
 const quizzesRouter = require("../routes/quizzes");
 const userRouter = require("../routes/user");
-const fileupload = require("express-fileupload");
-const postToInsta = require("../routes/instaupload");
+const eventsRouter = require("../routes/py-events");
 
-function link(app, nunjEnv) {
+function link (app, nunjEnv) {
 	const smallerRoutes = [
 		"/about",
 		"/apply",
@@ -24,7 +24,7 @@ function link(app, nunjEnv) {
 		"/submissions",
 		"/success",
 		"/privacy",
-		"/terms",
+		"/terms"
 	];
 	const userRoutes = ["/login", "/logout"];
 	const mediaRoutes = ["/art", "/videos"];
@@ -40,7 +40,7 @@ function link(app, nunjEnv) {
 		},
 		miscRouter
 	);
-	app.use(fileupload());
+
 	app.use(
 		"/",
 		(req, res, next) => {
@@ -78,7 +78,7 @@ function link(app, nunjEnv) {
 	app.use("/profile", profileRouter);
 	app.use(["/quizzes", "/events"], quizzesRouter);
 	app.use("/rebuild", (req, res) => {
-		nunjEnv.loaders.forEach((loader) => (loader.cache = {}));
+		nunjEnv.loaders.forEach((loader) => loader.cache = {});
 		["./rewards.json"].forEach(
 			(cache) => delete require.cache[require.resolve(cache)]
 		);
@@ -97,9 +97,54 @@ function link(app, nunjEnv) {
 		});
 	});
 
-	app.use("/error", async () => {
-		throw new Error("Sensitive error");
+	app.use('/', (req, res, next) => {
+		if (req.url in smallerRoutes) {
+			next();
+		} else {
+			next('route');
+		}
+	}, miscRouter);
+
+	app.use('/', (req, res, next) => {
+		if (req.url in userRoutes) {
+			next();
+		} else {
+			next('route');
+		}
+	}, userRouter);
+
+	app.use('/', (req, res, next) => {
+		if (req.url in mediaRoutes) {
+			next();
+		} else {
+			next('route');
+		}
+	}, mediaRouter);
+
+
+	app.use('/checker', checkerRouter);
+	app.use('/corsProxy', corsProxyRouter);
+	app.use('/gov-portal', govPortalRouter);
+	app.use('/git-hook', gitHookRouter);
+	app.use('/', homeRouter);
+	app.use('/home', homeRouter);
+	app.use('/live', liveRouter);
+	app.use('/members', membersRouter);
+	app.use('/newsletters', newsletterRouter);
+	app.use('/polls', pollRouter);
+	app.use('/profile', profileRouter);
+	app.use('/events', eventsRouter);
+	app.use(['/quizzes', '/events'], quizzesRouter);
+	app.use('/rebuild', (req, res) => {
+		nunjEnv.loaders.forEach(loader => loader.cache = {});
+		['./rewards.json'].forEach(cache => delete require.cache[require.resolve(cache)]);
+		return res.renderFile('rebuild.njk');
 	});
+
+	app.use('/error', async () => {
+		throw new Error('Sensitive error');
+	});
+
 
 	app.use((req, res, next) => {
 		// If propagation hasn't stopped, switch to GET!
@@ -119,7 +164,7 @@ function link(app, nunjEnv) {
 		res.status(500);
 		if (req.method === "GET")
 			res.renderFile("404.njk", {
-				message: "Server error! This may or may not be due to invalid input.",
+				message: "Server error! This may or may not be due to invalid input."
 			});
 		else res.send(err.toString());
 	});

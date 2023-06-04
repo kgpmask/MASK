@@ -1,4 +1,3 @@
-
 {% extends "govportal/govportal.njk" %}
 
 {% set thispage = 'govportal/add-post' %}
@@ -34,10 +33,6 @@
 				</div>
 			</div>
 			<div class="part2">
-				{# <div class="item">
-					<input type="checkbox" id="page">
-					<label>Page</label>
-				</div> #}
 				<div class="item">
 					<input type="checkbox" id="hype" checked> 
 					<label>Hype</label>
@@ -74,13 +69,12 @@
 			}
 			var response = (await axios.post('/gov-portal/add-post', { data: data })).data;
 			console.log(response);
-			{# response = response === 'Empty Data' ? false : response; #}
 			const e = document.getElementsByClassName('message')[0];
-			e.innerHTML = response ? 'Succesfully Added Post' : 'Something Went Wrong';
-			e.classList.add(response ? 'success' : 'error');
+			e.innerHTML = response.message;
+			e.classList.add(response.success ? 'success' : 'error');
 			e.classList.remove('hidden');
 			setTimeout(function () {e.classList.add('hidden')}, 2000);
-			if (response) {
+			if (response.success) {
 				setTimeout(function () { location.reload() }, 3000);
 			}
 		}
@@ -196,7 +190,7 @@
 			background-color: rgba(0, 0, 0, 0);
 		}
 		.part1 > .item > input:valid ~ label{
-			top: 0;
+			top: -7px;
 			font-size: 16px;
 			padding: 0 2px;
 			background-color: rgba(0, 0, 0, 0);
