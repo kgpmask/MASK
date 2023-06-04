@@ -97,7 +97,7 @@ async function addLiveResult (userId, quizId, currentQ, points, answer, timeLeft
 // Fetch newsletter solutions
 async function getNewsletter (date) {
 	const newsletter = await Newsletter.findById(date);
-	if (!Object.keys(newsletter).every(e => e)) throw new Error('No newsletters on this date');
+	if (!Object.keys(newsletter ?? {})?.some(e => e)) throw new Error('No newsletters on this date');
 	return newsletter;
 }
 
