@@ -7,6 +7,19 @@ const dbh = PARAMS.mongoless ? {} : require("../database/handler");
 // Todo: Add a middleware which throws an error when permissions are missing.
 // Basically, an app.use checking for user perms
 
+router.use((req, res, next) => {
+	if (PARAMS.userless) return res.notFound('404.njk', {
+		message: 'Sorry. This is currently not available in mongoless and userless mode.'
+	});
+
+	if (!req.loggedIn) return res.redirect('/login');
+	if (!req.user.permissions.find(perm => perm === 'governor')) return res.status(403).renderFile('404.njk', {
+		message: 'Access denied. You do not have the required permission.'
+	});
+
+	next();
+});
+
 router.get('/', (req, res) => {
 	// if (!req.loggedIn) return res.redirect('/login');
 	return res.renderFile(`govportal/govportal.njk`);
