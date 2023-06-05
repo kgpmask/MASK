@@ -70,20 +70,20 @@
 		}
 		.poll > .buttons * {
 			outline: none;
-			border: none;
+			border: 2px solid var(--light-gray);
 			padding: 12px 0;
 			margin: 5px;
-			color: white;
+			color: var(--red);
 			font-size: 18px;
 			font-weight: 600;
 			border-radius: 6px;
-			background-color: var(--red);
+			background-color: transparent;
 			width: 100px;
-			transition: background-color 0.5s ease;
+			transition: all 0.5s ease;
 		}
 		.poll > .buttons *:hover {
-			background-color: var(--abyss);
-			color: var(--off-white);
+			background-color: var(--red);
+			color: var(--abyss);
 		}
 		@media (max-width: 800px) {
 			.poll {
