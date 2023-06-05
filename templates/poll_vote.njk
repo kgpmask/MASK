@@ -22,7 +22,7 @@
 					{% endfor %}
 					<div class="choice make-choice">
 						<input type="radio" name="poll-value" value="null" id="null">
-						<label for="null"><input type="text" onclick="document.querySelector('#null').checked = true" placeholder="Enter your own choice..." required></label>
+						<label for="null"><input type="text" onclick="document.querySelector('#null').checked = true" placeholder="Enter your own choice" required></label>
 					</div>
 				</div>
 				<br>
@@ -151,10 +151,13 @@
 			color: var(--white);
 			font-weight: 600;
 		}
+		.make-choice > input[type='radio']:checked ~ label > input::placeholder{
+			color: var(--white);
+			font-weight: 600;
+		}
 		.poll > button {
 			margin: auto;
-			width: 15%;
-			max-width: 220px;
+			width: 250px;
 			border-radius: 12px;
 			padding: 12px;
 			background-color: var(--red);

@@ -59,8 +59,10 @@
 			margin: 20px;
 		}
 		.poll > .title {
+			text-align: left;
 			font-size: 20px;
 			font-weight: 600;
+			margin: 0 20px 0 0;
 		}
 		.poll > .buttons {
 			display: flex;
@@ -77,6 +79,11 @@
 			border-radius: 6px;
 			background-color: var(--red);
 			width: 100px;
+			transition: background-color 0.5s ease;
+		}
+		.poll > .buttons *:hover {
+			background-color: var(--abyss);
+			color: var(--off-white);
 		}
 		@media (max-width: 800px) {
 			.poll {
