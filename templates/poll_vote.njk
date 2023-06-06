@@ -99,7 +99,7 @@
 			margin: 0 5%;
 			border-radius: 10px;
 			padding: 40px 5%;
-			width: 60%;
+			width: calc(min(720px, 80vw));
 			background-color: rgba(50, 50, 50, 0.5);
 			border: 2px solid rgba(255,255,255,0.1);
 			backdrop-filter: blur(5px);
@@ -144,7 +144,7 @@
 		}
 		.make-choice > label > input {
 			background-color: transparent;
-			font-size: 18px;
+			font-size: 0.83em;
 			font-weight: 600;
 			text-align: center;
 			color: var(--light-gray);
@@ -160,7 +160,7 @@
 		}
 		.poll > button {
 			margin: auto;
-			width: 250px;
+			width: calc(min(250px, 40vw));
 			border-radius: 12px;
 			padding: 12px;
 			background-color: var(--red);
