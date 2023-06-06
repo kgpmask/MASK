@@ -56,7 +56,6 @@ router.get('/member-management', async (req, res) => {
 });
 
 router.post('/add-post', async (req, res) => {
-	await new Promise(r => r());
 	const data = req.body.data;
 	if (!data.name || !data.link || !data.attr[0] && ['youtube', 'instagram'].includes(data.type)) {
 		return res.send({ success: false, message: "Empty Data Provided" });
@@ -72,7 +71,6 @@ router.post('/add-post', async (req, res) => {
 });
 
 router.post('/add-poll', async (req, res) => {
-	await new Promise(r => r());
 	const data = req.body.data;
 	if (!data.title || !data.records.length) return res.send({ success: false, message: "Empty Data Provided" });
 	data.endTime = new Date(data.endTime).toISOString();
