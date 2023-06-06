@@ -3,10 +3,6 @@ const router = express.Router();
 
 const dbh = PARAMS.mongoless ? {} : require("../database/handler");
 
-
-// Todo: Add a middleware which throws an error when permissions are missing.
-// Basically, an app.use checking for user perms
-
 router.use((req, res, next) => {
 	if (PARAMS.userless) return res.notFound('404.njk', {
 		message: 'Sorry. This is currently not available in mongoless and userless mode.'
@@ -21,24 +17,20 @@ router.use((req, res, next) => {
 });
 
 router.get('/', (req, res) => {
-	// if (!req.loggedIn) return res.redirect('/login');
 	return res.renderFile(`govportal/govportal.njk`);
 });
 
 router.get('/add-post', (req, res) => {
-	// if (!req.loggedIn) return res.redirect('/login');
 	return res.renderFile(`govportal/add-post.njk`);
 });
 
 router.get('/add-poll', (req, res) => {
-	// if (!req.loggedIn) return res.redirect('/login');
 	const date = new Date();
 	date.setDate(date.getDate() + 7);
 	return res.renderFile(`govportal/add-poll.njk`, { date: date.toISOString().slice(0, 10) });
 });
 
 router.get('/member-management', async (req, res) => {
-	// if (!req.loggedIn) return res.redirect('/login');
 	const hierarchy = [
 		'Governor',
 		'Team Heads',
@@ -63,14 +55,8 @@ router.get('/member-management', async (req, res) => {
 	});
 });
 
-router.get("/image-upload", (req, res) => {
-	// if (!req.loggedIn) return res.redirect('/login');
-	return res.renderFile(`govportal/image-upload.njk`);
-});
-
 router.post('/add-post', async (req, res) => {
 	await new Promise(r => r());
-	// if (!req.loggedIn) return res.redirect('/');
 	const data = req.body.data;
 	if (!data.name || !data.link || !data.attr[0] && ['youtube', 'instagram'].includes(data.type)) {
 		return res.send({ success: false, message: "Empty Data Provided" });
@@ -87,7 +73,6 @@ router.post('/add-post', async (req, res) => {
 
 router.post('/add-poll', async (req, res) => {
 	await new Promise(r => r());
-	// if (!req.loggedIn) return res.redirect('/');
 	const data = req.body.data;
 	if (!data.title || !data.records.length) return res.send({ success: false, message: "Empty Data Provided" });
 	data.endTime = new Date(data.endTime).toISOString();
