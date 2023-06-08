@@ -128,7 +128,7 @@
     		padding: 10px;
 			width: -webkit-fill-available;
 			height: 50px;
-			color: var(--light-gray);
+			color: var(--off-white);
 			background-image: linear-gradient(to right, var(--red) 50%, transparent 50%);
 			background-size: 200% 200%;
 			background-position: right;
@@ -152,11 +152,12 @@
 		}
 		.make-choice > input[type='radio']:checked ~ label > input{
 			color: var(--white);
-			font-weight: 600;
 		}
 		.make-choice > input[type='radio']:checked ~ label > input::placeholder{
-			color: var(--white);
-			font-weight: 600;
+			opacity: 0;
+		}
+		.make-choice > input[type='radio'] ~ label > input::placeholder{
+			color: var(--light-gray);
 		}
 		.poll > button {
 			margin: auto;
