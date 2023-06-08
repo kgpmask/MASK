@@ -20,15 +20,15 @@
 					<label>End Date</label>
 				</div>
 			</div>
+			<h2>Options</h2>
 			<div class="options">
-				<h2>Options</h2>
 				<div class="option">
 					<input type="text" required>
 					<label>Option 1</label>
-					<button type="button" onclick="removeOption(this)" class="removeoption">&#10006;</button>
+					<button type="button" onclick="removeOption(this.parentElement)" class="removeoption">&#10006;</button>
 				</div>
-				<button type="button" onclick="addOption()" class="addoption">&#10010; Add Option</button>
 			</div>
+			<button type="button" onclick="addOption()" class="addoption">&#10010; Add Option</button>
 			<button type="button" onclick="addPoll()" style="width: 60%;">Add Poll</button>
 		<form>
 	</div>
@@ -41,22 +41,25 @@
 
 		function addOption() {
 			const parent = document.getElementsByClassName('options')[0];
-			parent.lastElementChild.previousElementSibling.lastElementChild.disabled = true; // disabling the last remove option button
+			// parent.lastElementChild.previousElementSibling.lastElementChild.disabled = true; // disabling the last remove option button
 			const div = document.createElement('div');
-            div.className = 'option'
-            div.innerHTML = `
+			div.className = 'option'
+			div.innerHTML = `
 				<input type="text" required>
-				<label>Option ${parent.children.length - 1}</label>
-				<button type="button" onclick="removeOption(this)" class="removeoption">&#10006;</button>
+				<label>Option ${parent.children.length + 1}</label>
+				<button type="button" onclick="removeOption(this.parentElement)" class="removeoption">&#10006;</button>
 			`
-			parent.insertBefore(div,document.getElementsByClassName('addoption')[0]);
+			parent.append(div);
 		}
 
 		function removeOption(element) {
 			const parent = element.parentNode;
 			try {
-				parent.previousElementSibling.lastElementChild.disabled = false; // enabling the previous remove option button
-				parent.remove();
+				if (parent.children.length === 1) return;
+				element.remove();
+				[...parent.children].forEach((element, i) => {
+					element.children[1].innerHTML = `Option ${i + 1}`;
+				});
 			} catch (e) {
 				parent.firstElementChild.value = '';
 			}
@@ -156,7 +159,7 @@
 			position: relative;
 			margin: 12px 10px;
 			justify-content: center;
-    		align-items: center;
+			align-items: center;
 		}
 		.option > input {
 			width: 75%;
@@ -173,6 +176,10 @@
 			height: 50px;
 			width: 50px;
 		}
+		h2 {
+			margin-block-start: 0.83em;
+			margin-block-end: 0.83em;
+		}
 		label{
 			position: absolute;
 			top: 50%;
@@ -186,18 +193,18 @@
 		}
 		input{
 			background-color: rgba(255,255,255,0.07);
-   			font-size: 18px;
-    		font-weight: 300;
+				font-size: 18px;
+			font-weight: 300;
 			height: 50px;
 			width: 90%;
-  			border-radius: 8px;
-  			padding: 0 15px 0px 15px;
-  			border: 2px solid var(--light-gray);
-  			color: #fff;
-  			outline: none;
+				border-radius: 8px;
+				padding: 0 15px 0px 15px;
+				border: 2px solid var(--light-gray);
+				color: #fff;
+				outline: none;
 		}
 		input:focus{
-  			border: 2px solid var(--red);
+				border: 2px solid var(--red);
 		}
 		input:focus ~ label{
 			top: -7px;
