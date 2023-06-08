@@ -17,8 +17,8 @@
 		<tbody>
 			{% for member in currentMembers %}
 				<tr>
-					<td class = "member-name" onclick = "toggleModal(`{{ member.roll }}`)"><div class = "name"><b>{{ member.name }}</b></div>
-					<div id = "{{ member.roll }}" class = "modal" style = "display:none">
+					<td class = "member-name"><div class = "name"><b>{{ member.name }}</b></div>
+					<div id = "{{ member.roll }}" class = "modal" style = "display:block">
 						<div class = "modal-content">
 							</br>
 							<div class = "member-details" style = "display:block;">{{ member.roll }}</div>
@@ -129,14 +129,14 @@
 			}
 		}
 
-		function toggleModal (id) {
+		{# function toggleModal (id) {
 			modal = document.getElementById(id);
 			if(modal.style.display === 'block') {
 				modal.style.display = 'none';
 			} else {
 				modal.style.display = 'block';
 			}
-		}
+		} #}
 
 		async function postData (data) {
 			//console.log(data);
@@ -148,7 +148,7 @@
 		function removeMemberTeam(name, rollNumber, team) {
 			//console.log(rollNumber);
 			if(confirm(`Are you sure you want to remove ${name} from ${team}`)) {
-				team = team[0].toLowerCase();
+				team = (team !== "Media & Newsletter" ? team[0] : 'n').toLowerCase();
 				const data = { functionType: 'removeTeam' , roll: `${rollNumber}`, team: `${team}` };
 				postData(data);
 			}
@@ -176,7 +176,7 @@
 			dropDown.addEventListener("change", function(event) {
 				let selectedTeam = event.target.value;
 				if (confirm(`Are you sure you want to add ${memberName} to ${selectedTeam}`)) {
-					selectedTeam = selectedTeam[0].toLowerCase();
+					selectedTeam = (selectedTeam !== "Media & Newsletter" ? selectedTeam[0] : 'n').toLowerCase();
 					console.log(memberRoll);
 					const data = { functionType: 'addTeam', roll: `${memberRoll}`, team: `${selectedTeam}` };
 					postData(data);
