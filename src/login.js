@@ -4,7 +4,7 @@ exports.init = () => {
 	const GoogleStrategy = require('passport-google-oauth20');
 	const dbh = require('../database/handler');
 
-	const port = process.env.PORT;
+	const port = process.env.PORT ?? 6969;
 	const fallbackUrl = process.env.NODE_ENV === 'production' ? 'https://kgpmask.club' : `http://localhost:${port}`;
 	const callbackURL = process.env.SITE_URL || fallbackUrl;
 
