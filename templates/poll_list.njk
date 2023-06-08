@@ -4,49 +4,97 @@
 {% set pagetitle = 'Active Polls' %}
 
 {% block pagecontent %}
-<div>
-	<h1> Polls </h1>
-	{% if message %}
-	<div style="background-color:var(--red);color:var(--off-white);opacity:0.8" class="text">
-		{{ message }}
+	<div>
+		<h1> Polls </h1>
+		{% if message %}
+		<div style="background-color:var(--red);color:var(--off-white);opacity:0.8" class="text">
+			{{ message }}
+		</div>
+		{% endif %}
+		<div class="container">
+			<div class="poll-container">
+				{% for poll in activePolls %}
+					<div class="poll">
+						<div class="title"> {{ poll.title }} </div>
+						<div class="buttons">
+							<button onclick="window.location.href = '/polls/{{ poll._id }}'">Vote</button>
+							<button onclick="window.location.href = '/polls/results/{{ poll._id }}'">Result</button>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
 	</div>
-	{% endif %}
-	<div class="poll-container">
-		{% for poll in activePolls %}
-			<a href="/polls/{{ poll._id }}"> {{ poll.title }} </a>
-		{% endfor %}
-	</div>
-</div>
 {% endblock %}
 
 {% block customcss %}
-<style>
-	.poll-container {
-		display: flex;
-		flex-direction: column;
-		margin: 0 5%;
-		border-radius: 10px;
-		padding: 40px 5%;
-		width: 80%;
-		background-color: var(--medium-gray);
-	}
-
-	.poll-container > a {
-		display: block;
-		margin: 5px auto;
-		width: 70%;
-		padding: 5% 2%;
-		border: solid 2px var(--off-white);
-		border-radius: 10px;
-		background-color: var(--shadow-gray);
-		color: var(--off-white);
-		font-size: 120%;
-	}
-
-	.poll-container > a:hover {
-		border: solid 2px var(--white);
-		background-color: var(--darker-gray);
-		color: var(--white);
-	}
-</style>
+	<style>
+		.container {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+		.poll-container {
+			max-width: 1200px;
+			display: flex;
+			flex-direction: column;
+			margin: 0 5%;
+			border-radius: 10px;
+			padding: 40px 5%;
+			width: 75%;
+			background-color: rgba(255,255,255,0.13);
+			backdrop-filter: blur(5px);
+			align-items: center;
+		}
+		.poll {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: center;
+			background-color: rgba(31, 31, 31, 0.5);
+			border: 2px solid var(--off-white);
+			border-radius: 10px;
+			width: 80%;
+			padding: 4%;
+			margin: 20px;
+		}
+		.poll > .title {
+			text-align: left;
+			font-size: 20px;
+			font-weight: 600;
+			margin: 0 20px 0 0;
+		}
+		.poll > .buttons {
+			display: flex;
+			flex-direction: column;
+		}
+		.poll > .buttons * {
+			outline: none;
+			border: 2px solid var(--red);
+			padding: 12px 0;
+			margin: 5px;
+			color: var(--red);
+			font-size: 18px;
+			font-weight: 600;
+			border-radius: 6px;
+			background-color: transparent;
+			width: 100px;
+			transition: all 0.3s ease;
+		}
+		.poll > .buttons *:hover {
+			background-color: var(--red);
+			color: var(--abyss);
+		}
+		@media (max-width: 800px) {
+			.poll {
+				flex-direction: column !important;
+			}
+			.poll > .title {
+				margin: 15px 0;
+			}
+			.buttons {
+				flex-direction: row !important;
+			}
+		}
+	</style>
 {% endblock %}
