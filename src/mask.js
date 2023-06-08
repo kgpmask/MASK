@@ -24,7 +24,8 @@ const nunjEnv = nunjucks.configure(path.join(__dirname, '../templates'), {
 
 initMiddleware(app);
 
-route(app, nunjEnv);
+if (PARAMS.maintenance) app.use((req, res) => res.renderFile('under_maintenance.njk'));
+else route(app, nunjEnv);
 
 const server = http.createServer(app);
 global.io = socketio.listen(server);
