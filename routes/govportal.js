@@ -48,7 +48,6 @@ router.get('/member-management', async (req, res) => {
 	currentMembers.sort((a, b) => -(hierarchy.indexOf(a.position) < hierarchy.indexOf(b.position))).forEach(member => {
 		member.teams = member.teams.map(team => team.name);
 	});
-	// dbh.removeTeam("22BT10011", "WebDev", 2022);
 	return res.renderFile('/govportal/member-management.njk', {
 		currentMembers,
 		teams: Object.values(teamsData[years[years.length - 1]])
@@ -89,7 +88,6 @@ router.post('/add-poll', async (req, res) => {
 
 router.post('/member-management', async (req, res) => {
 	const data = req.body.data;
-	// console.log(data);
 	let response;
 	switch (data.functionType) {
 		case 'removeTeam':
