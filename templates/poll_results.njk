@@ -4,39 +4,92 @@
 {% set pagetitle = 'Live Poll Result' %}
 
 {% block pagecontent %}
-	<h1> {{ title }} </h1>
 	<div class="poll-container">
-		<table>
-			<tr>
-				<th> Choice </th> <td> Votes </td>
-			</tr>
+		<h1> {{ title }} </h1>
+		<div class="result-container">
 			{% for record in records %}
-				<tr>
-					<th> {{ record.value }} </th> <td> {{ record.votes }} </td>
-				</tr>
+				<div class="row">
+					<label>{{ record.value }} {% if record.value === votedFor %} (Voted) {% endif %}</label>
+					<div style="font-weight: 600; margin: 5px;">{{ record.votes }} votes</div>
+					<div class="display">
+						<div class="bar"><div class="percent"></div></div>
+					</div>
+				</div>
 			{% endfor %}
-		</table>
+		</div>
 	</div>
 {% endblock %}
 
 {% block customcss %}
 	<style>
-		table {
-			margin: 0px auto;
-			min-width: 80%;
+		.poll-container {
+			display: flex;
+			align-items: center;
+			flex-direction: column;
 		}
-
-		th {
-			margin: 0px;
-			border-spacing: 0px;
+		.result-container {
+			display: flex;
+			flex-direction: column;
 			border: solid 1px var(--off-white);
+			border-radius: 12px;
+			padding: 12px 5px;
 			width: 70%;
+			background-color: rgba(255,255,255,0.13);
+			backdrop-filter: blur(5px);
 		}
-		td {
-			margin: 0px;
-			border-spacing: 0px;
-			border: solid 1px var(--off-white);
-			width: 30%;
+		.row {
+			display: flex;
+			flex-direction: column;
+			text-align: left;
+			margin: 15px 10px;
+		}
+		.row > label {
+			margin: 5px;
+			font-size: 20px;
+    		font-weight: 600;
+		}
+		.display {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+		}
+		.bar {
+			width: 5px;
+			height: 30px;
+			border-radius: 15px;
+			background-color: var(--light-gray);
+			transition: width 0.7s ease, background-color 0.2s;
+		}
+		.percent {
+			position: relative;
+    		margin: 7px 10px;
+    		left: 100%;
+			font-weight: 300;
+		}
+		.winning > .display > .bar {
+			background-color: var(--red);
 		}
 	</style>
+{% endblock %}
+
+{% block customjs %}
+	<script>
+		function update() {
+			const totalVotes = [...document.getElementsByClassName('bar')].map(ele => {
+				return eval(ele.parentElement.parentElement.children[1].innerHTML.split(" ")[0]);
+			}).reduce((a,b) => a+b);
+			const maxVotes = Math.max(...[...document.getElementsByClassName('bar')].map(ele => {
+				return eval(ele.parentElement.parentElement.children[1].innerHTML.split(" ")[0]);
+			}));
+			[...document.getElementsByClassName('bar')].map(ele => {
+				const votes = eval(ele.parentElement.parentElement.children[1].innerHTML.split(" ")[0]);
+				if (votes === maxVotes) ele.parentNode.parentNode.classList.add('winning');
+				if (votes) ele.style.width = totalVotes ? `${votes*100/totalVotes}%` : 0;
+				ele.firstElementChild.innerHTML = `${totalVotes ? Math.round(votes*100/totalVotes) : o}%`;
+			});
+		}
+		window.onload = () => {
+			update();
+		}
+	</script>
 {% endblock %}

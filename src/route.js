@@ -1,5 +1,6 @@
 const checkerRouter = require("../routes/checker");
 const corsProxyRouter = require("../routes/corsProxy");
+const govPortalRouter = require("../routes/govportal");
 const gitHookRouter = require("../routes/git-hook");
 const homeRouter = require("../routes/home");
 const liveRouter = require("../routes/live");
@@ -12,11 +13,17 @@ const pollRouter = require("../routes/polls");
 const profileRouter = require("../routes/profile");
 const quizzesRouter = require("../routes/quizzes");
 const userRouter = require("../routes/user");
+const eventsRouter = require("../routes/py-events");
 
 function link (app, nunjEnv) {
 	const smallerRoutes = ["/about", "/apply", "/blog", "/prizes", "/submissions", "/success", "/privacy", "/terms"];
 	const userRoutes = ["/login", "/logout"];
 	const mediaRoutes = ["/art", "/videos"];
+
+	app.use(async (_, __, next) => {
+		await new Promise(r => r());
+		next();
+	});
 
 	app.use('/', (req, res, next) => {
 		if (req.url in smallerRoutes) {
@@ -42,8 +49,10 @@ function link (app, nunjEnv) {
 		}
 	}, mediaRouter);
 
+
 	app.use('/checker', checkerRouter);
 	app.use('/corsProxy', corsProxyRouter);
+	app.use('/gov-portal', govPortalRouter);
 	app.use('/git-hook', gitHookRouter);
 	app.use('/', homeRouter);
 	app.use('/home', homeRouter);
@@ -52,6 +61,7 @@ function link (app, nunjEnv) {
 	app.use('/newsletters', newsletterRouter);
 	app.use('/polls', pollRouter);
 	app.use('/profile', profileRouter);
+	app.use('/events', eventsRouter);
 	app.use(['/quizzes', '/events'], quizzesRouter);
 	app.use('/rebuild', (req, res) => {
 		nunjEnv.loaders.forEach(loader => loader.cache = {});
@@ -80,7 +90,10 @@ function link (app, nunjEnv) {
 		if (PARAMS.dev) console.error(err.stack);
 		// Make POST errors show only the data, and GET errors show the page with the error message
 		res.status(500);
-		if (req.method === 'GET') res.renderFile('404.njk', { message: 'Server error! This may or may not be due to invalid input.' });
+		if (req.method === "GET")
+			res.renderFile("404.njk", {
+				message: "Server error! This may or may not be due to invalid input."
+			});
 		else res.send(err.toString());
 	});
 }

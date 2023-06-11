@@ -1,0 +1,193 @@
+{% extends "govportal/govportal.njk" %}
+
+{% set thispage = 'govportal' %}
+{% set pagetitle = 'Governor Portal | Member Management' %}
+{% set actionname = 'Member Management' %}
+
+{% set scripts = ['https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'] %}
+
+{% block actioncontent %}
+	<table>
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Position</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for member in currentMembers %}
+				<tr>
+					<td class = "member-name"><div class = "name" onclick="toggleModal('{{ member.roll }}')"><b>{{ member.name }}</b></div>
+					<div id = "{{ member.roll }}" class = "modal" style = "display:none">
+						<div class = "modal-content">
+							</br>
+							<div class = "member-details" style = "display:block;">{{ member.roll }}</div>
+							<div class = "member-details" style = "display:block;"> 
+								{% for team in member.teams %}
+									<div class = "span-div"><span class = "team-span">{{ team }}  <span class = "cross" onclick = "removeMemberTeam(`{{ member.name }}`,`{{ member.roll }}`, `{{ team }}`)">  &times;</span></span></div>
+								{% endfor %}
+								<div class = "span-div-plus"><span class = "add-team" id = "cross_`{{ member.roll }}`" onclick = "addTeam(this, `{{ member.teams }}`, `{{ member.name }}`, `{{ member.roll }}`)">&plus;</span></div>
+							</div>
+							<div class = "member-details" style = "display:block;"></div>
+						</div>
+					</div>
+					</td> 
+					<td>{{ member.position }}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<button onclick = "exportToNextYear()" class = "exportButton">Export to Next Year</button>
+{% endblock %}
+
+{% block customcss %}
+	<style>
+		.cross:hover {
+			background-color : lightgrey;
+		}
+		.cross {
+			border-radius : 200px;
+			padding : 0px 5px 0px 5px;
+		}
+		.changeMemberDetails {
+			border-radius : 5px;
+			padding: 4px 3px 13px 3px;
+  			height : 30px;
+			width : 50px;
+		}
+		.span-div {
+			margin: 10px;
+		}
+		.span-div-plus {
+			margin: 15px 0px 0px 10px;
+		}
+		.team-span {
+			padding : 3px 8px 3px 8px;
+			border : solid;
+			border-radius :5px;
+			display: block;
+			width: fit-content;
+		}
+		.add-team {
+			padding : 3px 8px 3px 8px;
+			border : solid;
+			border-radius :5px;
+		}
+		.add-team:hover {
+			background-color: lightgrey;
+		}
+		table {
+			border-collapse: collapse;
+			width: 70%;
+			margin: 4% 0% 1% 14%;
+		}
+		th, td {
+			border: 1px solid grey;
+			padding: 8px;
+			text-align: left;
+		}
+		td.member-name:hover {
+			background-color : #464646;
+			cursor : pointer;
+		}
+		.member-details {
+			font-color : white;
+			padding : 1px 0px 10px 0px;
+		}
+		.name {
+			font-size : 22px;
+		}
+		.exportButton {
+			align-self: center;
+			margin: 1% 0% 2% 0%;
+			width: fit-content;
+			background-color: var(--red);
+			color: white;
+			padding: 12px 0;
+			font-size: 18px;
+			font-weight: 600;
+			border-radius: 12px;
+			cursor: pointer;
+			padding: 1% 2% 1% 2%;
+		}
+		select, option {
+			background-color: var(--darker-gray);
+			color: var(--off-white);
+		}
+</style>
+{% endblock %}
+
+{% block customjs %}
+	<script>
+		axios.defaults.withCredentials = true;
+		axios.defaults.headers.common['X-CSRF-TOKEN'] = '{{ csrfToken }}';
+
+		window.onload = () => {
+			if (!axios.defaults.headers.common['X-CSRF-TOKEN']) axios.defaults.headers.common['X-CSRF-TOKEN'] = document.cookie.split('=')[1];
+		}
+
+		function exportToNextYear () {
+			if(confirm("Are you sure you want to export current year's data to next year ?")){
+				const data = { functionType: 'export' };
+				postData (data);
+			}
+		}
+
+		function toggleModal (id) {
+			modal = document.getElementById(id);
+			if(modal.style.display === 'block') {
+				modal.style.display = 'none';
+			} else {
+			modal.style.display = 'block';
+			}
+		}
+
+		async function postData (data) {
+			//console.log(data);
+			axios.post('/gov-portal/member-management', { data: data }).then(() => {
+				window.location.reload();
+			});
+		}
+
+		function removeMemberTeam(name, rollNumber, team) {
+			//console.log(rollNumber);
+			if(confirm(`Are you sure you want to remove ${name} from ${team}`)) {
+				team = (team !== "Media & Newsletter" ? team[0] : 'n').toLowerCase();
+				const data = { functionType: 'removeTeam' , roll: `${rollNumber}`, team: `${team}` };
+				postData(data);
+			}
+		}
+
+		function addTeam(spanElement, memberTeams, memberName, memberRoll) {
+			//console.log('start'+ memberRoll);
+			const teamNames = ["AMV & Music", "Media & Newsletter", "Quiz", "WebDev", "Design & Arts"];
+			memberTeams = memberTeams.split(',').map(team => team.trim());
+			const toAdd = teamNames.filter(team => !memberTeams.includes(team));
+			const dropDown = document.createElement("select");
+			dropDown.style = "height:28.5px;padding-left:5px;"		
+			const defaultOption = document.createElement("option");
+
+			defaultOption.text = "Select Team";
+			dropDown.add(defaultOption);
+
+			toAdd.forEach(team => {
+				const option = document.createElement("option");
+				option.value = team;
+				option.text = team;
+				dropDown.add(option);
+			});
+
+			dropDown.addEventListener("change", function(event) {
+				let selectedTeam = event.target.value;
+				if (confirm(`Are you sure you want to add ${memberName} to ${selectedTeam}`)) {
+					selectedTeam = (selectedTeam !== "Media & Newsletter" ? selectedTeam[0] : 'n').toLowerCase();
+					console.log(memberRoll);
+					const data = { functionType: 'addTeam', roll: `${memberRoll}`, team: `${selectedTeam}` };
+					postData(data);
+				}
+			})
+
+			spanElement.parentNode.replaceChild(dropDown, spanElement);
+		}
+	</script>
+{% endblock %}

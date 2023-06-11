@@ -66,7 +66,6 @@ exports.fakeRandom = function fakeRandom (seed) {
 };
 
 exports.levenshtein = function levenshtein (str1, str2) {
-	// needs some maintenance
 	if (!str1.length) return t.length;
 	if (!str2.length) return str1.length;
 	const arr = [];
@@ -83,50 +82,22 @@ exports.levenshtein = function levenshtein (str1, str2) {
 	return arr[str2.length][str1.length];
 };
 
-exports.levenshteinDamerau = function levenshteinDamerau (str1, str2, weights) {
-	let len1 = str1.length;
-	let len2 = str2.length;
-	let i, j;
-	let dist;
-	let ic, dc, rc;
-	let last, old;
-
-	const weighter = weights || {
-		insert: c => 3,
-		delete: c => 3,
-		replace: (c, d) => 2 // is added twice
-	};
-
-	if (len1 === 0 || len2 === 0) {
-		dist = 0;
-		while (len1) dist += weighter.delete(str1[--len1]);
-		while (len2) dist += weighter.insert(str2[--len2]);
-		return dist;
-	}
-
-	const column = [];
-	column[0] = 0;
-
-	for (j = 1; j <= len2; ++j) column[j] = column[j - 1] + weighter.insert(str2[j - 1]);
-
-	for (i = 1; i <= len1; ++i) {
-		last = column[0];
-		column[0] += weighter.delete(str1[i - 1]);
-		for (j = 1; j <= len2; ++j) {
-			old = column[j];
-			if (str1[i - 1] === str2[j - 1]) column[j] = last;
-			else {
-				ic = column[j - 1] + weighter.insert(str2[j - 1]);
-				dc = column[j] + weighter.delete(str1[i - 1]);
-				rc = last + weighter.replace(str1[i - 1], str2[j - 1]);
-				column[j] = ic < dc ? ic : dc < rc ? dc : rc;
+exports.levenshteinDamerau = function levenshteinDamerau (a, b) {
+	const d = Array.from({ length: a.length + 1 }, () => Array(b.length + 1).fill(0));
+	for (let i = 0; i < a.length + 1; i++) d[i][0] = i;
+	for (let j = 0; j < b.length + 1; j++) d[0][j] = j;
+	for (let i = 0; i < a.length; i++) {
+		for (let j = 0; j < b.length; j++) {
+			let cost;
+			if (a[i] === b[j]) cost = 0;
+			else cost = 1;
+			d[i + 1][j + 1] = Math.min(d[i][j + 1] + 1, d[i + 1][j] + 1, d[i][j] + cost);
+			if (i > 1 && j > 1 && a[i] === b[j - 1] && a[i - 1] === b[j]) {
+				d[i + 1][j + 1] = Math.min(d[i + 1][j + 1], d[i - 1][j - 1] + 1);
 			}
-			last = old;
 		}
 	}
-
-	dist = column[len2];
-	return dist;
+	return d[a.length][b.length];
 };
 
 exports.shell = async function exec (command) {
@@ -146,7 +117,7 @@ exports.updateCode = async function () {
 
 exports.alertToDiscord = async function (env, commit, err) {
 	// env: prod | dev
-	const webhookLink = require('./credentials').DISCORD_WEBHOOK_LINK;
+	const webhookLink = process.env.DISCORD_WEBHOOK_LINK;
 	const webhookObject = {
 		embeds: [
 			{

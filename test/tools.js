@@ -60,10 +60,10 @@ describe('Tools.LevenshteinDamerau', () => {
 		'This is a tesy'
 	];
 	it('should work with indel', () => {
-		return assert(Tools.levenshteinDamerau(strs[0], strs[2]) === 3 && Tools.levenshteinDamerau(strs[0], strs[3]) === 3);
+		return assert(Tools.levenshteinDamerau(strs[0], strs[2]) === 1 && Tools.levenshteinDamerau(strs[0], strs[3]) === 1);
 	});
-	it('should work with switch', () => assert(Tools.levenshteinDamerau(strs[0], strs[4]) === 2));
-	// it('should work with swap', () => assert(Tools.levenshteinDamerau(strs[0], strs[1]) === 2));
+	it('should work with switch', () => assert(Tools.levenshteinDamerau(strs[0], strs[4]) === 1));
+	it('should work with swap', () => assert(Tools.levenshteinDamerau(strs[0], strs[1]) === 1));
 	// Swap is broken
 });
 

@@ -10,7 +10,7 @@ const aliases = {
 	u: 'userless',
 	t: 'test'
 };
-const validParams = ['dev', 'local', 'prod', 'mongoless', 'userless', 'quiz', 'test'];
+const validParams = ['dev', 'local', 'prod', 'mongoless', 'userless', 'quiz', 'test', 'maintenance'];
 if (!global.PARAMS) {
 	if (process.env['NODE_ENV'] === 'production') process.env.prod = true;
 	const shorts = new Set();
@@ -56,4 +56,5 @@ exports.init = () => {
 	}
 	if (!PARAMS.prod) process.env.MONGO_URL = process.env.MONGO_TEST_URL;
 	if (PARAMS.local) process.env.MONGO_URL = 'mongodb://127.0.0.1/mask';
+	if (PARAMS.maintenance) PARAMS.mongoless = PARAMS.userless = true;
 };

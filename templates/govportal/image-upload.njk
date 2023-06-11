@@ -1,0 +1,112 @@
+{% extends "govportal/govportal.njk" %}
+
+{% set thispage = 'govportal' %}
+{% set pagetitle = 'Governor Portal | Image Upload' %}
+{% set actionname = 'Image Upload' %}
+{% set scripts = ['https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'] %}
+
+{% block actioncontent %}
+	<div class="container">
+		<form enctype="multipart/form-data">
+			<div>
+				<label for="image">Select Image:</label>
+				<input type="file" name="image" id="image" accept=".jpeg" required>
+			</div>
+			<div>
+				<label for="desc">Description:</label>
+				<textarea id="desc" name="desc" rows="5" cols="50" required></textarea>
+			</div>
+			<button type="button" id="submit" onclick="uploadImage()">Upload Image</button>
+		</form>
+	</div>
+{% endblock %}
+
+{% block customcss %}
+	<style>
+		.container{
+			padding: 23px 25px;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			transform: 0.3s;
+		}
+		form {
+			display: flex;
+			flex-direction: column;
+			border: 2px solid rgba(255,255,255,0.1);
+			border-radius: 12px;
+			padding: 12px 5px;
+			width: 40%;
+			background-color: rgba(255,255,255,0.13);
+			backdrop-filter: blur(5px);
+		}
+		form > button {
+			align-self: center;
+			margin-top: 19px;
+			width: 44%;
+			background-color: var(--red);
+			color: white;
+			padding: 12px 0;
+			font-size: 18px;
+			font-weight: 600;
+			border-radius: 12px;
+			cursor: pointer;
+			outline: none;
+			border: none;
+		}
+		@media (max-width: 1600px) {
+			form {
+				width: 50%;
+			}
+		}
+
+		@media (max-width: 1300px) {
+			form {
+				width: 65%;
+			}
+		}
+
+		@media (max-width: 1000px) {
+			form {
+				width: 75%;
+			}
+		}
+	</style>
+{% endblock %}
+
+{% block customjs %}
+	<script>
+		axios.defaults.withCredentials = true;
+		axios.defaults.headers.common['X-CSRF-TOKEN'] = '{{ csrfToken }}';
+		function uploadImage(e) {
+			var image = document.getElementById("image").files[0];
+			var desc = document.getElementById("desc").value;
+			var formdata = new FormData();
+			formdata.append("image", image);
+			formdata.append("desc", desc);
+			console.log(formdata);
+			axios.post('/api/instaupload', formdata, {
+				headers: {
+					'Content-Type': 'multipart/form-data'
+				},
+			}).then((res) => {
+				console.log(res);
+				if (res.status == 200) {
+					alert("Image Uploaded Successfully");
+					window.location.href = "/gov-portal";
+				} else {
+					alert("Image Upload Failed");
+				}
+			}).catch((err) => {
+				console.log(err);
+				alert("Image Upload Failed");
+			});
+		}
+		window.onload = () => {
+			if (!axios.defaults.headers.common['X-CSRF-TOKEN']){ 
+				axios.defaults.headers.common['X-CSRF-TOKEN'] = document.cookie.split('=')[1];
+			}
+		}
+	</script>
+{% endblock %}
