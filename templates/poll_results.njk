@@ -84,8 +84,8 @@
 			[...document.getElementsByClassName('bar')].map(ele => {
 				const votes = eval(ele.parentElement.parentElement.children[1].innerHTML.split(" ")[0]);
 				if (votes === maxVotes) ele.parentNode.parentNode.classList.add('winning');
-				if (votes) ele.style.width = `${votes*100/totalVotes}%`;
-				ele.firstElementChild.innerHTML = `${Math.round(votes*100/totalVotes)}%`;
+				if (votes) ele.style.width = totalVotes ? `${votes*100/totalVotes}%` : 0;
+				ele.firstElementChild.innerHTML = `${totalVotes ? Math.round(votes*100/totalVotes) : o}%`;
 			});
 		}
 		window.onload = () => {

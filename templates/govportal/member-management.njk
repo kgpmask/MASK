@@ -17,8 +17,8 @@
 		<tbody>
 			{% for member in currentMembers %}
 				<tr>
-					<td class = "member-name"><div class = "name"><b>{{ member.name }}</b></div>
-					<div id = "{{ member.roll }}" class = "modal" style = "display:block">
+					<td class = "member-name"><div class = "name" onclick="toggleModal('{{ member.roll }}')"><b>{{ member.name }}</b></div>
+					<div id = "{{ member.roll }}" class = "modal" style = "display:none">
 						<div class = "modal-content">
 							</br>
 							<div class = "member-details" style = "display:block;">{{ member.roll }}</div>
@@ -110,6 +110,10 @@
 			cursor: pointer;
 			padding: 1% 2% 1% 2%;
 		}
+		select, option {
+			background-color: var(--darker-gray);
+			color: var(--off-white);
+		}
 </style>
 {% endblock %}
 
@@ -129,14 +133,14 @@
 			}
 		}
 
-		{# function toggleModal (id) {
+		function toggleModal (id) {
 			modal = document.getElementById(id);
 			if(modal.style.display === 'block') {
 				modal.style.display = 'none';
 			} else {
-				modal.style.display = 'block';
+			modal.style.display = 'block';
 			}
-		} #}
+		}
 
 		async function postData (data) {
 			//console.log(data);
