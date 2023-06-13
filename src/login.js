@@ -7,7 +7,7 @@ exports.init = () => {
 	const port = process.env.PORT ?? 6969;
 	const fallbackUrl = process.env.NODE_ENV === 'production' ? 'https://kgpmask.club' : `http://localhost:${port}`;
 	const callbackURL = process.env.SITE_URL || fallbackUrl;
-	console.log(callbackURL);
+
 	passport.use(new GoogleStrategy({
 		clientID: process.env['GOOGLE_CLIENT_ID'],
 		clientSecret: process.env['GOOGLE_CLIENT_SECRET'],
