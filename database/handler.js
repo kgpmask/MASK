@@ -106,7 +106,13 @@ function getPosts (postType) {
 	// TODO: Make this accept a number of posts as a cap filter
 	return Post.find(postType ? { type: postType } : {}).sort({ date: -1 });
 }
+async function deletePost(link){
+    const postDeleted = Post.findOneAndDelete({'link':link})
+	return postDeleted;
+}
+async function editPost(link){
 
+}
 async function addPost (data) {
 	if (data.page === '') delete data.page;
 	const post = new Post(data);
@@ -291,6 +297,8 @@ module.exports = {
 	addLiveResult,
 	getNewsletter,
 	getPosts,
+	deletePost,
+	editPost,
 	addPost,
 	getMembersbyYear,
 	addPoll,
