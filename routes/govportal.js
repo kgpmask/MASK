@@ -29,6 +29,10 @@ router.get('/add-poll', (req, res) => {
 	date.setDate(date.getDate() + 7);
 	return res.renderFile(`govportal/add-poll.njk`, { date: date.toISOString().slice(0, 10) });
 });
+router.get('/post-management',async (req, res) => {
+	const posts = await dbh.getPosts() 
+	return res.renderFile(`govportal/post-management.njk`,{posts});
+});
 
 router.get('/member-management', async (req, res) => {
 	const hierarchy = [
@@ -102,6 +106,24 @@ router.post('/member-management', async (req, res) => {
 			break;
 	}
 	return res.send(response);
+});
+router.post('/post-management', async (req, res) => {
+	const data = req.body.data;
+	let response;
+	try{
+		switch (data.functionType) {
+			case 'deletePost':
+				response = await dbh.deletePost(data.link);
+				break;
+			case 'addTeam':
+				response = await dbh.editPost(data.link);
+				break;
+		}
+		return res.send({ success: true, message: "Successfully deleted post", response: response });
+	}
+	catch(e){
+		return res.send({ success: false, message: "Something Went Wrong" });
+	}
 });
 
 module.exports = router;
