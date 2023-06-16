@@ -6,7 +6,7 @@ exports.init = async () => {
 		const db = await mongoose.connect(process.env.MONGO_URL, { connectTimeoutMS: 5000 });
 		const socket = db.connections[0];
 		if (!PARAMS.test) console.log(`Connected to the database at ${socket.host}:${socket.port}`);
-		if (socket.host === '51.79.52.188' && socket.name === 'mask') {
+		if (socket.host === 'ac-5rrleks-shard-00-01.muhi0zw.mongodb.net' && socket.name === 'mask') {
 			if (PARAMS.test) {
 				console.log('HOLY SHIT WHY ARE YOU CONNECTING TO PROD IN A TEST SUITE AAAAAA');
 				console.log('*defenestrates to prevent damage*');

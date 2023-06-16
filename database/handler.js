@@ -143,7 +143,9 @@ async function updatePoll (ctx) {
 	// ctx = { pollId, userId, userChoice }
 	const poll = await Poll.findById(ctx.pollId);
 	// Yeet vote if exists
-	poll.records.forEach(val => (ind = val.votes.findIndex(id => id === ctx.userId)) || val.votes.splice(ind, ind + 1 ? 1 : 0));
+	poll.records.forEach(record => {
+		record.votes = record.votes.filter(id => id !== ctx.userId);
+	});
 	if (!poll.records.find(val => val.value === ctx.userChoice)) poll.records.push({
 		value: ctx.userChoice,
 		votes: []

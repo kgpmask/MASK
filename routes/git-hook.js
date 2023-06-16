@@ -27,7 +27,10 @@ router.post('/', async (req, res) => {
 		return res.send('Automatic webhook updates are only enabled on dev and main branch');
 	}
 	// We don't need it to restart unless the branch is same
-	if (branch !== pushBranch) return res.send('Not for current docker.');
+	if (branch !== pushBranch) {
+		console.log('Not for this server');
+		return res.send('Not for this server');
+	}
 	res.send('Hook received. Starting code update.');
 	// Note: This needs to be inside a timeout with a hook to Discord if it fails
 	try {
