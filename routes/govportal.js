@@ -77,7 +77,7 @@ router.post('/add-poll', async (req, res) => {
 	if (!(now < new Date(data.endTime))) return res.send({ success: false, message: "Invalid End Date" });
 	try {
 		data._id = now.getFullYear() + "-" + ("0" + (now.getMonth() + 1)).slice(-2) + "-" + ((await dbh.getMonthlyPolls()).length + 1);
-		console.log(data);
+		// console.log(data);
 		response = await dbh.addPoll(data);
 		return res.send({ success: true, message: "Successfully Added Poll", response: response });
 	} catch (e) {
