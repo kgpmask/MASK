@@ -21,8 +21,8 @@
 - Isekai-Themed Crossword
 
 ## __**2023-02-1**__
-- Manga Review: Otonari ni Ginga [@akp]
-- Webtoon Review: Yumi&rsquo;s Cells [@Gargi Raj]
+- Manga Review: Otonari ni Ginga [@Ayush Parmar]
+- Webtoon Review: Yumi's Cells [@Gargi Raj]
 - Anime and Manga Review: Shigatsu wa Kimi no Uso [@Dillip Dibyajyoti Dash]
 - Mangaka Review: Naoko Takeuchi [@Rashmi Patil]
 - Top 10 Romance Anime [@Phantom Shadow & @Vidhu Vikas Singh]
@@ -45,7 +45,7 @@
 - The Promised Neverland Crossword [@Aditya Das]
 
 ## __**2021-10-1**__
-- Monster Review [@AverageHedonismEnjoyer]
+- Monster Review [@Anmol Kumar]
 - Made in Abyss - Anime/Manga Review [@Parth Mane]
 - Parasyte: The Maxim - Review [@Anshul Bankar]
 - Psycho Pass - Review [@Aditya Sarode]
@@ -69,11 +69,9 @@
 - Review / Recommendation: Kekkai Sensen Blood Blockade Battlefront [@Aditya Sarode]
 - Review: KonoSuba: God’s Blessing on This Wonderful World [@Bishal Kumar Behera]
 - Review - Kumo Desu Ga, Nani Ka? [@Parth Mane]
-- Serial Experiments Lain - An Overview [@AverageHedonismEnjoyer]
+- Serial Experiments Lain - An Overview [@Anmol Kumar]
 - Tensura Wordsearch [@Sarthak Vijaywat]
 - Overlord Crossword [@Parth Mane]
-
-
 
 ## __**2021-08-1**__
 - Review / Recommendation: Berserk (1997) [@Ankit Chowdhury]
@@ -81,6 +79,6 @@
 - Review: Demon Slayer [@Abhishek Kumar]
 - Review / Recommendation: Chivalry of a Failed Knight [@Phantom Shadow]
 - Review: Dororo [@Vidhu Vikas Singh]
-- The Philosophy of Attack on Titan [@AverageHedonismEnjoyer]
+- The Philosophy of Attack on Titan [@Anmol Kumar]
 - BnHA Wordsearch [@Aditya Das]
 - KnY Crossword [@Arjit Lohia]
