@@ -1,7 +1,7 @@
 # Past Newsletter Archive (Akashic Records of Articles)
 
 ## __**2023-05-1**__
-- Anime News Scan [Gargi Raj] 
+- Anime News Scan [Gargi Raj]
 - Upcoming Action Anime Review [Mayank Rana]
 - Anime Review: Demon Slayer [Nishkal Prakash]
 - Anime Review: I'm Standing on a Million Lives [Aman Tater]
@@ -14,10 +14,10 @@
 - Anime Review: School Babysitters [Aman Tater]
 
 ## __**2023-03-1**__
-- Anime Review: Cautious Hero [Nishkal Prakash] 
+- Anime Review: Cautious Hero [Nishkal Prakash]
 - Manga Review: In Another World with my Smartphone [Nikhith Manoj]
-- Anime Review: Eminence in Shadow [Phantom Shadow]
-- Isekai Recommendations [Divyansh Tripathi ]
+- Anime Review: Eminence in Shadow [Abhibhu Prakash]
+- Isekai Recommendations [Divyansh Tripathi]
 - Isekai-Themed Crossword
 
 ## __**2023-02-1**__
@@ -25,12 +25,12 @@
 - Webtoon Review: Yumi's Cells [Gargi Raj]
 - Anime and Manga Review: Shigatsu wa Kimi no Uso [Dillip Dibyajyoti Dash]
 - Mangaka Review: Naoko Takeuchi [Rashmi Patil]
-- Top 10 Romance Anime [Phantom Shadow & Vidhu Vikas Singh]
+- Top 10 Romance Anime [Abhibhu Prakash & Vidhu Vikas Singh]
 - Romance-Themed Crossword
 
 ## __**2022-12-1**__
 - Anime Review: AO ASHI [Nikhith Manoj]
-- Manhwa Review: SECOND LIFE RANKER [Chiranjeet Mishra ]
+- Manhwa Review: SECOND LIFE RANKER [Chiranjeet Mishra]
 - Anime Review: HAJIME NO IPPO [Dillip Dibyajyoti Dash]
 - Light Novel Review: MUSHOKU TENSEI [Nishkal Prakash]
 - Top 10 Popular Action Manhwas [Vidunram A R]
@@ -38,7 +38,7 @@
 
 ## __**2021-10-2**__
 - Manga Review - UZUMAKI [Abhishek Kumar]
-- Horror/Thriller Anime Reviews [Phantom Shadow]
+- Horror/Thriller Anime Reviews [Abhibhu Prakash]
 - Review: Tokyo Ghoul [Ankit Chowdhury]
 - Review: Boku Dake ga Inai Machi/Erased (Review) [Vidhu Vikas Singh]
 - Ajin : Demi-human Wordsearch [Arjit Lohia]
@@ -55,7 +55,7 @@
 
 ## __**2021-09-2**__
 - Review - Mairimashita! Iruma-Kun (Manga) [Abhishek Kumar]
-- Seasonal Anime Review - Summer 2021 [Phantom Shadow]
+- Seasonal Anime Review - Summer 2021 [Abhibhu Prakash]
 - Review: Akagami no Shirayuki-hime [Ankit Chowdhury]
 - Review: No Game No Life [Vidhu Vikas Singh]
 - Recommendation/Review - Black Clover [Aditya Das]
@@ -77,7 +77,7 @@
 - Review / Recommendation: Berserk (1997) [Ankit Chowdhury]
 - Recommendation: Tower of God [Sarthak Vijaywat]
 - Review: Demon Slayer [Abhishek Kumar]
-- Review / Recommendation: Chivalry of a Failed Knight [Phantom Shadow]
+- Review / Recommendation: Chivalry of a Failed Knight [Abhibhu Prakash]
 - Review: Dororo [Vidhu Vikas Singh]
 - The Philosophy of Attack on Titan [Anmol Kumar]
 - BnHA Wordsearch [Aditya Das]
