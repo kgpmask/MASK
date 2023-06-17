@@ -147,7 +147,7 @@ All non-trivial changes are done through PULL REQUESTS ONLY. The WebDev Team Hea
 
 To create a pull request, navigate to the `dev` branch (clicking on the GitHub client, or `git checkout dev` on the CLI) and create a new branch based on it (`New Branch` button (based on the `dev` branch, again!) on the GitHub client's branches page, or `git checkout -b [branch-name]` on the CLI). Pull requests will _never_ be merged directly to `main`; they will be first merged to `dev` and batches of changes and/or patches will be merged from `dev` to `main` alongside version increments.
 
-To work on templates which require access to credentials using `dev userless` (`du`) mode, check out [this page](/TESTING.md) for some info.
+To work on templates which require access to credentials using `dev userless` (`du`) mode, check out [this page](/docs/TESTING.md) for some info.
 
 Changes to the `dev` server are automatically deployed to [https://test.kgpmask.club]. This does not extend to environment configuration changes (eg: docker changes).
 
