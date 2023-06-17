@@ -1,1 +1,260 @@
+{% extends "govportal/govportal.njk" %}
+
+{% set thispage = 'govportal'  %}
+{% set pagetitle = 'Governor Portal | Edit Post' %}
+{% set actionname = 'Edit Post' %}
+
+{% set scripts = ['https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'] %}
+
+{% block actioncontent %}
+	<div class="message hidden"></div>
+    
+	<div class="form-container">
+		<form>
+			<div class="part1">
+				
+				<div id="idUpdate">{{data._id}}</div>
+				<div class="item">
+					<select name="type" id="type" value = "{{data.type}}" onchange='check(this);'>
+						<option value="youtube">Youtube</option>
+						<option value="instagram">Instagram</option>
+						<option value="letter">Newsletter</option>
+						<option value="event">Event</option>
+					</select>
+				</div>
+				<div class="item">
+					<input type="text" value = "{{data.name}}" required id="name">
+					<label>Name</label>
+				</div>
+				<div class="item">
+					<input type="text" value = "{{data.link}}" required id="link">
+					<label>Link</label>
+				</div>
+				<div class="item">
+					<input type="text" value = "{{data.attr}}" required id="attr">
+					<label>Author</label>
+				</div>
+				<div class="item">
+					<input type="text" value = "{{data.date}}" required id="date">
+					<label>Date</label>
+				</div>
+			</div>
+			<div class="part2">
+				<div class="item">
+					<input type="checkbox" id="hype" checked> 
+					<label>Hype</label>
+				</div>
+			</div>
+			<button type="button" onclick="updatePost()">Save Changes</button>
+		<form>
+	</div>
+{% endblock %}
+
+{% block customjs %}
+	<script>
+		axios.defaults.withCredentials = true;
+		axios.defaults.headers.common['X-CSRF-TOKEN'] = '{{ csrfToken }}';
+	
+		async function updatePost () {
+			const data = {
+				id :document.getElementById('idUpdate').innerHTML,
+				name: document.getElementById('name').value,
+				link: document.getElementById('link').value,
+				type: document.getElementById('type').value,
+				attr: [document.getElementById('attr').value],
+				date:document.getElementById('date').value,
+				page: ['instagram', 'youtube', 'event'].includes(document.getElementById('type').value) ? '_blank' : '',
+				hype: document.getElementById('hype').checked
+			}
+			
+			var response = (await axios.patch('/gov-portal/edit-post', { data: data })).data;
+			const e = document.getElementsByClassName('message')[0];
+			e.innerHTML = response.message;
+			e.classList.add(response.success ? 'success' : 'error');
+			e.classList.remove('hidden');
+			setTimeout(function () {e.classList.add('hidden')}, 2000);
+			if (response.success) {
+				setTimeout(function () { location.reload();window.location.href = '/gov-portal/post-management'; }, 3000);
+			}
+
+		}
+		window.onload = () => {
+			if (!axios.defaults.headers.common['X-CSRF-TOKEN']) axios.defaults.headers.common['X-CSRF-TOKEN'] = document.cookie.split('=')[1];
+		}
+	</script>
+{% endblock %}
+
+{% block customcss %}
+	<style>
+		.message {
+			position: absolute;
+			top: 0;
+			right: calc(50vw - 220px);
+			padding: 20px;
+			z-index: 1;
+			color: #fff;
+			font-weight: 600;
+			font-size: 18px;
+			width: 400px;
+			transform-origin: top;
+			transition: transform 0.3s ease;
+			border-bottom-left-radius: 6px;
+			border-bottom-right-radius: 6px;
+		}
+		.error {
+			background-color: rgba(255, 51, 51, 0.85);
+		}
+		.success {
+			background-color: rgba(75, 189, 67, 0.85);
+		}
+		.hidden {
+			transform: scaleY(0);
+		}
+		.form-container{
+			padding: 23px 25px;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			transform: 0.3s;
+		}
+		form {
+			display: flex;
+			flex-direction: column;
+			border: 2px solid rgba(255,255,255,0.1);
+			border-radius: 12px;
+			padding: 12px 5px;
+			width: 40%;
+			background-color: rgba(255,255,255,0.13);
+			backdrop-filter: blur(5px);
+		}
+		.part1 > .item {
+			position: relative;
+			margin: 20px 10px;
+		}
+		.part1 > .item > label{
+			position: absolute;
+			top: 50%;
+			left: 5%;
+			transform: translateY(-50%);
+			color: #fff;
+			font-weight: 600;
+			font-size: 18px;
+			pointer-events: none;
+			transition: 0.3s;
+		}
+		.part1 > .item > input{
+			background-color: rgba(255,255,255,0.07);
+   			font-size: 18px;
+    		font-weight: 300;
+			height: 50px;
+			width: 90%;
+  			border-radius: 8px;
+  			padding: 0 15px 0px 15px;
+  			border: 2px solid var(--light-gray);
+  			color: #fff;
+  			outline: none;
+		}
+		.part1 > .item > select{
+			background-color: rgba(255,255,255,0.07);
+   			font-size: 18px;
+    		font-weight: 600;
+			height: 50px;
+			width: 95%;
+  			border-radius: 8px;
+  			padding: 0 15px 0px 15px;
+  			border: 2px solid var(--light-gray);
+  			color: #fff;
+  			outline: none;
+		}
+		.part1 > .item > input:focus{
+  			border: 2px solid var(--red);
+		}
+		.part1 > .item > select:focus{
+  			border: 2px solid var(--red);
+			color: var(--red);
+		}
+		.part1 > .item > select > option {
+			background-color: var(--darker-gray);
+		}
+		.part1 > .item > input:focus ~ label{
+			top: -7px;
+			font-size: 16px;
+			color: var(--red);
+			padding: 0 2px;
+			background-color: rgba(0, 0, 0, 0);
+		}
+		.part1 > .item > input:valid ~ label{
+			top: -7px;
+			font-size: 16px;
+			padding: 0 2px;
+			background-color: rgba(0, 0, 0, 0);
+		}
+		.part1 > .item > input:disabled ~ label{
+			color: var(--light-gray);
+		}
+		form > button {
+			align-self: center;
+			margin-top: 19px;
+			width: 44%;
+			background-color: var(--red);
+			color: white;
+			padding: 12px 0;
+			font-size: 18px;
+			font-weight: 600;
+			border-radius: 12px;
+			cursor: pointer;
+		}
+
+		.part2 {
+			display: grid;
+			grid-template-columns: auto;
+			column-gap: 50px;
+			margin: 10px;
+		}
+
+		.part2 > .item > input {
+   			font-size: 18px;
+    		font-weight: 300;
+			height: 25px;
+			width: 25px;
+  			border-radius: 12px;
+  			color: #fff;
+			accent-color: var(--red);
+		}
+
+		.part2 > .item > label {
+    		position: relative;
+			top: -6px;
+    		left: 5px;
+			color: #fff;
+			font-weight: 600;
+			font-size: 18px;
+			pointer-events: none;
+			transition: 0.3s;
+		}
+		
+		.part2 > .item > input:checked ~ label{
+			color: var(--red);
+		}
+
+		@media (max-width: 1600px) {
+			form {
+				width: 50%;
+			}
+		}
+
+		@media (max-width: 1300px) {
+			form {
+				width: 65%;
+			}
+		}
+
+		@media (max-width: 1000px) {
+			form {
+				width: 75%;
+			}
+		}
+	</style>
+{% endblock %}
 
