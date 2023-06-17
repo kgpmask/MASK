@@ -24,7 +24,7 @@ This server requires Node.js v16.0+ to run, and all tests are performed on v16. 
 There are multiple ways to run the server. The vast majority of the time, you will be running it in dev mode - the command for this is `npm run dev`. If you wish to run in regular mode, the command is `npm start`. Note that the server run in both cases will be identical - the only difference is that dev mode will automatically refresh changes made to the server code and/or pages, while regular mode will not. In addition, you can add flags to customize the operation of the server. These are:
 
 - `dev` (d): An internal flag that does the same as `npm run dev`, except you lose access to nodemon. Just use `npm run dev` instead.
-- <strike>`jsonuser` (t): Runs the server with the user details being defined in `/src/user.json`.</strike> **This is in progress.**
+- ~~`jsonuser` (t): Runs the server with the user details being defined in `/src/user.json`.~~ **This is in progress.**
 - `local` (l): Uses a local database (mongodb://127.0.0.1/mask) instead of the designated test database. Overwrites all other DB flags.
 - `mongoless` (m): Runs the server without a database connection. All database-based pages cannot be loaded. This is a superset of the `userless` flag (ie; a `mongoless` server will also always be `userless`).
 - `prod` (p): Connects directly to the production database. Do NOT use this flag lightly; it can break many, many things if you mess up and the testing database should serve your purposes. Cannot be used in conjuction with dev mode, for security reasons.
@@ -72,7 +72,7 @@ Additionally, the following blocks may be set:
 
 The default page template is:
 
-```nunjucks
+```jinja
 {% extends "_base.njk" %}
 
 {% set thispage = 'navref' %}
@@ -108,7 +108,7 @@ Take a look at existing articles for the various classes and where they're used.
 ## Routers
 <!-- Note. This will be subject to change once the fs readdir router system is implemented. -->
 
-The Express app's router is set up by `/src/route.js`. The file route.js imports routers from the `/routes` directory. Each router file has the following format:
+The Express app's router is set up by `/src/route.js`. The file route.js imports routers from the `/routes` folder. Each router file has the following format:
 
 ```js
 const express = require('express');
@@ -153,11 +153,13 @@ Changes to the `dev` server are automatically deployed to [https://test.kgpmask.
 
 Ensure that pull requests pass tests (`npm test` for both lint and mocha tests).
 
+---
 
 ## Guidelines
 
 Tabs for indentation, basic JS style guidelines (check `./eslintrc.json` for the full list). If you have any questions, post 'em in the WebDev channel. If you aren't a member of the society but have queries/reports/suggestions, feel free to use the Issues / Discussions pages on the repository.
 
+---
 
 ## Credits:
 
