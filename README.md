@@ -1,5 +1,5 @@
 # MASK
-The website for the Manga & Anime Society Kharagpur
+The website for the Manga & Anime Society Kharagpur (currently running in [kgpmask.club](https://kgpmask.club))
 
 ## Tech Stack
 
@@ -149,7 +149,7 @@ To create a pull request, navigate to the `dev` branch (clicking on the GitHub c
 
 To work on templates which require access to credentials using `dev userless` (`du`) mode, check out [this page](/docs/TESTING.md) for some info.
 
-Changes to the `dev` server are automatically deployed to [https://test.kgpmask.club]. This does not extend to environment configuration changes (eg: docker changes).
+Changes to the `dev` server are automatically deployed to [test.kgpmask.club](https://test.kgpmask.club). This does not extend to environment configuration changes (eg: docker changes).
 
 Ensure that pull requests pass tests (`npm test` for both lint and mocha tests).
 
@@ -157,23 +157,30 @@ Ensure that pull requests pass tests (`npm test` for both lint and mocha tests).
 
 ## Guidelines
 
-Tabs for indentation, basic JS style guidelines (check `./eslintrc.json` for the full list). If you have any questions, post 'em in the WebDev channel. If you aren't a member of the society but have queries/reports/suggestions, feel free to use the Issues / Discussions pages on the repository.
+- For any new route, make sure to use a new router file instead of adding to `route.js`
+- Make sure to extend your template from either `_base.njk` or another template (in case of similar pages, like events or newsletters).
+- Make sure the code passes the lint and mocha tests. You can check that by running `npm run test`. The ESLint configuration can be seen in `.eslintrc.json` and tests can be seen in the `test` folder.
+- If you have any questions, post 'em in the WebDev channel.
+- If you aren't a member of the society but have queries/reports/suggestions, feel free to use the [Issues](https://github.com/kgpmask/MASK/issues)/[Discussions](https://github.com/kgpmask/MASK/discussions) pages.
 
 ---
 
 ## Credits:
 
-- <a href="https://github.com/PartMan7" target="_blank">Parth Mane</a> (Lead)<br />
-- <a href="https://github.com/Goose-Of-War" target="_blank">Vidunram A R </a> (Contributor)<br />
-- <a href="https://github.com/nishkalprakash" target="_blank">Nishkal Prakash</a> (Contributor) <br />
-- <a href="https://github.com/MokshithPV" target="_blank">Venkatsai Mokshith</a> (Contributor)<br />
-- <a href="https://github.com/SachdevJai" target="_blank">Jai Sachdev</a> (Contributor)<br />
-- <a href="https://github.com/ItsAnkan" target="_blank">Ankan Saha</a> (Contributor)<br />
-- <a href="https://github.com/Symbiot01" target="_blank">Sahil Patel</a> (Contributor)<br />
-- <a href="https://github.com/KarmaAkaB" target="_blank">Soumil Maiti</a> (Contributor)<br />
-- <a href="https://github.com/anjaniit23" target="_blank">Anjani Kumar</a> (Contributor)<br />
-- <a href="https://github.com/lurkingryuu" target="_blank">Karthikeya Y M</a> (Contributor)<br />
-- <a href="https://github.com/Yureien" target="_blank">Soham Sen</a> (Contributor)<br />
-- <a href="https://github.com/ayush4ise" target="_blank">Ayush Parmar</a> (Contributor)<br />
-- <a href="https://github.com/Pagol1" target="_blank">Saumyadip Nandy</a> (Contributor)<br />
-- <a href="https://github.com/shiroyasha263" target="_blank">Vishesh Gupta</a> (Contributor)<br />
+### Current Contributors:
+- <a href="https://github.com/Goose-Of-War" target="_blank">Vidunram A R </a> (Lead)  
+- <a href="https://github.com/nishkalprakash" target="_blank">Nishkal Prakash</a>  
+- <a href="https://github.com/MokshithPV" target="_blank">Venkatsai Mokshith</a>  
+- <a href="https://github.com/SachdevJai" target="_blank">Jai Sachdev</a>  
+- <a href="https://github.com/ItsAnkan" target="_blank">Ankan Saha</a>  
+- <a href="https://github.com/Symbiot01" target="_blank">Sahil Patel</a>  
+- <a href="https://github.com/KarmaAkaB" target="_blank">Soumil Maiti</a>  
+
+### Former Contributors:
+- <a href="https://github.com/PartMan7" target="_blank">Parth Mane</a>  
+- <a href="https://github.com/anjaniit23" target="_blank">Anjani Kumar</a>  
+- <a href="https://github.com/Yureien" target="_blank">Soham Sen</a>  
+- <a href="https://github.com/shiroyasha263" target="_blank">Vishesh Gupta</a>  
+- <a href="https://github.com/Pagol1" target="_blank">Saumyadip Nandy</a>  
+- <a href="https://github.com/lurkingryuu" target="_blank">Karthikeya Y M</a>  
+- <a href="https://github.com/ayush4ise" target="_blank">Ayush Parmar</a>  
