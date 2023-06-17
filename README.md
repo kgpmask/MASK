@@ -105,9 +105,37 @@ Take a look at existing articles for the various classes and where they're used.
 
 ---
 
-## Routes and Routers
+## Routers
+<!-- Note. This will be subject to change once the fs readdir router system is implemented. -->
 
-<!-- Will be added soon -->
+The Express app's router is set up by `/src/route.js`. The file route.js imports routers from the `/routes` directory. Each router file has the following format:
+
+```js
+const express = require('express');
+const router = express.Router();
+// This router is used to configure the app for a specific route
+
+// GET requests
+app.get('/path', (req, res, next) => { 
+	// some code
+	return res.renderFile(template, ctx);
+});
+
+// POST requests
+app.post('/path', (req, res, next) => { 
+	// some code
+	return res.status(statusCode).send;
+});
+
+/* 
+Notes:
+	The next argument is optional in most cases. 
+	The functions in the requests can be asynchronous too.
+	You can use other routers as well if needed.
+*/
+
+module.exports = router;
+```
 
 ---
 
