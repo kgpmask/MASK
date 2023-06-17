@@ -1,19 +1,21 @@
 # MASK
 The website for the Manga & Anime Society Kharagpur
 
-## Contributing
+## Tech Stack
 
-The owner of this repository is @PartMan7, who also runs the server. He's also running the server cost (at the time of writing he's in his final year, but it'll carry on even after graduation).
+- VPS provider: OVH
+- Backend reverse proxy for port-forwarding: NGINX
+<!-- - Containerized deployments: Docker (we aren't using dockerized containers right now) -->
+- Application language: Node.js
+- App routing: Express.js
+- Page templates: Nunjucks
+- Page styling: SASS
+- Database: MongoDB
+- Database ORM: mongoose
+- Linting: ESLint
+- Testing suite: Mocha
 
-All non-trivial changes are done through PULL REQUESTS ONLY. The WebDev Team Head (currently @Goose-Of-War) is responsible for testing and merging all PRs. Feel free to pester them to look at the changes you've prepared.
-
-To create a pull request, navigate to the `dev` branch (clicking on the GitHub client, or `git checkout dev` on the CLI) and create a new branch based on it (`New Branch` button (based on the `dev` branch, again!) on the GitHub client's branches page, or `git checkout -b [branch-name]` on the CLI). Pull requests will _never_ be merged directly to `main`; they will be first merged to `dev` and batches of changes and/or patches will be merged from `dev` to `main` alongside version increments.
-
-To work on templates which require access to credentials using `dev userless` (`du`) mode, check out [this page](/TESTING.md) for some info.
-
-Changes to the `dev` server are automatically deployed to [https://test.kgpmask.club]. This does not extend to environment configuration changes (eg: docker changes).
-
-Ensure that pull requests pass tests (`npm test` for both lint and mocha tests).
+---
 
 ## Running the Server
 
@@ -50,23 +52,7 @@ Furthermore, for those with access to multiple sets of credentials (the three ex
 
 Note (edited): You can now connect to the database even while on WiFi/LAN without a VPN. The domain name has been whitelisted. The IP address has NOT been whitelisted for direct http/https connections.
 
-## Guidelines
-
-Tabs for indentation, basic JS style guidelines (check `./eslintrc.json` for the full list). If you have any questions, post 'em in the WebDev channel. If you aren't a member of the society but have queries/reports/suggestions, feel free to use the Issues / Discussions pages on the repository.
-
-## Tech Stack
-
-- VPS provider: OVH
-- Backend reverse proxy for port-forwarding: NGINX
-- Containerized deployments: Docker
-- Application language: Node.js
-- App routing: Express.js
-- Page templates: Nunjucks
-- Page styling: SASS
-- Database: MongoDB
-- Database ORM: mongoose
-- Linting: ESLint
-- Testing suite: Mocha
+---
 
 ## Templates
 
@@ -116,6 +102,34 @@ The default newsletter template is:
 ```
 
 Take a look at existing articles for the various classes and where they're used.
+
+---
+
+## Routes and Routers
+
+<!-- Will be added soon -->
+
+---
+
+## Contributing
+
+The owner of this repository is @PartMan7, who also runs the server. He's also running the server cost (at the time of writing he's in his final year, but it'll carry on even after graduation).
+
+All non-trivial changes are done through PULL REQUESTS ONLY. The WebDev Team Head (currently @Goose-Of-War) is responsible for testing and merging all PRs. Feel free to pester them to look at the changes you've prepared.
+
+To create a pull request, navigate to the `dev` branch (clicking on the GitHub client, or `git checkout dev` on the CLI) and create a new branch based on it (`New Branch` button (based on the `dev` branch, again!) on the GitHub client's branches page, or `git checkout -b [branch-name]` on the CLI). Pull requests will _never_ be merged directly to `main`; they will be first merged to `dev` and batches of changes and/or patches will be merged from `dev` to `main` alongside version increments.
+
+To work on templates which require access to credentials using `dev userless` (`du`) mode, check out [this page](/TESTING.md) for some info.
+
+Changes to the `dev` server are automatically deployed to [https://test.kgpmask.club]. This does not extend to environment configuration changes (eg: docker changes).
+
+Ensure that pull requests pass tests (`npm test` for both lint and mocha tests).
+
+
+## Guidelines
+
+Tabs for indentation, basic JS style guidelines (check `./eslintrc.json` for the full list). If you have any questions, post 'em in the WebDev channel. If you aren't a member of the society but have queries/reports/suggestions, feel free to use the Issues / Discussions pages on the repository.
+
 
 ## Credits:
 
