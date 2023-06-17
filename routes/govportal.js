@@ -24,6 +24,13 @@ router.get('/add-post', (req, res) => {
 	return res.renderFile(`govportal/add-post.njk`);
 });
 
+router.get('/edit-post/:id', async (req, res) => {
+	const id = req.params.id;
+	const data = await dbh.getPost(id); 
+	// console.log("work",data);
+	return res.renderFile(`govportal/edit-post.njk`,{data})
+});
+
 router.get('/add-poll', (req, res) => {
 	const date = new Date();
 	date.setDate(date.getDate() + 7);
@@ -111,19 +118,25 @@ router.post('/post-management', async (req, res) => {
 	const data = req.body.data;
 	let response;
 	try{
-		switch (data.functionType) {
-			case 'deletePost':
-				response = await dbh.deletePost(data.link);
-				break;
-			case 'addTeam':
-				response = await dbh.editPost(data.link);
-				break;
-		}
+		response = await dbh.deletePost(data);
+		// console.log(response)
 		return res.send({ success: true, message: "Successfully deleted post", response: response });
-	}
+		}
 	catch(e){
 		return res.send({ success: false, message: "Something Went Wrong" });
 	}
 });
+router.patch('/edit-post',async (req,res) => {
+	const data = req.body.data;
+	// console.log("update",data)
+	try {
+		response = await dbh.editPost(data);
+		// console.log(response);
+		return res.send({ success: true, message: "Successfully Edited Post", response: response });
+	} catch (e) {
+		console.log(e);
+		return res.send({ success: false, message: "Something Went Wrong" });
+	}
+})
 
 module.exports = router;
