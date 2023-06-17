@@ -8,35 +8,90 @@
 
 {% block actioncontent %}
 <div class="message hidden"></div>
-<div class="container">
 	<h1>post management page</h1>
 	{% for post in posts %}
-	<div class = "card">
-				<div>{{post.name}}</div>
-				<div>{{post.type}}</div>
-				<div>{{post.link}}</div>
-				<div>{{post.attr}}</div>
-				<button class = "editP" onclick= "editPost('{{post.link}}')" >Edit</button>
+	<div class="container">
+	<div class = "card1">
+			<table style="width:100%">
+  <tr>
+    <th>Name:</th>
+    <td>{{post.name}}</td>
+  </tr>
+  <tr>
+    <th>Type:</th>
+    <td>{{post.type}}</td>
+  </tr>
+  <tr>
+    <th>Link:</th>
+    <td>{{post.link}}</td>
+  </tr>
+  <tr>
+    <th>Attr:</th>
+    <td>{{post.attr}}</td>
+  </tr>
+  <tr>
+    <th>Date:</th>
+    <td>{{post.date}}</td>
+  </tr>
+</table>	
+	</div>
+	
+	<div class = "card2">
+				<button class = "editP" onclick= "editPost(`{{post._id}}`)" >Edit</button>
 				<button class = "deleteP" onclick = "deletePost('{{post.link}}')">Delete</button>
+				
+	</div>
 	</div>
 	{% endfor %}
-</div>
+
 {% endblock %}
 
 {% block customcss %}
 	<style>
-		.card {
-		margin: 15px 0px 0px 10px;
+		.container {
+		margin: 50px 30px 30px 50px;
+		left:40vw;
+		display:flex;
+		flex-direction:row;
+		border: 2px solid rgba(255,255,255,0.1);
+		border-radius: 8px;
+		padding: 20px 5px;
+		width: 80%;
+		background-color: rgba(255,255,255,0.13);
+		backdrop-filter: blur(5px);
+		align-self:center;
+		}
+		.card1{
+			flex:70%;
+			padding-left:20px;
+		}
+		.card2{
+			flex:30%;
+			display:flex;
+			flex-direction:column;
+			align-items:center;
+		}
+		
+		table, th, td {
+		border: 1px solid black;
+		border-collapse: collapse;
+		}
+		th, td {
+		padding: 5px;
+		text-align: left;
 		}
 		.editP,.deleteP {
 			align-self: center;
-			margin: 1% 0% 2% 0%;
-			width: fit-content;
-			background-color: var(--red);
-			color: white;
-			border-radius: 12px;
+			margin: 5% 0% 5% 0%;
+			border-radius: 4px;
+			color:white;
 			cursor: pointer;
-			padding: 1% 2% 1% 2%;
+			border: 1px solid white;
+			padding: 2% 3%;
+		}
+		button{
+			background-color: var(--red);
+			width:6rem;
 		}
 		.message {
 			position: absolute;
@@ -62,12 +117,7 @@
 		.hidden {
 			transform: scaleY(0);
 		}
-		.container{
-			display: flex;
-			flex-direction: column;
-			
-			transform: 0.3s;
-		}
+		
 </style>
 {% endblock %}
 
@@ -88,16 +138,16 @@
 				setTimeout(function () { location.reload() }, 3000);
 			}
 		}
-		function editPost(link) {
-				const data = { functionType: 'editPost' , link: `${link}` };
-				postData(data);
-			
+		async function editPost(id) {
+           await axios.get(`/gov-portal/edit-post/${id}`)
+		   .then(res=>{
+    window.location.href = `/gov-portal/edit-post/${id}`; 
+		   });
 		}
 		function deletePost(link) {
 			console.log(link);
 			if(confirm("Are you sure you want to delete the post?")) {
-				const data = { functionType: 'deletePost' , link: `${link}` };
-				postData(data);
+				postData(link);
 			}
 		}
 		window.onload = () => {
