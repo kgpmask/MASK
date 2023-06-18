@@ -104,4 +104,7 @@ router.post('/member-management', async (req, res) => {
 	return res.send(response);
 });
 
-module.exports = router;
+module.exports = {
+	route: '/gov-portal',
+	router
+};

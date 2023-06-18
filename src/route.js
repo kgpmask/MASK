@@ -31,7 +31,7 @@ function link (app, nunjEnv) {
 		} else {
 			next('route');
 		}
-	}, miscRouter);
+	}, miscRouter.router);
 
 	app.use('/', (req, res, next) => {
 		if (req.url in userRoutes) {
@@ -39,7 +39,7 @@ function link (app, nunjEnv) {
 		} else {
 			next('route');
 		}
-	}, userRouter);
+	}, userRouter.router);
 
 	app.use('/', (req, res, next) => {
 		if (req.url in mediaRoutes) {
@@ -47,22 +47,22 @@ function link (app, nunjEnv) {
 		} else {
 			next('route');
 		}
-	}, mediaRouter);
+	}, mediaRouter.router);
 
 
-	app.use('/checker', checkerRouter);
-	app.use('/corsProxy', corsProxyRouter);
-	app.use('/gov-portal', govPortalRouter);
-	app.use('/git-hook', gitHookRouter);
-	app.use('/', homeRouter);
-	app.use('/home', homeRouter);
-	app.use('/live', liveRouter);
-	app.use('/members', membersRouter);
-	app.use('/newsletters', newsletterRouter);
-	app.use('/polls', pollRouter);
-	app.use('/profile', profileRouter);
-	app.use('/events', eventsRouter);
-	app.use(['/quizzes', '/events'], quizzesRouter);
+	app.use('/checker', checkerRouter.router);
+	app.use('/corsProxy', corsProxyRouter.router);
+	app.use('/gov-portal', govPortalRouter.router);
+	app.use('/git-hook', gitHookRouter.router);
+	app.use('/', homeRouter.router);
+	app.use('/home', homeRouter.router);
+	app.use('/live', liveRouter.router);
+	app.use('/members', membersRouter.router);
+	app.use('/newsletters', newsletterRouter.router);
+	app.use('/polls', pollRouter.router);
+	app.use('/profile', profileRouter.router);
+	app.use('/events', eventsRouter.router);
+	app.use(['/quizzes', '/events'], quizzesRouter.router);
 	app.use('/rebuild', (req, res) => {
 		nunjEnv.loaders.forEach(loader => loader.cache = {});
 		['./rewards.json'].forEach(cache => delete require.cache[require.resolve(cache)]);

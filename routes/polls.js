@@ -59,4 +59,7 @@ router.get('/results/:id?', async (req, res) => {
 	});
 });
 
-module.exports = router;
+module.exports = {
+	route: '/polls',
+	router
+};

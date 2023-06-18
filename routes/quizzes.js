@@ -1,5 +1,4 @@
-const express = require('express');
-const router = express.Router();
+const router = require('express').Router();
 
 const dbh = PARAMS.mongoless ? {} : require('../database/handler');
 
@@ -168,4 +167,7 @@ router.post('/', async (req, res) => {
 	return res.renderFile('events/quiz_success.njk', { score: points[0], totalScore: points[1] });
 });
 
-module.exports = router;
+module.exports = {
+	route: ['/quizzes', '/events'],
+	router
+};

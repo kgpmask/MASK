@@ -1,5 +1,4 @@
-const express = require('express');
-const router = express.Router();
+const router = require('express').Router();
 
 const dbh = PARAMS.mongoless ? {} : require('../database/handler');
 const sample = require('../src/samples/members');
@@ -35,4 +34,7 @@ router.get('/:yearName?', async (req, res) => {
 	});
 });
 
-module.exports = router;
+module.exports = {
+	route: '/members',
+	router
+};

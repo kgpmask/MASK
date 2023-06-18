@@ -1,5 +1,4 @@
-const express = require('express');
-const router = express.Router();
+const router = require('express').Router();
 
 router.get('/about', (req, res) => {
 	return res.renderFile('about.njk');
@@ -37,4 +36,7 @@ router.get('/terms', (req, res) => {
 	res.renderFile('terms.njk');
 });
 
-module.exports = router;
+module.exports = {
+	route: '/',
+	router
+};
