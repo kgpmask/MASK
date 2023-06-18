@@ -1,68 +1,14 @@
-const checkerRouter = require("../routes/checker");
-const corsProxyRouter = require("../routes/corsProxy");
-const govPortalRouter = require("../routes/govportal");
-const gitHookRouter = require("../routes/git-hook");
-const homeRouter = require("../routes/home");
-const liveRouter = require("../routes/live");
-const mediaRouter = require("../routes/media");
-const membersRouter = require("../routes/members");
-const miscRouter = require("../routes/misc");
-const newsletterRouter = require("../routes/newsletter");
-const pollRouter = require("../routes/polls");
+const fs = require('fs').promises;
+const path = require('path');
 
-const profileRouter = require("../routes/profile");
-const quizzesRouter = require("../routes/quizzes");
-const userRouter = require("../routes/user");
-const eventsRouter = require("../routes/py-events");
-
-function link (app, nunjEnv) {
-	const smallerRoutes = ["/about", "/apply", "/blog", "/prizes", "/submissions", "/success", "/privacy", "/terms"];
-	const userRoutes = ["/login", "/logout"];
-	const mediaRoutes = ["/art", "/videos"];
-
-	app.use(async (_, __, next) => {
-		await new Promise(r => r());
-		next();
+async function link (app, nunjEnv) {
+	// readdir and use routers like a madman
+	const routerModules = (await fs.readdir(path.join(__dirname, '../routes'))).filter(file => file.endsWith('.js'));
+	routerModules.forEach(module => {
+		const { route, router } = require(`../routes/${module}`);
+		app.use(route, router);
 	});
 
-	app.use('/', (req, res, next) => {
-		if (req.url in smallerRoutes) {
-			next();
-		} else {
-			next('route');
-		}
-	}, miscRouter.router);
-
-	app.use('/', (req, res, next) => {
-		if (req.url in userRoutes) {
-			next();
-		} else {
-			next('route');
-		}
-	}, userRouter.router);
-
-	app.use('/', (req, res, next) => {
-		if (req.url in mediaRoutes) {
-			next();
-		} else {
-			next('route');
-		}
-	}, mediaRouter.router);
-
-
-	app.use('/checker', checkerRouter.router);
-	app.use('/corsProxy', corsProxyRouter.router);
-	app.use('/gov-portal', govPortalRouter.router);
-	app.use('/git-hook', gitHookRouter.router);
-	app.use('/', homeRouter.router);
-	app.use('/home', homeRouter.router);
-	app.use('/live', liveRouter.router);
-	app.use('/members', membersRouter.router);
-	app.use('/newsletters', newsletterRouter.router);
-	app.use('/polls', pollRouter.router);
-	app.use('/profile', profileRouter.router);
-	app.use('/events', eventsRouter.router);
-	app.use(['/quizzes', '/events'], quizzesRouter.router);
 	app.use('/rebuild', (req, res) => {
 		nunjEnv.loaders.forEach(loader => loader.cache = {});
 		['./rewards.json'].forEach(cache => delete require.cache[require.resolve(cache)]);

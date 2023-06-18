@@ -18,6 +18,6 @@ router.get('/', async (req, res) => {
 });
 
 module.exports = {
-	route: ['/', '/home'],
+	route: ['/home', '/'],
 	router
 };
