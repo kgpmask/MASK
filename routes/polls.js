@@ -45,11 +45,6 @@ router.get('/results/:id?', async (req, res) => {
 	const activePolls = await dbh.getActivePolls();
 	const poll = activePolls.find(poll => poll._id === pollId);
 	if (!poll) return res.notFound('No poll with this ID.');
-	const allUsers = await dbh.getAllUsers();
-	console.log(poll.records.map(result => ({
-		value: result.value,
-		votes: result.votes.map(i => allUsers.find(u => u._id === i).name)
-	})));
 	const votedFor = poll.records.find(record => record.votes.find(voter => voter === req.user._id))?.value;
 	return res.renderFile('poll_results.njk', {
 		_id: pollId,

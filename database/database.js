@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 
 exports.init = async () => {
 	const prodHosts = [...Array(3)].map((_, i) => `ac-5rrleks-shard-00-0${i}.muhi0zw.mongodb.net`);
-	console.log(prodHosts);
 	if (!process.env.MONGO_URL) return console.log('[!!!] Unable to connect to database: no URL supplied');
 	try {
 		const db = await mongoose.connect(process.env.MONGO_URL, { connectTimeoutMS: 5000 });
