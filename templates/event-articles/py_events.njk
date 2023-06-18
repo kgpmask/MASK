@@ -8,10 +8,10 @@
 		<img src="/assets/events/{{ _link }}.jpg" alt="{{ _title }}">
 		<div class="details">
 			<h2> {{ _title }} </h2>
-			<p> 
+			<p>
 				<span> Date: </span> {{ _date }} <br>
-				<span> Venue: </span> {{ _venue }} 
-			</p> 
+				<span> Venue: </span> {{ _venue }}
+			</p>
 			<p> {{ _desc | safe }} </p>
 			<br>
 			<a href="/events/{{ _link }}" title="{{ _title }}"> Read More... </a>
@@ -82,16 +82,16 @@
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
-		
+
 		margin: 20px 3vw;
 		border-radius: 20px;
 		padding: 30px calc(10px + 4vw);
-		
+
 		background-color: rgba(255,255,255,.2);
 		color: var(--light-gray);
 		text-align: left;
 	}
-	
+
 	.event-container > img {
 		margin: 10px;
 		display: block;
