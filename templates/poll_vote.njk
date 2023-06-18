@@ -42,7 +42,7 @@
 	<script>
 		async function submitVote () {
 			const pollId = '{{ poll._id }}'
-			const id = [...document.querySelectorAll('input[name="poll-value"]')].filter(inp => inp.checked)[0]?.id;
+			const id = [...document.querySelectorAll('input[name="poll-value"]')].filter(inp => inp.checked).map(inp => inp.value.trim())[0]?.id;
 			const userChoice = document.querySelector(`label[for="${id}"]`).firstChild.value ?? document.querySelector(`label[for="${id}"]`).innerText;
 			{# console.log(userChoice); #}
 			const response = (await axios.post('/polls/', { pollId, userChoice })).data;
