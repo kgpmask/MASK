@@ -82,7 +82,7 @@
 			document.getElementById('crossword-left').innerHTML = `<h3>Across</h3><table class="cross-words">${clues[0].map(clue => `<tr><th>${clue[0]}</th><td>${clue[1]}</td></tr>`).join('')}</table>`;
 			document.getElementById('crossword-right').innerHTML = `<h3>Down</h3><table class="cross-words">${clues[1].map(clue => `<tr><th>${clue[0]}</th><td>${clue[1]}</td></tr>`).join('')}</table>`;
 		}
-	
+
 		window.onload = () => {
 			startCross();
 			startClues();
