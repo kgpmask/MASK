@@ -184,3 +184,6 @@ Ensure that pull requests pass tests (`npm test` for both lint and mocha tests).
 - <a href="https://github.com/Pagol1" target="_blank">Saumyadip Nandy</a>  
 - <a href="https://github.com/lurkingryuu" target="_blank">Karthikeya Y M</a>  
 - <a href="https://github.com/ayush4ise" target="_blank">Ayush Parmar</a>  
+
+### Open Source Contributors:
+- <a href="https://github.com/Baron105" target="_blank">Barun Parua</a>  
