@@ -7,41 +7,40 @@
 {% set scripts = ['https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'] %}
 
 {% block actioncontent %}
-<div class="message hidden"></div>
-	<h1>post management page</h1>
+	<div class="message hidden"></div>
+	<h1>Post Management Page</h1>
 	{% for post in posts %}
-	<div class="container">
-	<div class = "card1">
-			<table style="width:100%">
-  <tr>
-    <th>Name:</th>
-    <td>{{post.name}}</td>
-  </tr>
-  <tr>
-    <th>Type:</th>
-    <td>{{post.type}}</td>
-  </tr>
-  <tr>
-    <th>Link:</th>
-    <td>{{post.link}}</td>
-  </tr>
-  <tr>
-    <th>Attr:</th>
-    <td>{{post.attr}}</td>
-  </tr>
-  <tr>
-    <th>Date:</th>
-    <td>{{((post.date).toDateString()).substr(0,15)}}</td>
-  </tr>
-</table>	
-	</div>
-	
-	<div class = "card2">
-				<button class = "editP" onclick= "editPost(`{{post._id}}`)" >Edit</button>
-				<button class = "deleteP" onclick = "deletePost('{{post.link}}')">Delete</button>
-				
-	</div>
-	</div>
+		<div class="container">
+			<div class="card1">
+				<table style="width:100%">
+					<tr>
+						<th>Name:</th>
+						<td>{{post.name}}</td>
+					</tr>
+					<tr>
+						<th>Type:</th>
+						<td>{{post.type}}</td>
+					</tr>
+					<tr>
+						<th>Link:</th>
+						<td>{{post.link}}</td>
+					</tr>
+					<tr>
+						<th>Attr:</th>
+						<td>{{post.attr}}</td>
+					</tr>
+					<tr>
+						<th>Date:</th>
+						<td>{{((post.date).toDateString()).substr(0,15)}}</td>
+					</tr>
+				</table>
+			</div>
+
+			<div class="card2">
+				<button class="editP" onclick="editPost(`{{post._id}}`)">Edit</button>
+				<button class="deleteP" onclick="deletePost('{{post.link}}')">Delete</button>
+			</div>
+		</div>
 	{% endfor %}
 
 {% endblock %}
@@ -177,7 +176,7 @@
 			}
 		}
 		
-</style>
+	</style>
 {% endblock %}
 
 {% block customjs %}
@@ -185,7 +184,7 @@
 		axios.defaults.withCredentials = true;
 		axios.defaults.headers.common['X-CSRF-TOKEN'] = '{{ csrfToken }}';
 
-        async function postData (data) {
+				async function postData (data) {
 			//console.log(data);
 			var res = (await axios.post('/gov-portal/post-management', { data: data })).data;
 			const e = document.getElementsByClassName('message')[0];
@@ -197,22 +196,17 @@
 				setTimeout(function () { location.reload() }, 3000);
 			}
 		}
-		async function editPost(id) {
-           await axios.get(`/gov-portal/edit-post/${id}`)
-		   .then(res=>{
-    window.location.href = `/gov-portal/edit-post/${id}`; 
-		   });
+		async function editPost (id) {
+			await axios.get(`/gov-portal/edit-post/${id}`)
+			 .then(res => {
+				window.location.href = `/gov-portal/edit-post/${id}`; 
+			 });
 		}
-		function deletePost(link) {
+		function deletePost (link) {
 			console.log(link);
-			if(confirm("Are you sure you want to delete the post?")) {
+			if (confirm("Are you sure you want to delete the post?")) {
 				postData(link);
 			}
 		}
-		window.onload = () => {
-			if (!axios.defaults.headers.common['X-CSRF-TOKEN']) axios.defaults.headers.common['X-CSRF-TOKEN'] = document.cookie.split('=')[1];
-		}
-
-		
 	</script>
 {% endblock %}

@@ -30,19 +30,8 @@ router.get('/post-management', async (req, res) => {
 });
 router.get('/edit-post/:id', async (req, res) => {
 	const id = req.params.id;
-	const data1 = await dbh.getPost(id);
-	// console.log("work",data);
-	const date = data1.date;
-	const dateNew = date.toISOString().substr(0, 10);
-	console.log(dateNew);
-	const data = {
-		_id: data1._id,
-		name: data1.name,
-		link: data1.link,
-		attr: data1.attr,
-		date: dateNew
-	};
-	return res.renderFile(`govportal/edit-post.njk`, { data });
+	const data = (await dbh.getPost(id)).toObject();
+	return res.renderFile(`govportal/edit-post.njk`, { ...data, date: data.date.toISOString().slice(0, 10) });
 });
 
 

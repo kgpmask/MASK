@@ -8,14 +8,12 @@
 
 {% block actioncontent %}
 	<div class="message hidden"></div>
-    
 	<div class="form-container">
 		<form>
 			<div class="part1">
-				
-				<div id="idUpdate" style="display:none;">{{data._id}}</div>
+				<div id="idUpdate" style="display:none;">{{_id}}</div>
 				<div class="item">
-					<select name="type" id="type" value = "{{data.type}}" onchange='check(this);'>
+					<select name="type" id="type" onchange='check(this);'>
 						<option value="youtube">Youtube</option>
 						<option value="instagram">Instagram</option>
 						<option value="letter">Newsletter</option>
@@ -23,19 +21,19 @@
 					</select>
 				</div>
 				<div class="item">
-					<input type="text" value = "{{data.name}}" required id="name">
+					<input type="text" value = "{{name}}" required id="name">
 					<label>Name</label>
 				</div>
 				<div class="item">
-					<input type="text" value = "{{data.link}}" required id="link">
+					<input type="text" value = "{{link}}" required id="link">
 					<label>Link</label>
 				</div>
 				<div class="item">
-					<input type="text" value = "{{data.attr}}" required id="attr">
+					<input type="text" value = "{{attr}}" required id="attr">
 					<label>Author</label>
 				</div>
 				<div class="item">
-					<input type="date" value = "{{data.date}}" required id="date">
+					<input type="date" value = "{{date}}" required id="date">
 					<label>Date</label>
 				</div>
 			</div>
@@ -54,15 +52,25 @@
 	<script>
 		axios.defaults.withCredentials = true;
 		axios.defaults.headers.common['X-CSRF-TOKEN'] = '{{ csrfToken }}';
-	
+
+		function check (select) {
+			if (['letter', 'event'].includes(select.options[select.selectedIndex].value)) {
+				document.getElementById('attr').value = '';
+				document.getElementById('attr').disabled = true;
+			}
+			else {
+				document.getElementById('attr').disabled = false;
+			}
+		}
+
 		async function updatePost () {
 			const data = {
-				id :document.getElementById('idUpdate').innerHTML,
+				id: document.getElementById('idUpdate').innerHTML,
 				name: document.getElementById('name').value,
 				link: document.getElementById('link').value,
 				type: document.getElementById('type').value,
 				attr: [document.getElementById('attr').value],
-				date:document.getElementById('date').value,
+				date: document.getElementById('date').value,
 				page: ['instagram', 'youtube', 'event'].includes(document.getElementById('type').value) ? '_blank' : '',
 				hype: document.getElementById('hype').checked
 			}
@@ -79,7 +87,7 @@
 
 		}
 		window.onload = () => {
-			if (!axios.defaults.headers.common['X-CSRF-TOKEN']) axios.defaults.headers.common['X-CSRF-TOKEN'] = document.cookie.split('=')[1];
+			document.querySelector('select').value = '{{ type }}';
 		}
 	</script>
 {% endblock %}
