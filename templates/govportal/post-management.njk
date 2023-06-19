@@ -13,28 +13,11 @@
 	{% for post in posts %}
 		<div class="container">
 			<div class="card1">
-				<table style="width:100%">
-					<tr>
-						<th>Name:</th>
-						<td>{{post.name}}</td>
-					</tr>
-					<tr>
-						<th>Type:</th>
-						<td>{{post.type}}</td>
-					</tr>
-					<tr>
-						<th>Link:</th>
-						<td>{{post.link}}</td>
-					</tr>
-					<tr>
-						<th>Attr:</th>
-						<td>{{post.attr}}</td>
-					</tr>
-					<tr>
-						<th>Date:</th>
-						<td>{{((post.date).toDateString()).substr(0,15)}}</td>
-					</tr>
-				</table>
+				{% for key, value in post %}
+				{% if key != '_id' and key != '__v' and key != 'metadata' %}
+					<b> {{ key | capitalize }}: </b> {% if key != 'date' %} {{ value }} {% else %}  {{ value | string | truncate(15, true, "") }} {% endif %}<br>
+				{% endif %}
+				{% endfor %}
 			</div>
 
 			<div class="card2">
@@ -49,7 +32,7 @@
 {% block customcss %}
 	<style>
 		.container {
-		margin: 3rem 7rem;
+		margin: 3rem auto;
 		display:flex;
 		flex-direction:row;
 		border: 2px solid rgba(255,255,255,0.1);
@@ -65,12 +48,14 @@
 			width:40%;
 			padding-left:5px;
 			word-wrap: break-word;
+			text-align: left;
 		}
 		.card2{
 			flex:20%;
 			display:flex;
 			flex-direction:column;
-			align-items:left;
+			justify-content: space-evenly;
+			align-items: center;
 		}
 		table{
 			word-wrap: break-word;
@@ -89,23 +74,16 @@
 			width:30%;
 		}
 		.editP,.deleteP {
-			align-self: center;
-			
 			border-radius: 4px;
 			color:white;
 			cursor: pointer;
-			border: 1px solid white;
+			border: 0px;
 			padding: 2% 3%;
-		}
-		.editP{
-			margin-top:1.5rem;
-		}
-		.deleteP{
-			margin-top:3rem;
 		}
 		button{
 			background-color: var(--red);
-			width:6rem;
+			width: 7em;
+			height: 2.5em;
 		}
 		.message {
 			position: absolute;
@@ -141,7 +119,7 @@
 			}
 		}
 
-		@media (max-width: 420px) {
+		@media (max-width: 500px) {
 			.container {
 				flex-direction:column;
 			}

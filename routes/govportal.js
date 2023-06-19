@@ -25,7 +25,7 @@ router.get('/add-post', (req, res) => {
 	return res.renderFile(`govportal/add-post.njk`);
 });
 router.get('/post-management', async (req, res) => {
-	const posts = await dbh.getPosts().limit(20);
+	const posts = (await dbh.getPosts().limit(20)).map(post => post.toObject());
 	return res.renderFile(`govportal/post-management.njk`, { posts });
 });
 router.get('/edit-post/:id', async (req, res) => {
