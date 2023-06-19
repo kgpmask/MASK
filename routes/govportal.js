@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const axios = require('axios');
 
 const dbh = PARAMS.mongoless ? {} : require("../database/handler");
 
@@ -9,9 +10,9 @@ router.use((req, res, next) => {
 	});
 
 	if (!req.loggedIn) return res.redirect('/login');
-	if (!req.user.permissions.find(perm => perm === 'governor')) return res.status(403).renderFile('404.njk', {
-		message: 'Access denied. You do not have the required permission.'
-	});
+	// if (!req.user.permissions.find(perm => perm === 'governor')) return res.status(403).renderFile('404.njk', {
+	// 	message: 'Access denied. You do not have the required permission.'
+	// });
 
 	next();
 });
@@ -23,6 +24,16 @@ router.get('/', (req, res) => {
 router.get('/add-post', (req, res) => {
 	return res.renderFile(`govportal/add-post.njk`);
 });
+router.get('/post-management', async (req, res) => {
+	const posts = (await dbh.getPosts().limit(20)).map(post => post.toObject());
+	return res.renderFile(`govportal/post-management.njk`, { posts });
+});
+router.get('/edit-post/:id', async (req, res) => {
+	const id = req.params.id;
+	const data = (await dbh.getPost(id)).toObject();
+	return res.renderFile(`govportal/edit-post.njk`, { ...data, date: data.date.toISOString().slice(0, 10) });
+});
+
 
 router.get('/add-poll', (req, res) => {
 	const date = new Date();
@@ -62,6 +73,7 @@ router.post('/add-post', async (req, res) => {
 	data.date = new Date().toISOString();
 	try {
 		response = await dbh.addPost(data);
+		// console.log(response);
 		return res.send({ success: true, message: "Successfully Added Post", response: response });
 	} catch (e) {
 		console.log(e);
@@ -102,6 +114,30 @@ router.post('/member-management', async (req, res) => {
 			break;
 	}
 	return res.send(response);
+});
+router.post('/post-management', async (req, res) => {
+	const data = req.body.data;
+	let response;
+	try {
+		response = await dbh.deletePost(data);
+		// console.log(response)
+		return res.send({ success: true, message: "Successfully deleted post", response: response });
+	} catch (e) {
+		return res.send({ success: false, message: "Something Went Wrong" });
+	}
+});
+
+router.patch('/edit-post', async (req, res) => {
+	const data = req.body.data;
+	// console.log("update",data)
+	try {
+		response = await dbh.editPost(data);
+		// console.log(response);
+		return res.send({ success: true, message: "Successfully Edited Post", response: response });
+	} catch (e) {
+		console.log(e);
+		return res.send({ success: false, message: "Something Went Wrong" });
+	}
 });
 
 module.exports = router;
