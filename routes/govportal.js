@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const axios = require('axios');
 
 const dbh = PARAMS.mongoless ? {} : require("../database/handler");
 
@@ -9,9 +10,9 @@ router.use((req, res, next) => {
 	});
 
 	if (!req.loggedIn) return res.redirect('/login');
-	if (!req.user.permissions.find(perm => perm === 'governor')) return res.status(403).renderFile('404.njk', {
-		message: 'Access denied. You do not have the required permission.'
-	});
+	// if (!req.user.permissions.find(perm => perm === 'governor')) return res.status(403).renderFile('404.njk', {
+	// 	message: 'Access denied. You do not have the required permission.'
+	// });
 
 	next();
 });
@@ -23,22 +24,32 @@ router.get('/', (req, res) => {
 router.get('/add-post', (req, res) => {
 	return res.renderFile(`govportal/add-post.njk`);
 });
-
+router.get('/post-management',async (req, res) => {
+	const posts = await dbh.getPosts() 
+	return res.renderFile(`govportal/post-management.njk`,{posts});
+});
 router.get('/edit-post/:id', async (req, res) => {
 	const id = req.params.id;
-	const data = await dbh.getPost(id); 
+	const data1 = await dbh.getPost(id); 
 	// console.log("work",data);
+	const date = data1.date;
+	const dateNew = (date.toISOString()).substr(0,10);
+	console.log(dateNew);
+	const data = {
+          _id:data1._id,
+		  name:data1.name,
+		  link:data1.link,
+		  attr:data1.attr,
+		  date:dateNew
+	}
 	return res.renderFile(`govportal/edit-post.njk`,{data})
 });
+
 
 router.get('/add-poll', (req, res) => {
 	const date = new Date();
 	date.setDate(date.getDate() + 7);
 	return res.renderFile(`govportal/add-poll.njk`, { date: date.toISOString().slice(0, 10) });
-});
-router.get('/post-management',async (req, res) => {
-	const posts = await dbh.getPosts() 
-	return res.renderFile(`govportal/post-management.njk`,{posts});
 });
 
 router.get('/member-management', async (req, res) => {
@@ -73,6 +84,7 @@ router.post('/add-post', async (req, res) => {
 	data.date = new Date().toISOString();
 	try {
 		response = await dbh.addPost(data);
+		// console.log(response);
 		return res.send({ success: true, message: "Successfully Added Post", response: response });
 	} catch (e) {
 		console.log(e);
@@ -126,6 +138,7 @@ router.post('/post-management', async (req, res) => {
 		return res.send({ success: false, message: "Something Went Wrong" });
 	}
 });
+
 router.patch('/edit-post',async (req,res) => {
 	const data = req.body.data;
 	// console.log("update",data)
