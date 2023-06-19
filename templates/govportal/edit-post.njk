@@ -13,7 +13,7 @@
 		<form>
 			<div class="part1">
 				
-				<div id="idUpdate">{{data._id}}</div>
+				<div id="idUpdate" style="display:none;">{{data._id}}</div>
 				<div class="item">
 					<select name="type" id="type" value = "{{data.type}}" onchange='check(this);'>
 						<option value="youtube">Youtube</option>
@@ -35,7 +35,7 @@
 					<label>Author</label>
 				</div>
 				<div class="item">
-					<input type="text" value = "{{data.date}}" required id="date">
+					<input type="date" value = "{{data.date}}" required id="date">
 					<label>Date</label>
 				</div>
 			</div>
@@ -257,4 +257,3 @@
 		}
 	</style>
 {% endblock %}
-
