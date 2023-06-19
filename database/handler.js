@@ -106,25 +106,25 @@ function getPosts (postType) {
 	// TODO: Make this accept a number of posts as a cap filter
 	return Post.find(postType ? { type: postType } : {}).sort({ date: -1 });
 }
-async function getPost(id){
-  return Post.findById(id);
+async function getPost (id) {
+	return Post.findById(id);
 }
-async function deletePost(link){
-    const postDeleted = Post.findOneAndDelete({'link':link})
+async function deletePost (link) {
+	const postDeleted = Post.findOneAndDelete({ 'link': link });
 	return postDeleted;
 }
-async function editPost(data){
-const updatedPost = Post.findOneAndUpdate({'_id':data.id},{
-      'name':data.name,
-	  'link':data.link,
-	  'type':data.type,
-	  'attr':data.attr,
-	  'date':data.date
-},{
-	new:true
-})
-// console.log(updatedPost);
-return updatedPost;
+async function editPost (data) {
+	const updatedPost = Post.findOneAndUpdate({ '_id': data.id }, {
+		'name': data.name,
+		'link': data.link,
+		'type': data.type,
+		'attr': data.attr,
+		'date': data.date
+	}, {
+		new: true
+	});
+	// console.log(updatedPost);
+	return updatedPost;
 }
 
 async function addPost (data) {

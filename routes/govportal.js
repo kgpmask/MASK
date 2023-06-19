@@ -24,25 +24,25 @@ router.get('/', (req, res) => {
 router.get('/add-post', (req, res) => {
 	return res.renderFile(`govportal/add-post.njk`);
 });
-router.get('/post-management',async (req, res) => {
-	const posts = await dbh.getPosts() 
-	return res.renderFile(`govportal/post-management.njk`,{posts});
+router.get('/post-management', async (req, res) => {
+	const posts = await dbh.getPosts();
+	return res.renderFile(`govportal/post-management.njk`, { posts });
 });
 router.get('/edit-post/:id', async (req, res) => {
 	const id = req.params.id;
-	const data1 = await dbh.getPost(id); 
+	const data1 = await dbh.getPost(id);
 	// console.log("work",data);
 	const date = data1.date;
-	const dateNew = (date.toISOString()).substr(0,10);
+	const dateNew = date.toISOString().substr(0, 10);
 	console.log(dateNew);
 	const data = {
-          _id:data1._id,
-		  name:data1.name,
-		  link:data1.link,
-		  attr:data1.attr,
-		  date:dateNew
-	}
-	return res.renderFile(`govportal/edit-post.njk`,{data})
+		_id: data1._id,
+		name: data1.name,
+		link: data1.link,
+		attr: data1.attr,
+		date: dateNew
+	};
+	return res.renderFile(`govportal/edit-post.njk`, { data });
 });
 
 
@@ -129,17 +129,16 @@ router.post('/member-management', async (req, res) => {
 router.post('/post-management', async (req, res) => {
 	const data = req.body.data;
 	let response;
-	try{
+	try {
 		response = await dbh.deletePost(data);
 		// console.log(response)
 		return res.send({ success: true, message: "Successfully deleted post", response: response });
-		}
-	catch(e){
+	} catch (e) {
 		return res.send({ success: false, message: "Something Went Wrong" });
 	}
 });
 
-router.patch('/edit-post',async (req,res) => {
+router.patch('/edit-post', async (req, res) => {
 	const data = req.body.data;
 	// console.log("update",data)
 	try {
@@ -150,6 +149,6 @@ router.patch('/edit-post',async (req,res) => {
 		console.log(e);
 		return res.send({ success: false, message: "Something Went Wrong" });
 	}
-})
+});
 
 module.exports = router;
