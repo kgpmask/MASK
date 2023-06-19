@@ -31,7 +31,7 @@
   </tr>
   <tr>
     <th>Date:</th>
-    <td>{{post.date}}</td>
+    <td>{{((post.date).toDateString()).substr(0,15)}}</td>
   </tr>
 </table>	
 	</div>
@@ -49,8 +49,7 @@
 {% block customcss %}
 	<style>
 		.container {
-		margin: 50px 30px 30px 50px;
-		left:40vw;
+		margin: 3rem 7rem;
 		display:flex;
 		flex-direction:row;
 		border: 2px solid rgba(255,255,255,0.1);
@@ -62,16 +61,20 @@
 		align-self:center;
 		}
 		.card1{
-			flex:70%;
-			padding-left:20px;
+			flex:80%;
+			width:40%;
+			padding-left:5px;
+			word-wrap: break-word;
 		}
 		.card2{
-			flex:30%;
+			flex:20%;
 			display:flex;
 			flex-direction:column;
-			align-items:center;
+			align-items:left;
 		}
-		
+		table{
+			word-wrap: break-word;
+		}
 		table, th, td {
 		border: 1px solid black;
 		border-collapse: collapse;
@@ -79,15 +82,26 @@
 		th, td {
 		padding: 5px;
 		text-align: left;
+		word-wrap: break-word;
+		overflow-wrap: anywhere;
+		}
+		th{
+			width:30%;
 		}
 		.editP,.deleteP {
 			align-self: center;
-			margin: 5% 0% 5% 0%;
+			
 			border-radius: 4px;
 			color:white;
 			cursor: pointer;
 			border: 1px solid white;
 			padding: 2% 3%;
+		}
+		.editP{
+			margin-top:1.5rem;
+		}
+		.deleteP{
+			margin-top:3rem;
 		}
 		button{
 			background-color: var(--red);
@@ -116,6 +130,51 @@
 		}
 		.hidden {
 			transform: scaleY(0);
+		}
+		
+		@media (max-width: 600px) {
+			button{
+				width:4rem;
+			}
+			.container{
+				margin-left:3rem;
+			}
+		}
+
+		@media (max-width: 420px) {
+			.container {
+				flex-direction:column;
+			}
+			.card1{
+				width:95%;
+			}
+			.card2{
+				flex-direction:row;
+			}
+			button{
+				margin-right:5rem;
+			}
+			.editP{
+				margin:1rem 3rem;
+			}
+			.deleteP{
+				margin:1rem 2rem;
+			}
+			.container{
+				margin-left:2rem;
+			}
+		}
+		@media (max-width:300px){
+			.editP{
+				margin-right:1rem;
+				margin-left:2rem;
+			}
+			.deleteP{
+				margin-left:1rem;
+			}
+			.container{
+				margin-left:1.5rem;
+			}
 		}
 		
 </style>
