@@ -104,7 +104,7 @@
 			});
 		}
 		window.onload = () => {
-			if (!axios.defaults.headers.common['X-CSRF-TOKEN']){ 
+			if (!axios.defaults.headers.common['X-CSRF-TOKEN']){
 				axios.defaults.headers.common['X-CSRF-TOKEN'] = document.cookie.split('=')[1];
 			}
 		}

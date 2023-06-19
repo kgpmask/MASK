@@ -1,4 +1,4 @@
-# Tips for working on templates using credentials in `dev userless` mode
+# Tips for working on templates using credentials in `dev userless and mongoless` mode
 
 As you check `handler.js`, you might come across a few cases which checks for `loggedIn` or `PARAMS`. Generally, the templates which are supposed to be rendered by this cannot be accessed by this in `dev userless` (`du`) mode. Some instances include:
 - Quiz templates (quiz list, quiz login, the actual quiz, quiz attempted, etc)
