@@ -131,8 +131,8 @@ async function getMonthlyPolls (month) {
 	const polls = await Poll.find(
 		{
 			'_id': {
-				"$regex": `${date.getFullYear() + "-" + ("0" + (month ? month : date.getMonth() + 1)).slice(-2) + "-"}`,
-				"$options": "i"
+				'$regex': `${date.getFullYear() + '-' + ('0' + (month ? month : date.getMonth() + 1)).slice(-2) + '-'}`,
+				'$options': 'i'
 			}
 		}
 	).lean();

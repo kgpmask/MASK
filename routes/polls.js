@@ -31,9 +31,9 @@ router.post('/', async (req, res) => {
 			userId: req.user._id,
 			userChoice: req.body.userChoice
 		});
-		return res.send({ success: true, message: "Successfully Voted" });
+		return res.send({ success: true, message: 'Successfully Voted' });
 	} catch (e) {
-		return res.send({ success: false, message: "Something Went Wrong" });
+		return res.send({ success: false, message: 'Something Went Wrong' });
 	}
 });
 

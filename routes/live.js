@@ -33,7 +33,7 @@ router.get('/master', async (req, res) => {
 	if (PARAMS.dev) {
 		// TODO: In the future, set a 'daily' script to run at midnight and update a process.env.LIVE_QUIZ parameter
 		const quiz = await dbh.getLiveQuiz('2022-11-12');
-		console.log("Hello");
+		console.log('Hello');
 		// if (!quiz) return res.renderFile('events/quizzes_404.njk', { message: `The quiz hasn't started, yet!` });
 		const QUIZ = quiz.questions;
 

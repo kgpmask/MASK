@@ -1,7 +1,7 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 
-const dbh = PARAMS.mongoless ? {} : require("../database/handler");
+const dbh = PARAMS.mongoless ? {} : require('../database/handler');
 
 router.use((req, res, next) => {
 	if (PARAMS.userless) return res.notFound('404.njk', {
@@ -57,32 +57,32 @@ router.get('/member-management', async (req, res) => {
 router.post('/add-post', async (req, res) => {
 	const data = req.body.data;
 	if (!data.name || !data.link || !data.attr[0] && ['youtube', 'instagram'].includes(data.type)) {
-		return res.send({ success: false, message: "Empty Data Provided" });
+		return res.send({ success: false, message: 'Empty Data Provided' });
 	}
 	data.date = new Date().toISOString();
 	try {
 		response = await dbh.addPost(data);
-		return res.send({ success: true, message: "Successfully Added Post", response: response });
+		return res.send({ success: true, message: 'Successfully Added Post', response: response });
 	} catch (e) {
 		console.log(e);
-		return res.send({ success: false, message: "Something Went Wrong" });
+		return res.send({ success: false, message: 'Something Went Wrong' });
 	}
 });
 
 router.post('/add-poll', async (req, res) => {
 	const data = req.body.data;
-	if (!data.title || !data.records.length) return res.send({ success: false, message: "Empty Data Provided" });
+	if (!data.title || !data.records.length) return res.send({ success: false, message: 'Empty Data Provided' });
 	data.endTime = new Date(data.endTime).toISOString();
 	const now = new Date();
-	if (!(now < new Date(data.endTime))) return res.send({ success: false, message: "Invalid End Date" });
+	if (!(now < new Date(data.endTime))) return res.send({ success: false, message: 'Invalid End Date' });
 	try {
-		data._id = now.getFullYear() + "-" + ("0" + (now.getMonth() + 1)).slice(-2) + "-" + ((await dbh.getMonthlyPolls()).length + 1);
+		data._id = now.getFullYear() + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + ((await dbh.getMonthlyPolls()).length + 1);
 		console.log(data);
 		response = await dbh.addPoll(data);
-		return res.send({ success: true, message: "Successfully Added Poll", response: response });
+		return res.send({ success: true, message: 'Successfully Added Poll', response: response });
 	} catch (e) {
 		console.log(e);
-		return res.send({ success: false, message: "Something Went Wrong" });
+		return res.send({ success: false, message: 'Something Went Wrong' });
 	}
 });
 
