@@ -116,7 +116,7 @@
 			height: 1px;*/
 			opacity: 0;
 			z-index: -1;
-		
+
 		}
 
 		.rad-design {
@@ -189,7 +189,7 @@
 				document
 					.getElementById(`question-${q + 1}`)
 					.innerHTML = generateHTML(question.q);
-				for (let i = 1; i <= 4; i++) 
+				for (let i = 1; i <= 4; i++)
 					document
 						.getElementById(`option-${q + 1}-${i}`)
 						.innerHTML = generateHTML(question.options[i - 1]);
@@ -216,7 +216,7 @@
 				}
 			});
 			if (e) {
-				
+
 				//Select the corresponding option
 				op=document.getElementById(`option-${currentQ + 1}-${e}`);
 				op.click();
@@ -232,7 +232,7 @@
 			}
 			else if (n == 13) {
 			// TODO: Ignore if no input is selected
-				if (document.querySelector(`input[name="answer-${currentQ + 1}"]:checked`)) 
+				if (document.querySelector(`input[name="answer-${currentQ + 1}"]:checked`))
 					nextQ();
 				preventDefault(event);
 			}
@@ -245,7 +245,7 @@
 				.getElementById(`qbox-${c + 1}`)
 				.style
 				.display = 'block';
-			if (c) 
+			if (c)
 				document
 					.getElementById(`qbox-${c}`)
 					.style
@@ -256,15 +256,15 @@
 				cancel = true;
 			}
 			function decrement() {
-				if (cancel) 
+				if (cancel)
 					return;
 				document
 					.getElementById('count')
 					.innerHTML = timeVal;
 				timeVal--;
-				if (timeVal >= 0) 
+				if (timeVal >= 0)
 					setTimeout(decrement, 1000);
-				else 
+				else
 					nextQ();
 				}
 			decrement();
@@ -284,7 +284,7 @@
 			currentTimer = timer();
 		}
 		function nextQ() {
-			if (currentTimer) 
+			if (currentTimer)
 				currentTimer();
 			currentQ++;
 			const c = currentQ;
@@ -292,7 +292,7 @@
 				document
 					.getElementById('quiz')
 					.submit();
-			} else 
+			} else
 				currentTimer = timer();
 			}
 		function prevQ() {

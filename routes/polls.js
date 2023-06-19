@@ -39,6 +39,7 @@ router.post('/', async (req, res) => {
 
 // Route for displaying poll results
 router.get('/results/:id?', async (req, res) => {
+	if (!req.loggedIn) return res.redirect('/login');
 	const pollId = req.params.id;
 	if (!pollId) return res.notFound('No ID given.');
 	const activePolls = await dbh.getActivePolls();
