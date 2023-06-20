@@ -1,4 +1,4 @@
-{% extends "govportal/govportal.njk" %}
+{% extends 'govportal/govportal.njk' %}
 
 {% set thispage = 'govportal' %}
 {% set pagetitle = 'Governor Portal | Image Upload' %}
@@ -80,11 +80,11 @@
 		axios.defaults.withCredentials = true;
 		axios.defaults.headers.common['X-CSRF-TOKEN'] = '{{ csrfToken }}';
 		function uploadImage(e) {
-			var image = document.getElementById("image").files[0];
-			var desc = document.getElementById("desc").value;
+			var image = document.getElementById('image').files[0];
+			var desc = document.getElementById('desc').value;
 			var formdata = new FormData();
-			formdata.append("image", image);
-			formdata.append("desc", desc);
+			formdata.append('image', image);
+			formdata.append('desc', desc);
 			console.log(formdata);
 			axios.post('/api/instaupload', formdata, {
 				headers: {
@@ -93,18 +93,18 @@
 			}).then((res) => {
 				console.log(res);
 				if (res.status == 200) {
-					alert("Image Uploaded Successfully");
-					window.location.href = "/gov-portal";
+					alert('Image Uploaded Successfully');
+					window.location.href = '/gov-portal';
 				} else {
-					alert("Image Upload Failed");
+					alert('Image Upload Failed');
 				}
 			}).catch((err) => {
 				console.log(err);
-				alert("Image Upload Failed");
+				alert('Image Upload Failed');
 			});
 		}
 		window.onload = () => {
-			if (!axios.defaults.headers.common['X-CSRF-TOKEN']){ 
+			if (!axios.defaults.headers.common['X-CSRF-TOKEN']){
 				axios.defaults.headers.common['X-CSRF-TOKEN'] = document.cookie.split('=')[1];
 			}
 		}

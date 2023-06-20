@@ -1,5 +1,4 @@
-const express = require('express');
-const router = express.Router();
+const router = require('express').Router();
 const axios = require('axios');
 
 router.get('/', (req, res) => {
@@ -10,4 +9,7 @@ router.get('/', (req, res) => {
 	});
 });
 
-module.exports = router;
+module.exports = {
+	route: '/corsProxy',
+	router
+};

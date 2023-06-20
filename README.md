@@ -1,5 +1,7 @@
 # MASK
-The website for the Manga & Anime Society Kharagpur (currently running in [kgpmask.club](https://kgpmask.club))
+
+The website for the Manga and Anime Society Kharagpur (currently running in [kgpmask.club](https://kgpmask.club))
+
 
 ## Tech Stack
 
@@ -72,6 +74,7 @@ Additionally, the following blocks may be set:
 
 The default page template is:
 
+
 ```jinja
 {% extends "_base.njk" %}
 
@@ -85,6 +88,7 @@ The default page template is:
 ```
 
 The default newsletter template is:
+
 
 ```jinja
 {% extends "_newsletter.njk" %}

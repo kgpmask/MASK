@@ -1,7 +1,7 @@
 
 {% set thispage = 'submissions' %}
 {% set pagetitle = 'Submit!' %}
-{% extends "_base.njk" %}
+{% extends '_base.njk' %}
 
 {% block pagecontent %}
 	<!--h1 id="formpre" style="text-align: center;">Submit your content here!</h1-->
@@ -52,7 +52,7 @@
 		.RdH0ib .zHQkBf, .RdH0ib .tL9Q4c {
 			border-radius: 5px !important;
 		}
-		
+
 		/*geS5n is the question div*/
 		.geS5n {
 			border: 1px solid var(--ghost-gray);
@@ -109,12 +109,12 @@
 			document.getElementsByTagName('head')[0].appendChild(link);
 		}
 		let firstLoad = false;
-		const ifrm = document.createElement("iframe");
-		ifrm.setAttribute("name", "swallow");
-		ifrm.setAttribute("id", "swallow");
+		const ifrm = document.createElement('iframe');
+		ifrm.setAttribute('name', 'swallow');
+		ifrm.setAttribute('id', 'swallow');
 		document.body.appendChild(ifrm);
 		ifrm.style.display = 'none';
-		document.forms[0].target = "swallow";
+		document.forms[0].target = 'swallow';
 		document.getElementById('swallow').onload = () => {
 			if (firstLoad === false) return firstLoad = true;
 			const form = document.getElementsByTagName('form')[0];

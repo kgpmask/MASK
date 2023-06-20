@@ -1,6 +1,5 @@
 
-{% extends "_base.njk" %}
-
+{% extends '_base.njk' %}
 {% set thispage = 'events' %}
 {% set pagetitle = 'Events' %}
 
@@ -119,7 +118,7 @@
 			height: 1px;*/
 			opacity: 0;
 			z-index: -1;
-		
+
 		}
 
 		.rad-design {
@@ -190,7 +189,7 @@
 		window.onload = () => {
 			qs.forEach((question, q) => {
 				document.getElementById(`question-${q + 1}`).innerHTML = generateHTML(question.q);
-				for (let i = 1; i <= 4; i++) 
+				for (let i = 1; i <= 4; i++)
 					document.getElementById(`option-${q + 1}-${i}`).innerHTML = generateHTML(question.options[i - 1]);
 				}
 			);

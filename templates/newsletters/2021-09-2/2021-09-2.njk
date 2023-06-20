@@ -1,4 +1,4 @@
-{% extends "_newsletter.njk" %}
+{% extends '_newsletter.njk' %}
 
 {% set pagetitle = 'September - Issue 2' %}
 
@@ -7,7 +7,7 @@
 
 {% block prescript %}
 	<script>
-		"use strict";
+		'use strict';
 		const wordMatrix = `N J O Z B D D E E H R V L L U
 			U Y R V N T M E E K I L E P K
 			K J Z I E I B U K E Y H L S N
@@ -20,7 +20,7 @@
 			P O B E B Y O B W O C N Y F Q
 			H U G N W O R C Y T L I U G S`.replace(/\t/g, '').split("\n").map(line => line.split(" "));
 		const letterSpaces = [];
-		const tempWords = `OVERLORD\nKIRITO\nEMILIA\nJOHN TITOR\nSORA\nSENKU\nLELOUCH\nPSYCHO-PASS\nCOWBOY BEBOP\nGUILTY CROWN`.split("\n").map(word => word.replace(/\t/g, '')), words = tempWords.map(word => word.replace(/[ -]/g, '').toUpperCase());
+		const tempWords = `OVERLORD\nKIRITO\nEMILIA\nJOHN TITOR\nSORA\nSENKU\nLELOUCH\nPSYCHO-PASS\nCOWBOY BEBOP\nGUILTY CROWN`.split('\n').map(word => word.replace(/\t/g, '')), words = tempWords.map(word => word.replace(/[ -]/g, '').toUpperCase());
 		(() => {
 			const root = document.querySelector(':root');
 			root.style.setProperty('--wordsearch-padding', (100 * wordMatrix.length / wordMatrix[0].length) + '%');

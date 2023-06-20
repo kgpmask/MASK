@@ -1,4 +1,4 @@
-{% extends "_base.njk" %}
+{% extends '_base.njk' %}
 
 {% set thispage = 'events' %}
 {% set pagetitle = 'Live Quiz' %}
@@ -111,7 +111,7 @@
 			height: 1px;*/
 			opacity: 0;
 			z-index: -1;
-		
+
 		}
 
 		.rad-design {
@@ -301,7 +301,7 @@
 		});
 
 		window.addEventListener('load', () => showMessage(waitingMsg));
-		
+
 		function submitAnswer (timeout = false) {
 			let answer = null;
 			if (answerText.style.display === 'block') {
@@ -313,7 +313,7 @@
 				else atf.value = '';
 			} else {
 				for (let i = 1; i <= 4; i++) {
-					if (document.getElementById(`answer-${i}`).checked) { 
+					if (document.getElementById(`answer-${i}`).checked) {
 						answer = document.getElementById(`answer-${i}`).value;
 						document.getElementById(`answer-${i}`).checked = false;
 						break;
