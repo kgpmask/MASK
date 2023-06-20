@@ -7,7 +7,7 @@ router.get('/login', (req, res) => {
 });
 
 router.get('/logout', (req, res) => {
-	if (!req.loggedIn) return res.redirect('/login');
+	if (!req.loggedIn) return res.loginRedirect(req, res);
 	return req.logout(() => res.redirect('/'));
 });
 
