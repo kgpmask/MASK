@@ -4,6 +4,15 @@
 
 <!--{ % set pdf = '2021-09-1/issue.pdf' %}-->
 
+{% block coverpage %}
+	<div class="page cover-default" id="cover-page">
+		<img id="cover-logo" src="/assets/transparent_logo.png"/>
+		<br/>Manga And Anime<br/>Society Kharagpur<br/>
+		<br/>
+		<div id="cover-page-title">{{ pagetitle }}</div>
+	</div>
+{% endblock %}
+
 {% block prescript %}
 	<script>
 		"use strict";
@@ -87,13 +96,13 @@
 		.page {
 			color: var(--dark-blue);
 		}
-		#cover-page {
+		{# #cover-page {
 			background-image: url(/assets/releases/2021-09-1/cover.webp);
 			background-position: center;
 			background-size: contain;
 			background-repeat: no-repeat;
 			background-color: rgba(0, 0, 0, 0) !important;
-		}
+		} #}
 		.article-full, .article-half, #crossword-left, #crossword-right {
 			scrollbar-color: var(--teal) var(--off-white) !important;
 		}
