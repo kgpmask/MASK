@@ -1,5 +1,5 @@
 # MASK
-The website for the Manga & Anime Society Kharagpur
+The website for the Manga and Anime Society Kharagpur
 
 ## Contributing
 
