@@ -5,7 +5,7 @@ The website for the Manga & Anime Society Kharagpur (currently running in [kgpma
 
 - VPS provider: OVH
 - Backend reverse proxy for port-forwarding: NGINX
-<!-- - Containerized deployments: Docker (we aren't using dockerized containers right now) -->
+- Containerized deployments: Docker (we aren't using dockerized containers right now)
 - Application language: Node.js
 - App routing: Express.js
 - Page templates: Nunjucks
