@@ -1,24 +1,24 @@
-const checkerRouter = require('../routes/checker');
-const corsProxyRouter = require('../routes/corsProxy');
-const govPortalRouter = require('../routes/govportal');
-const gitHookRouter = require('../routes/git-hook');
-const homeRouter = require('../routes/home');
-const liveRouter = require('../routes/live');
-const mediaRouter = require('../routes/media');
-const membersRouter = require('../routes/members');
-const miscRouter = require('../routes/misc');
-const newsletterRouter = require('../routes/newsletter');
-const pollRouter = require('../routes/polls');
+const checkerRouter = require("../routes/checker");
+const corsProxyRouter = require("../routes/corsProxy");
+const govPortalRouter = require("../routes/govportal");
+const gitHookRouter = require("../routes/git-hook");
+const homeRouter = require("../routes/home");
+const liveRouter = require("../routes/live");
+const mediaRouter = require("../routes/media");
+const membersRouter = require("../routes/members");
+const miscRouter = require("../routes/misc");
+const newsletterRouter = require("../routes/newsletter");
+const pollRouter = require("../routes/polls");
 
-const profileRouter = require('../routes/profile');
-const quizzesRouter = require('../routes/quizzes');
-const userRouter = require('../routes/user');
-const eventsRouter = require('../routes/py-events');
+const profileRouter = require("../routes/profile");
+const quizzesRouter = require("../routes/quizzes");
+const userRouter = require("../routes/user");
+const eventsRouter = require("../routes/py-events");
 
 function link (app, nunjEnv) {
-	const smallerRoutes = ['/about', '/apply', '/blog', '/prizes', '/submissions', '/success', '/privacy', '/terms'];
-	const userRoutes = ['/login', '/logout'];
-	const mediaRoutes = ['/art', '/videos'];
+	const smallerRoutes = ["/about", "/apply", "/blog", "/prizes", "/submissions", "/success", "/privacy", "/terms"];
+	const userRoutes = ["/login", "/logout"];
+	const mediaRoutes = ["/art", "/videos"];
 
 	app.use(async (_, __, next) => {
 		await new Promise(r => r());
@@ -76,7 +76,7 @@ function link (app, nunjEnv) {
 
 	app.use((req, res, next) => {
 		// If propagation hasn't stopped, switch to GET!
-		if (req.method === 'POST') {
+		if (req.method === "POST") {
 			return res.redirect(req.url);
 		}
 		next();
@@ -90,9 +90,9 @@ function link (app, nunjEnv) {
 		if (PARAMS.dev) console.error(err.stack);
 		// Make POST errors show only the data, and GET errors show the page with the error message
 		res.status(500);
-		if (req.method === 'GET')
-			res.renderFile('404.njk', {
-				message: 'Server error! This may or may not be due to invalid input.'
+		if (req.method === "GET")
+			res.renderFile("404.njk", {
+				message: "Server error! This may or may not be due to invalid input."
 			});
 		else res.send(err.toString());
 	});

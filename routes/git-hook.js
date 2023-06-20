@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const crypto = require('crypto');
 
-const Tools = require('../src/tools');
+const Tools = require("../src/tools");
 
 router.post('/', async (req, res) => {
 

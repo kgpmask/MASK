@@ -40,10 +40,6 @@
 		"prefer-const": ["error", {
 			"ignoreReadBeforeAssign": true
 		}],
-		"quotes": [ "error", "single", {
-			"allowTemplateLiterals": true,
-			"avoidEscape": true
-		}],
 		"semi": ["error", "always"],
 		"semi-spacing": ["error", {
 			"before": false,

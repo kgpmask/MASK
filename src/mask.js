@@ -10,7 +10,7 @@ const path = require('path');
 global.Tools = require('./tools.js');
 const DB = require('../database/database.js');
 const PORT = process.env.PORT ?? 6969;
-const route = require('./route.js');
+const route = require("./route.js");
 const socketio = require('socket.io')();
 const initMiddleware = require('./middleware.js');
 
