@@ -37,29 +37,23 @@ module.exports = function setMiddleware (app) {
 
 	// Pre-routing
 	if (!PARAMS.userless) {
-		app.get('/login/federated/google', (req, res, next) => {
-			passport.authenticate('google')(req, res, next);
-		});
+		app.get('/login/federated/google', passport.authenticate('google'));
 
 		app.get('/oauth2/redirect/google', (req, res, next) => {
 			passport.authenticate('google', {
-				successReturnToOrRedirect: req.cookies.redirect.path || '/',
+				successReturnToOrRedirect: '/logged-in',
 				failureRedirect: '/login'
 			})(req, res, next);
 		});
 	}
+
+	app.use('/assets', express.static(path.join(__dirname, '..', 'assets')));
 
 	app.use((req, res, next) => {
 		res.loginRedirect = (req, res) => {
 			res.cookie('redirect', { path: req.originalUrl, setPath: false });
 			return res.redirect('/login');
 		};
-		next();
-	});
-
-	app.use('/assets', express.static(path.join(__dirname, '..', 'assets')));
-
-	app.use((req, res, next) => {
 		res.renderFile = (files, ctx) => {
 			if (!Array.isArray(files)) files = [files];
 			return res.render(path.join(__dirname, '../templates', ...files), ctx);
