@@ -38,10 +38,12 @@ module.exports = function setMiddleware (app) {
 	// Pre-routing
 	if (!PARAMS.userless) {
 		app.get('/login/federated/google', passport.authenticate('google'));
-		app.get('/oauth2/redirect/google', passport.authenticate('google', {
-			successReturnToOrRedirect: '/',
-			failureRedirect: '/login'
-		}));
+		app.get('/oauth2/redirect/google', passport.authenticate('google'), (req, res) => {
+			// Redirect back to the original page, if any
+			const redirect = process.env.redirectUrl || '/';
+			process.env.redirectUrl = '/';
+			res.redirect(redirect);
+		});
 	}
 
 	app.use('/assets', express.static(path.join(__dirname, '..', 'assets')));

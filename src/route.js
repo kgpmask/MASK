@@ -15,6 +15,8 @@ const quizzesRouter = require("../routes/quizzes");
 const userRouter = require("../routes/user");
 const eventsRouter = require("../routes/py-events");
 
+process.env.redirectUrl = '/';
+
 function link (app, nunjEnv) {
 	const smallerRoutes = ["/about", "/apply", "/blog", "/prizes", "/submissions", "/success", "/privacy", "/terms"];
 	const userRoutes = ["/login", "/logout"];
@@ -37,6 +39,12 @@ function link (app, nunjEnv) {
 		if (req.url in userRoutes) {
 			next();
 		} else {
+			// The logic here is that we keep the last url visited in the env variable redirectUrl
+			// and set it everytime we redirect to /login or /logout
+			// so that we can redirect back to the page the user was on before logging in
+			// after that we can reset the redirectUrl to /
+			if (req.url !== '/login' && req.url !== '/logout')
+				process.env.redirectUrl = req.url;
 			next('route');
 		}
 	}, userRouter);
