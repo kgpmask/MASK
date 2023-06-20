@@ -1,5 +1,4 @@
-const express = require('express');
-const router = express.Router();
+const router = require('express').Router();
 
 router.get('/login', (req, res) => {
 	if (req.loggedIn) return res.redirect('/');
@@ -17,4 +16,7 @@ router.get('/logged-in', (req, res) => {
 	return res.redirect(redirectRoute);
 });
 
-module.exports = router;
+module.exports = {
+	route: '/',
+	router
+};
