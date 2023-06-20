@@ -111,8 +111,7 @@ Take a look at existing articles for the various classes and where they're used.
 The Express app's router is set up by `/src/route.js`. The file route.js imports routers from the `/routes` folder. Each router file has the following format:
 
 ```js
-const express = require('express');
-const router = express.Router();
+const router = require('express').Router();
 // This router is used to configure the app for a specific route
 
 // GET requests
@@ -134,7 +133,20 @@ Notes:
 	You can use other routers as well if needed.
 */
 
-module.exports = router;
+module.exports = {
+	route: '/path'
+	router;
+}
+```
+
+All routers are imported and used in `route.js` in the `src` folder. 
+
+```js
+	const routerModules = (await fs.readdir(path.join(__dirname, '../routes'))).filter(file => file.endsWith('.js'));
+	routerModules.forEach(module => {
+		const { route, router } = require(`../routes/${module}`);
+		app.use(route, router);
+	});
 ```
 
 ---
