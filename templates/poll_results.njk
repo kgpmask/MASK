@@ -80,13 +80,13 @@
 	<script>
 		function update() {
 			const totalVotes = [...document.getElementsByClassName('bar')].map(ele => {
-				return eval(ele.parentElement.parentElement.children[1].innerHTML.split(" ")[0]);
+				return eval(ele.parentElement.parentElement.children[1].innerHTML.split(' ')[0]);
 			}).reduce((a,b) => a+b);
 			const maxVotes = Math.max(...[...document.getElementsByClassName('bar')].map(ele => {
-				return eval(ele.parentElement.parentElement.children[1].innerHTML.split(" ")[0]);
+				return eval(ele.parentElement.parentElement.children[1].innerHTML.split(' ')[0]);
 			}));
 			[...document.getElementsByClassName('bar')].map(ele => {
-				const votes = eval(ele.parentElement.parentElement.children[1].innerHTML.split(" ")[0]);
+				const votes = eval(ele.parentElement.parentElement.children[1].innerHTML.split(' ')[0]);
 				if (votes === maxVotes) ele.parentNode.parentNode.classList.add('winning');
 				if (votes) ele.style.width = totalVotes ? `${votes*100/totalVotes}%` : 0;
 				ele.firstElementChild.innerHTML = `${totalVotes ? Math.round(votes*100/totalVotes) : o}%`;

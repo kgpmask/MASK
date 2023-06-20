@@ -1,4 +1,4 @@
-{% extends "_newsletter.njk" %}
+{% extends '_newsletter.njk' %}
 
 {% set pagetitle = 'March 2023 Issue' %}
 
@@ -27,8 +27,8 @@
 		(() => {
 				const maxDimension = Math.max(crossMatrix.length, crossMatrix[0].length);
 				const root = document.querySelector(':root');
-				root.style.setProperty('--crossword-cell-size', (40 * 10 / maxDimension - 4) + "px");
-				root.style.setProperty('--crossword-font-size', (10 / maxDimension) ** (1 / 2) + "em");
+				root.style.setProperty('--crossword-cell-size', (40 * 10 / maxDimension - 4) + 'px');
+				root.style.setProperty('--crossword-font-size', (10 / maxDimension) ** (1 / 2) + 'em');
 				crossMatrix.forEach((row, i) => {
 					row.forEach((char, j) => {
 						if (char === ' ') letterSpaces.push([i, j]);

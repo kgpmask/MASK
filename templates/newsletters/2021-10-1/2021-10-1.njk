@@ -1,4 +1,4 @@
-{% extends "_newsletter.njk" %}
+{% extends '_newsletter.njk' %}
 
 {% set pagetitle = 'October - Issue 1' %}
 
@@ -6,8 +6,8 @@
 
 {% block prescript %}
 	<script>
-		"use strict";
-		const crossMatrix = [[" "," "," "," "," "," "," "," "," "," "," ","-","-","-"],[" ","-"," ","-","-","-","-","-","-","-","-","-","-","-"],[" ","-"," ","-","-"," ","-","-","-","-","-"," ","-","-"],[" ","-"," ","-","-"," ","-","-"," "," "," "," "," ","-"],["-","-"," ","-","-"," ","-","-","-","-","-"," ","-","-"],["-"," "," "," "," "," "," "," "," "," "," "," ","-","-"],["-","-"," ","-","-"," ","-","-","-","-","-"," ","-","-"],[" "," "," "," "," "," "," "," "," "," "," "," ","-","-"],[" ","-"," ","-","-"," ","-","-","-"," ","-"," ","-"," "],[" ","-","-","-","-"," ","-","-","-"," ","-","-","-"," "],[" ","-"," "," "," "," ","-"," ","-"," "," "," "," "," "],["-","-","-","-","-"," "," "," "," ","-","-","-","-"," "],["-","-","-","-","-","-","-","-","-","-","-","-","-"," "]];
+		'use strict';
+		const crossMatrix = [[' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','-','-','-'],[' ','-',' ','-','-','-','-','-','-','-','-','-','-','-'],[' ','-',' ','-','-',' ','-','-','-','-','-',' ','-','-'],[' ','-',' ','-','-',' ','-','-',' ',' ',' ',' ',' ','-'],['-','-',' ','-','-',' ','-','-','-','-','-',' ','-','-'],['-',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','-','-'],['-','-',' ','-','-',' ','-','-','-','-','-',' ','-','-'],[' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','-','-'],[' ','-',' ','-','-',' ','-','-','-',' ','-',' ','-',' '],[' ','-','-','-','-',' ','-','-','-',' ','-','-','-',' '],[' ','-',' ',' ',' ',' ','-',' ','-',' ',' ',' ',' ',' '],['-','-','-','-','-',' ',' ',' ',' ','-','-','-','-',' '],['-','-','-','-','-','-','-','-','-','-','-','-','-',' ']];
 		const wordMatrix = `P E T E L G E U S E O U L V A R
 			R F R B M T W U O T P K L M C G
 			I E U A E K R Z S K U M A I H A
@@ -16,14 +16,14 @@
 			I X W U I E L R S I Z U O R B I
 			L A S C L T E U I X R V R O Y E
 			L H K L E M F S A C P O L M A L
-			A S A M K A I L I M E K B I Y S`.replace(/\t/g, '').split("\n").map(line => line.split(" "));
-		const tempWords = `BEATRICE\nCRUSCH\nEMILIA\nFELIX\nFELT\nGARFIEL\nPETELGEUSE\nPRISCILLA\nPUCK\nRAM\nREM\nROM\nROSWALL\nSATELLA\nSUBARU`.split("\n").map(word => word.replace(/\t/g, '')), words = tempWords.map(word => word.replace(/[ ]/g, '').toUpperCase());
+			A S A M K A I L I M E K B I Y S`.replace(/\t/g, '').split('\n').map(line => line.split(' '));
+		const tempWords = `BEATRICE\nCRUSCH\nEMILIA\nFELIX\nFELT\nGARFIEL\nPETELGEUSE\nPRISCILLA\nPUCK\nRAM\nREM\nROM\nROSWALL\nSATELLA\nSUBARU`.split('\n').map(word => word.replace(/\t/g, '')), words = tempWords.map(word => word.replace(/[ ]/g, '').toUpperCase());
 		const letterSpaces = [];
 		(() => {
 			const maxDimension = Math.max(crossMatrix.length, crossMatrix[0].length);
 			const root = document.querySelector(':root');
-			root.style.setProperty('--crossword-cell-size', (40 * 10 / maxDimension - 4) + "px");
-			root.style.setProperty('--crossword-font-size', (10 / maxDimension) ** (1 / 2) + "em");
+			root.style.setProperty('--crossword-cell-size', (40 * 10 / maxDimension - 4) + 'px');
+			root.style.setProperty('--crossword-font-size', (10 / maxDimension) ** (1 / 2) + 'em');
 			crossMatrix.forEach((row, i) => {
 				row.forEach((char, j) => {
 					if (char === ' ') letterSpaces.push([i, j]);
