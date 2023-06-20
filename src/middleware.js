@@ -38,15 +38,22 @@ module.exports = function setMiddleware (app) {
 	// Pre-routing
 	if (!PARAMS.userless) {
 		app.get('/login/federated/google', passport.authenticate('google'));
-		app.get('/oauth2/redirect/google', passport.authenticate('google', {
-			successReturnToOrRedirect: '/',
-			failureRedirect: '/login'
-		}));
+
+		app.get('/oauth2/redirect/google', (req, res, next) => {
+			passport.authenticate('google', {
+				successReturnToOrRedirect: '/logged-in',
+				failureRedirect: '/login'
+			})(req, res, next);
+		});
 	}
 
 	app.use('/assets', express.static(path.join(__dirname, '..', 'assets')));
 
 	app.use((req, res, next) => {
+		res.loginRedirect = (req, res) => {
+			res.cookie('redirect', { path: req.originalUrl, setPath: false });
+			return res.redirect('/login');
+		};
 		res.renderFile = (files, ctx) => {
 			if (!Array.isArray(files)) files = [files];
 			return res.render(path.join(__dirname, '../templates', ...files), ctx);
@@ -76,4 +83,7 @@ module.exports = function setMiddleware (app) {
 		req.loggedIn = res.locals.loggedIn = Boolean(req.user);
 		next();
 	});
+
 };
+
+
