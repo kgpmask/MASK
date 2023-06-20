@@ -3,6 +3,8 @@
 {% set thispage = 'login' %}
 {% set pagetitle = 'Login' %}
 
+{% set scripts = ['https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'] %}
+
 {% block pagecontent %}
-	<a class="undecorated-link" href="/login/federated/google"><img src="/assets/icons/google_sign_in.png" height="46"/></a>
+	<a id = "google-anchor" class="undecorated-link" href="/login/federated/google"><img src="/assets/icons/google_sign_in.png" height="46"/></a>
 {% endblock %}
