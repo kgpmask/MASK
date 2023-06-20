@@ -1,5 +1,5 @@
 # MASK
-The website for the Manga & Anime Society Kharagpur
+The website for the Manga and Anime Society Kharagpur
 
 ## Contributing
 
@@ -87,7 +87,7 @@ Additionally, the following blocks may be set:
 The default page template is:
 
 ```nunjucks
-{% extends "_base.njk" %}
+{% extends '_base.njk' %}
 
 {% set thispage = 'navref' %}
 {% set pagetitle = 'TITLEHERE' %}
@@ -101,7 +101,7 @@ The default page template is:
 The default newsletter template is:
 
 ```nunjucks
-{% extends "_newsletter.njk" %}
+{% extends '_newsletter.njk' %}
 
 {% set pagetitle = 'Month - Issue num' %}
 {% set pagecount = number_of_pages %}

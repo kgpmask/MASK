@@ -4,7 +4,7 @@ const router = require('express').Router();
 
 // Route for opening poll or poll list
 router.get('/:pollId?', async (req, res) => {
-	if (!req.loggedIn) return res.redirect('/login');
+	if (!req.loggedIn) return res.loginRedirect(req, res);
 	const pollId = req.params.pollId;
 	const activePolls = await dbh.getActivePolls();
 	if (!pollId) return res.renderFile('poll_list.njk', {
@@ -39,7 +39,7 @@ router.post('/', async (req, res) => {
 
 // Route for displaying poll results
 router.get('/results/:id?', async (req, res) => {
-	if (!req.loggedIn) return res.redirect('/login');
+	if (!req.loggedIn) return res.loginRedirect(req, res);
 	const pollId = req.params.id;
 	if (!pollId) return res.notFound('No ID given.');
 	const activePolls = await dbh.getActivePolls();
