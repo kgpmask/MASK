@@ -146,11 +146,11 @@ module.exports = {
 All routers are imported and used in `route.js` in the `src` folder. 
 
 ```js
-	const routerModules = (await fs.readdir(path.join(__dirname, '../routes'))).filter(file => file.endsWith('.js'));
-	routerModules.forEach(module => {
-		const { route, router } = require(`../routes/${module}`);
-		app.use(route, router);
-	});
+const routerModules = (await fs.readdir(path.join(__dirname, '../routes'))).filter(file => file.endsWith('.js'));
+routerModules.forEach(module => {
+	const { route, router } = require(`../routes/${module}`);
+	app.use(route, router);
+});
 ```
 
 ---
