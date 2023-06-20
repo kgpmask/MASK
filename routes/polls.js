@@ -1,6 +1,5 @@
-const dbh = require('../database/handler');
-
 const router = require('express').Router();
+const dbh = require('../database/handler');
 
 // Route for opening poll or poll list
 router.get('/:pollId?', async (req, res) => {
