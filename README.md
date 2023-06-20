@@ -86,7 +86,7 @@ The default page template is:
 
 The default newsletter template is:
 
-```nunjucks
+```jinja
 {% extends "_newsletter.njk" %}
 
 {% set pagetitle = 'Month - Issue num' %}
@@ -168,6 +168,7 @@ Ensure that pull requests pass tests (`npm test` for both lint and mocha tests).
 ## Credits:
 
 ### Current Contributors:
+
 - <a href="https://github.com/Goose-Of-War" target="_blank">Vidunram A R </a> (Lead)  
 - <a href="https://github.com/nishkalprakash" target="_blank">Nishkal Prakash</a>  
 - <a href="https://github.com/MokshithPV" target="_blank">Venkatsai Mokshith</a>  
@@ -177,6 +178,7 @@ Ensure that pull requests pass tests (`npm test` for both lint and mocha tests).
 - <a href="https://github.com/KarmaAkaB" target="_blank">Soumil Maiti</a>  
 
 ### Former Contributors:
+
 - <a href="https://github.com/PartMan7" target="_blank">Parth Mane</a>  
 - <a href="https://github.com/anjaniit23" target="_blank">Anjani Kumar</a>  
 - <a href="https://github.com/Yureien" target="_blank">Soham Sen</a>  
@@ -186,4 +188,5 @@ Ensure that pull requests pass tests (`npm test` for both lint and mocha tests).
 - <a href="https://github.com/ayush4ise" target="_blank">Ayush Parmar</a>  
 
 ### Open Source Contributors:
+
 - <a href="https://github.com/Baron105" target="_blank">Barun Parua</a>  
