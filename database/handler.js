@@ -134,7 +134,7 @@ async function addPost (data) {
 	return post.toObject();
 }
 
-async function getPolls(){
+async function getPolls () {
 	return Poll.find().lean().sort({ _id: -1 });
 }
 
@@ -154,8 +154,8 @@ async function deletePoll (id) {
 }
 
 async function editPoll (data) {
-	let poll = await Poll.findById(data.id);
-	console.log("hehe",poll);
+	const poll = await Poll.findById(data.id);
+	console.log("hehe", poll);
 	poll.title = data.title;
 	poll.endTime = data.endTime;
 	poll.records = data.records;
