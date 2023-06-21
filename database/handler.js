@@ -134,10 +134,33 @@ async function addPost (data) {
 	return post.toObject();
 }
 
+async function getPolls(){
+	return Poll.find().lean().sort({ _id: -1 });
+}
+
+async function getPoll (id) {
+	return Poll.findById(id);
+}
+
 async function addPoll (data) {
 	const poll = new Poll(data);
 	await poll.save();
 	return poll.toObject();
+}
+
+async function deletePoll (id) {
+	const postDeleted = Poll.findOneAndDelete({ '_id': id });
+	return postDeleted;
+}
+
+async function editPoll (data) {
+	let poll = await Poll.findById(data.id);
+	console.log("hehe",poll);
+	poll.title = data.title;
+	poll.endTime = data.endTime;
+	poll.records = data.records;
+	const updatedPoll = await poll.save();
+	return updatedPoll;
 }
 
 async function getActivePolls () {
@@ -317,8 +340,12 @@ module.exports = {
 	deletePost,
 	editPost,
 	addPost,
-	getMembersbyYear,
+	getPoll,
+	getPolls,
 	addPoll,
+	deletePoll,
+	editPoll,
+	getMembersbyYear,
 	getActivePolls,
 	getMonthlyPolls,
 	updatePoll,
