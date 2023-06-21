@@ -1,5 +1,4 @@
-const express = require("express");
-const router = express.Router();
+const router = require("express").Router();
 
 const dbh = PARAMS.mongoless ? {} : require("../database/handler");
 
@@ -8,7 +7,7 @@ router.use((req, res, next) => {
 		message: 'Sorry. This is currently not available in mongoless and userless mode.'
 	});
 
-	if (!req.loggedIn) return res.redirect('/login');
+	if (!req.loggedIn) return res.loginRedirect(req, res);
 	if (!req.user.permissions.find(perm => perm === 'governor')) return res.status(403).renderFile('404.njk', {
 		message: 'Access denied. You do not have the required permission.'
 	});
@@ -104,4 +103,7 @@ router.post('/member-management', async (req, res) => {
 	return res.send(response);
 });
 
-module.exports = router;
+module.exports = {
+	route: '/gov-portal',
+	router
+};

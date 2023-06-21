@@ -1,4 +1,4 @@
-{% extends "govportal/govportal.njk" %}
+{% extends 'govportal/govportal.njk' %}
 
 {% set thispage = 'govportal' %}
 {% set pagetitle = 'Governor Portal | Member Management' %}
@@ -127,7 +127,7 @@
 		}
 
 		function exportToNextYear () {
-			if(confirm("Are you sure you want to export current year's data to next year ?")){
+			if(confirm('Are you sure you want to export current year’s data to next year ?')){
 				const data = { functionType: 'export' };
 				postData (data);
 			}
@@ -152,7 +152,7 @@
 		function removeMemberTeam(name, rollNumber, team) {
 			//console.log(rollNumber);
 			if(confirm(`Are you sure you want to remove ${name} from ${team}`)) {
-				team = (team !== "Media & Newsletter" ? team[0] : 'n').toLowerCase();
+				team = (team !== 'Media & Newsletter' ? team[0] : 'n').toLowerCase();
 				const data = { functionType: 'removeTeam' , roll: `${rollNumber}`, team: `${team}` };
 				postData(data);
 			}
@@ -160,27 +160,27 @@
 
 		function addTeam(spanElement, memberTeams, memberName, memberRoll) {
 			//console.log('start'+ memberRoll);
-			const teamNames = ["AMV & Music", "Media & Newsletter", "Quiz", "WebDev", "Design & Arts"];
+			const teamNames = ['AMV & Music', 'Media & Newsletter', 'Quiz', 'WebDev', 'Design & Arts'];
 			memberTeams = memberTeams.split(',').map(team => team.trim());
 			const toAdd = teamNames.filter(team => !memberTeams.includes(team));
-			const dropDown = document.createElement("select");
-			dropDown.style = "height:28.5px;padding-left:5px;"
-			const defaultOption = document.createElement("option");
+			const dropDown = document.createElement('select');
+			dropDown.style = 'height:28.5px;padding-left:5px;'
+			const defaultOption = document.createElement('option');
 
-			defaultOption.text = "Select Team";
+			defaultOption.text = 'Select Team';
 			dropDown.add(defaultOption);
 
 			toAdd.forEach(team => {
-				const option = document.createElement("option");
+				const option = document.createElement('option');
 				option.value = team;
 				option.text = team;
 				dropDown.add(option);
 			});
 
-			dropDown.addEventListener("change", function(event) {
+			dropDown.addEventListener('change', function(event) {
 				let selectedTeam = event.target.value;
 				if (confirm(`Are you sure you want to add ${memberName} to ${selectedTeam}`)) {
-					selectedTeam = (selectedTeam !== "Media & Newsletter" ? selectedTeam[0] : 'n').toLowerCase();
+					selectedTeam = (selectedTeam !== 'Media & Newsletter' ? selectedTeam[0] : 'n').toLowerCase();
 					console.log(memberRoll);
 					const data = { functionType: 'addTeam', roll: `${memberRoll}`, team: `${selectedTeam}` };
 					postData(data);

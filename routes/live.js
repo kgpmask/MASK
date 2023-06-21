@@ -1,5 +1,4 @@
-const express = require('express');
-const router = express.Router();
+const router = require('express').Router();
 
 const checker = require('../src/checker.js');
 const dbh = PARAMS.mongoless ? {} : require('../database/handler');
@@ -163,4 +162,7 @@ router.post('/end', async (req, res) => {
 	return res.send('Ended!');
 });
 
-module.exports = router;
+module.exports = {
+	route: '/live',
+	router
+};

@@ -1,5 +1,4 @@
-const express = require('express');
-const router = express.Router();
+const router = require('express').Router();
 
 const checker = require('../src/checker.js');
 const dbh = PARAMS.mongoless ? {} : require('../database/handler');
@@ -14,4 +13,7 @@ router.post('/:newsletter/:puzzleType', async (req, res) => {
 	}
 });
 
-module.exports = router;
+module.exports = {
+	route: '/checker',
+	router
+};
