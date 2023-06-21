@@ -6,7 +6,7 @@
 {% macro input(name, type, text=null, options=null) %}
 	<div class="input-container">
 		<h4> {{ name | capitalize if not text else text }} </h4>
-		{% if type == 'text' or type == 'email' %}
+		{% if type == 'text' or type == 'email' or type == 'url' %}
 			<input type="text" name="{{ name }}">
 		{% elif type == "radio" %}
 			{% set options = [{ value: 'true', label: 'Yes' }, { label: 'No', value: 'false' }] if not options else options %}
@@ -25,7 +25,7 @@
 
 {% block pagecontent %}
 	<h1>Submit your content here!</h1>
-	<form action="javascript:console.log;">
+	<form action="javascript:" onsubmit="submitForm()">
 		{# Email Address #}
 		{{ input('email', 'email', 'E-mail Address') }}
 		{# Name #}
@@ -44,10 +44,33 @@
 		{# Content Link #}
 		{{ input('link', 'url', 'Please provide the Drive link of the content you wish to submit.') }}
 		{# Proof of Ownership #}
-		{{ input('proof', 'url', 'If possible, please provide any proof of ownership for the same') }}
+		{{ input('proof', 'text', 'If possible, please provide any proof of ownership for the same') }}
 		{# Social Media Handles to be mentioned #}
 		{{ input('social', 'text', "Mention any social media handles you\'d like to be taggged in") }}
+		{# Submit button #}
+		<button type="submit"> Submit </button>
 	</form>
+{% endblock %}
+
+{% block customjs %}
+	<script>
+		async function submitForm () {
+			if (!confirm("Do you want to submit the form? Check again if you want to change anything.")) return;
+			// Fetching data
+			const data = {};
+			['email', 'name', 'link', 'proof', 'social'].forEach(field => data[field] = document.querySelector(`input[name="${field}"]`).value.trim());
+			['member', 'type'].forEach(field => data[field] = [...document.querySelectorAll(`input[name="${field}"]`)].find(e => e.checked)?.value);
+			console.log(data);
+			// Validation (at least for the necessary fields)
+			if (!data.email) return alert('No email has been provided. Please check again.');
+			if (!data.name) return alert('No name has been provided. Use "Anonymous" if you do not want to share your name.');
+			if (!data.member) return alert('Select whether you are a member of IIT Kharagpur or not.');
+			if (!data.type) return alert('Select the type of content you are submitting.');
+			if (!data.link) return alert('No link has been provided.');
+			// Proof and social media handles are not mandatory, so...
+			// await axios.post('/submission', data);
+		}
+	</script>
 {% endblock %}
 
 {% block customcss %}
@@ -58,11 +81,10 @@
 			border: solid 1px var(--off-white);
 			margin: auto;
 			border-radius: 12px;
-			padding: 12px 5px;
+			padding: 12px 10px;
 			width: 70%;
 			background-color: rgba(255,255,255,0.13);
 			backdrop-filter: blur(5px);
-			padding-right: calc(5px + 2.68em);
 		}
 
 		h4 {
@@ -97,5 +119,18 @@
 		.option-container > label {
 			margin: 5px 10px;
 		}
+
+		button {
+			width: min(30vw, 120px);
+			height: 2.4em;
+			margin: 5px auto;
+			border: 0px;
+			border-radius: 6px;
+			padding: 5px;
+			background-color: var(--red);
+			color: var(--white);
+		}
 	</style>
 {% endblock %}
+
+{% set scripts = ['https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'] %}
