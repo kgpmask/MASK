@@ -278,8 +278,8 @@ async function exportToNextYear () {
 }
 
 async function addSubmission (ctx) {
-	const idPrefix = `^${new Date().toISOString().slice(0, 8)}`;
-	const _id = `${idPrefix}${(await Submission.find({ _id: { '$regex': idPrefix } })).length + 1}`;
+	const idPrefix = `${new Date().toISOString().slice(0, 8)}`;
+	const _id = `${idPrefix}${(await Submission.find({ _id: { '$regex': '^' + idPrefix } })).length + 1}`;
 	const submission = new Submission({
 		...ctx,
 		_id
