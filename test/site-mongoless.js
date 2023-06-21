@@ -6,7 +6,7 @@ const assert = require('assert');
 const axios = require('axios');
 const server = require('../src/mask.js');
 
-const pages = ['', 'home', 'art', 'videos', 'about', 'members', 'submissions', 'privacy', 'terms'];
+const pages = ['', 'home', 'art', 'videos', 'about', 'members', 'privacy', 'terms'];
 
 describe('Server (Mongoless mode)', () => {
 

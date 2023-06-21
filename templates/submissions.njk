@@ -54,6 +54,10 @@
 
 {% block customjs %}
 	<script>
+		axios.defaults.withCredentials = true;
+		axios.defaults.headers.common['X-CSRF-TOKEN'] = '{{ csrfToken }}';
+	</script>
+	<script>
 		async function submitForm () {
 			if (!confirm("Do you want to submit the form? Check again if you want to change anything.")) return;
 			// Fetching data
@@ -68,7 +72,8 @@
 			if (!data.type) return alert('Select the type of content you are submitting.');
 			if (!data.link) return alert('No link has been provided.');
 			// Proof and social media handles are not mandatory, so...
-			// await axios.post('/submission', data);
+			await axios.post('/submissions', data);
+			return alert("Your content has been successfully submitted.");
 		}
 	</script>
 {% endblock %}

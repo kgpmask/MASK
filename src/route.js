@@ -2,6 +2,11 @@ const fs = require('fs').promises;
 const path = require('path');
 
 async function link (app, nunjEnv) {
+	app.use(async (req, res, next) => {
+		await new Promise(r => r());
+		next();
+	});
+
 	// readdir and use routers like a madman
 	const routerModules = (await fs.readdir(path.join(__dirname, '../routes'))).filter(file => file.endsWith('.js'));
 	routerModules.forEach(module => {

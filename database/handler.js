@@ -5,7 +5,7 @@ const Member = require('./schemas/Member');
 const Newsletter = require('./schemas/Newsletter');
 const Poll = require('./schemas/Poll');
 const Post = require('./schemas/Post');
-const { findOne } = require('./schemas/User');
+const Submission = require('./schemas/Subnmission');
 
 // Handle newly registered user or normal login
 async function createNewUser (profile) {
@@ -277,7 +277,15 @@ async function exportToNextYear () {
 	}
 }
 
-
+async function addSubmission (ctx) {
+	const idPrefix = `^${new Date().toISOString().slice(0, 8)}`;
+	const _id = `${idPrefix}${(await Submission.find({ _id: { '$regex': idPrefix } })).length + 1}`;
+	const submission = new Submission({
+		...ctx,
+		_id
+	});
+	return submission.save();
+}
 
 
 module.exports = {
@@ -302,5 +310,6 @@ module.exports = {
 	removeTeam,
 	getCurrentMembers,
 	exportToNextYear,
-	addTeam
+	addTeam,
+	addSubmission
 };
