@@ -24,6 +24,7 @@
 
 
 {% block pagecontent %}
+	<div class="message hidden"></div>
 	<h1>Submit your content here!</h1>
 	<form action="javascript:" onsubmit="submitForm()">
 		{# Email Address #}
@@ -71,9 +72,24 @@
 			if (!data.member) return alert('Select whether you are a member of IIT Kharagpur or not.');
 			if (!data.type) return alert('Select the type of content you are submitting.');
 			if (!data.link) return alert('No link has been provided.');
+			if (!data.proof) delete data.proof;
+			if (!data.social) delete data.social;
 			// Proof and social media handles are not mandatory, so...
-			await axios.post('/submissions', data);
-			return alert("Your content has been successfully submitted.");
+			let responseClass, responseMessage;
+			try {
+				await axios.post('/submissions', data);
+				responseClass = 'success';
+				responseMessage = 'Successfullly Added';
+			} catch (err) {
+				responseClass = 'error';
+				responseMessage = 'Error while adding';
+			}
+			const messageElement = document.querySelector('.message');
+			messageElement.innerHTML = responseMessage;
+			messageElement.classList.add(responseClass);
+			messageElement.classList.remove('hidden');
+			setTimeout(function () {messageElement.classList.add('hidden')}, 2_000);
+			if (responseClass === 'success') setTimeout( () => window.location.href = '/', 3_000);
 		}
 	</script>
 {% endblock %}
@@ -134,6 +150,31 @@
 			padding: 5px;
 			background-color: var(--red);
 			color: var(--white);
+		}
+
+		.message {
+			position: absolute;
+			top: 0;
+			right: calc(50vw - 220px);
+			padding: 20px;
+			z-index: 1;
+			color: #fff;
+			font-weight: 600;
+			font-size: 18px;
+			width: 400px;
+			transform-origin: top;
+			transition: transform 0.3s ease;
+			border-bottom-left-radius: 6px;
+			border-bottom-right-radius: 6px;
+		}
+		.error {
+			background-color: rgba(255, 51, 51, 0.85);
+		}
+		.success {
+			background-color: rgba(75, 189, 67, 0.85);
+		}
+		.hidden {
+			transform: scaleY(0);
 		}
 	</style>
 {% endblock %}
