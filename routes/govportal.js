@@ -34,11 +34,21 @@ router.get('/edit-post/:id', async (req, res) => {
 	return res.renderFile(`govportal/edit-post.njk`, { ...data, date: data.date.toISOString().slice(0, 10) });
 });
 
+router.get('/polls-management', async (req, res) => {
+	const polls = await dbh.getPolls()
+	return res.renderFile(`govportal/polls-management.njk`, { polls });
+});
 
 router.get('/add-poll', (req, res) => {
 	const date = new Date();
 	date.setDate(date.getDate() + 7);
 	return res.renderFile(`govportal/add-poll.njk`, { date: date.toISOString().slice(0, 10) });
+});
+
+router.get('/edit-poll/:id', async (req, res) => {
+	const id = req.params.id;
+	const poll = (await dbh.getPoll(id)).toObject();
+	return res.renderFile(`govportal/edit-poll.njk`, { ...poll, endTime: poll.endTime.toISOString().slice(0, 10) });
 });
 
 router.get('/member-management', async (req, res) => {
@@ -139,5 +149,34 @@ router.patch('/edit-post', async (req, res) => {
 		return res.send({ success: false, message: "Something Went Wrong" });
 	}
 });
+
+router.post('/polls-management', async (req, res) => {
+	const data = req.body.data;
+	let response;
+	try {
+		response = await dbh.deletePoll(data);
+		// console.log(response)
+		return res.send({ success: true, message: "Successfully deleted post", response: response });
+	} catch (e) {
+		return res.send({ success: false, message: "Something Went Wrong" });
+	}
+});
+
+router.patch('/edit-poll', async (req, res) => {
+	const data = req.body.data;
+	if (!data.title || !data.records.length) return res.send({ success: false, message: "Empty Data Provided" });
+	data.endTime = new Date(data.endTime).toISOString();
+	const now = new Date();
+	if (!(now < new Date(data.endTime))) return res.send({ success: false, message: "Invalid End Date" });
+	try {
+		response = await dbh.editPoll(data);
+		console.log(response);
+		return res.send({ success: true, message: "Successfully Updated Poll", response: response });
+	} catch (e) {
+		console.log(e);
+		return res.send({ success: false, message: "Something Went Wrong" });
+	}
+});
+
 
 module.exports = router;
