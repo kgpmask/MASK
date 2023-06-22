@@ -1,7 +1,7 @@
 {% extends '_base.njk' %}
 
 {% set thispage = 'events' %}
-{% set pagedesc = 'At MASK, we engage in a variety of activities that celebrate the creativity and beauty of manga and anime. View every past events organised by us. ' %}
+{% set pagedesc = pagedesc if pagedesc else 'Events in MASK' %}
 
 {% macro slide(folder, img) %}
 	<div class="slide"> <img src="/assets/events/{{ folder }}/{{ img }}"> </div>
