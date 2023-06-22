@@ -33,6 +33,6 @@ router.get('/', async (req, res) => {
 
 
 module.exports = {
-	route: 'profile/',
+	route: '/profile',
 	router
 };
