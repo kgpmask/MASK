@@ -19,9 +19,6 @@ router.get('/prizes', (req, res) => {
 	return res.renderFile('events/prizes.njk', { prizes });
 });
 
-router.get('/submissions', (req, res) => {
-	return res.renderFile('submissions.njk');
-});
 
 router.get('/success', (req, res) => {
 	// TODO: Rename this to /quiz/success
