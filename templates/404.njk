@@ -2,6 +2,7 @@
 
 {% set thispage = '404' %}
 {% set pagetitle = pagetitle if pagetitle else '404' %}
+{% set pagedesc = 'Errr' %}
 
 {% block pagecontent %}
 	<h1>{% if message %} {{message}} {% else %} It doesn't look like this page exists! {% endif %}</h1>

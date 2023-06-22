@@ -1,6 +1,7 @@
 {% extends "_base.njk" %}
 
 {% set thispage = 'newsletters' %}
+{# {% set pagedesc = '' %} #}
 {% macro nextprev() %}
 	<div class="controls">
 		<a{% if adjs[0] %} href="/newsletters/{{ adjs[0] }}"{% endif %}><button class="rel" {{ 'disabled' if not adjs[0] }}><span class="buttonicon" id="flipped">&#x279C;</span><span class="buttontext">Previous</span></button></a>
