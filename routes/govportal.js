@@ -3,7 +3,7 @@ const router = require("express").Router();
 const dbh = PARAMS.mongoless ? {} : require("../database/handler");
 
 router.use((req, res, next) => {
-	if (PARAMS.userless) return res.notFound('404.njk', {
+	if (PARAMS.userless && !PARAMS.jsonuser) return res.notFound('404.njk', {
 		message: 'Sorry. This is currently not available in mongoless and userless mode.'
 	});
 
