@@ -1,4 +1,4 @@
-{% extends "_base.njk" %}
+{% extends '_base.njk' %}
 
 {% set thispage = 'events' %}
 {% set pagetitle = 'Events' %}
@@ -205,7 +205,7 @@
 			event.preventDefault();
 			event.stopPropagation();
 		}
-		window.addEventListener("keydown", function (event) {
+		window.addEventListener('keydown', function (event) {
 			e = 0;
 			n = event.keyCode;
 			keys = [48, 64, 96]; //[48: 1-4, 64 A-D, 96:NUM1-4]

@@ -1,5 +1,4 @@
-const express = require('express');
-const router = express.Router();
+const router = require('express').Router();
 
 router.get('/', (req, res) => {
 	return res.renderFile("event-articles/py_events.njk");
@@ -25,4 +24,7 @@ router.get('/suzume', (req, res) => {
 	return res.renderFile("event-articles/suzumetrip.njk");
 });
 
-module.exports = router;
+module.exports = {
+	route: '/events',
+	router
+};

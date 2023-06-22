@@ -6,6 +6,7 @@ const session = require('express-session');
 const fs = require('fs').promises;
 const passport = require('passport');
 const path = require('path');
+const sampleJsonUser = require('./samples/user.json');
 
 const login = require('./login.js');
 
@@ -13,7 +14,13 @@ module.exports = function setMiddleware (app) {
 	app.use(express.json());
 	app.use(express.urlencoded({ extended: true }));
 	app.use(cookieParser());
-
+	if (PARAMS.jsonuser) {
+		app.use((req, res, next) => {
+			req.user = sampleJsonUser;
+			req.loggedIn = true;
+			next();
+		});
+	}
 	if (!PARAMS.userless) {
 		app.use(session({
 			secret: process.env.SESSION_SECRET,
@@ -38,15 +45,22 @@ module.exports = function setMiddleware (app) {
 	// Pre-routing
 	if (!PARAMS.userless) {
 		app.get('/login/federated/google', passport.authenticate('google'));
-		app.get('/oauth2/redirect/google', passport.authenticate('google', {
-			successReturnToOrRedirect: '/',
-			failureRedirect: '/login'
-		}));
+
+		app.get('/oauth2/redirect/google', (req, res, next) => {
+			passport.authenticate('google', {
+				successReturnToOrRedirect: '/logged-in',
+				failureRedirect: '/login'
+			})(req, res, next);
+		});
 	}
 
 	app.use('/assets', express.static(path.join(__dirname, '..', 'assets')));
 
 	app.use((req, res, next) => {
+		res.loginRedirect = (req, res) => {
+			res.cookie('redirect', { path: req.originalUrl, setPath: false });
+			return res.redirect('/login');
+		};
 		res.renderFile = (files, ctx) => {
 			if (!Array.isArray(files)) files = [files];
 			return res.render(path.join(__dirname, '../templates', ...files), ctx);
@@ -73,7 +87,11 @@ module.exports = function setMiddleware (app) {
 		res.locals.userless = PARAMS.userless;
 		res.locals.mongoless = PARAMS.mongoless;
 		res.locals.quizFlag = PARAMS.quiz;
+		res.locals.jsonuser = PARAMS.jsonuser;
 		req.loggedIn = res.locals.loggedIn = Boolean(req.user);
 		next();
 	});
+
 };
+
+

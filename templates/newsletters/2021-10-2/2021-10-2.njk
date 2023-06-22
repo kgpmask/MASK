@@ -1,4 +1,4 @@
-{% extends "_newsletter.njk" %}
+{% extends '_newsletter.njk' %}
 
 {% set pagetitle = 'October - Issue 2' %}
 {% set pagedesc = 'Check out reviews of some Horrer/Thriller anime titles like Tokyo Ghoul, Promise Neverland. Also enjoy exciting Wordsearch at the end.' %}
@@ -6,11 +6,11 @@
 {# {% set pagecount = 6 %} #}
 
 {% block coverpage %}
-<div class="page cover-default" id="cover-page">
-	<img id="cover-logo" src="/assets/transparent_logo.png"/>
-	<br/>Manga & Anime<br/>Society Kharagpur<br/>
-	<br/>
-	<div id="cover-page-title">{{ pagetitle }}</div>
+	<div class="page cover-default" id="cover-page">
+		<img id="cover-logo" src="/assets/transparent_logo.png"/>
+		<br/>Manga And Anime<br/>Society Kharagpur<br/>
+		<br/>
+		<div id="cover-page-title">{{ pagetitle }}</div>
 	</div>
 {% endblock %}
 
@@ -22,8 +22,8 @@
 
 {% block prescript %}
 	<script>
-		"use strict";
-		const crossMatrix = [["-","-","-","-"," ","-","-","-","-","-","-","-","-","-","-"],["-","-","-","-"," ","-","-","-"," ","-","-","-"," "," "," "],["-","-","-"," "," "," "," "," "," "," ","-"," ","-"," ","-"],["-","-","-","-"," ","-","-","-"," ","-","-"," ","-"," ","-"],["-"," "," "," "," "," ","-"," "," "," "," "," "," "," ","-"],["-"," ","-","-"," ","-","-","-"," ","-","-","-","-","-","-"],["-"," ","-"," "," "," ","-","-","-","-","-","-","-","-","-"],["-"," ","-","-"," ","-","-","-","-","-","-","-","-","-","-"],[" "," "," "," "," "," ","-","-","-","-","-","-","-","-","-"],["-","-"," ","-"," ","-","-","-","-","-","-","-","-","-","-"],["-","-"," ","-","-","-","-","-","-","-","-","-","-","-","-"]];
+		'use strict';
+		const crossMatrix = [['-','-','-','-',' ','-','-','-','-','-','-','-','-','-','-'],['-','-','-','-',' ','-','-','-',' ','-','-','-',' ',' ',' '],['-','-','-',' ',' ',' ',' ',' ',' ',' ','-',' ','-',' ','-'],['-','-','-','-',' ','-','-','-',' ','-','-',' ','-',' ','-'],['-',' ',' ',' ',' ',' ','-',' ',' ',' ',' ',' ',' ',' ','-'],['-',' ','-','-',' ','-','-','-',' ','-','-','-','-','-','-'],['-',' ','-',' ',' ',' ','-','-','-','-','-','-','-','-','-'],['-',' ','-','-',' ','-','-','-','-','-','-','-','-','-','-'],[' ',' ',' ',' ',' ',' ','-','-','-','-','-','-','-','-','-'],['-','-',' ','-',' ','-','-','-','-','-','-','-','-','-','-'],['-','-',' ','-','-','-','-','-','-','-','-','-','-','-','-']];
 		const wordMatrix = `K A U K H Q Z N S H I N Y A X
 O R L E N U K L Q P B Q Z X H
 J I I I C A R L E Y K B I V J
@@ -33,14 +33,14 @@ Z U Y K I K O N A K A N O K S
 U P A E T W X Z M E N T N S A
 M X S S O B Y U T O S A K I T
 I U E H E R I K O O Y X T P O
-S A L I B H Q S F V U K V L T`.replace(/\t/g, '').split("\n").map(line => line.split(" "));
+S A L I B H Q S F V U K V L T`.replace(/\t/g, '').split('\n').map(line => line.split(' '));
 		const letterSpaces = [];
-		const tempWords = `CARLEY\nDOUGLAS\nERIKO\nIKUYA\nIZUMI\nKAITO\nKEI\nKOJI\nKONAKANO\nRITSU\nSATO\nSHINYA\nSOKABE\nTAKESHI\nYUTOSAKI\n`.split("\n").map(word => word.replace(/\t/g, '')), words = tempWords.map(word => word.replace(/[ -]/g, '').toUpperCase());
+		const tempWords = `CARLEY\nDOUGLAS\nERIKO\nIKUYA\nIZUMI\nKAITO\nKEI\nKOJI\nKONAKANO\nRITSU\nSATO\nSHINYA\nSOKABE\nTAKESHI\nYUTOSAKI\n`.split('\n').map(word => word.replace(/\t/g, '')), words = tempWords.map(word => word.replace(/[ -]/g, '').toUpperCase());
 		(() => {
 			const maxDimension = Math.max(crossMatrix.length, crossMatrix[0].length);
 			const root = document.querySelector(':root');
-			root.style.setProperty('--crossword-cell-size', (40 * 10 / maxDimension - 4) + "px");
-			root.style.setProperty('--crossword-font-size', (10 / maxDimension) ** (1 / 2) + "em");
+			root.style.setProperty('--crossword-cell-size', (40 * 10 / maxDimension - 4) + 'px');
+			root.style.setProperty('--crossword-font-size', (10 / maxDimension) ** (1 / 2) + 'em');
 			crossMatrix.forEach((row, i) => {
 				row.forEach((char, j) => {
 					if (char === ' ') letterSpaces.push([i, j]);

@@ -1,4 +1,4 @@
-{% extends "_base.njk" %}
+{% extends '_base.njk' %}
 
 {% set thispage = 'profile' %}
 {% set pagetitle = 'Profile' %}
@@ -17,7 +17,7 @@
 			<div>Quizzes attempted: {{ quizzes | join(', ') if quizzes | length else '-' }}</div>
 		</div>
 	</div>
-	<a href="/logout"><button class="rel">Logout</button></a>
+	<a href="/logout"><button class="rel" {{ 'disabled' if jsonuser }}>Logout</button></a>
 {% endblock %}
 
 {% block customcss %}

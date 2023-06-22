@@ -1,132 +1,184 @@
+{% extends '_base.njk' %}
 
 {% set thispage = 'submissions' %}
 {% set pagetitle = 'Submit!' %}
-{% extends "_base.njk" %}
+
 {% set pagedesc = 'Submit your artwork here' %}
 
+{% macro input(name, type, text=null, options=null) %}
+	<div class="input-container">
+		<h4> {{ name | capitalize if not text else text }} </h4>
+		{% if type == 'text' or type == 'email' or type == 'url' %}
+			<input type="text" name="{{ name }}">
+		{% elif type == "radio" %}
+			{% set options = [{ value: 'true', label: 'Yes' }, { label: 'No', value: 'false' }] if not options else options %}
+			<div class="option-container">
+				{% for option in options %}
+					<label for="{{ name + '-' + option.value }}">
+						<input type="radio" name="{{ name }}" value={{ option.value }} id="{{ name + '-' + option.value }}"> {{ option.label }} 
+					</label>
+				{% endfor %}
+			</div>
+		{% endif %}
+	</div>
+{% endmacro %}
+
+
+
 {% block pagecontent %}
-	<!--h1 id="formpre" style="text-align: center;">Submit your content here!</h1-->
-	<script src="/assets/GoogleFormStyler.js" form="https://docs.google.com/forms/d/e/1FAIpQLSfwnkz0L_oTyHPgzCtWg9xusAmiQbG4AjMA2zCRjsRu0959cw/viewform?embedded=true&lang=en"></script>
-	<style>
-		a[href] {
-			color: var(--white) !important;
-		}
+	<div class="message hidden"></div>
+	<h1>Submit your content here!</h1>
+	<form action="javascript:" onsubmit="submitForm()">
+		{# Email Address #}
+		{{ input('email', 'email', 'E-mail Address') }}
+		{# Name #}
+		{{ input('name', 'text', "Your Name (or a Psudonym, if you prefer)") }}
+		{# Member of IIT Kharagpur? #}
+		{{ input('member', 'radio', "Are you a member of IIT Kharagpur?") }}
+		{# Content type #}
+		{{ input('type', 'radio', 'What kind of content are you submitting?', [
+			{ label: 'Art (Digital)', value: 'dig-art' },
+			{ label: 'Art (Traditional)', value: 'trd-art' },
+			{ label: 'Video (AMV)', value: 'amv-vid' },
+			{ label: 'Video (Animation)', value: 'ani-vid' },
+			{ label: 'Video (Instrumental Music)', value: 'ins-mus' },
+			{ label: 'Video (Vocal Music)', value: 'voc-mus' }
+		]) }}
+		{# Content Link #}
+		{{ input('link', 'url', 'Please provide the Drive link of the content you wish to submit.') }}
+		{# Proof of Ownership #}
+		{{ input('proof', 'text', 'If possible, please provide any proof of ownership for the same') }}
+		{# Social Media Handles to be mentioned #}
+		{{ input('social', 'text', "Mention any social media handles you\'d like to be taggged in") }}
+		{# Submit button #}
+		<button type="submit"> Submit </button>
+	</form>
+{% endblock %}
 
-		.navbar-full{
-			font-family: Ubuntu,Roboto,Arial,Open Sans,sans-serif;
-		}
-
-		body {
-			background-color: var(--dark-gray) !important;
-			text-align: left;
-		}
-		/*Form as a whole*/
-
-		form>div>div>div>div {
-			background-color: rgba(20, 20, 20, 0.8);
-		}
-
-		.teQAzf {
-			margin: auto;
-			max-width: 90vw;
-			width: 900px;
-		}
-
-		/*Form name class*/
-		.m7w29c {
-			background-color: transparent;
-			border: 1px solid var(--ghost-gray);
-			color: var(--white) !important;
-		}
-		.md0UAd {
-			color: #ae2f27 !important;
-		}
-
-		.TYUeKb {
-			color: #4c8adb !important;
-		}
-
-		.vnumgf {
-			color: #c8463d !important;
-		}
-
-		.RdH0ib .zHQkBf, .RdH0ib .tL9Q4c {
-			border-radius: 5px !important;
-		}
-
-		/*geS5n is the question div*/
-		.geS5n {
-			border: 1px solid var(--ghost-gray);
-			background-color: transparent !important;
-		}
-
-		/*M7eMe is the question in the div above, the other 3 are divs in the form heading*/
-		.M7eMe, .F9yp7e, .cBGGJ, .kesdnc{
-			color: var(--off-white) !important;
-			text-align: left;
-		}
-
-		/*Question div...*/
-		.z12JJ {
-			margin-bottom: 2px;
-		}
-
-		/*aDTYNe is the span used for options*/
-		.aDTYNe {
-			color: var(--off-white) !important;
-		}
-
-		input, .tL9Q4c {
-			justify-self: left;
-			background-color: #22222299 !important;
-			color: var(--white) !important;
-		}
-
-		/*Some Background Elements*/
-		.DE3NNc.CekdCb {
-			background-color: rgba(0, 0, 0, 0) !important;
-		}
-
-		.T2dutf, .xpWfed {
-			display: none;
-		}
-
-		.QvWxOd, .RVEQke {
-			background-color: var(--red) !important;
-			color: var(--abyss) !important;
-		}
-
-		/*'Clear form' text*/
-		.TFBnVe{
-			color: var(--red) !important;
-		}
-
-	</style>
+{% block customjs %}
 	<script>
-		function fixFavicon () {
-			link = document.createElement('link');
-			link.rel = 'shortcut icon';
-			link.href = '/assets/favicon.ico';
-			document.getElementsByTagName('head')[0].appendChild(link);
+		axios.defaults.withCredentials = true;
+		axios.defaults.headers.common['X-CSRF-TOKEN'] = '{{ csrfToken }}';
+	</script>
+	<script>
+		async function submitForm () {
+			if (!confirm("Do you want to submit the form? Check again if you want to change anything.")) return;
+			// Fetching data
+			const data = {};
+			['email', 'name', 'link', 'proof', 'social'].forEach(field => data[field] = document.querySelector(`input[name="${field}"]`).value.trim());
+			['member', 'type'].forEach(field => data[field] = [...document.querySelectorAll(`input[name="${field}"]`)].find(e => e.checked)?.value);
+			console.log(data);
+			// Validation (at least for the necessary fields)
+			if (!data.email) return alert('No email has been provided. Please check again.');
+			if (!data.name) return alert('No name has been provided. Use "Anonymous" if you do not want to share your name.');
+			if (!data.member) return alert('Select whether you are a member of IIT Kharagpur or not.');
+			if (!data.type) return alert('Select the type of content you are submitting.');
+			if (!data.link) return alert('No link has been provided.');
+			if (!data.proof) delete data.proof;
+			if (!data.social) delete data.social;
+			// Proof and social media handles are not mandatory, so...
+			let responseClass, responseMessage;
+			try {
+				await axios.post('/submissions', data);
+				responseClass = 'success';
+				responseMessage = 'Successfullly Added';
+			} catch (err) {
+				responseClass = 'error';
+				responseMessage = 'Error while adding';
+			}
+			const messageElement = document.querySelector('.message');
+			messageElement.innerHTML = responseMessage;
+			messageElement.classList.add(responseClass);
+			messageElement.classList.remove('hidden');
+			setTimeout(function () {messageElement.classList.add('hidden')}, 2_000);
+			if (responseClass === 'success') setTimeout( () => window.location.href = '/', 3_000);
 		}
-		let firstLoad = false;
-		const ifrm = document.createElement("iframe");
-		ifrm.setAttribute("name", "swallow");
-		ifrm.setAttribute("id", "swallow");
-		document.body.appendChild(ifrm);
-		ifrm.style.display = 'none';
-		document.forms[0].target = "swallow";
-		document.getElementById('swallow').onload = () => {
-			if (firstLoad === false) return firstLoad = true;
-			const form = document.getElementsByTagName('form')[0];
-			const parent = form.parentNode;
-			form.remove();
-			const submitted = document.createElement('div');
-			const home = document.createElement('div');
-			submitted.setAttribute('class', 'text');
-			submitted.innerHTML = '<h1>Thank you for submitting! We\'ll get back to you soon.</h1>';
-			parent.appendChild(submitted);
-		}
-		fixFavicon();
 	</script>
 {% endblock %}
+
+{% block customcss %}
+	<style>
+		form {
+			display: flex;
+			flex-direction: column;
+			border: solid 1px var(--off-white);
+			margin: auto;
+			border-radius: 12px;
+			padding: 12px 10px;
+			width: 70%;
+			background-color: rgba(255,255,255,0.13);
+			backdrop-filter: blur(5px);
+		}
+
+		h4 {
+			color: var(--off-white);
+			margin-inline-start: 0.3em;
+			margin-block-end: 0.4em;
+		}
+
+		.input-container {
+			margin: 10px 5vw;
+			text-align: left;
+		}
+
+		.input-container > input {
+			background-color: rgba(255, 255, 255, 0.07);
+			font-weight: 300;
+			width: 90%;
+			border-radius: 5px;
+			padding: 10px;
+			border: 2px solid var(--light-gray);
+			color: #fff;
+			outline: none;
+		}
+
+		.option-container {
+			display: flex;
+			flex-wrap: wrap;
+			flex-direction: row;
+			align-items: center;
+		}
+
+		.option-container > label {
+			margin: 5px 10px;
+		}
+
+		button {
+			width: min(30vw, 120px);
+			height: 2.4em;
+			margin: 5px auto;
+			border: 0px;
+			border-radius: 6px;
+			padding: 5px;
+			background-color: var(--red);
+			color: var(--white);
+		}
+
+		.message {
+			position: absolute;
+			top: 0;
+			right: calc(50vw - 220px);
+			padding: 20px;
+			z-index: 1;
+			color: #fff;
+			font-weight: 600;
+			font-size: 18px;
+			width: 400px;
+			transform-origin: top;
+			transition: transform 0.3s ease;
+			border-bottom-left-radius: 6px;
+			border-bottom-right-radius: 6px;
+		}
+		.error {
+			background-color: rgba(255, 51, 51, 0.85);
+		}
+		.success {
+			background-color: rgba(75, 189, 67, 0.85);
+		}
+		.hidden {
+			transform: scaleY(0);
+		}
+	</style>
+{% endblock %}
+
+{% set scripts = ['https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'] %}
