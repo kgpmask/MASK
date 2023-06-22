@@ -3,8 +3,36 @@
 {% set thispage = 'newsletters' %}
 {% set pagetitle = 'Newsletters' %}
 
+{% macro card(name, link, width=200) %}
+	<button class="card" onclick="window.location.href = '/newsletters/{{ link }}';">
+		<img class="cover" src="../assets/releases/{{ link }}/cover.webp" onerror="this.src='../assets/logo.jpeg'" style="width: {{ width }}px; height: calc({{ width }}px * 3400 / 2400);"/>
+		<div class="desc"><p style="font-size: calc({{ width }}px * 0.06);">{{ name }}</p></div>
+	</button>
+{% endmacro %}
+
 {% block pagecontent %}
 	{% block extrainfo %}{% endblock %}
+	<div class="container">
+		<div class="latest">
+			<h3>Lates Release</h3>
+			{% for letter in letters %}
+				{% if loop.first %}
+					{{ card(letter.name, letter.link, 500) }}	
+				{% endif %}
+			{% endfor %}
+		</div>
+		<div class="previous">
+			<h3>Previous releases</h3>
+			<div class="list">
+				{% for letter in letters %}
+					{% if not loop.first %}
+						{{ card(letter.name, letter.link) }}	
+					{% endif %}
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+	{#
 	<div id="accordion-container">
 	{% for year in years %}
 		<button class="accordion">&nbsp;&nbsp;&nbsp;{{ year.title }}</button>
@@ -22,12 +50,59 @@
 			{% endfor %}
 		</div></div>
 	{% endfor %}
-	</div>
+	</div> #}
 {% endblock %}
 
 {% block customcss %}
 	<style>
-		#accordion-container {
+		.container {
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+		}
+		.container > div {
+			border: 2px solid rgba(255,255,255,0.1);
+			border-radius: 12px;
+			margin: 10px;
+			padding: 12px 5px;
+			background-color: rgba(255,255,255,0.13);
+			backdrop-filter: blur(5px);
+		}
+		.previous {
+			max-width: 50%;
+		}
+		.list {
+			display: flex;
+			flex-wrap: wrap;
+		}
+		.card {
+			margin: 25px;
+			position: relative;
+			border: none;
+			background: none;
+		}
+		.desc {
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			height: 100%;
+			width: 100%;
+			background: linear-gradient(to top, black, transparent);
+			color: var(--light-gray);
+			opacity: 0;
+			transition: 0.3s ease;
+		}
+		.desc > p{
+			position: absolute;
+			bottom: 10px;
+			width: 100%
+		}
+		.card:hover .desc{
+			opacity: 1;
+		}
+		{# #accordion-container {
 			width: 60%;
 			margin: auto;
 			padding: 40px;
@@ -105,7 +180,7 @@
 			background-color: var(--gray);
 			font-size: 0.7em;
 			border-radius: 10px;
-		}
+		} #}
 	</style>
 {% endblock %}
 
