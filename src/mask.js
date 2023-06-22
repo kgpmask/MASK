@@ -13,8 +13,6 @@ const PORT = process.env.PORT ?? 6969;
 const route = require("./route.js");
 const socketio = require('socket.io')();
 const initMiddleware = require('./middleware.js');
-const jsonuser = require('./samples/user.json');
-
 
 global.app = express();
 const waitForDB = PARAMS.mongoless ? Promise.resolve({}) : DB.init();
