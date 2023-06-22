@@ -3,8 +3,5 @@
     "name": "MASK user",
     "picture": "https://lh3.googleusercontent.com/a/ALm5wu2RSxfT5t7kiQhkIGaUw9WvknvNP-1ZEqAlcEgTSg=s96-c",
     "__v": 0,
-    "permissions": [
-      "quizmaster",
-      "governor"
-    ]
+    "permissions": []
 }
