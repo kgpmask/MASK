@@ -4,12 +4,12 @@ const dbh = PARAMS.mongoless ? {} : require('../database/handler');
 
 router.get('/', async (req, res) => {
 	if (!req.loggedIn) return res.redirect('/');
-	const user = await dbh.getUserStats(req.user._id);
+	const user = !PARAMS.jsonuser ? await dbh.getUserStats(req.user._id) : {};
 	return res.renderFile('profile.njk', {
 		name: req.user.name,
 		picture: req.user.picture,
-		points: user.points,
-		quizzes: user.quizData.map(stamp => {
+		points: user?.points,
+		quizzes: user?.quizData?.map(stamp => {
 			const months = [
 				'-',
 				'January',
