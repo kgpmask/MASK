@@ -8,9 +8,10 @@ const aliases = {
 	p: 'prod',
 	q: 'quiz',
 	u: 'userless',
-	t: 'test'
+	t: 'test',
+	j: 'jsonuser'
 };
-const validParams = ['dev', 'local', 'prod', 'mongoless', 'userless', 'quiz', 'test', 'maintenance'];
+const validParams = ['dev', 'local', 'prod', 'mongoless', 'userless', 'quiz', 'test', 'maintenance', 'jsonuser'];
 if (!global.PARAMS) {
 	if (process.env['NODE_ENV'] === 'production') process.env.prod = true;
 	const shorts = new Set();
@@ -26,6 +27,7 @@ if (!global.PARAMS) {
 }
 
 exports.init = () => {
+
 	if (PARAMS.dev && PARAMS.prod) {
 		console.log('Production access is disabled with dev mode. Please use the testing DB instead.');
 		process.exit(1);
@@ -54,6 +56,7 @@ exports.init = () => {
 		PARAMS.userless = true;
 		console.log('Operating in userless mode.');
 	}
+	if (PARAMS.jsonuser) PARAMS.userless = true;
 	if (!PARAMS.prod) process.env.MONGO_URL = process.env.MONGO_TEST_URL;
 	if (PARAMS.local) process.env.MONGO_URL = 'mongodb://127.0.0.1/mask';
 	if (PARAMS.maintenance) PARAMS.mongoless = PARAMS.userless = true;
