@@ -1,7 +1,7 @@
 {% extends '_base.njk' %}
 
 {% set thispage = 'polls' %}
-{% set pagetitle = poll.title %}
+{% set pagetitle = 'Poll:' + poll.title %}
 
 {% block pagecontent %}
 	<div class="message hidden"></div>

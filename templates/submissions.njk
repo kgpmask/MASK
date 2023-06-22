@@ -3,6 +3,8 @@
 {% set thispage = 'submissions' %}
 {% set pagetitle = 'Submit!' %}
 
+{% set pagedesc = 'Submit your content here to release it form MASK, be it art work, AMVs or music covers.' %}
+
 {% macro input(name, type, text=null, options=null) %}
 	<div class="input-container">
 		<h4> {{ name | capitalize if not text else text }} </h4>
