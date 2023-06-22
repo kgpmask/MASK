@@ -34,7 +34,7 @@ router.post('/', async (req, res) => {
 	try {
 		await new Promise(async (resolve, reject) => {
 			// Keeping timeout this small because I know it won't work
-			setTimeout(() => reject(new Error('60 seconds time out')), 60_000);
+			setTimeout(() => reject(new Error('60 seconds time out')), 75_000);
 			await Tools.updateCode();
 			return resolve('Successfully updated');
 		});
