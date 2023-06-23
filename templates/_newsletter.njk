@@ -5,11 +5,13 @@
 
 {% set pagecount = pages.length %}
 
+
+
 {% macro nextprevnewsletter() %}
 	<div class="controls">
 		<a{% if adjs[0] %} href="/newsletters/{{ adjs[0] }}"{% endif %}><button class="rel" {{ 'disabled' if not adjs[0] }}><span class="buttonicon">&#x21B0;</span><span class="buttontext">Prev Newsletter</span></button></a>
 		<a href="/newsletters/{{ 'random' if (adjs[0] or adjs[1]) else '' }}"><button class="rel" {{ 'disabled' if not (adjs[0] or adjs[1]) }}><span class="buttonicon" id="random"><span class="icon-random"></span></span><span class="buttontext">Random</span></button></a>
-		<a{% if adjs[1] %} href="/newsletters/{{ adjs[1] }}"{% endif %}><button class="rel" {{ 'disabled' if not adjs[1] }}><span class="buttonicon">&#x21B1;</span><span class="buttontext">Next Newsletter</span></button></a>
+		<a{% if adjs[1] %} href="/newsletters/{{ adjs[1] }}"{% endif %}><button class="rel" {{ 'disabled' if not adjs[1] }}><span class="buttonicon">&#x21B1;</span><span class="buttontext">{{ 'Next Newsletter' if adjs[1] else 'Coming soon' }}</span></button></a>
 	</div>
 {% endmacro %}
 
