@@ -177,6 +177,16 @@ router.patch('/edit-poll', async (req, res) => {
 		return res.send({ success: false, message: "Something Went Wrong" });
 	}
 });
+router.patch('/delete-option', async (req, res) => {
+	const data = req.body.data;
+	try {
+		response = await dbh.deletePollOption(data);
+		console.log(response);
+	} catch (e) {
+		console.log(e);
+	}
+});
+});
 
 
 module.exports = router;
