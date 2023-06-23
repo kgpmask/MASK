@@ -123,6 +123,11 @@ router.post('/member-management', async (req, res) => {
 	}
 	return res.send(response);
 });
+
+router.get('/add-member', (req, res) => {
+	return res.renderFile('govportal/govportal.njk', { message: 'Try again (once we actually get new members)' });
+});
+
 router.post('/post-management', async (req, res) => {
 	const data = req.body.data;
 	let response;
