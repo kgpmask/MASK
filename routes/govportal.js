@@ -175,6 +175,7 @@ router.patch('/edit-poll', async (req, res) => {
 		return res.send({ success: false, message: "Something Went Wrong" });
 	}
 });
+
 router.patch('/delete-option', async (req, res) => {
 	const data = req.body.data;
 	try {
@@ -184,8 +185,6 @@ router.patch('/delete-option', async (req, res) => {
 		console.log(e);
 	}
 });
-
-
 
 module.exports = {
 	route: '/gov-portal',
