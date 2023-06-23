@@ -43,6 +43,7 @@
 {% endblock %}
 
 {% block customcss %}
+	{{ super() }}
 	<style>
 		#add-item {
 			display: block;
@@ -51,13 +52,13 @@
 			border: 3px solid var(--off-white);
 			border-radius: 5px;
 			padding: 10px;
-			background-color: var(--middle-gray);
+			background-color: var(--dark-gray);
 			transition: color 0.3s, border-color 0.3s, background-color 0.3s;
 		}
 		#add-item:hover {
 			color: var(--error-red);
 			border-color: var(--white);
-			background-color: var(--dark=gray);
+			background-color: var(--darker-gray);
 		}
 		.cross:hover {
 			background-color : lightgrey;

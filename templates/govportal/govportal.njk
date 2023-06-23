@@ -59,6 +59,32 @@
 	{{ message if message }}
 	{# This looks kinda empty, maybe we can have stuff here #}
 	<div class="action">
-		{% block actioncontent %}{% endblock %}
+		{% block actioncontent %}
+			<h2> Quick Actions </h2>
+			<div>
+				<a href="/gov-portal/add-poll" class="add-item"> Add Poll </a>
+				<a href="/gov-portal/add-post" class="add-item"> Add Post </a>
+			</div>
+		{% endblock %}
 	</div>
+{% endblock %}
+
+{% block customcss %}
+	<style>
+		.add-item {
+			display: block;
+			width: fit-content;
+			margin: 20px auto;
+			border: 3px solid var(--off-white);
+			border-radius: 5px;
+			padding: 10px;
+			background-color: var(--dark-gray);
+			transition: color 0.3s, border-color 0.3s, background-color 0.3s;
+		}
+		.add-item:hover {
+			color: var(--error-red);
+			border-color: var(--white);
+			background-color: var(--darker-gray);
+		}
+	</style>
 {% endblock %}
