@@ -1,8 +1,8 @@
 {% extends "govportal/govportal.njk" %}
 
-{% set thispage = 'govportal/add-poll' %}
-{% set pagetitle = 'Governor Portal | Add Poll' %}
-{% set actionname = 'Add Poll' %}
+{% set thispage = 'govportal/edit-poll' %}
+{% set pagetitle = 'Governor Portal | Edit Poll' %}
+{% set actionname = 'Edit Poll' %}
 
 {% set scripts = ['https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'] %}
 
@@ -27,7 +27,7 @@
 				<div class="option">
 					<input type="text" value = "{{record.value}}" required>
 					<label>Option {{loop.index}}</label>
-					<button type="button" onclick="removeOption(this.parentElement)" class="removeoption">&#10006;</button>
+					<button type="button" onclick="deleteOption(this.parentElement,'{{record ._id}}')" class="removeoption">&#10006;</button>
 				</div>
                 {% endfor %}
 			</div>
@@ -54,7 +54,6 @@
 			`
 			parent.append(div);
 		}
-
 		function removeOption(element) {
 			const parent = element.parentNode;
 			try {
@@ -68,6 +67,24 @@
 			}
 		}
 
+		async function deleteOption(element,id) {
+			const parent = element.parentNode;
+			const data = {
+				pollId:document.getElementById('idUpdate').innerHTML,
+                                optionId:id
+			}
+			try {
+				element.remove();
+				[...parent.children].forEach((element, i) => {
+					element.children[1].innerHTML = `Option ${i + 1}`;
+				});
+				await axios.patch('/gov-portal/delete-option', { data: data });
+			} catch (e) {
+				parent.firstElementChild.value = '';
+			}
+
+		}
+
 		async function savePoll() {
 			const data = {
                 id: document.getElementById('idUpdate').innerHTML,
@@ -75,8 +92,7 @@
 				endTime: document.getElementById('date').value,
 				records: [...document.getElementsByClassName('option')].map(e => {
 					return e.firstElementChild.value ? {
-						value: e.firstElementChild.value,
-						votes: []
+						value: e.firstElementChild.value
 					} : null;
 				}).filter(e => e)
 			};
