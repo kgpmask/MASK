@@ -153,15 +153,31 @@ async function deletePoll (id) {
 	return postDeleted;
 }
 
+async function deletePollOption (data) {
+	const poll = await Poll.findById(data.pollId);
+	const indexToDelete = poll.records.findIndex(record => record._id.toString() === data.optionId);
+	if (indexToDelete !== -1) {
+		poll.records.splice(indexToDelete, 1);
+	}
+	const updatedPoll = await poll.save();
+	return updatedPoll;
+}
+
 async function editPoll (data) {
 	const poll = await Poll.findById(data.id);
 	console.log("hehe", poll);
 	poll.title = data.title;
 	poll.endTime = data.endTime;
-	poll.records = data.records;
+	for (let i = 0; i < poll.records.length; i++) {
+		poll.records[i].value = data.records[i].value;
+	}
+	for (let i = poll.records.length; i < data.records.length; i++) {
+		poll.records.push(data.records[i]);
+	}
 	const updatedPoll = await poll.save();
 	return updatedPoll;
 }
+
 
 async function getActivePolls () {
 	const polls = await Poll.find({ endTime: { '$gt': new Date() } });
@@ -344,6 +360,7 @@ module.exports = {
 	getPolls,
 	addPoll,
 	deletePoll,
+	deletePollOption,
 	editPoll,
 	getMembersbyYear,
 	getActivePolls,
