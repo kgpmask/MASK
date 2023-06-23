@@ -407,7 +407,6 @@
 
 		function updatePageState () {
 			const currentPage = findCurrentPage();
-			window.history.pushState({ }, "", window.location.href.split('?')[0] + `?page=${currentPage}`);
 			[...document.querySelectorAll('input[type="number"]')].forEach(input => input.value = `${currentPage}`);
 		}
 
@@ -432,6 +431,7 @@
 		}
 
 		window.addEventListener('load', () => {{ 'scrollToPage('+ targetpage + ')' if targetpage else 'updatePageState()' }});
+		window.addEventListener('load', () => setInterval(() => window.history.pushState({ }, "", window.location.href.split('?')[0] + `?page=${findCurrentPage()}`), 500));
 	</script>
 	<script>
 		axios.defaults.withCredentials = true;
