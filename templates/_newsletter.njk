@@ -17,6 +17,7 @@
 	<div class="page-change-container">
 		<button class="rel" onclick="prevPage()"><span class="buttonicon">&#x2190;</span><span class="buttontext">{{ '<<' }}</span></button>
 		<input type="number" min="0" max="{{ pagecount }}" onchange="scrollToPage(this.value)">
+		<button class="rel" onclick="copyLink()">{{ 'Share' }}</button>
 		<button class="rel" onclick="nextPage()"><span class="buttonicon">&#x2192;</span><span class="buttontext">{{ '>>' }}</span></button>
 	</div>
 {% endmacro %}
@@ -428,6 +429,11 @@
 		function prevPage () {
 			const currentPage = findCurrentPage();
 			scrollToPage( Math.max(currentPage - 1, 0) );
+		}
+
+		function copyLink () {
+			navigator.clipboard.writeText(`${window.location.href.split('?')[0]}?page=${findCurrentPage()}`);
+			return alert('Copied to clipboard');
 		}
 
 		window.addEventListener('load', () => {{ 'scrollToPage('+ targetpage + ')' if targetpage else 'updatePageState()' }});
