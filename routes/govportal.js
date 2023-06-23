@@ -186,7 +186,7 @@ router.patch('/delete-option', async (req, res) => {
 		console.log(e);
 	}
 });
-});
+
 
 
 module.exports = router;
