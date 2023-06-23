@@ -32,7 +32,7 @@ router.get('/edit-post/:id', async (req, res) => {
 	return res.renderFile(`govportal/edit-post.njk`, { ...data, date: data.date.toISOString().slice(0, 10) });
 });
 
-router.get('/polls-management', async (req, res) => {
+router.get('/poll-management', async (req, res) => {
 	const polls = await dbh.getPolls();
 	return res.renderFile(`govportal/polls-management.njk`, { polls });
 });
