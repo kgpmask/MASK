@@ -1,7 +1,7 @@
 {% extends '_base.njk' %}
 
 {% set thispage = 'polls' %}
-{% set pagetitle = poll.title %}
+{% set pagetitle = 'Poll:' + poll.title %}
 
 {% block pagecontent %}
 	<div class="message hidden"></div>
@@ -91,6 +91,7 @@
 			display: flex;
 			flex-direction: column;
 			align-items: center;
+			margin: 5vh 0;
 		}
 
 		.poll {
@@ -117,18 +118,15 @@
 			display: block;
 			font-size: 18px;
 			position: relative;
-			top: -38px;
+			{# top: -38px; #}
 			transition: all 0.5s ease;
 			width: 100%;
-		}
-		.choice > input[type='radio'] {
-			appearance: none;
-    		border: 2px solid var(--light-gray);
+			border: 2px solid var(--light-gray);
 			border-radius: 6px;
     		padding: 10px;
 			width: -moz-available;
 			width: -webkit-fill-available;
-			height: 50px;
+			{# height: 50px; #}
 			color: var(--off-white);
 			background-image: linear-gradient(to right, var(--red) 50%, transparent 50%);
 			background-size: 200% 200%;
@@ -136,11 +134,13 @@
 			transition: all 0.4s ease;
 			font-weight: 600;
 		}
-		.choice > input[type='radio']:checked {
-			background-position: left;
+		.choice > input[type='radio'] {
+			appearance: none;
 		}
+
 		.choice > input[type='radio']:checked ~ label{
 			color: var(--white);
+			background-position: left;
 			font-weight: 600;
 		}
 		.make-choice > label > input {

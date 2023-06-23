@@ -1,18 +1,16 @@
-const express = require("express");
-const router = express.Router();
-const axios = require('axios');
+const router = require("express").Router();
 
 const dbh = PARAMS.mongoless ? {} : require("../database/handler");
 
 router.use((req, res, next) => {
-	if (PARAMS.userless) return res.notFound('404.njk', {
+	if (PARAMS.userless && !PARAMS.jsonuser) return res.notFound('404.njk', {
 		message: 'Sorry. This is currently not available in mongoless and userless mode.'
 	});
 
-	if (!req.loggedIn) return res.redirect('/login');
-	// if (!req.user.permissions.find(perm => perm === 'governor')) return res.status(403).renderFile('404.njk', {
-	// 	message: 'Access denied. You do not have the required permission.'
-	// });
+	if (!req.loggedIn) return res.loginRedirect(req, res);
+	if (!req.user.permissions.find(perm => perm === 'governor')) return res.status(403).renderFile('404.njk', {
+		message: 'Access denied. You do not have the required permission.'
+	});
 
 	next();
 });
@@ -189,4 +187,7 @@ router.patch('/delete-option', async (req, res) => {
 
 
 
-module.exports = router;
+module.exports = {
+	route: '/gov-portal',
+	router
+};

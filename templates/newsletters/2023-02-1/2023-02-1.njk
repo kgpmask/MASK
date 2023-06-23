@@ -1,6 +1,7 @@
-{% extends "_newsletter.njk" %}
+{% extends '_newsletter.njk' %}
 
 {% set pagetitle = 'February 2023 Issue' %}
+{% set pagedesc = 'With MASK’s February issue, we bring to you, the ultimate romance newsletter, in a veritable delight, brimming with enchanting reviews, an exhilarating top 10 romance anime list, and your monthly dose of crossword. 心踊る！' %}
 
 {# {% set pagecount = 24 %}
 
@@ -39,8 +40,8 @@
 		(() => {
 				const maxDimension = Math.max(crossMatrix.length, crossMatrix[0].length);
 				const root = document.querySelector(':root');
-				root.style.setProperty('--crossword-cell-size', (40 * 10 / maxDimension - 4) + "px");
-				root.style.setProperty('--crossword-font-size', (10 / maxDimension) ** (1 / 2) + "em");
+				root.style.setProperty('--crossword-cell-size', (40 * 10 / maxDimension - 4) + 'px');
+				root.style.setProperty('--crossword-font-size', (10 / maxDimension) ** (1 / 2) + 'em');
 				crossMatrix.forEach((row, i) => {
 					row.forEach((char, j) => {
 						if (char === ' ') letterSpaces.push([i, j]);

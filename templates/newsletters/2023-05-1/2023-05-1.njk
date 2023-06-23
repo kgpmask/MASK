@@ -1,6 +1,7 @@
-{% extends "_newsletter.njk" %}
+{% extends '_newsletter.njk' %}
 
 {% set pagetitle = 'May 2023 Issue' %}
+{% set pagedesc = 'Ahoy, fellow anime enthusiasts! The May issue of the MASK newsletter, be teeming with gripping action anime reviews, exhilarating news, enlightening ‘know your anime memes’, and an enigmatic crossword! Set sail now!' %}
 
 {% block prescript %}
 	<script>
@@ -41,8 +42,8 @@
 		(() => {
 				const maxDimension = Math.max(crossMatrix.length, crossMatrix[0].length);
 				const root = document.querySelector(':root');
-				root.style.setProperty('--crossword-cell-size', (50 * 10 / maxDimension) + "px");
-				root.style.setProperty('--crossword-font-size', (20 / maxDimension) ** (1 / 2) + "em");
+				root.style.setProperty('--crossword-cell-size', (50 * 10 / maxDimension) + 'px');
+				root.style.setProperty('--crossword-font-size', (20 / maxDimension) ** (1 / 2) + 'em');
 				crossMatrix.forEach((row, i) => {
 					row.forEach((char, j) => {
 						if (char === ' ') letterSpaces.push([i, j]);

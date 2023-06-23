@@ -1,6 +1,7 @@
 {% extends '_base.njk' %}
 
 {% set thispage = 'events' %}
+{% set pagedesc = pagedesc if pagedesc else 'Events in MASK' %}
 
 {% macro slide(folder, img) %}
 	<div class="slide"> <img src="/assets/events/{{ folder }}/{{ img }}"> </div>

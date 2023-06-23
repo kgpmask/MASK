@@ -2,6 +2,7 @@
 
 {% set thispage = 'polls' %}
 {% set pagetitle = 'Live Poll Result' %}
+{% set pagedesc = 'Here are the results of the poll:' + title %}
 
 {% block pagecontent %}
 	<div class="poll-container">
@@ -26,7 +27,7 @@
 			display: flex;
 			align-items: center;
 			flex-direction: column;
-			margin: 0px auto 5vh	;
+			margin: 5vh 0;
 		}
 		.result-container {
 			display: flex;
@@ -80,13 +81,13 @@
 	<script>
 		function update() {
 			const totalVotes = [...document.getElementsByClassName('bar')].map(ele => {
-				return eval(ele.parentElement.parentElement.children[1].innerHTML.split(" ")[0]);
+				return eval(ele.parentElement.parentElement.children[1].innerHTML.split(' ')[0]);
 			}).reduce((a,b) => a+b);
 			const maxVotes = Math.max(...[...document.getElementsByClassName('bar')].map(ele => {
-				return eval(ele.parentElement.parentElement.children[1].innerHTML.split(" ")[0]);
+				return eval(ele.parentElement.parentElement.children[1].innerHTML.split(' ')[0]);
 			}));
 			[...document.getElementsByClassName('bar')].map(ele => {
-				const votes = eval(ele.parentElement.parentElement.children[1].innerHTML.split(" ")[0]);
+				const votes = eval(ele.parentElement.parentElement.children[1].innerHTML.split(' ')[0]);
 				if (votes === maxVotes) ele.parentNode.parentNode.classList.add('winning');
 				if (votes) ele.style.width = totalVotes ? `${votes*100/totalVotes}%` : 0;
 				ele.firstElementChild.innerHTML = `${totalVotes ? Math.round(votes*100/totalVotes) : o}%`;
