@@ -15,10 +15,10 @@
 
 {% macro nextprevpage() %}
 	<div class="page-change-container">
-		<button class="rel" onclick="prevPage()"><span class="buttonicon">&#x2190;</span><span class="buttontext">{{ '<<' }}</span></button>
+		<button class="rel" onclick="prevPage()" id="prev-page"><span class="buttonicon">&#x2190;</span><span class="buttontext">{{ '<<' }}</span></button>
 		<input type="number" min="0" max="{{ pagecount }}" onchange="scrollToPage(this.value)">
 		{# <button class="rel" onclick="copyLink()">{{ 'Share' }}</button> #}
-		<button class="rel" onclick="nextPage()"><span class="buttonicon">&#x2192;</span><span class="buttontext">{{ '>>' }}</span></button>
+		<button class="rel" onclick="nextPage()" id="next-page"><span class="buttonicon">&#x2192;</span><span class="buttontext">{{ '>>' }}</span></button>
 	</div>
 {% endmacro %}
 
@@ -411,7 +411,10 @@
 
 		function updatePageState () {
 			const currentPage = findCurrentPage();
+			const pages = document.querySelectorAll('.page');
 			[...document.querySelectorAll('input[type="number"]')].forEach(input => input.value = `${currentPage}`);
+			document.querySelector('#prev-page').disabled = (currentPage === 0);
+			document.querySelector('#next-page').disabled = (currentPage === pages.length - 1);
 		}
 
 		function scrollToPage (n) {
@@ -444,7 +447,6 @@
 			document.activeElement.blur();
 			document.querySelector('#pages').tabIndex = -1;
 			document.querySelector('#pages').focus();
-			{# console.log(document.activeElement); #}
 			setInterval(() => window.history.pushState({ }, "", window.location.href.split('?')[0] + `?page=${findCurrentPage()}`), 500)
 		});
 	</script>
