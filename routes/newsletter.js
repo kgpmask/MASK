@@ -48,7 +48,7 @@ router.get('/:target?', (req, res) => {
 		const adjs = [letters[index - 1], letters[index + 1], letters[index]];
 		fs.readdir(path.join(__dirname, '../templates/newsletters', target)).then(files => {
 			const pages = files.filter(file => file.includes('#'));
-			return res.renderFile(filepath, { adjs, pages, target });
+			return res.renderFile(filepath, { adjs, pages, target, targetpage: req.query.page });
 		});
 
 	}).catch(err => {
