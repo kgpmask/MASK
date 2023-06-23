@@ -3,7 +3,9 @@
 {% set thispage = 'newsletters' %}
 {% set pagedesc = pagedesc if pagedesc else 'Newsletter: Manga and Anime Society Kharagpur' %}
 
-{% macro nextprev() %}
+{% set pagecount = pages.length %}
+
+{% macro nextprevnewsletter() %}
 	<div class="controls">
 		<a{% if adjs[0] %} href="/newsletters/{{ adjs[0] }}"{% endif %}><button class="rel" {{ 'disabled' if not adjs[0] }}><span class="buttonicon" id="flipped">&#x279C;</span><span class="buttontext">Previous</span></button></a>
 		<a href="/newsletters/{{ 'random' if (adjs[0] or adjs[1]) else '' }}"><button class="rel" {{ 'disabled' if not (adjs[0] or adjs[1]) }}><span class="buttonicon" id="random"><span class="icon-random"></span></span><span class="buttontext">Random</span></button></a>
@@ -11,10 +13,16 @@
 	</div>
 {% endmacro %}
 
-{% set pagecount = pages.length %}
+{% macro nextprevpage() %}
+	<div class="page-change-container">
+		<button onclick="prevPage()"> P </button>
+		<input type="number" min="0" max="{{ pagecount }}" onchange="scrollToPage(this.value)">
+		<button onclick="nextPage()"> N </button>
+	</div>
+{% endmacro %}
 
 {% block pagecontent %}
-	{{ nextprev() }}
+	{{ nextprevnewsletter() }}
 	<hr class="letter-breaker"/><br/>
 	{% if pdf %}
 		<div class="pdf-link"><a href="/assets/releases/{{ pdf }}" target="_blank" class="undecorated-link">
@@ -27,28 +35,31 @@
 		<span id="left-control-button">&#10094;</span>
 		<span id="right-control-button">&#10095;</span>
 	</div></div>-->
-	<div id="pages-container"><div id="pages">
-	{# {% block coverpage %}
-	<div class="page cover-default" id="cover-page">
-		<img id="cover-logo" src="/assets/transparent_logo.png"/>
-		<br/>Manga and Anime<br/>Society, Kharagpur<br/>
-		<br/>
-		<div id="cover-page-title">{{ pagetitle }}</div>
+	<div id="pages-container">
+		{{ nextprevpage() }}
+		<div id="pages" onscroll="updateInputs()">
+			{# {% block coverpage %}
+			<div class="page cover-default" id="cover-page">
+				<img id="cover-logo" src="/assets/transparent_logo.png"/>
+				<br/>Manga and Anime<br/>Society, Kharagpur<br/>
+				<br/>
+				<div id="cover-page-title">{{ pagetitle }}</div>
+				</div>
+			{% endblock %} #}
+			{% block coverpage %}
+				<div class="page" id="cover-page"></div>
+			{% endblock %}
+			{# {% block article %}
+				<div class="faded">This article hasn't been published yet - stay tuned!</div>
+			{% endblock %} #}
+			{% block article %}
+				{% for page in pages %}
+					{% include thispage+'/'+target+'/'+page%}
+				{% endfor %}
+			{% endblock %}
 		</div>
-	{% endblock %} #}
-		{% block coverpage %}
-			<div class="page" id="cover-page"></div>
-		{% endblock %}
-		{# {% block article %}
-			<div class="faded">This article hasn't been published yet - stay tuned!</div>
-		{% endblock %} #}
-		{% block article %}
-
-			{% for page in pages %}
-				{% include thispage+'/'+target+'/'+page%}
-			{% endfor %}
-		{% endblock %}
-	</div></div>
+		{{ nextprevpage() }}
+	</div>
 	<script>
 		const spoilered = document.querySelectorAll('.spoiler');
 		for (let i = 0; i < spoilered.length; i++) {
@@ -61,7 +72,7 @@
 		}
 	</script>
 	<br/><div style="width:200px;margin:10px auto;background-color:rgba(255,255,255,0.2);border-radius:5px;padding:10px;color:var(--light-gray);font-size:0.8em;text-align:justify-center">Swipe left/right or click and use arrow keys to scroll<br/>Best viewed on PC</div><hr class="letter-breaker"/><br/>
-	{{ nextprev() }}
+	{{ nextprevnewsletter() }}
 {% endblock %}
 
 {% block customcss %}
@@ -131,6 +142,10 @@
 		#left-control-button:hover, #right-control-button:hover {
 			transform: scale(1.2);
 			color: var(--off-white);
+		}
+
+		.page-change-container {
+			margin: 10px auto;
 		}
 
 		#pages-container {
@@ -364,6 +379,41 @@
 {% endblock %}
 
 {% block customjs %}
+	<script>
+		function findCurrentPage () {
+			const pagesContainer = document.querySelector('#pages');
+			const pages = [...pagesContainer.children];
+			const offsetLeft = pagesContainer.scrollLeft;
+			return pages.map((page, i) => [Math.abs(page.offsetLeft - offsetLeft), i]).sort((a, b) => -(a[0] < b[0]))[0][1];
+		}
+
+		function updateInputs () {
+			const currentPage = findCurrentPage();
+			[...document.querySelectorAll('input[type="number"]')].forEach(input => input.value = `${currentPage}`);
+		}
+
+		function scrollToPage (n) {
+			if (n === '') return;
+			const pagesContainer = document.querySelector('#pages');
+			const pages = document.querySelectorAll('.page');
+			if (!pages[~~n]) scrollToPage(~~n < 0 ? 0 : pages.length - 1);
+			pagesContainer.scrollTo(pages[~~n].offsetLeft, 0);
+			updateInputs();
+		}
+
+		function nextPage () {
+			const pages = document.querySelectorAll('.page');
+			const currentPage = findCurrentPage();
+			scrollToPage( Math.min(currentPage + 1, pages.length - 1) );
+		}
+
+		function prevPage () {
+			const currentPage = findCurrentPage();
+			scrollToPage( Math.max(currentPage - 1, 0) );
+		}
+
+		window.addEventListener('load', () => {{ 'scrollToPage('+ targetpage + ')' if targetpage else 'updateInputs()' }});
+	</script>
 	<script>
 		axios.defaults.withCredentials = true;
 		axios.defaults.headers.common['X-CSRF-TOKEN'] = '{{ csrfToken }}';
