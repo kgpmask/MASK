@@ -17,7 +17,7 @@
 	<div class="page-change-container">
 		<button class="rel" onclick="prevPage()"><span class="buttonicon">&#x2190;</span><span class="buttontext">{{ '<<' }}</span></button>
 		<input type="number" min="0" max="{{ pagecount }}" onchange="scrollToPage(this.value)">
-		<button class="rel" onclick="copyLink()">{{ 'Share' }}</button>
+		{# <button class="rel" onclick="copyLink()">{{ 'Share' }}</button> #}
 		<button class="rel" onclick="nextPage()"><span class="buttonicon">&#x2192;</span><span class="buttontext">{{ '>>' }}</span></button>
 	</div>
 {% endmacro %}
@@ -185,6 +185,9 @@
 			width: 100%;
 			-ms-overflow-style: none;
 			scrollbar-width: none;
+		}
+		#pages:active, #pages:focus {
+			outline: 0;
 		}
 		#pages::-webkit-scrollbar {
 			display: none;
@@ -437,7 +440,13 @@
 		}
 
 		window.addEventListener('load', () => {{ 'scrollToPage('+ targetpage + ')' if targetpage else 'updatePageState()' }});
-		window.addEventListener('load', () => setInterval(() => window.history.pushState({ }, "", window.location.href.split('?')[0] + `?page=${findCurrentPage()}`), 500));
+		window.addEventListener('load', () => {
+			document.activeElement.blur();
+			document.querySelector('#pages').tabIndex = -1;
+			document.querySelector('#pages').focus();
+			{# console.log(document.activeElement); #}
+			setInterval(() => window.history.pushState({ }, "", window.location.href.split('?')[0] + `?page=${findCurrentPage()}`), 500)
+		});
 	</script>
 	<script>
 		axios.defaults.withCredentials = true;
