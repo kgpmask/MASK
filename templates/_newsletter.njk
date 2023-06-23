@@ -15,9 +15,9 @@
 
 {% macro nextprevpage() %}
 	<div class="page-change-container">
-		<button class="rel" onclick="prevPage()"><span class="buttonicon">&#x2190;</span><span class="buttontext">Previous Page</span></button>
+		<button class="rel" onclick="prevPage()"><span class="buttonicon">&#x2190;</span><span class="buttontext">{{ '<<' }}</span></button>
 		<input type="number" min="0" max="{{ pagecount }}" onchange="scrollToPage(this.value)">
-		<button class="rel" onclick="nextPage()"><span class="buttonicon">&#x2192;</span><span class="buttontext">Next Page</span></button>
+		<button class="rel" onclick="nextPage()"><span class="buttonicon">&#x2192;</span><span class="buttontext">{{ '>>' }}</span></button>
 	</div>
 {% endmacro %}
 
@@ -37,7 +37,7 @@
 	</div></div>-->
 	<div id="pages-container">
 		{{ nextprevpage() }}
-		<div id="pages" onscroll="updateInputs()">
+		<div id="pages" onscroll="updatePageState()">
 			{# {% block coverpage %}
 			<div class="page cover-default" id="cover-page">
 				<img id="cover-logo" src="/assets/transparent_logo.png"/>
@@ -405,8 +405,9 @@
 			return pages.map((page, i) => [Math.abs(page.offsetLeft - offsetLeft), i]).sort((a, b) => -(a[0] < b[0]))[0][1];
 		}
 
-		function updateInputs () {
+		function updatePageState () {
 			const currentPage = findCurrentPage();
+			window.history.pushState({ }, "", window.location.href.split('?')[0] + `?page=${currentPage}`);
 			[...document.querySelectorAll('input[type="number"]')].forEach(input => input.value = `${currentPage}`);
 		}
 
@@ -416,7 +417,7 @@
 			const pages = document.querySelectorAll('.page');
 			if (!pages[~~n]) scrollToPage(~~n < 0 ? 0 : pages.length - 1);
 			pagesContainer.scrollTo(pages[~~n].offsetLeft, 0);
-			updateInputs();
+			updatePageState();
 		}
 
 		function nextPage () {
@@ -430,7 +431,7 @@
 			scrollToPage( Math.max(currentPage - 1, 0) );
 		}
 
-		window.addEventListener('load', () => {{ 'scrollToPage('+ targetpage + ')' if targetpage else 'updateInputs()' }});
+		window.addEventListener('load', () => {{ 'scrollToPage('+ targetpage + ')' if targetpage else 'updatePageState()' }});
 	</script>
 	<script>
 		axios.defaults.withCredentials = true;
