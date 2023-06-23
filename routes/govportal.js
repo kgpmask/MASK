@@ -34,7 +34,7 @@ router.get('/edit-post/:id', async (req, res) => {
 
 router.get('/poll-management', async (req, res) => {
 	const polls = await dbh.getPolls();
-	return res.renderFile(`govportal/polls-management.njk`, { polls });
+	return res.renderFile(`govportal/poll-management.njk`, { polls });
 });
 
 router.get('/add-poll', (req, res) => {
@@ -148,7 +148,7 @@ router.patch('/edit-post', async (req, res) => {
 	}
 });
 
-router.post('/polls-management', async (req, res) => {
+router.post('/poll-management', async (req, res) => {
 	const data = req.body.data;
 	let response;
 	try {
