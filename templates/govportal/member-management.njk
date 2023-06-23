@@ -1,12 +1,14 @@
 {% extends 'govportal/govportal.njk' %}
 
-{% set thispage = 'govportal' %}
+{% set thispage = 'member' %}
 {% set pagetitle = 'Governor Portal | Member Management' %}
 {% set actionname = 'Member Management' %}
 
 {% set scripts = ['https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'] %}
 
 {% block actioncontent %}
+	{# <h1>Member Management Page</h1> #}
+	<div> <a href="/gov-portal/add-member" id="add-item"> Add Member </a> </div>
 	<table>
 		<thead>
 			<tr>
@@ -42,6 +44,21 @@
 
 {% block customcss %}
 	<style>
+		#add-item {
+			display: block;
+			width: fit-content;
+			margin: 20px auto;
+			border: 3px solid var(--off-white);
+			border-radius: 5px;
+			padding: 10px;
+			background-color: var(--middle-gray);
+			transition: color 0.3s, border-color 0.3s, background-color 0.3s;
+		}
+		#add-item:hover {
+			color: var(--error-red);
+			border-color: var(--white);
+			background-color: var(--dark=gray);
+		}
 		.cross:hover {
 			background-color : lightgrey;
 		}

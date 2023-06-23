@@ -8,7 +8,8 @@
 
 {% block actioncontent %}
 	<div class="message hidden"></div>
-	<h1>Polls Management Page</h1>
+	{# <h1>Polls Management Page</h1> #}
+	<div> <a href="/gov-portal/add-poll" id="add-item"> Add Poll </a> </div>
 	{% for poll in polls %}
 		<div class="container">
 			<div class="card1">
@@ -35,17 +36,32 @@
 
 {% block customcss %}
 	<style>
+		#add-item {
+			display: block;
+			width: fit-content;
+			margin: 20px auto;
+			border: 3px solid var(--off-white);
+			border-radius: 5px;
+			padding: 10px;
+			background-color: var(--middle-gray);
+			transition: color 0.3s, border-color 0.3s, background-color 0.3s;
+		}
+		#add-item:hover {
+			color: var(--error-red);
+			border-color: var(--white);
+			background-color: var(--dark=gray);
+		}
 		.container {
-		margin: 3rem auto;
-		display:flex;
-		flex-direction:row;
-		border: 2px solid rgba(255,255,255,0.1);
-		border-radius: 8px;
-		padding: 20px 5px;
-		width: 80%;
-		background-color: rgba(255,255,255,0.13);
-		backdrop-filter: blur(5px);
-		align-self:center;
+			margin: 3rem auto;
+			display:flex;
+			flex-direction:row;
+			border: 2px solid rgba(255,255,255,0.1);
+			border-radius: 8px;
+			padding: 20px 5px;
+			width: 80%;
+			background-color: rgba(255,255,255,0.13);
+			backdrop-filter: blur(5px);
+			align-self:center;
 		}
 		.card1{
 			flex:80%;
