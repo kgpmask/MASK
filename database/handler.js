@@ -106,6 +106,26 @@ function getPosts (postType) {
 	// TODO: Make this accept a number of posts as a cap filter
 	return Post.find(postType ? { type: postType } : {}).sort({ date: -1 });
 }
+async function getPost (id) {
+	return Post.findById(id);
+}
+async function deletePost (link) {
+	const postDeleted = Post.findOneAndDelete({ 'link': link });
+	return postDeleted;
+}
+async function editPost (data) {
+	const updatedPost = Post.findOneAndUpdate({ '_id': data.id }, {
+		'name': data.name,
+		'link': data.link,
+		'type': data.type,
+		'attr': data.attr,
+		'date': data.date
+	}, {
+		new: true
+	});
+	// console.log(updatedPost);
+	return updatedPost;
+}
 
 async function addPost (data) {
 	if (data.page === '') delete data.page;
@@ -114,11 +134,50 @@ async function addPost (data) {
 	return post.toObject();
 }
 
+async function getPolls () {
+	return Poll.find().lean().sort({ _id: -1 });
+}
+
+async function getPoll (id) {
+	return Poll.findById(id);
+}
+
 async function addPoll (data) {
 	const poll = new Poll(data);
 	await poll.save();
 	return poll.toObject();
 }
+
+async function deletePoll (id) {
+	const postDeleted = Poll.findOneAndDelete({ '_id': id });
+	return postDeleted;
+}
+
+async function deletePollOption (data) {
+	const poll = await Poll.findById(data.pollId);
+	const indexToDelete = poll.records.findIndex(record => record._id.toString() === data.optionId);
+	if (indexToDelete !== -1) {
+		poll.records.splice(indexToDelete, 1);
+	}
+	const updatedPoll = await poll.save();
+	return updatedPoll;
+}
+
+async function editPoll (data) {
+	const poll = await Poll.findById(data.id);
+	console.log("hehe", poll);
+	poll.title = data.title;
+	poll.endTime = data.endTime;
+	for (let i = 0; i < poll.records.length; i++) {
+		poll.records[i].value = data.records[i].value;
+	}
+	for (let i = poll.records.length; i < data.records.length; i++) {
+		poll.records.push(data.records[i]);
+	}
+	const updatedPoll = await poll.save();
+	return updatedPoll;
+}
+
 
 async function getActivePolls () {
 	const polls = await Poll.find({ endTime: { '$gt': new Date() } });
@@ -301,9 +360,17 @@ module.exports = {
 	addLiveResult,
 	getNewsletter,
 	getPosts,
+	getPost,
+	deletePost,
+	editPost,
 	addPost,
-	getMembersbyYear,
+	getPoll,
+	getPolls,
 	addPoll,
+	deletePoll,
+	deletePollOption,
+	editPoll,
+	getMembersbyYear,
 	getActivePolls,
 	getMonthlyPolls,
 	updatePoll,

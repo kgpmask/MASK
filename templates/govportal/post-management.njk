@@ -1,0 +1,208 @@
+{% extends "govportal/govportal.njk" %}
+
+{% set thispage = 'post' %}
+{% set pagetitle = 'Governor Portal | Post Management' %}
+{% set actionname = 'Post Management' %}
+
+{% set scripts = ['https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'] %}
+
+{% block actioncontent %}
+	<div class="message hidden"></div>
+	{# <h1>Post Management Page</h1> #}
+	<div> <a href="/gov-portal/add-post" id="add-item"> Add Post </a> </div>
+	<h4><i> Showing the last 20 posts only... </i></h4>
+	{% for post in posts %}
+		<div class="container">
+			<div class="card1">
+				{% for key, value in post %}
+				{% if key != '_id' and key != '__v' and key != 'metadata' %}
+					<b> {{ key | capitalize }}: </b> {% if key != 'date' %} {{ value }} {% else %}  {{ value | string | truncate(15, true, "") }} {% endif %}<br>
+				{% endif %}
+				{% endfor %}
+			</div>
+
+			<div class="card2">
+				<button class="editP" onclick="editPost(`{{post._id}}`)">Edit</button>
+				<button class="deleteP" onclick="deletePost('{{post.link}}')">Delete</button>
+			</div>
+		</div>
+	{% endfor %}
+
+{% endblock %}
+
+{% block customcss %}
+	{{ super() }}
+	<style>
+		#add-item {
+			display: block;
+			width: fit-content;
+			margin: 20px auto;
+			border: 3px solid var(--off-white);
+			border-radius: 5px;
+			padding: 10px;
+			background-color: var(--dark-gray);
+			transition: color 0.3s, border-color 0.3s, background-color 0.3s;
+		}
+		#add-item:hover {
+			color: var(--error-red);
+			border-color: var(--white);
+			background-color: var(--darker-gray);
+		}
+		.container {
+			margin: 3rem auto;
+			display:flex;
+			flex-direction:row;
+			border: 2px solid rgba(255,255,255,0.1);
+			border-radius: 8px;
+			padding: 20px 5px;
+			width: 80%;
+			background-color: rgba(255,255,255,0.13);
+			backdrop-filter: blur(5px);
+			align-self:center;
+		}
+		.card1{
+			flex:80%;
+			width:40%;
+			padding-left:5px;
+			word-wrap: break-word;
+			text-align: left;
+		}
+		.card2{
+			flex:20%;
+			display:flex;
+			flex-direction:column;
+			justify-content: space-evenly;
+			align-items: center;
+		}
+		table{
+			word-wrap: break-word;
+		}
+		table, th, td {
+		border: 1px solid black;
+		border-collapse: collapse;
+		}
+		th, td {
+		padding: 5px;
+		text-align: left;
+		word-wrap: break-word;
+		overflow-wrap: anywhere;
+		}
+		th{
+			width:30%;
+		}
+		.editP,.deleteP {
+			border-radius: 4px;
+			color:white;
+			cursor: pointer;
+			border: 0px;
+			padding: 2% 3%;
+		}
+		button{
+			background-color: var(--red);
+			width: 7em;
+			height: 2.5em;
+		}
+		.message {
+			position: absolute;
+			top: 0;
+			right: calc(50vw - 220px);
+			padding: 20px;
+			z-index: 1;
+			color: #fff;
+			font-weight: 600;
+			font-size: 18px;
+			width: 400px;
+			transform-origin: top;
+			transition: transform 0.3s ease;
+			border-bottom-left-radius: 6px;
+			border-bottom-right-radius: 6px;
+		}
+		.error {
+			background-color: rgba(255, 51, 51, 0.85);
+		}
+		.success {
+			background-color: rgba(75, 189, 67, 0.85);
+		}
+		.hidden {
+			transform: scaleY(0);
+		}
+		
+		@media (max-width: 600px) {
+			button{
+				width:4rem;
+			}
+			.container{
+				margin-left:3rem;
+			}
+		}
+
+		@media (max-width: 500px) {
+			.container {
+				flex-direction:column;
+			}
+			.card1{
+				width:95%;
+			}
+			.card2{
+				flex-direction:row;
+			}
+			button{
+				margin-right:5rem;
+			}
+			.editP{
+				margin:1rem 3rem;
+			}
+			.deleteP{
+				margin:1rem 2rem;
+			}
+			.container{
+				margin-left:2rem;
+			}
+		}
+		@media (max-width:300px){
+			.editP{
+				margin-right:1rem;
+				margin-left:2rem;
+			}
+			.deleteP{
+				margin-left:1rem;
+			}
+			.container{
+				margin-left:1.5rem;
+			}
+		}
+		
+	</style>
+{% endblock %}
+
+{% block customjs %}
+	<script>
+		axios.defaults.withCredentials = true;
+		axios.defaults.headers.common['X-CSRF-TOKEN'] = '{{ csrfToken }}';
+
+				async function postData (data) {
+			//console.log(data);
+			var res = (await axios.post('/gov-portal/post-management', { data: data })).data;
+			const e = document.getElementsByClassName('message')[0];
+			e.innerHTML = res.message;
+			e.classList.add(res.success ? 'success' : 'error');
+			e.classList.remove('hidden');
+			setTimeout(function () {e.classList.add('hidden')}, 2000);
+			if (res.success) {
+				setTimeout(function () { location.reload() }, 3000);
+			}
+		}
+		async function editPost (id) {
+			await axios.get(`/gov-portal/edit-post/${id}`)
+			 .then(res => {
+				window.location.href = `/gov-portal/edit-post/${id}`; 
+			 });
+		}
+		function deletePost (link) {
+			console.log(link);
+			if (confirm("Are you sure you want to delete the post?")) {
+				postData(link);
+			}
+		}
+	</script>
+{% endblock %}

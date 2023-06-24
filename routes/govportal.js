@@ -22,11 +22,31 @@ router.get('/', (req, res) => {
 router.get('/add-post', (req, res) => {
 	return res.renderFile(`govportal/add-post.njk`);
 });
+router.get('/post-management', async (req, res) => {
+	const posts = (await dbh.getPosts().limit(20)).map(post => post.toObject());
+	return res.renderFile(`govportal/post-management.njk`, { posts });
+});
+router.get('/edit-post/:id', async (req, res) => {
+	const id = req.params.id;
+	const data = (await dbh.getPost(id)).toObject();
+	return res.renderFile(`govportal/edit-post.njk`, { ...data, date: data.date.toISOString().slice(0, 10) });
+});
+
+router.get('/poll-management', async (req, res) => {
+	const polls = await dbh.getPolls();
+	return res.renderFile(`govportal/poll-management.njk`, { polls });
+});
 
 router.get('/add-poll', (req, res) => {
 	const date = new Date();
 	date.setDate(date.getDate() + 7);
 	return res.renderFile(`govportal/add-poll.njk`, { date: date.toISOString().slice(0, 10) });
+});
+
+router.get('/edit-poll/:id', async (req, res) => {
+	const id = req.params.id;
+	const poll = (await dbh.getPoll(id)).toObject();
+	return res.renderFile(`govportal/edit-poll.njk`, { ...poll, endTime: poll.endTime.toISOString().slice(0, 10) });
 });
 
 router.get('/member-management', async (req, res) => {
@@ -61,6 +81,7 @@ router.post('/add-post', async (req, res) => {
 	data.date = new Date().toISOString();
 	try {
 		response = await dbh.addPost(data);
+		// console.log(response);
 		return res.send({ success: true, message: "Successfully Added Post", response: response });
 	} catch (e) {
 		console.log(e);
@@ -76,7 +97,7 @@ router.post('/add-poll', async (req, res) => {
 	if (!(now < new Date(data.endTime))) return res.send({ success: false, message: "Invalid End Date" });
 	try {
 		data._id = now.getFullYear() + "-" + ("0" + (now.getMonth() + 1)).slice(-2) + "-" + ((await dbh.getMonthlyPolls()).length + 1);
-		console.log(data);
+		// console.log(data);
 		response = await dbh.addPoll(data);
 		return res.send({ success: true, message: "Successfully Added Poll", response: response });
 	} catch (e) {
@@ -101,6 +122,73 @@ router.post('/member-management', async (req, res) => {
 			break;
 	}
 	return res.send(response);
+});
+
+router.get('/add-member', (req, res) => {
+	return res.renderFile('govportal/govportal.njk', { message: 'Try again (once we actually get new members)' });
+});
+
+router.post('/post-management', async (req, res) => {
+	const data = req.body.data;
+	let response;
+	try {
+		response = await dbh.deletePost(data);
+		// console.log(response)
+		return res.send({ success: true, message: "Successfully deleted post", response: response });
+	} catch (e) {
+		return res.send({ success: false, message: "Something Went Wrong" });
+	}
+});
+
+router.patch('/edit-post', async (req, res) => {
+	const data = req.body.data;
+	// console.log("update",data)
+	try {
+		response = await dbh.editPost(data);
+		// console.log(response);
+		return res.send({ success: true, message: "Successfully Edited Post", response: response });
+	} catch (e) {
+		console.log(e);
+		return res.send({ success: false, message: "Something Went Wrong" });
+	}
+});
+
+router.post('/poll-management', async (req, res) => {
+	const data = req.body.data;
+	let response;
+	try {
+		response = await dbh.deletePoll(data);
+		// console.log(response)
+		return res.send({ success: true, message: "Successfully deleted post", response: response });
+	} catch (e) {
+		return res.send({ success: false, message: "Something Went Wrong" });
+	}
+});
+
+router.patch('/edit-poll', async (req, res) => {
+	const data = req.body.data;
+	if (!data.title || !data.records.length) return res.send({ success: false, message: "Empty Data Provided" });
+	data.endTime = new Date(data.endTime).toISOString();
+	const now = new Date();
+	if (!(now < new Date(data.endTime))) return res.send({ success: false, message: "Invalid End Date" });
+	try {
+		response = await dbh.editPoll(data);
+		console.log(response);
+		return res.send({ success: true, message: "Successfully Updated Poll", response: response });
+	} catch (e) {
+		console.log(e);
+		return res.send({ success: false, message: "Something Went Wrong" });
+	}
+});
+
+router.patch('/delete-option', async (req, res) => {
+	const data = req.body.data;
+	try {
+		response = await dbh.deletePollOption(data);
+		console.log(response);
+	} catch (e) {
+		console.log(e);
+	}
 });
 
 module.exports = {
