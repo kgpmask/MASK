@@ -41,8 +41,7 @@
 		"nunjucks": "^3.2.4",
 		"passport": "^0.6.0",
 		"passport-google-oauth20": "^2.0.0",
-		"sass": "^1.63.6",
-		"socket.io": "^4.7.0"
+		"sass": "^1.63.6"
 	},
 	"devDependencies": {
 		"cross-env": "^7.0.3",
