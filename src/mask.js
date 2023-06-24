@@ -36,7 +36,7 @@ server.listen(PORT, () => {
 	if (!PARAMS.test) console.log(`The MASK server's up at http://localhost:${PORT}/`);
 });
 
-const sass = childProcess.exec(`npx sass assets${PARAMS.dev ? ' --watch' : ''} --no-source-map --style compressed`);
+const sass = childProcess.exec(`npx sass assets${PARAMS.dev ? ' --watch' : ''} --no-source-map --style=compressed`);
 
 exports.ready = () => waitForDB;
 
