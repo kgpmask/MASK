@@ -26,8 +26,8 @@ router.get('/post-management', async (req, res) => {
 	const posts = (await dbh.getPosts().limit(20)).map(post => post.toObject());
 	return res.renderFile(`govportal/post-management.njk`, { posts });
 });
-router.get('/edit-post/:id', async (req, res) => {
-	const id = req.params.id;
+router.get('/edit-post', async (req, res) => {
+	const id = req.query.id;
 	const data = (await dbh.getPost(id)).toObject();
 	return res.renderFile(`govportal/edit-post.njk`, { ...data, date: data.date.toISOString().slice(0, 10) });
 });
@@ -43,8 +43,8 @@ router.get('/add-poll', (req, res) => {
 	return res.renderFile(`govportal/add-poll.njk`, { date: date.toISOString().slice(0, 10) });
 });
 
-router.get('/edit-poll/:id', async (req, res) => {
-	const id = req.params.id;
+router.get('/edit-poll', async (req, res) => {
+	const id = req.query.id;
 	const poll = (await dbh.getPoll(id)).toObject();
 	return res.renderFile(`govportal/edit-poll.njk`, { ...poll, endTime: poll.endTime.toISOString().slice(0, 10) });
 });

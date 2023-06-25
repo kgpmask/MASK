@@ -197,9 +197,9 @@
 			}
 		}
 		async function editPoll (id) {
-			await axios.get(`/gov-portal/edit-poll/${id}`)
+			await axios.get(`/gov-portal/edit-poll?id=${id}`)
 			 .then(res => {
-				window.location.href = `/gov-portal/edit-poll/${id}`; 
+				window.location.href = `/gov-portal/edit-poll?id=${id}`; 
 			 });
 		}
 		function deletePoll (id) {

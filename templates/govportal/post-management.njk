@@ -193,9 +193,9 @@
 			}
 		}
 		async function editPost (id) {
-			await axios.get(`/gov-portal/edit-post/${id}`)
+			await axios.get(`/gov-portal/edit-post?id=${id}`)
 			 .then(res => {
-				window.location.href = `/gov-portal/edit-post/${id}`; 
+				window.location.href = `/gov-portal/edit-post?id=${id}`; 
 			 });
 		}
 		function deletePost (link) {
