@@ -3,29 +3,28 @@
 {% set thispage = 'newsletters' %}
 {% set pagetitle = 'Newsletters' %}
 
-{% macro card(name, link, desc, width=25) %}
-	<div class="card" onclick="window.location.href = '/newsletters/{{ link }}';">
-		<img class="cover" src="../assets/releases/{{ link }}/cover.webp" onerror="this.src='../assets/releases/no-cover.webp'" style="width: {{ width }}%; height: calc({{ width }}% * 3);"/>
+{% set latestnewsletter = letters[0] %}
+
+{% macro card(name, link, desc) %}
+	<a class="card" href="/newsletters/{{ link }}">
+		<img class="cover" src="../assets/releases/{{ link }}/cover.webp" onerror="this.src='../assets/releases/no-cover.webp'"/>
 		<div class="desc" style="width: 100%; text-align: left;">
-			<h4>{{ name }}</h4>
+			<h3>{{ name }}</h3>
 			<p>{{ desc }}</p>
 		</div>
-	</div>
+	</a>
 {% endmacro %}
 
 {% block pagecontent %}
+	<h1> Newsletters </h1>
 	{% block extrainfo %}{% endblock %}
 	<div class="container">
 		<div class="latest">
-			<h3>Latest Release</h3>
-			{% for letter in letters %}
-				{% if loop.first %}
-					{{ card(letter.name, letter.link, "weufg ewu fgewuf gewf guwef gyuae gfyuwef guew gfuysefuyweg fyweg fyueyfugevygfvewfyu vesagyfve", 90) }}	
-				{% endif %}
-			{% endfor %}
+			<h2>Latest Release</h2>
+			{{ card(latestnewsletter.name, latestnewsletter.link, "weufg ewu fgewuf gewf guwef gyuae gfyuwef guew gfuysefuyweg fyweg fyueyfugevygfvewfyu vesagyfve", 90) }}
 		</div>
 		<div class="previous">
-			<h3>Previous Releases</h3>
+			<h2>Previous Releases</h2>
 			<div class="list">
 				{# <button class="card" onclick="window.location.href = '/newsletters/2023-04-1';">
 					<img class="cover" src="../assets/releases/2023-04-1/cover.webp" onerror="this.src='../assets/logo.jpeg'" style="width: 175px; height: calc(175px * 3400 / 2400);"/>
@@ -68,6 +67,7 @@
 		</div></div>
 	{% endfor %}
 	</div> #}
+	<div style="height: 40px;"></div>
 {% endblock %}
 
 {% block customcss %}
@@ -76,6 +76,7 @@
 			display: flex;
 			flex-direction: row;
 			justify-content: center;
+			align-items: center;
 		}
 		.container > div {
 			display: flex;
@@ -87,7 +88,8 @@
 			padding: 12px 5px;
 			background-color: rgba(255,255,255,0.13);
 			backdrop-filter: blur(5px);
-			height: 76vh;
+			max-height: calc(100vh - 300px);
+			height: fit-content;
 			overflow-y: scroll;
 		}
 		.previous {
@@ -97,26 +99,42 @@
 			width: 32%;
 		}
 		.list {
-			display: grid;
-			grid-auto-rows: 1fr;
-			grid-template-columns: minmax(400px, 1fr)  minmax(400px, 1fr);
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
 		}
 		.card {
 			display: flex;
 			align-items: center;
 			flex-direction: row;
-			margin: 15px;
+			margin: 10px;
 			border: 1px solid var(--light-gray);
 			border-radius: 6px;
 			position: relative;
 			background: none;
+			width: calc(50% - 22px);
+			text-decoration: none;
+			transition: color 0.3s;
 		}
 		.latest > .card {
 			flex-direction: column;
+			justify-content: space-between;
 			border: none;
+			width: 95%;
 		}
 		.card * {
 			margin: 5px;
+		}
+		.latest > .card > img {
+			width: 65%;	
+		}
+		.latest > .card > desc {
+			justify-content: space-between;
+			min-height: 25%;
+			width: 88%;
+		}
+		.card > img {
+			width: 33%;
 		}
 		* {
 			scrollbar-width: 5px;
@@ -133,46 +151,72 @@
 			border-radius: 7px;
 		}
 		@media (max-width: 1600px) {
+			.latest {
+				width: 40vw;
+			}
+
+			.previous {
+				width: 45vw;
+			}
+
 			.list {
-				grid-template-columns:  minmax(400px, 1fr);
+				justify-content: center;
+			}
+
+			.card {
+				width: 40vw;
 			}
 		}
-		@media (max-width: 1200px) {
+		@media (max-width: 780px) {
 			.container {
 				flex-direction: column;
 				align-items: center;
 			}
 			.container > div {
 				width: 80%;
-				height: 110vw;
+				max-height: 83vh;
+				height: fit-content;
+			}
+			.card {
+				width: 90%;
 			}
 		}
-		@media (max-width: 520px) {
+		@media (max-width: 500px) {
 			.card {
 				flex-direction: column;
 			}
 			.previous > .list > .card > img {
-				width: 30%;
+				width: 70%;
 				height: calc(30% * 3;)
 			}
 			.list {
 				grid-auto-rows: unset;
 			}
 		}
-		{# .desc {
-			position: absolute;
-			left: 0;
-			right: 0;
-			top: 0;
-			bottom: 0;
-			height: 100%;
-			width: 100%;
-			background: linear-gradient(to top, black, transparent);
-			color: var(--light-gray);
-			opacity: 0;
-			transition: 0.3s ease;
+		@media (max-height: 530px) {
+			.container > div {
+				width: 45% !important;
+				height: 257px !important; 
+			}
+
+			.card {
+				flex-direction: row !important;
+				width: 90% !important;
+				border: 1px solid var(--light-gray) !important;
+			}
+
+			.card img {
+				width: 33% !important;
+			}
 		}
-		.desc > p{
+		.desc {
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+			justify-content: start;
+			font-size: 0.94em;
+		}
+		{# .desc > p{
 			position: absolute;
 			bottom: 10px;
 			width: 100%
