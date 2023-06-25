@@ -18,8 +18,8 @@
 					<div class="poll">
 						<div class="title"> {{ poll.title }} </div>
 						<div class="buttons">
-							<button onclick="window.location.href = '/polls/{{ poll._id }}'">Vote</button>
-							<button onclick="window.location.href = '/polls/results/{{ poll._id }}'">Result</button>
+							<button onclick="window.location.href = '/polls?pollId={{ poll._id }}'">Vote</button>
+							<button onclick="window.location.href = '/polls/results?id={{ poll._id }}'">Result</button>
 						</div>
 					</div>
 				{% endfor %}

@@ -8,9 +8,9 @@ router.use((req, res, next) => {
 	});
 
 	if (!req.loggedIn) return res.loginRedirect(req, res);
-	if (!req.user.permissions.find(perm => perm === 'governor')) return res.status(403).renderFile('404.njk', {
-		message: 'Access denied. You do not have the required permission.'
-	});
+	// if (!req.user.permissions.find(perm => perm === 'governor')) return res.status(403).renderFile('404.njk', {
+		// message: 'Access denied. You do not have the required permission.'
+	// });
 
 	next();
 });
@@ -26,8 +26,8 @@ router.get('/post-management', async (req, res) => {
 	const posts = (await dbh.getPosts().limit(20)).map(post => post.toObject());
 	return res.renderFile(`govportal/post-management.njk`, { posts });
 });
-router.get('/edit-post/:id', async (req, res) => {
-	const id = req.params.id;
+router.get('/edit-post', async (req, res) => {
+	const id = req.query.id;
 	const data = (await dbh.getPost(id)).toObject();
 	return res.renderFile(`govportal/edit-post.njk`, { ...data, date: data.date.toISOString().slice(0, 10) });
 });
@@ -43,8 +43,8 @@ router.get('/add-poll', (req, res) => {
 	return res.renderFile(`govportal/add-poll.njk`, { date: date.toISOString().slice(0, 10) });
 });
 
-router.get('/edit-poll/:id', async (req, res) => {
-	const id = req.params.id;
+router.get('/edit-poll', async (req, res) => {
+	const id = req.query.id;
 	const poll = (await dbh.getPoll(id)).toObject();
 	return res.renderFile(`govportal/edit-poll.njk`, { ...poll, endTime: poll.endTime.toISOString().slice(0, 10) });
 });
@@ -192,6 +192,6 @@ router.patch('/delete-option', async (req, res) => {
 });
 
 module.exports = {
-	route: '/gov-portal',
+	route: '/gov-portal',	
 	router
 };
