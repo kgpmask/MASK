@@ -5,7 +5,7 @@ const dbh = require('../database/handler');
 // Route for opening poll or poll list
 router.get('/', async (req, res) => {
 	if (!req.loggedIn) return res.loginRedirect(req, res);
-	const pollId = req.query.pollId;
+	const pollId = req.query.id;
 	const activePolls = await dbh.getActivePolls();
 	if (!pollId) return res.renderFile('poll_list.njk', {
 		activePolls,

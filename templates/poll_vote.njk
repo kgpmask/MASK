@@ -53,7 +53,7 @@
 			setTimeout(function () {e.classList.add('hidden')}, 2000);
 			if (response.success) {
 				setTimeout(function () {
-					window.location.href  = "/polls/results/{{ poll._id }}";
+					window.location.href  = "/polls/results?id={{ poll._id }}";
 				}, 3000);
 			}
 		}
