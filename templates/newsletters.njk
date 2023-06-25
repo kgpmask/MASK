@@ -3,10 +3,10 @@
 {% set thispage = 'newsletters' %}
 {% set pagetitle = 'Newsletters' %}
 
-{% macro card(name, link, desc, width=7) %}
+{% macro card(name, link, desc, width=25) %}
 	<div class="card" onclick="window.location.href = '/newsletters/{{ link }}';">
-		<img class="cover" src="../assets/releases/{{ link }}/cover.webp" onerror="this.src='../assets/logo.jpeg'" style="width: {{ width }}vw; height: calc({{ width }}vw * 3400 / 2400);"/>
-		<div class="desc">
+		<img class="cover" src="../assets/releases/{{ link }}/cover.webp" onerror="this.src='../assets/releases/no-cover.webp'" style="width: {{ width }}%; height: calc({{ width }}% * 3);"/>
+		<div class="desc" style="width: 100%; text-align: left;">
 			<h4>{{ name }}</h4>
 			<p>{{ desc }}</p>
 		</div>
@@ -20,7 +20,7 @@
 			<h3>Latest Release</h3>
 			{% for letter in letters %}
 				{% if loop.first %}
-					{{ card(letter.name, letter.link, "weufg ewu fgewuf gewf guwef gyuae gfyuwef guew gfuysefuyweg fyweg fyueyfugevygfvewfyu vesagyfve", 23) }}	
+					{{ card(letter.name, letter.link, "weufg ewu fgewuf gewf guwef gyuae gfyuwef guew gfuysefuyweg fyweg fyueyfugevygfvewfyu vesagyfve", 90) }}	
 				{% endif %}
 			{% endfor %}
 		</div>
@@ -98,6 +98,7 @@
 		}
 		.list {
 			display: grid;
+			grid-auto-rows: 1fr;
 			grid-template-columns: minmax(400px, 1fr)  minmax(400px, 1fr);
 		}
 		.card {
@@ -105,12 +106,17 @@
 			align-items: center;
 			flex-direction: row;
 			margin: 15px;
+			border: 1px solid var(--light-gray);
+			border-radius: 6px;
 			position: relative;
-			border: none;
 			background: none;
 		}
 		.latest > .card {
 			flex-direction: column;
+			border: none;
+		}
+		.card * {
+			margin: 5px;
 		}
 		* {
 			scrollbar-width: 5px;
@@ -129,6 +135,28 @@
 		@media (max-width: 1600px) {
 			.list {
 				grid-template-columns:  minmax(400px, 1fr);
+			}
+		}
+		@media (max-width: 1200px) {
+			.container {
+				flex-direction: column;
+				align-items: center;
+			}
+			.container > div {
+				width: 80%;
+				height: 110vw;
+			}
+		}
+		@media (max-width: 520px) {
+			.card {
+				flex-direction: column;
+			}
+			.previous > .list > .card > img {
+				width: 30%;
+				height: calc(30% * 3;)
+			}
+			.list {
+				grid-auto-rows: unset;
 			}
 		}
 		{# .desc {
