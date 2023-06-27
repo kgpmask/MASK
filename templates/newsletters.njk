@@ -6,303 +6,67 @@
 {% set latestnewsletter = letters[0] %}
 
 {% macro card(name, link, desc) %}
-	<a class="card" href="/newsletters/{{ link }}">
-		<img class="cover" src="../assets/releases/{{ link }}/cover.webp" onerror="this.src='../assets/releases/no-cover.webp'"/>
-		<div class="desc" style="width: 100%; text-align: left;">
-			<h3>{{ name }}</h3>
-			<p>{{ desc }}</p>
-		</div>
-	</a>
+	<div class="newsletter">
+		{# <a class="card" href="/newsletters/{{ link }}"> #}
+			<div class="cvr-hldr">
+				<img class="cover" src="../assets/releases/{{ link }}/cover.webp" onerror="this.src='../assets/releases/no-cover.webp'"/>
+			</div>
+			<div class="desc" style="width: 100%; text-align: left;">
+				<h3>{{ name }}</h3>
+				<p>{{ desc }}</p>
+			</div>
+		</a>
+	</div>
 {% endmacro %}
 
 {% block pagecontent %}
 	<h1> Newsletters </h1>
 	{% block extrainfo %}{% endblock %}
-	<div class="container">
-		<div class="latest">
-			<h2>Latest Release</h2>
-			{{ card(latestnewsletter.name, latestnewsletter.link, "weufg ewu fgewuf gewf guwef gyuae gfyuwef guew gfuysefuyweg fyweg fyueyfugevygfvewfyu vesagyfve", 90) }}
-		</div>
-		<div class="previous">
-			<h2>Previous Releases</h2>
-			<div class="list">
-				{# <button class="card" onclick="window.location.href = '/newsletters/2023-04-1';">
-					<img class="cover" src="../assets/releases/2023-04-1/cover.webp" onerror="this.src='../assets/logo.jpeg'" style="width: 175px; height: calc(175px * 3400 / 2400);"/>
-					<div class="desc">
-						<h4>April Newsletters</h4>
-						<p>Welcome to the captivating high-school themed April edition of the MASK newsletter! Immerse yourself in riveting reviews and rare recommendations that will leave you spellbound!</p>
-					</div>
-				</button>
-				<button class="card" onclick="window.location.href = '/newsletters/2023-05-1';">
-					<img class="cover" src="../assets/releases/2023-05-1/cover.webp" onerror="this.src='../assets/logo.jpeg'" style="width: 175px; height: calc(175px * 3400 / 2400);"/>
-					<div class="desc">
-						<h4>April Newsletters</h4>
-						<p>Welcome to the captivating high-school themed April edition of the MASK newsletter! Immerse yourself in riveting reviews and rare recommendations that will leave you spellbound!</p>
-					</div>
-				</button> #}
-				{% for letter in letters %}
-					{% if not loop.first %}
-						{{ card(letter.name, letter.link, letter.desc) }}	
-					{% endif %}
-				{% endfor %}
-			</div>
-		</div>
+	<div class="container" class="grid">
+		{{ card(latestnewsletter.name, latestnewsletter.link, "weufg ewu fgewuf gewf guwef gyuae gfyuwef guew gfuysefuyweg fyweg fyueyfugevygfvewfyu vesagyfve", 90) }}
+		{% for letter in letters %}
+			{% if not loop.first %}
+				{{ cards(letter.name, letter.link, letter.desc) }}
+			{% endif %}
+		{% endfor %}
 	</div>
-	{#
-	<div id="accordion-container">
-	{% for year in years %}
-		<button class="accordion">&nbsp;&nbsp;&nbsp;{{ year.title }}</button>
-		<div class="accordion-panel"><div class="accordion-content">
-			{% for month in year.months %}
-				<div class="month">
-					<h3 style="color:var(--off-white)">{{ month.title }}</h3>
-					<div class="monthposts">
-						{% for issue in month.issues %}
-							<div class="flex-link"><a class="issue-link" href="/newsletters/{{ issue.href }}">{{ issue.title }} Issue</a></div>
-						{% endfor %}
-					</div>
-				</div>
-				{% if not loop.last %} <hr/> {% endif %}
-			{% endfor %}
-		</div></div>
-	{% endfor %}
-	</div> #}
 	<div style="height: 40px;"></div>
 {% endblock %}
 
 {% block customcss %}
 	<style>
-		.container {
-			display: flex;
-			flex-direction: row;
-			justify-content: center;
-			align-items: center;
-		}
-		.container > div {
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			border: 2px solid rgba(255,255,255,0.1);
-			border-radius: 12px;
-			margin: 10px;
-			padding: 12px 5px;
-			background-color: rgba(255,255,255,0.13);
-			backdrop-filter: blur(5px);
-			max-height: calc(100vh - 300px);
-			height: fit-content;
-			overflow-y: scroll;
-		}
-		.previous {
-			width: 50%;
-		}
-		.latest {
-			width: 32%;
-		}
-		.list {
-			display: flex;
-			flex-direction: row;
-			flex-wrap: wrap;
-		}
-		.card {
-			display: flex;
-			align-items: center;
-			flex-direction: row;
-			margin: 10px;
-			border: 1px solid var(--light-gray);
-			border-radius: 6px;
-			position: relative;
-			background: none;
-			width: calc(50% - 22px);
-			text-decoration: none;
-			transition: color 0.3s;
-		}
-		.latest > .card {
-			flex-direction: column;
-			justify-content: space-between;
-			border: none;
-			width: 95%;
-		}
-		.card * {
-			margin: 5px;
-		}
-		.latest > .card > img {
-			width: 65%;	
-		}
-		.latest > .card > desc {
-			justify-content: space-between;
-			min-height: 25%;
-			width: 88%;
-		}
-		.card > img {
-			width: 33%;
-		}
-		* {
-			scrollbar-width: 5px;
-			scrollbar-color: var(--ghost-gray) transparent;
-		}
-		*::-webkit-scrollbar {
-			width: 5px;
-		}
-		*::-webkit-scrollbar-track {
-			background: transparent;
-		}
-		*::-webkit-scrollbar-thumb {
-			background-color: var(--ghost-gray);
-			border-radius: 7px;
-		}
-		@media (max-width: 1600px) {
-			.latest {
-				width: 40vw;
-			}
+		{# <link rel="stylesheet" type="text/css" href="/assets/styles/newsletters.css"/> #}
+.container {
+    display: grid;
+	grid-auto-flow: column;
+    gap: 1.5rem;
+    height: 100%;
+    grid-template-rows: 1fr 1fr;
+}
+.span-2{
+    grid-row: span 2;
+    grid-column: span 2;
+}
+.cover{
+    width: 100%;
+	object-fit: contain;
+}
+.newsletter{
+    border: 10px solid red;
+	width:400px
+}
+.card{
+    box-sizing: border-box;
+    display:flex;
+    flex-direction: column;
+	width:400px
+}
+.cvr-hldr{
+	width: 100%;
+	height:80%
 
-			.previous {
-				width: 45vw;
-			}
+}
 
-			.list {
-				justify-content: center;
-			}
-
-			.card {
-				width: 40vw;
-			}
-		}
-		@media (max-width: 780px) {
-			.container {
-				flex-direction: column;
-				align-items: center;
-			}
-			.container > div {
-				width: 80%;
-				max-height: 83vh;
-				height: fit-content;
-			}
-			.card {
-				width: 90%;
-			}
-		}
-		@media (max-width: 500px) {
-			.card {
-				flex-direction: column;
-			}
-			.previous > .list > .card > img {
-				width: 70%;
-				height: calc(30% * 3;)
-			}
-			.list {
-				grid-auto-rows: unset;
-			}
-		}
-		@media (max-height: 530px) {
-			.container > div {
-				width: 45% !important;
-				height: 257px !important; 
-			}
-
-			.card {
-				flex-direction: row !important;
-				width: 90% !important;
-				border: 1px solid var(--light-gray) !important;
-			}
-
-			.card img {
-				width: 33% !important;
-			}
-		}
-		.desc {
-			height: 100%;
-			display: flex;
-			flex-direction: column;
-			justify-content: start;
-			font-size: 0.94em;
-		}
-		{# .desc > p{
-			position: absolute;
-			bottom: 10px;
-			width: 100%
-		}
-		.card:hover .desc{
-			opacity: 1;
-		} #}
-		{# #accordion-container {
-			width: 60%;
-			margin: auto;
-			padding: 40px;
-		}
-
-		.accordion {
-			background-color: var(--middle-gray);
-			color: var(--off-white);
-			cursor: pointer;
-			padding: 18px;
-			width: 100%;
-			border: none;
-			text-align: center;
-			outline: none;
-			transition: 0.4s;
-			font-weight: bold;
-			font-size: 1.6em;
-		}
-
-		.active-accordion, .accordion:hover {
-			background-color: var(--gray);
-			color: var(--white);
-		}
-
-		.accordion:after {
-			content: '\002B';
-			color: var(--off-white);
-			font-weight: bold;
-			float: right;
-			margin-left: 5px;
-		}
-
-		.active-accordion:after {
-			content: '\2212';
-		}
-
-		.accordion-panel {
-			padding: 0px;
-			background-color: var(--medium-gray);
-			max-height: 0;
-			overflow: hidden;
-			transition: max-height 0.2s ease-out;
-		}
-
-		.accordion-panel hr {
-			margin: 20px 10%;
-		}
-
-		.accordion-content {
-			padding: 18px;
-		}
-
-		.monthposts {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			width: 100%;
-		}
-
-		.flex-link {
-			display: inline-flex;
-		}
-
-		div h3 {
-			padding-bottom: 25px;
-		}
-
-		a.issue-link, a.issue-link:visited {
-			text-decoration: none;
-			font-weight: bold;
-			color: var(--white);
-			border: 1px solid var(--light-gray);
-			padding: 8px;
-			margin: 10px;
-			background-color: var(--gray);
-			font-size: 0.7em;
-			border-radius: 10px;
-		} #}
 	</style>
 {% endblock %}
 
