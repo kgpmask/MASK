@@ -90,7 +90,7 @@
 				const votes = eval(ele.parentElement.parentElement.children[1].innerHTML.split(' ')[0]);
 				if (votes === maxVotes) ele.parentNode.parentNode.classList.add('winning');
 				if (votes) ele.style.width = totalVotes ? `${votes*100/totalVotes}%` : 0;
-				ele.firstElementChild.innerHTML = `${totalVotes ? Math.round(votes*100/totalVotes) : o}%`;
+				ele.firstElementChild.innerHTML = `${totalVotes ? Math.round(votes*100/totalVotes * 10)/10 : o}%`;
 			});
 		}
 		window.onload = () => {
