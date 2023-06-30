@@ -186,7 +186,7 @@
 
 				async function postData (id) {
 			//console.log(data);
-			var res = (await axios.post('/gov-portal/polls-management', { data: id })).data;
+			var res = (await axios.post('/gov-portal/poll-management', { data: id })).data;
 			const e = document.getElementsByClassName('message')[0];
 			e.innerHTML = res.message;
 			e.classList.add(res.success ? 'success' : 'error');
