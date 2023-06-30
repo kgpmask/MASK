@@ -28,31 +28,33 @@
 {% block pagecontent %}
 	<div class="message hidden"></div>
 	<h1>Submit your content here!</h1>
-	<form action="javascript:" onsubmit="submitForm()">
-		{# Email Address #}
-		{{ input('email', 'email', 'E-mail Address') }}
-		{# Name #}
-		{{ input('name', 'text', "Your Name (or a Psudonym, if you prefer)") }}
-		{# Member of IIT Kharagpur? #}
-		{{ input('member', 'radio', "Are you a member of IIT Kharagpur?") }}
-		{# Content type #}
-		{{ input('type', 'radio', 'What kind of content are you submitting?', [
-			{ label: 'Art (Digital)', value: 'dig-art' },
-			{ label: 'Art (Traditional)', value: 'trd-art' },
-			{ label: 'Video (AMV)', value: 'amv-vid' },
-			{ label: 'Video (Animation)', value: 'ani-vid' },
-			{ label: 'Video (Instrumental Music)', value: 'ins-mus' },
-			{ label: 'Video (Vocal Music)', value: 'voc-mus' }
-		]) }}
-		{# Content Link #}
-		{{ input('link', 'url', 'Please provide the Drive link of the content you wish to submit.') }}
-		{# Proof of Ownership #}
-		{{ input('proof', 'text', 'If possible, please provide any proof of ownership for the same') }}
-		{# Social Media Handles to be mentioned #}
-		{{ input('social', 'text', "Mention any social media handles you\'d like to be taggged in") }}
-		{# Submit button #}
-		<button type="submit"> Submit </button>
-	</form>
+	<div class="form-container" style="padding-bottom:5%;">
+		<form action="javascript:" onsubmit="submitForm()">
+			{# Email Address #}
+			{{ input('email', 'email', 'E-mail Address') }}
+			{# Name #}
+			{{ input('name', 'text', "Your Name (or a Psudonym, if you prefer)") }}
+			{# Member of IIT Kharagpur? #}
+			{{ input('member', 'radio', "Are you a member of IIT Kharagpur?") }}
+			{# Content type #}
+			{{ input('type', 'radio', 'What kind of content are you submitting?', [
+				{ label: 'Art (Digital)', value: 'dig-art' },
+				{ label: 'Art (Traditional)', value: 'trd-art' },
+				{ label: 'Video (AMV)', value: 'amv-vid' },
+				{ label: 'Video (Animation)', value: 'ani-vid' },
+				{ label: 'Video (Instrumental Music)', value: 'ins-mus' },
+				{ label: 'Video (Vocal Music)', value: 'voc-mus' }
+			]) }}
+			{# Content Link #}
+			{{ input('link', 'url', 'Please provide the Drive link of the content you wish to submit.') }}
+			{# Proof of Ownership #}
+			{{ input('proof', 'text', 'If possible, please provide any proof of ownership for the same') }}
+			{# Social Media Handles to be mentioned #}
+			{{ input('social', 'text', "Mention any social media handles you\'d like to be taggged in") }}
+			{# Submit button #}
+			<button type="submit"> Submit </button>
+		</form>
+	</div>
 {% endblock %}
 
 {% block customjs %}
