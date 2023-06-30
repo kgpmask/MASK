@@ -187,7 +187,6 @@ Ensure that pull requests pass tests (`npm test` for both lint and mocha tests).
 
 - <a href="https://github.com/Goose-Of-War" target="_blank">Vidunram A R </a> (Lead)  
 - <a href="https://github.com/nishkalprakash" target="_blank">Nishkal Prakash</a>  
-- <a href="https://github.com/MokshithPV" target="_blank">Venkatsai Mokshith</a>  
 - <a href="https://github.com/SachdevJai" target="_blank">Jai Sachdev</a>  
 - <a href="https://github.com/ItsAnkan" target="_blank">Ankan Saha</a>  
 - <a href="https://github.com/Symbiot01" target="_blank">Sahil Patel</a>  
@@ -201,6 +200,7 @@ Ensure that pull requests pass tests (`npm test` for both lint and mocha tests).
 - <a href="https://github.com/Yureien" target="_blank">Soham Sen</a>  
 - <a href="https://github.com/shiroyasha263" target="_blank">Vishesh Gupta</a>  
 - <a href="https://github.com/Pagol1" target="_blank">Saumyadip Nandy</a>  
+- <a href="https://github.com/MokshithPV" target="_blank">Venkatsai Mokshith</a>  
 - <a href="https://github.com/lurkingryuu" target="_blank">Karthikeya Y M</a>  
 - <a href="https://github.com/ayush4ise" target="_blank">Ayush Parmar</a>  
 
