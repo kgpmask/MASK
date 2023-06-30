@@ -13,7 +13,7 @@
 				<br>
 				<div>Click here to see the <a href="/polls/results/{{ poll._id }}" style="color: var(--dark-red); font-weight: 600;">current poll results</a></div>
 				<br>
-				<div class="choice-container">
+				<div class="choice-container" style="padding:0% 0% 2% 0%;">
 					{% for choice in poll.records %}
 						<div class="choice">
 							<input type="radio" name="poll-value" value="{{ choice._id }}" id="{{ choice._id }}" {{ 'checked' if votedFor === choice.value else '' }}>
@@ -26,7 +26,7 @@
 					</div>
 				</div>
 				<br>
-				<button type="button" onclick="submitVote()"> Submit </button>
+				<button type="button" onclick="submitVote()"  style="color:white;"> Submit </button>
 			</div>
 		</div>
 	</div>
