@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 const router = require('express').Router();
 
-const Tools = require("../src/tools");
+const Tools = require('../src/tools');
 
 router.post('/', async (req, res) => {
 	// Console log git hook requests

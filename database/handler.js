@@ -165,7 +165,7 @@ async function deletePollOption (data) {
 
 async function editPoll (data) {
 	const poll = await Poll.findById(data.id);
-	console.log("hehe", poll);
+	console.log('hehe', poll);
 	poll.title = data.title;
 	poll.endTime = data.endTime;
 	for (let i = 0; i < poll.records.length; i++) {
@@ -190,8 +190,8 @@ async function getMonthlyPolls (month) {
 	const polls = await Poll.find(
 		{
 			'_id': {
-				"$regex": `${date.getFullYear() + "-" + ("0" + (month ? month : date.getMonth() + 1)).slice(-2) + "-"}`,
-				"$options": "i"
+				'$regex': `${date.getFullYear() + '-' + ('0' + (month ? month : date.getMonth() + 1)).slice(-2) + '-'}`,
+				'$options': 'i'
 			}
 		}
 	).lean();

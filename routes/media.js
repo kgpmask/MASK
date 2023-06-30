@@ -9,7 +9,7 @@ router.get('/art', async (req, res) => {
 });
 
 router.get('/videos', async (req, res) => {
-	const vids = PARAMS.mongoless ? sample.filter(post => post.type === 'youtube') : await dbh.getPosts("youtube");
+	const vids = PARAMS.mongoless ? sample.filter(post => post.type === 'youtube') : await dbh.getPosts('youtube');
 	vids.forEach((vid) => {
 		vid.embed = `https://www.youtube.com/embed/${vid.link.split('?v=')[1]}?playsinline=1`;
 	});

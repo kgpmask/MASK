@@ -27,7 +27,7 @@ async function link (app, nunjEnv) {
 
 	app.use((req, res, next) => {
 		// If propagation hasn't stopped, switch to GET!
-		if (req.method === "POST") {
+		if (req.method === 'POST') {
 			return res.redirect(req.url);
 		}
 		next();
@@ -41,10 +41,10 @@ async function link (app, nunjEnv) {
 		if (PARAMS.dev) console.error(err.stack);
 		// Make POST errors show only the data, and GET errors show the page with the error message
 		res.status(500);
-		if (req.method === "GET")
-			res.renderFile("404.njk", {
-				message: "Server error! This may or may not be due to invalid input.",
-				pagetitle: "Error"
+		if (req.method === 'GET')
+			res.renderFile('404.njk', {
+				message: 'Server error! This may or may not be due to invalid input.',
+				pagetitle: 'Error'
 			});
 		else res.send(err.toString());
 	});
