@@ -5,7 +5,7 @@ const Member = require('./schemas/Member');
 const Newsletter = require('./schemas/Newsletter');
 const Poll = require('./schemas/Poll');
 const Post = require('./schemas/Post');
-const Submission = require('./schemas/Subnmission');
+const Submission = require('./schemas/Submission');
 
 // Handle newly registered user or normal login
 async function createNewUser (profile) {
