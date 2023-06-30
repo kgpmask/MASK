@@ -404,11 +404,17 @@
 
 {% block customjs %}
 	<script>
+		function descSort(arr) {
+			return arr.sort(function(a, b) {
+				return a < b ? 1 : -1;
+			});
+		}
 		function findCurrentPage () {
 			const pagesContainer = document.querySelector('#pages');
 			const pages = [...pagesContainer.children];
 			const offsetLeft = pagesContainer.scrollLeft;
-			return pages.map((page, i) => [Math.abs(page.offsetLeft - offsetLeft), i]).sort((a, b) => -(a[0] < b[0]))[0][1];
+			let pageArr = pages.map((page, i) => [Math.abs(page.offsetLeft - offsetLeft), i]);
+			return descSort(pageArr).pop().pop();
 		}
 
 		function updatePageState () {
