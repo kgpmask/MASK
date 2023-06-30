@@ -215,7 +215,7 @@ async function updatePoll (ctx) {
 }
 
 async function getMembersbyYear (year) {
-	const data = await Member.find({ 'records.year': year }).sort('name').lean();
+	const data = await Member.find({ 'records.year': ~~year }).sort('name').lean();
 	const yearData = [];
 	const teamsData = require('../src/teams.json');
 	data.forEach(member => {
