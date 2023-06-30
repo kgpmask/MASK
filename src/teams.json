@@ -60,5 +60,27 @@
 			"name": "WebDev",
 			"icon": "webdev"
 		}
+	},
+	"2023" : {
+		"a": {
+			"name": "AMV & Music",
+			"icon": "amv"
+		},
+		"d": {
+			"name": "Design & Arts",
+			"icon": "design"
+		},
+		"n": {
+			"name": "Media & Newsletter",
+			"icon": "newsletter"
+		},
+		"q": {
+			"name": "Quiz",
+			"icon": "quiz"
+		},
+		"w": {
+			"name": "WebDev",
+			"icon": "webdev"
+		}
 	}
 }

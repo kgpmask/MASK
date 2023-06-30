@@ -1,5 +1,4 @@
-const express = require('express');
-const router = express.Router();
+const router = require('express').Router();
 
 const dbh = PARAMS.mongoless ? {} : require('../database/handler');
 const sample = require('../src/samples/posts');
@@ -10,7 +9,7 @@ router.get('/art', async (req, res) => {
 });
 
 router.get('/videos', async (req, res) => {
-	const vids = PARAMS.mongoless ? sample.filter(post => post.type === 'youtube') : await dbh.getPosts("youtube");
+	const vids = PARAMS.mongoless ? sample.filter(post => post.type === 'youtube') : await dbh.getPosts('youtube');
 	vids.forEach((vid) => {
 		vid.embed = `https://www.youtube.com/embed/${vid.link.split('?v=')[1]}?playsinline=1`;
 	});
@@ -18,4 +17,7 @@ router.get('/videos', async (req, res) => {
 });
 
 
-module.exports = router;
+module.exports = {
+	route: '/',
+	router
+};

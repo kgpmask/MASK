@@ -1,4 +1,4 @@
-{% extends "govportal/govportal.njk" %}
+{% extends 'govportal/govportal.njk' %}
 
 {% set thispage = 'govportal/add-post' %}
 {% set pagetitle = 'Governor Portal | Add Post' %}
@@ -34,7 +34,7 @@
 			</div>
 			<div class="part2">
 				<div class="item">
-					<input type="checkbox" id="hype" checked> 
+					<input type="checkbox" id="hype" checked>
 					<label>Hype</label>
 				</div>
 			</div>
@@ -47,7 +47,7 @@
 	<script>
 		axios.defaults.withCredentials = true;
 		axios.defaults.headers.common['X-CSRF-TOKEN'] = '{{ csrfToken }}';
-		
+
 		function check (select) {
 			if (['letter', 'event'].includes(select.options[select.selectedIndex].value)) {
 				document.getElementById('attr').value = '';
@@ -85,6 +85,7 @@
 {% endblock %}
 
 {% block customcss %}
+	{{ super() }}
 	<style>
 		.message {
 			position: absolute;
@@ -241,7 +242,7 @@
 			pointer-events: none;
 			transition: 0.3s;
 		}
-		
+
 		.part2 > .item > input:checked ~ label{
 			color: var(--red);
 		}

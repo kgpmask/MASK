@@ -1,11 +1,10 @@
-const express = require('express');
-const router = express.Router();
+const router = require('express').Router();
 
 const dbh = PARAMS.mongoless ? {} : require('../database/handler');
 const sample = require('../src/samples/members');
 
 router.get('/:yearName?', async (req, res) => {
-	const yearName = parseInt(req.params.yearName) || 2022;
+	const yearName = ~~Object.keys(require('../src/teams.json')).sort().pop();
 	const membersData = PARAMS.mongoless ? sample : await dbh.getMembersbyYear(yearName);
 	const status = {
 		'Governors': [],
@@ -35,4 +34,7 @@ router.get('/:yearName?', async (req, res) => {
 	});
 });
 
-module.exports = router;
+module.exports = {
+	route: '/members',
+	router
+};

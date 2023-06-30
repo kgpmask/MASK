@@ -2,6 +2,7 @@
 
 {% set thispage = 'polls' %}
 {% set pagetitle = 'Active Polls' %}
+{% set pagedesc = 'View the list of active polls right now.' %}
 
 {% block pagecontent %}
 	<div>
@@ -17,8 +18,8 @@
 					<div class="poll">
 						<div class="title"> {{ poll.title }} </div>
 						<div class="buttons">
-							<button onclick="window.location.href = '/polls/{{ poll._id }}'">Vote</button>
-							<button onclick="window.location.href = '/polls/results/{{ poll._id }}'">Result</button>
+							<button onclick="window.location.href = '/polls?id={{ poll._id }}'">Vote</button>
+							<button onclick="window.location.href = '/polls/results?id={{ poll._id }}'">Results</button>
 						</div>
 					</div>
 				{% endfor %}
@@ -38,7 +39,7 @@
 			max-width: 1200px;
 			display: flex;
 			flex-direction: column;
-			margin: 0 5%;
+			margin: 5vh 0;
 			border-radius: 10px;
 			padding: 40px 5%;
 			width: 75%;

@@ -1,11 +1,11 @@
-const dbh = require('../database/handler');
-
 const router = require('express').Router();
 
+const dbh = require('../database/handler');
+
 // Route for opening poll or poll list
-router.get('/:pollId?', async (req, res) => {
-	if (!req.loggedIn) return res.redirect('/login');
-	const pollId = req.params.pollId;
+router.get('/', async (req, res) => {
+	if (!req.loggedIn) return res.loginRedirect(req, res);
+	const pollId = req.query.id;
 	const activePolls = await dbh.getActivePolls();
 	if (!pollId) return res.renderFile('poll_list.njk', {
 		activePolls,
@@ -31,16 +31,16 @@ router.post('/', async (req, res) => {
 			userId: req.user._id,
 			userChoice: req.body.userChoice
 		});
-		return res.send({ success: true, message: "Successfully Voted" });
+		return res.send({ success: true, message: 'Successfully Voted' });
 	} catch (e) {
-		return res.send({ success: false, message: "Something Went Wrong" });
+		return res.send({ success: false, message: 'Something Went Wrong' });
 	}
 });
 
 // Route for displaying poll results
-router.get('/results/:id?', async (req, res) => {
-	if (!req.loggedIn) return res.redirect('/login');
-	const pollId = req.params.id;
+router.get('/results', async (req, res) => {
+	if (!req.loggedIn) return res.loginRedirect(req, res);
+	const pollId = req.query.id;
 	if (!pollId) return res.notFound('No ID given.');
 	const activePolls = await dbh.getActivePolls();
 	const poll = activePolls.find(poll => poll._id === pollId);
@@ -59,4 +59,7 @@ router.get('/results/:id?', async (req, res) => {
 	});
 });
 
-module.exports = router;
+module.exports = {
+	route: '/polls',
+	router
+};

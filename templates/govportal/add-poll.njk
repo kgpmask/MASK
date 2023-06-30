@@ -1,4 +1,4 @@
-{% extends "govportal/govportal.njk" %}
+{% extends 'govportal/govportal.njk' %}
 
 {% set thispage = 'govportal/add-poll' %}
 {% set pagetitle = 'Governor Portal | Add Poll' %}
@@ -95,6 +95,7 @@
 {% endblock %}
 
 {% block customcss %}
+	{{ super() }}
 	<style>
 		.message {
 			position: absolute;

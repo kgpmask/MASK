@@ -1,11 +1,9 @@
-const express = require('express');
-const router = express.Router();
 const crypto = require('crypto');
+const router = require('express').Router();
 
-const Tools = require("../src/tools");
+const Tools = require('../src/tools');
 
 router.post('/', async (req, res) => {
-
 	// Console log git hook requests
 	console.log(`git-hook request sent at: ${new Date()}`);
 	const pushBranch = req.body.ref.split('/')[2];
@@ -36,7 +34,7 @@ router.post('/', async (req, res) => {
 	try {
 		await new Promise(async (resolve, reject) => {
 			// Keeping timeout this small because I know it won't work
-			setTimeout(() => reject(new Error('60 seconds time out')), 60_000);
+			setTimeout(() => reject(new Error('60 seconds time out')), 75_000);
 			await Tools.updateCode();
 			return resolve('Successfully updated');
 		});
@@ -48,4 +46,7 @@ router.post('/', async (req, res) => {
 	}
 });
 
-module.exports = router;
+module.exports = {
+	route: '/git-hook',
+	router
+};

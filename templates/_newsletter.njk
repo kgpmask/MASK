@@ -1,18 +1,31 @@
-{% extends "_base.njk" %}
+{% extends '_base.njk' %}
 
 {% set thispage = 'newsletters' %}
-{% macro nextprev() %}
-	<div class="controls">
-		<a{% if adjs[0] %} href="/newsletters/{{ adjs[0] }}"{% endif %}><button class="rel" {{ 'disabled' if not adjs[0] }}><span class="buttonicon" id="flipped">&#x279C;</span><span class="buttontext">Previous</span></button></a>
-		<a href="/newsletters/{{ 'random' if (adjs[0] or adjs[1]) else '' }}"><button class="rel" {{ 'disabled' if not (adjs[0] or adjs[1]) }}><span class="buttonicon" id="random"><span class="icon-random"></span></span><span class="buttontext">Random</span></button></a>
-		<a{% if adjs[1] %} href="/newsletters/{{ adjs[1] }}"{% endif %}><button class="rel" {{ 'disabled' if not adjs[1] }}><span class="buttonicon">&#x279C;</span><span class="buttontext">Next</span></button></a>
-	</div>
-{% endmacro %}
+{% set pagedesc = pagedesc if pagedesc else 'Newsletter: Manga and Anime Society Kharagpur' %}
 
 {% set pagecount = pages.length %}
 
+
+
+{% macro nextprevnewsletter() %}
+	<div class="controls">
+		<a{% if adjs[0] %} href="/newsletters/{{ adjs[0] }}"{% endif %}><button class="rel" style="width:auto;padding:revert;" {{ 'disabled' if not adjs[0] }}><span class="buttonicon">&#x21B0;</span><span class="buttontext">Prev Newsletter</span></button></a>
+		<a href="/newsletters/{{ 'random' if (adjs[0] or adjs[1]) else '' }}"><button class="rel" {{ 'disabled' if not (adjs[0] or adjs[1]) }}><span class="buttonicon" id="random"><span class="icon-random"></span></span><span class="buttontext">Random</span></button></a>
+		<a{% if adjs[1] %} href="/newsletters/{{ adjs[1] }}"{% endif %}><button class="rel" style="width:auto;padding:revert;" {{ 'disabled' if not adjs[1] }}><span class="buttonicon">&#x21B1;</span><span class="buttontext">{{ 'Next Newsletter' if adjs[1] else 'Coming soon' }}</span></button></a>
+	</div>
+{% endmacro %}
+
+{% macro nextprevpage() %}
+	<div class="page-change-container">
+		<button class="rel" onclick="prevPage()" id="prev-page"><span class="buttonicon">&#x2190;</span><span class="buttontext">{{ '<<' }}</span></button>
+		<input type="number" min="0" max="{{ pagecount }}" onchange="scrollToPage(this.value)">
+		{# <button class="rel" onclick="copyLink()">{{ 'Share' }}</button> #}
+		<button class="rel" onclick="nextPage()" id="next-page"><span class="buttonicon">&#x2192;</span><span class="buttontext">{{ '>>' }}</span></button>
+	</div>
+{% endmacro %}
+
 {% block pagecontent %}
-	{{ nextprev() }}
+	{{ nextprevnewsletter() }}
 	<hr class="letter-breaker"/><br/>
 	{% if pdf %}
 		<div class="pdf-link"><a href="/assets/releases/{{ pdf }}" target="_blank" class="undecorated-link">
@@ -25,28 +38,31 @@
 		<span id="left-control-button">&#10094;</span>
 		<span id="right-control-button">&#10095;</span>
 	</div></div>-->
-	<div id="pages-container"><div id="pages">
-	{# {% block coverpage %}
-	<div class="page cover-default" id="cover-page">
-		<img id="cover-logo" src="/assets/transparent_logo.png"/>
-		<br/>Manga & Anime<br/>Society, Kharagpur<br/>
-		<br/>
-		<div id="cover-page-title">{{ pagetitle }}</div>
+	<div id="pages-container">
+		{{ nextprevpage() }}
+		<div id="pages" onscroll="updatePageState()">
+			{# {% block coverpage %}
+			<div class="page cover-default" id="cover-page">
+				<img id="cover-logo" src="/assets/transparent_logo.png"/>
+				<br/>Manga and Anime<br/>Society, Kharagpur<br/>
+				<br/>
+				<div id="cover-page-title">{{ pagetitle }}</div>
+				</div>
+			{% endblock %} #}
+			{% block coverpage %}
+				<div class="page" id="cover-page"></div>
+			{% endblock %}
+			{# {% block article %}
+				<div class="faded">This article hasn't been published yet - stay tuned!</div>
+			{% endblock %} #}
+			{% block article %}
+				{% for page in pages %}
+					{% include thispage+'/'+target+'/'+page%}
+				{% endfor %}
+			{% endblock %}
 		</div>
-	{% endblock %} #}
-		{% block coverpage %}
-			<div class="page" id="cover-page"></div>
-		{% endblock %}
-		{# {% block article %}
-			<div class="faded">This article hasn't been published yet - stay tuned!</div>
-		{% endblock %} #}
-		{% block article %}
-	
-			{% for page in pages %}
-				{% include thispage+'/'+target+'/'+page%}
-			{% endfor %}
-		{% endblock %}
-	</div></div>
+		{{ nextprevpage() }}
+	</div>
 	<script>
 		const spoilered = document.querySelectorAll('.spoiler');
 		for (let i = 0; i < spoilered.length; i++) {
@@ -59,7 +75,7 @@
 		}
 	</script>
 	<br/><div style="width:200px;margin:10px auto;background-color:rgba(255,255,255,0.2);border-radius:5px;padding:10px;color:var(--light-gray);font-size:0.8em;text-align:justify-center">Swipe left/right or click and use arrow keys to scroll<br/>Best viewed on PC</div><hr class="letter-breaker"/><br/>
-	{{ nextprev() }}
+	{{ nextprevnewsletter() }}
 {% endblock %}
 
 {% block customcss %}
@@ -131,6 +147,28 @@
 			color: var(--off-white);
 		}
 
+		.page-change-container {
+			margin: 10px auto;
+		}
+
+		.page-change-container > input[type="number"] {
+			width: 80px;
+			height: 25px;
+			margin: 0 5px;
+			border: solid 2px var(--light-gray);
+			border-radius: 3px;
+			background-color: var(--gray);
+			color: var(--off-white);
+			text-align: center;
+			-moz-appearance: textfield;
+		}
+
+		.page-change-container > input[type="number"]::-webkit-outer-spin-button,
+		.page-change-container > input[type="number"]::-webkit-inner-spin-button {
+			-webkit-appearance: none;
+			margin: 0px;
+		}
+
 		#pages-container {
 			overflow: hidden;
 			width: 80%;
@@ -150,13 +188,16 @@
 			-ms-overflow-style: none;
 			scrollbar-width: none;
 		}
+		#pages:active, #pages:focus {
+			outline: 0;
+		}
 		#pages::-webkit-scrollbar {
 			display: none;
 		}
 		.ref{
 			color: inherit;
 			text-decoration: none;
-			
+
 		}
 		.page {
 			scroll-snap-align: start;
@@ -363,6 +404,61 @@
 
 {% block customjs %}
 	<script>
+		function descSort(arr) {
+			return arr.sort(function(a, b) {
+				return a < b ? 1 : -1;
+			});
+		}
+		function findCurrentPage () {
+			const pagesContainer = document.querySelector('#pages');
+			const pages = [...pagesContainer.children];
+			const offsetLeft = pagesContainer.scrollLeft;
+			let pageArr = pages.map((page, i) => [Math.abs(page.offsetLeft - offsetLeft), i]);
+			return descSort(pageArr).pop().pop();
+		}
+
+		function updatePageState () {
+			const currentPage = findCurrentPage();
+			const pages = document.querySelectorAll('.page');
+			[...document.querySelectorAll('input[type="number"]')].forEach(input => input.value = `${currentPage}`);
+			document.querySelector('#prev-page').disabled = (currentPage === 0);
+			document.querySelector('#next-page').disabled = (currentPage === pages.length - 1);
+		}
+
+		function scrollToPage (n) {
+			if (n === '') return;
+			const pagesContainer = document.querySelector('#pages');
+			const pages = document.querySelectorAll('.page');
+			if (!pages[~~n]) scrollToPage(~~n < 0 ? 0 : pages.length - 1);
+			pagesContainer.scrollTo(pages[~~n].offsetLeft, 0);
+			updatePageState();
+		}
+
+		function nextPage () {
+			const pages = document.querySelectorAll('.page');
+			const currentPage = findCurrentPage();
+			scrollToPage( Math.min(currentPage + 1, pages.length - 1) );
+		}
+
+		function prevPage () {
+			const currentPage = findCurrentPage();
+			scrollToPage( Math.max(currentPage - 1, 0) );
+		}
+
+		function copyLink () {
+			navigator.clipboard.writeText(`${window.location.href.split('?')[0]}?page=${findCurrentPage()}`);
+			return alert('Copied to clipboard');
+		}
+
+		window.addEventListener('load', () => {{ 'scrollToPage('+ targetpage + ')' if targetpage else 'updatePageState()' }});
+		window.addEventListener('load', () => {
+			document.activeElement.blur();
+			document.querySelector('#pages').tabIndex = -1;
+			document.querySelector('#pages').focus();
+			setInterval(() => window.history.pushState({ }, "", window.location.href.split('?')[0] + `?page=${findCurrentPage()}`), 500)
+		});
+	</script>
+	<script>
 		axios.defaults.withCredentials = true;
 		axios.defaults.headers.common['X-CSRF-TOKEN'] = '{{ csrfToken }}';
 	</script>
@@ -386,42 +482,42 @@
 		let wordClick = false;
 		function startWord () {
 			let max = Math.max(wordRows, wordCols);
-			let size = 40 * 10 / max - 3 + "px";
-			let fontsize = (10 / max) ** (1 / 2) + "em";
-			let mytablebody = document.getElementById("wordsearch-table");
+			let size = 40 * 10 / max - 3 + 'px';
+			let fontsize = (10 / max) ** (1 / 2) + 'em';
+			let mytablebody = document.getElementById('wordsearch-table');
 			for (let i = 0; i < wordRows; i++) {
-				let mycurrent_row = document.createElement("tr");
+				let mycurrent_row = document.createElement('tr');
 				for (let j = 0; j < wordCols; j++) {
-					let mycurrent_cell = document.createElement("td");
-					mycurrent_cell.classList.add("wordsearch-cell");
-					mycurrent_cell.setAttribute("id", `wordsearch-cell-${i}-${j}`);
-					mycurrent_cell.setAttribute("data-posI", i);
-					mycurrent_cell.setAttribute("data-posJ", j);
+					let mycurrent_cell = document.createElement('td');
+					mycurrent_cell.classList.add('wordsearch-cell');
+					mycurrent_cell.setAttribute('id', `wordsearch-cell-${i}-${j}`);
+					mycurrent_cell.setAttribute('data-posI', i);
+					mycurrent_cell.setAttribute('data-posJ', j);
 					/*mycurrent_cell.style.width = size;
 					mycurrent_cell.style.minWidth = size;
 					mycurrent_cell.style.height = size;
 					mycurrent_cell.style.maxHeight = size;
 					mycurrent_cell.style.fontSize = fontsize;*/
 					let currenttext = document.createTextNode(wordMatrix[i][j]);
-					mycurrent_cell.addEventListener("click", function (event) {
+					mycurrent_cell.addEventListener('click', function (event) {
 						if (wordClick) {
 							const start = wordClick;
-							const final = [~~this.getAttribute("data-posI"), ~~this.getAttribute("data-posJ")];
+							const final = [~~this.getAttribute('data-posI'), ~~this.getAttribute('data-posJ')];
 							wordClick = false;
 							if (start[0] === final[0] && start[1] === final[1]) return; //same position
 							if (start[0] === final[0] || start[1] === final[1] || (Math.abs(start[0] - final[0]) === Math.abs(start[1] - final[1]))) {
-								let word = "";
+								let word = '';
 								let offsets = [Math.sign(final[0] - start[0]), Math.sign(final[1] - start[1])];
 								for (let [i, j] = start; (i !== final[0] || j !== final[1]); [i += offsets[0], j += offsets[1]]) word += wordMatrix[i][j];
 								word += wordMatrix[final[0]][final[1]];
 								console.log(word);
 								if (words.includes(word) && !wordFound.includes(word)) {
 									wordFound.push(word);
-									document.getElementById(`wordsearch-word-${word.toLowerCase()}`).classList.add("found-word");
+									document.getElementById(`wordsearch-word-${word.toLowerCase()}`).classList.add('found-word');
 									if (words.length === wordFound.length) {
-										mytablebody.id = "table-complete";
+										mytablebody.id = 'table-complete';
 										const wordsList = document.getElementById('wordsearch-words');
-										wordsList.style.animation = "fadeOut 1.5s";
+										wordsList.style.animation = 'fadeOut 1.5s';
 										wordsList.style.opacity = 0.1;
 										setTimeout(function () {
 											document.getElementById(`wordsearch`).innerHTML = `<div class="wordsearch-complete">Completed!</div>`;
@@ -432,30 +528,30 @@
 							return; // invalid
 						}
 						else {
-							wordClick = [~~this.getAttribute("data-posI"), ~~this.getAttribute("data-posJ")];
+							wordClick = [~~this.getAttribute('data-posI'), ~~this.getAttribute('data-posJ')];
 						}
 					}, false);
-					mycurrent_cell.addEventListener("mouseover", function (event) {
+					mycurrent_cell.addEventListener('mouseover', function (event) {
 						if (wordClick) {
 							const start = wordClick;
-							const final = [~~this.getAttribute("data-posI"), ~~this.getAttribute("data-posJ")];
+							const final = [~~this.getAttribute('data-posI'), ~~this.getAttribute('data-posJ')];
 							if (start[0] === final[0] && start[1] === final[1]) return; //same position
 							if (start[0] === final[0] || start[1] === final[1] || (Math.abs(start[0] - final[0]) === Math.abs(start[1] - final[1]))) {
 								let offsets = [Math.sign(final[0] - start[0]), Math.sign(final[1] - start[1])];
 								for (let [i, j] = start; (i !== final[0] + offsets[0] || j !== final[1] + offsets[1]); [i += offsets[0], j += offsets[1]]) {
 									let tempCell = document.getElementById(`wordsearch-cell-${i}-${j}`);
-									tempCell.classList.add("wordsearchCellS");
+									tempCell.classList.add('wordsearchCellS');
 								}
 							}
 						}
-						event.target.classList.add("wordsearchCellH");
+						event.target.classList.add('wordsearchCellH');
 					}, false);
-					mycurrent_cell.addEventListener("mouseleave", function (event) {
+					mycurrent_cell.addEventListener('mouseleave', function (event) {
 						for (let i = 0; i < wordRows; i++) {
 							for (let j = 0; j < wordCols; j++) {
 								let tempCell = document.getElementById(`wordsearch-cell-${i}-${j}`);
-								tempCell.classList.remove("wordsearchCellH");
-								tempCell.classList.remove("wordsearchCellS");
+								tempCell.classList.remove('wordsearchCellH');
+								tempCell.classList.remove('wordsearchCellS');
 							}
 						}
 					}, false);
@@ -465,12 +561,12 @@
 				mytablebody.appendChild(mycurrent_row);
 			}
 			let colnum = Math.ceil(words.length / 5);
-			let wordArea = document.getElementById("wordsearch-words");
-			wordArea.innerHTML = tempWords.map(word => `<div id="wordsearch-word-${word.replace(/[ \t-]/g, '').toLowerCase()}" class="wordsearch-word">${word}</div>`).join("");
+			let wordArea = document.getElementById('wordsearch-words');
+			wordArea.innerHTML = tempWords.map(word => `<div id="wordsearch-word-${word.replace(/[ \t-]/g, '').toLowerCase()}" class="wordsearch-word">${word}</div>`).join('');
 		}
 	</script>
 	<script>
-		"use strict";
+		'use strict';
 		const crossRows = crossMatrix.length;
 		const crossCols = crossMatrix[0].length;
 		const crossFound = crossMatrix.map(row => row.map(() => '-'));
@@ -478,35 +574,35 @@
 		let crossDir = false; // 1234 NESW
 		let crosswordVis = false;
 		function startCross () {
-			let mytablebody = document.getElementById("crossword-table");
+			let mytablebody = document.getElementById('crossword-table');
 			for (let i = 0; i < crossRows; i++) {
-				let mycurrent_row = document.createElement("tr");
+				let mycurrent_row = document.createElement('tr');
 				for (let j = 0; j < crossCols; j++) {
-					let mycurrent_cell = document.createElement("td");
-					if (crossMatrix[i][j] === "-") {
-						mycurrent_cell.classList.add("crossword-cell-blank");
-						mycurrent_cell.setAttribute("data-cell", "");
+					let mycurrent_cell = document.createElement('td');
+					if (crossMatrix[i][j] === '-') {
+						mycurrent_cell.classList.add('crossword-cell-blank');
+						mycurrent_cell.setAttribute('data-cell', '');
 					} else {
-						mycurrent_cell.classList.add("crossword-cell");
-						mycurrent_cell.setAttribute("data-cell", "1");
+						mycurrent_cell.classList.add('crossword-cell');
+						mycurrent_cell.setAttribute('data-cell', '1');
 						if (((!i || crossMatrix[i - 1][j] === '-') && crossMatrix[i + 1] && crossMatrix[i + 1][j] === ' ') || ((!j || crossMatrix[i][j - 1] === '-') && crossMatrix[i][j + 1] === ' ')) {
 							mycurrent_cell.classList.add('crossword-count');
 						}
 					}
-					mycurrent_cell.setAttribute("id", `crossword-cell-${i}-${j}`);
-					mycurrent_cell.setAttribute("data-posI", i);
-					mycurrent_cell.setAttribute("data-posJ", j);
-					mycurrent_cell.addEventListener("click", function (event) {
+					mycurrent_cell.setAttribute('id', `crossword-cell-${i}-${j}`);
+					mycurrent_cell.setAttribute('data-posI', i);
+					mycurrent_cell.setAttribute('data-posJ', j);
+					mycurrent_cell.addEventListener('click', function (event) {
 						for (let i = 0; i < crossRows; i++) {
 							for (let j = 0; j < crossCols; j++) {
 								let tempCell = document.getElementById(`crossword-cell-${i}-${j}`);
-								tempCell.classList.remove("crosswordCellH");
-								tempCell.classList.remove("crosswordCellS");
+								tempCell.classList.remove('crosswordCellH');
+								tempCell.classList.remove('crosswordCellS');
 							}
 						}
-						crossClick = [~~this.getAttribute("data-posI"), ~~this.getAttribute("data-posJ")];
-						if (crossMatrix[crossClick[0]][crossClick[1]] === "-") crossClick = false;
-						else event.target.classList.add("crosswordCellH");
+						crossClick = [~~this.getAttribute('data-posI'), ~~this.getAttribute('data-posJ')];
+						if (crossMatrix[crossClick[0]][crossClick[1]] === '-') crossClick = false;
+						else event.target.classList.add('crosswordCellH');
 					}, false);
 					mycurrent_row.appendChild(mycurrent_cell);
 				}
@@ -522,10 +618,10 @@
 						crossFound[crossClick[0]][crossClick[1]] = currenttext;
 						// check if crossword is completed
 						if (!letterSpaces.find(([i, j]) => crossFound[i][j] === '-')) {
-							console.log("Sending POST request");
+							console.log('Sending POST request');
 							axios.post(`/checker/{{ target }}/crossword`, crossFound).then(res => {
 								if (res.data) {
-									mytablebody.classList.add("table-complete-cross");
+									mytablebody.classList.add('table-complete-cross');
 									setTimeout(function () {
 										document.getElementById(`crossword`).innerHTML = `<div class="crossword-complete">Completed!</div>`;
 									}, 1600);
@@ -544,14 +640,14 @@
 						})();
 						return nexts.find(coords => {
 							const cell = document.getElementById(`crossword-cell-${coords.c[0]}-${coords.c[1]}`);
-							if (cell && cell.getAttribute("data-cell")) {
+							if (cell && cell.getAttribute('data-cell')) {
 								crossClick = coords.c;
 								crossDir = coords.d;
 								for (let i = 0; i < crossRows; i++) {
 									for (let j = 0; j < crossCols; j++) {
 										let tempCell = document.getElementById(`crossword-cell-${i}-${j}`);
-										tempCell.classList.remove("crosswordCellH");
-										tempCell.classList.remove("crosswordCellS");
+										tempCell.classList.remove('crosswordCellH');
+										tempCell.classList.remove('crosswordCellS');
 									}
 								}
 								cell.classList.add('crosswordCellH');
@@ -576,17 +672,17 @@
 						};
 						e.preventDefault();
 						const next = document.getElementById(`crossword-cell-${crossClick[0] + offsets[e.keyCode][0]}-${crossClick[1] + offsets[e.keyCode][1]}`);
-						if (next && next.getAttribute("data-cell")) {
+						if (next && next.getAttribute('data-cell')) {
 							crossClick[0] += offsets[e.keyCode][0];
 							crossClick[1] += offsets[e.keyCode][1];
 							for (let i = 0; i < crossRows; i++) {
 								for (let j = 0; j < crossCols; j++) {
 									let tempCell = document.getElementById(`crossword-cell-${i}-${j}`);
-									tempCell.classList.remove("crosswordCellH");
-									tempCell.classList.remove("crosswordCellS");
+									tempCell.classList.remove('crosswordCellH');
+									tempCell.classList.remove('crosswordCellS');
 								}
 							}
-							next.classList.add("crosswordCellH");
+							next.classList.add('crosswordCellH');
 							crossDir = keyDir[e.keyCode];
 							return;
 						}

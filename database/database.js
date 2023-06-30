@@ -1,12 +1,13 @@
 const mongoose = require('mongoose');
 
 exports.init = async () => {
+	const prodHosts = [...Array(3)].map((_, i) => `ac-5rrleks-shard-00-0${i}.muhi0zw.mongodb.net`);
 	if (!process.env.MONGO_URL) return console.log('[!!!] Unable to connect to database: no URL supplied');
 	try {
 		const db = await mongoose.connect(process.env.MONGO_URL, { connectTimeoutMS: 5000 });
 		const socket = db.connections[0];
 		if (!PARAMS.test) console.log(`Connected to the database at ${socket.host}:${socket.port}`);
-		if (socket.host === 'ac-5rrleks-shard-00-01.muhi0zw.mongodb.net' && socket.name === 'mask') {
+		if (prodHosts.includes(socket.host) && socket.name === 'mask') {
 			if (PARAMS.test) {
 				console.log('HOLY SHIT WHY ARE YOU CONNECTING TO PROD IN A TEST SUITE AAAAAA');
 				console.log('*defenestrates to prevent damage*');

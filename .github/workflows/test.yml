@@ -6,11 +6,13 @@ on:
     paths-ignore:
         - 'LICENSE'
         - 'README.md'
+        - 'docs'
   pull_request:
     branches: [ main, dev ]
     paths-ignore:
         - 'LICENSE'
         - 'README.md'
+        - 'docs'
 
 jobs:
   test:
