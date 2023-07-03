@@ -26,20 +26,6 @@
 		<div class="previous">
 			<h2>Previous Releases</h2>
 			<div class="list">
-				{# <button class="card" onclick="window.location.href = '/newsletters/2023-04-1';">
-					<img class="cover" src="../assets/releases/2023-04-1/cover.webp" onerror="this.src='../assets/logo.jpeg'" style="width: 175px; height: calc(175px * 3400 / 2400);"/>
-					<div class="desc">
-						<h4>April Newsletters</h4>
-						<p>Welcome to the captivating high-school themed April edition of the MASK newsletter! Immerse yourself in riveting reviews and rare recommendations that will leave you spellbound!</p>
-					</div>
-				</button>
-				<button class="card" onclick="window.location.href = '/newsletters/2023-05-1';">
-					<img class="cover" src="../assets/releases/2023-05-1/cover.webp" onerror="this.src='../assets/logo.jpeg'" style="width: 175px; height: calc(175px * 3400 / 2400);"/>
-					<div class="desc">
-						<h4>April Newsletters</h4>
-						<p>Welcome to the captivating high-school themed April edition of the MASK newsletter! Immerse yourself in riveting reviews and rare recommendations that will leave you spellbound!</p>
-					</div>
-				</button> #}
 				{% for letter in letters %}
 					{% if not loop.first %}
 						{{ card(letter.name, letter.link, letter.desc) }}	
@@ -48,25 +34,6 @@
 			</div>
 		</div>
 	</div>
-	{#
-	<div id="accordion-container">
-	{% for year in years %}
-		<button class="accordion">&nbsp;&nbsp;&nbsp;{{ year.title }}</button>
-		<div class="accordion-panel"><div class="accordion-content">
-			{% for month in year.months %}
-				<div class="month">
-					<h3 style="color:var(--off-white)">{{ month.title }}</h3>
-					<div class="monthposts">
-						{% for issue in month.issues %}
-							<div class="flex-link"><a class="issue-link" href="/newsletters/{{ issue.href }}">{{ issue.title }} Issue</a></div>
-						{% endfor %}
-					</div>
-				</div>
-				{% if not loop.last %} <hr/> {% endif %}
-			{% endfor %}
-		</div></div>
-	{% endfor %}
-	</div> #}
 	<div style="height: 40px;"></div>
 {% endblock %}
 
@@ -126,7 +93,7 @@
 			margin: 5px;
 		}
 		.latest > .card > img {
-			width: 65%;	
+			width: 70%;	
 		}
 		.latest > .card > desc {
 			justify-content: space-between;
@@ -135,6 +102,13 @@
 		}
 		.card > img {
 			width: 33%;
+		}
+		.desc {
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+			justify-content: start;
+			font-size: 0.94em;
 		}
 		* {
 			scrollbar-width: 5px;
@@ -186,7 +160,7 @@
 				flex-direction: column;
 			}
 			.previous > .list > .card > img {
-				width: 70%;
+				width: 60%;
 				height: calc(30% * 3;)
 			}
 			.list {
@@ -209,116 +183,11 @@
 				width: 33% !important;
 			}
 		}
-		.desc {
-			height: 100%;
-			display: flex;
-			flex-direction: column;
-			justify-content: start;
-			font-size: 0.94em;
-		}
-		{# .desc > p{
-			position: absolute;
-			bottom: 10px;
-			width: 100%
-		}
-		.card:hover .desc{
-			opacity: 1;
-		} #}
-		{# #accordion-container {
-			width: 60%;
-			margin: auto;
-			padding: 40px;
-		}
-
-		.accordion {
-			background-color: var(--middle-gray);
-			color: var(--off-white);
-			cursor: pointer;
-			padding: 18px;
-			width: 100%;
-			border: none;
-			text-align: center;
-			outline: none;
-			transition: 0.4s;
-			font-weight: bold;
-			font-size: 1.6em;
-		}
-
-		.active-accordion, .accordion:hover {
-			background-color: var(--gray);
-			color: var(--white);
-		}
-
-		.accordion:after {
-			content: '\002B';
-			color: var(--off-white);
-			font-weight: bold;
-			float: right;
-			margin-left: 5px;
-		}
-
-		.active-accordion:after {
-			content: '\2212';
-		}
-
-		.accordion-panel {
-			padding: 0px;
-			background-color: var(--medium-gray);
-			max-height: 0;
-			overflow: hidden;
-			transition: max-height 0.2s ease-out;
-		}
-
-		.accordion-panel hr {
-			margin: 20px 10%;
-		}
-
-		.accordion-content {
-			padding: 18px;
-		}
-
-		.monthposts {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			width: 100%;
-		}
-
-		.flex-link {
-			display: inline-flex;
-		}
-
-		div h3 {
-			padding-bottom: 25px;
-		}
-
-		a.issue-link, a.issue-link:visited {
-			text-decoration: none;
-			font-weight: bold;
-			color: var(--white);
-			border: 1px solid var(--light-gray);
-			padding: 8px;
-			margin: 10px;
-			background-color: var(--gray);
-			font-size: 0.7em;
-			border-radius: 10px;
-		} #}
 	</style>
 {% endblock %}
 
 {% block customjs %}
 	<script>
-		window.onload = () => {
-			const accs = document.getElementsByClassName('accordion');
-			for (const acc of accs) {
-				acc.addEventListener('click', function () {
-					this.classList.toggle('active-accordion');
-					const panel = this.nextElementSibling;
-					if (panel.style.maxHeight) panel.style.maxHeight = null;
-					else panel.style.maxHeight = panel.scrollHeight + 'px';
-				});
-			}
-			accs[0].click();
-		}
+		
 	</script>
 {% endblock %}
