@@ -1,4 +1,4 @@
-{% macro heading(h,label) %}
+{% macro heading(h, label) %}
 	<div class="heading">
 		<{{ h }}>{{ label }}</{{ h }}>
 	</div>
@@ -16,7 +16,7 @@
 		<label style="top: 0;">{{ label }}</label>
 		{% for option in options %}
 			<div class="option">
-				<input type="radio" id="{{ option.id }}" name="answer" class="option-input" value=""/>
+				<input type="radio" id="{{ option.id }}" name="{{ id }}" class="option-input" value="{{ option.value }}"/>
 				<div class="option-design"></div>
 				<div class="option-text" id="option" for="{{ option.id }}">{{ option.label }}</div>
 			</div>
@@ -29,7 +29,7 @@
 		<label style="top: 0;">{{ label }}</label>
 		{% for option in options %}
 			<div class="option">
-				<input type="checkbox" id="{{ option.id }}" name="answer" class="option-input" value="{{ option.value }}"/>
+				<input type="checkbox" id="{{ option.id }}" name="{{ id }}" class="option-input" value="{{ option.value }}"/>
 				<div class="option-design"></div>
 				<div class="option-text" for="{{ option.id }}">{{ option.label }}</div>
 			</div>
@@ -41,6 +41,17 @@
 	<div class="item datetime">
 		<input type="date" id="{{ id }}" value="{{ value }}">
 		<label>{{ label }}</label>
+	</div>
+{% endmacro %}
+
+{% macro select(id, label, options, onchange) %}
+	<div class="item select">
+		<select name="{{ id }}" id="{{ id }}" {% if onchange %} onchange="{{ onchange }}(this);" {% endif %}>
+			{% for option in options %}
+				<option value="{{ option.value }}">{{ option.label }}</option>
+			{% endfor %}
+		</select>
+		<label style="top: -8px;">{{ label }}</label>
 	</div>
 {% endmacro %}
 
@@ -57,7 +68,7 @@
 	<div style="height: 30px;"></div>
 {% endmacro %}
 
-{% macro css() %}
+{% macro formCss() %}
 	<style>
 		.message {
 			position: absolute;
@@ -210,8 +221,67 @@
 			font-weight: 900;
 			transition: 0.3s;
 		}
-		.option-input:checked + .option-text {
+		.option-input:checked ~ .option-text {
 			color: hsl(184deg 58% 60%);
 		}
+		select {
+			background-color: rgba(255,255,255,0.07);
+   			font-size: 18px;
+    		font-weight: 600;
+			height: 50px;
+			width: 95%;
+  			border-radius: 8px;
+  			padding: 0 15px 0px 15px;
+  			border: 2px solid var(--light-gray);
+  			color: #fff;
+  			outline: none;
+		}
+		select:focus{
+  			border: 2px solid var(--red);
+			color: var(--red);
+		}
+		select:focus ~ label{
+  			color: var(--red);
+		}
+		select > option {
+			background-color: var(--darker-gray);
+		}
 	</style>
+{% endmacro %}
+
+{% macro formFunction() %}
+	<script>
+		function getData() {
+			const data = {};
+			[...document.getElementsByClassName('item')].map(e => {
+				switch (e.classList[1]) {
+					case 'field':
+					case 'datetime':
+						data[e.firstElementChild.id] = e.firstElementChild.value;
+						break;
+					case 'radio':
+						data[e.id] = e.querySelector("input:checked")?.value;
+						break;
+					case 'checkbox':
+						data[e.id] = [...e.querySelectorAll("input:checked")].map(v => v.value);
+						break;
+					case 'select':
+						data[e.firstElementChild.id] = e.firstElementChild.value;
+						break;
+				}
+			});
+			return data;
+		}
+		function message(response) {
+			console.log(response);
+			const e = document.getElementsByClassName('message')[0];
+			e.innerHTML = response.message;
+			e.classList.add(response.success ? 'success' : 'error');
+			e.classList.remove('hidden');
+			setTimeout(function () {e.classList.add('hidden')}, 2000);
+			if (response.success) {
+				setTimeout(function () { location.reload() }, 3000);
+			}
+		}
+	</script>
 {% endmacro %}
