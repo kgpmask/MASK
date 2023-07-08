@@ -41,7 +41,6 @@
 	#photos .img-container {
 		position: relative;
 		width: 100%;
-		background-color: var(--abyss);
 	}
 
 	#photos .img-container .overlay {
@@ -57,6 +56,11 @@
 
 	#photos .img-container:hover .overlay {
 		opacity: 1;
+	}
+
+	#photos .img-container:hover {
+		transition: 1s ease;
+		background-color: var(--abyss);
 	}
 
 	#photos .img-container img {
