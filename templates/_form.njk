@@ -4,9 +4,9 @@
 	</div>
 {% endmacro %}
 
-{% macro field(id, label, required) %}
+{% macro field(id, label, required, value) %}
 	<div class="item field">
-		<input type="text" {% if required %} required {% endif %} id="{{ id }}">
+		<input type="text" required id="{{ id }}" {% if value %} value="{{ value }}" {% endif %}>
 		<label>{{ label }}</label>
 	</div>
 {% endmacro %}
@@ -34,6 +34,14 @@
 				<div class="option-text" for="{{ option.id }}">{{ option.label }}</div>
 			</div>
 		{% endfor %}
+	</div>
+{% endmacro %}
+	
+{% macro singlecheck(id, label, checked) %}
+	<div class="item singlecheck option">
+		<input type="checkbox" id="{{ id }}" name="{{ id }}" class="option-input" {% if checked %} checked {% endif %}/>
+		<div class="option-design" style="border-radius: 2px;"></div>
+		<div class="option-text" for="{{ id }}">{{ label }}</div>
 	</div>
 {% endmacro %}
 
@@ -66,6 +74,10 @@
 		</form>
 	</div>
 	<div style="height: 30px;"></div>
+{% endmacro %}
+
+{% macro button(id, label, onclick) %}
+	<button id="{{ id }}" {% if onclick %} type="button" onclick="{{ onclick }}()" {% else %} type="submit" {% endif %}>{{ label }}</button>
 {% endmacro %}
 
 {% macro formCss() %}
@@ -115,6 +127,18 @@
 		form * {
 			outline: none;
 			border: none;
+		}
+		button {
+			align-self: center;
+			margin-top: 19px;
+			width: 44%;
+			background-color: var(--red);
+			color: white;
+			padding: 12px 0;
+			font-size: 18px;
+			font-weight: 600;
+			border-radius: 12px;
+			cursor: pointer;
 		}
 		.item {
 			position: relative;
@@ -224,6 +248,9 @@
 		.option-input:checked ~ .option-text {
 			color: hsl(184deg 58% 60%);
 		}
+		.singlecheck {
+			align-self: center;
+		}
 		select {
 			background-color: rgba(255,255,255,0.07);
    			font-size: 18px;
@@ -264,6 +291,9 @@
 						break;
 					case 'checkbox':
 						data[e.id] = [...e.querySelectorAll("input:checked")].map(v => v.value);
+						break;
+					case 'singlecheck':
+						data[e.firstElementChild.id] = e.firstElementChild.checked;
 						break;
 					case 'select':
 						data[e.firstElementChild.id] = e.firstElementChild.value;
