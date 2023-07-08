@@ -17,6 +17,9 @@
 			{
 				'label': 'Instagram',
 				'value': 'instagram'
+			},{
+				'label': 'Art',
+				'value': 'art'
 			},
 			{
 				'label': 'Newsletter',
@@ -81,7 +84,7 @@
 		}
 		async function updatePost () {
 			const data = getData();
-			data.page = ['instagram', 'youtube', 'event'].includes(data.type) ? '_blank' : '';
+			data.page = ['art', 'instagram', 'youtube', 'event'].includes(data.type) ? '_blank' : '';
 			data.attr = [data.attr];
 			var response = (await axios.post('/gov-portal/add-post', { data: data })).data;
 			message(response);

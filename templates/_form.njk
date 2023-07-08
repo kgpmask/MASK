@@ -4,7 +4,7 @@
 	</div>
 {% endmacro %}
 
-{% macro field(id, label, required, value) %}
+{% macro field(id, label, value) %}
 	<div class="item field">
 		<input type="text" required id="{{ id }}" {% if value %} value="{{ value }}" {% endif %}>
 		<label>{{ label }}</label>
@@ -302,7 +302,7 @@
 			});
 			return data;
 		}
-		function message(response) {
+		function message(response, location='') {
 			console.log(response);
 			const e = document.getElementsByClassName('message')[0];
 			e.innerHTML = response.message;
@@ -310,7 +310,12 @@
 			e.classList.remove('hidden');
 			setTimeout(function () {e.classList.add('hidden')}, 2000);
 			if (response.success) {
-				setTimeout(function () { location.reload() }, 3000);
+				setTimeout(function () {
+					location.reload();
+					if(location) {
+						window.location.href = location;
+					}
+				}, 3000);
 			}
 		}
 	</script>
