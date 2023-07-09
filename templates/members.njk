@@ -3,6 +3,8 @@
 {% set thispage = 'members' %}
 {% set pagetitle = 'Our Members' %}
 
+{% set pagedesc = 'Our members, who have worked hard and made this place what it is now.' %}
+
 {% block pagecontent %}
 	<div id="loaded" style="display:none">
 		<h1><u>{{ membersTitle }}</u></h1>
@@ -72,7 +74,7 @@
 		.member {
 			border-radius: 10px;
 			background-color: var(--medium-gray);
-			width: 80px;
+			width: 100px;
 			display: grid;
 			text-align: center;
 			margin: 20px;
@@ -82,8 +84,8 @@
 			border-radius: 15px;
 			margin-bottom: 10px;
 			font-size: 60%;
-			height: 80px;
-			width: 80px;
+			height: 100px;
+			width: 100px;
 		}
 		.member-desc {
 			margin-top: 10px;

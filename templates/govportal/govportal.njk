@@ -1,17 +1,16 @@
 {% extends '_base.njk' %}
 
-{% set thispage = 'govportal' %}
 {% set pagetitle = pagetitle if pagetitle else 'Governor Portal' %}
 
 {% set navlink=[{
-	href: 'gov-portal/add-post',
-	name: 'Add Post'
+	href: 'post',
+	name: 'Post'
 },{
-	href: 'gov-portal/add-poll',
-	name: 'Add Poll'
+	href: 'poll',
+	name: 'Poll'
 },{
-	href: 'gov-portal/member-management',
-	name: 'Member Management'
+	href: 'member',
+	name: 'Member'
 }] %}
 
 {% block navbar %}
@@ -21,7 +20,7 @@
 			<span class="navbar-line">&nbsp;</span>
 			<div class="navbar-container">
 				{% for link in navlink %}
-					<li><a href="/{{ link.href }}" {% if link.href === thispage %} class="active-page" {% endif %} target="_self">{{ link.name }}</a></li>
+					<li><a href="/gov-portal/{{ link.href }}-management" {% if link.href === thispage %} class="active-page" {% endif %} target="_self">{{ link.name }}</a></li>
 				{% endfor %}
 			</div>
 		</ul>
@@ -57,8 +56,35 @@
 {% block pagecontent %}
 	{% block extrainfo %}{% endblock %}
 	<h1>Governor Portal{% if actionname %} - {{ actionname }} {% endif %}</h1>
+	{{ message if message }}
 	{# This looks kinda empty, maybe we can have stuff here #}
 	<div class="action">
-		{% block actioncontent %}{% endblock %}
+		{% block actioncontent %}
+			<h2> Quick Actions </h2>
+			<div>
+				<a href="/gov-portal/add-poll" class="add-item"> Add Poll </a>
+				<a href="/gov-portal/add-post" class="add-item"> Add Post </a>
+			</div>
+		{% endblock %}
 	</div>
+{% endblock %}
+
+{% block customcss %}
+	<style>
+		.add-item {
+			display: block;
+			width: fit-content;
+			margin: 20px auto;
+			border: 3px solid var(--off-white);
+			border-radius: 5px;
+			padding: 10px;
+			background-color: var(--dark-gray);
+			transition: color 0.3s, border-color 0.3s, background-color 0.3s;
+		}
+		.add-item:hover {
+			color: var(--error-red);
+			border-color: var(--white);
+			background-color: var(--darker-gray);
+		}
+	</style>
 {% endblock %}

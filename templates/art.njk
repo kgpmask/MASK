@@ -2,6 +2,7 @@
 
 {% set thispage = 'art' %}
 {% set pagetitle = 'Art' %}
+{% set pagedesc = 'View some amazing artwork created by our DNA team. From traditional to digital to even unconvential, we have it all.' %}
 
 {% block pagecontent %}
 <div class="text">Check out our content on here or on <a href="https://www.instagram.com/maskiitkgp" class="link"
@@ -40,7 +41,6 @@
 	#photos .img-container {
 		position: relative;
 		width: 100%;
-		background-color: var(--abyss);
 	}
 
 	#photos .img-container .overlay {
@@ -56,6 +56,11 @@
 
 	#photos .img-container:hover .overlay {
 		opacity: 1;
+	}
+
+	#photos .img-container:hover {
+		transition: 1s ease;
+		background-color: var(--abyss);
 	}
 
 	#photos .img-container img {

@@ -27,6 +27,8 @@ body {
 	background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url('/assets/background.jpg');
 	background-size: cover;
 	background-position: center;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
 	text-align: center;
 	color: var(--light-gray);
 	font-family: Ubuntu, Roboto, Arial, Open Sans, sans-serif;
@@ -50,10 +52,11 @@ h1 {
 
 a, a.visited {
 	color: inherit;
+	transition: color 0.3s;
 }
 
 a:hover {
-	color: white;
+	color: var(--error-red);
 }
 
 .dropdown-content a.disabled {

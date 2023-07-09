@@ -55,7 +55,7 @@
 									<a href="/about" {% if 'about' === thispage %} class="active-page" {% endif %} target="_self">Our Society</a>
 									<a href="/members" {% if 'members' === thispage %} class="active-page" {% endif %} target="_self">Our Members</a>
 									{% if loggedIn %}
-										<a href="/profile" class="{% if 'profile' === thispage %}active-page {% endif %}{% if userless %}disabled {% endif %}" target="_self">Profile</a>
+										<a href="/profile" class="{% if 'profile' === thispage %}active-page {% endif %}" target="_self">Profile</a>
 									{% else %}
 										<a href="/login" class="{% if 'login' === thispage %}active-page {% endif %}{% if userless %}disabled {% endif %}" target="_self">Login</a>
 									{% endif %}
