@@ -15,8 +15,8 @@
 
 {% block pagecontent %}
 	<h1 id="heading">Newsletters</h1>
-	<div class="wrapper" >
 	{% block extrainfo %}{% endblock %}
+	<div class="wrapper" >
 		<div class= "newsletter" class"scale-up-tl" id="latest" href="/newsletters/{{ link }}" >
 			{{ card(latestnewsletter.title, latestnewsletter.link, latestnewsletter.desc, 90) }}
 		</div>
