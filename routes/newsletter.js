@@ -11,9 +11,8 @@ router.get('/:target?', async (req, res) => {
 		const data = await dbh.getPosts('letter');
 		const letters = data.map(entry => {
 			const letter = {
-				name: entry.name,
+				obj: desc[entry.link.split('/')[2]],
 				link: entry.link.split('/')[2],
-				desc: desc[entry.link.split('/')[2]]
 			};
 			return letter;
 		});
