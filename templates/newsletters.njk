@@ -14,7 +14,7 @@
 {% endmacro %}
 
 {% block pagecontent %}
-    <h2 id="heading">Newsletters</h2>
+    <h1 id="heading">Newsletters</h1>
 	<div class="wrapper" >
 	{% block extrainfo %}{% endblock %}
 		<div class= "newsletter" class"scale-up-tl" id="latest" href="/newsletters/{{ link }}" >
@@ -34,7 +34,8 @@
 <style>
 
 #heading{
-    padding-bottom: 1%;
+    margin: 0px;
+    padding-bottom:1%;
 }
 
 @media screen and (min-width: 1651px){
@@ -105,7 +106,7 @@
     display: grid;
     grid-auto-flow: rows;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr  ;
-    gap: 1rem;
+    gap: 2rem;
     overflow-x: auto;
     overscroll-behavior-inline: contain;
 }
@@ -127,17 +128,19 @@
 	aspect-ratio:5/7;
     border-radius: 5% 5% 5% 5%;
     grid-area: one ;
+    filter: drop-shadow(0.3rem 0.3rem 3px rgba(0,0,0,0.5));
 }
 #latest{
     grid-row: span 2 ;
     grid-column: span 2 ;
+    gap:0.6rem;
 }
 
 #latest .desc{
     font-size: 150%
 }
 .desc{
-    border-radius: 12px 12px 12px 12px;
+    border-radius: 5% 5% 5% 5%;
 	background-color: rgba(0,0,0,0.6);
     display: none;
     z-index:2;
