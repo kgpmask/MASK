@@ -7,12 +7,12 @@ const dbh = require('../database/handler');
 router.get('/:target?', async (req, res) => {
 	const target = req.params.target;
 	if (!target) {
-		const desc = require('../src/newsletter_desc.json');
-		const data = await dbh.getPosts('letter');
-		const letters = data.map(entry => {
+		const data = require('../src/newsletter_desc.json');
+		const letters = data.map(data => {
 			const letter = {
-				obj: desc[entry.link.split('/')[2]],
-				link: entry.link.split('/')[2],
+				title: data.title,
+				desc: data.desc,
+				link: data.link
 			};
 			return letter;
 		});

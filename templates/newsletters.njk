@@ -18,12 +18,12 @@
 	<div class="wrapper" >
 	{% block extrainfo %}{% endblock %}
 		<div class= "newsletter" class"scale-up-tl" id="latest" href="/newsletters/{{ link }}" >
-			{{ card(latestnewsletter.obj.title, latestnewsletter.link, "weufg ewu fgewuf gewf guwef gyuae gfyuwef guew gfuysefuyweg fyweg fyueyfugevygfvewfyu vesagyfve", 90) }}
+			{{ card(latestnewsletter.title, latestnewsletter.link, "weufg ewu fgewuf gewf guwef gyuae gfyuwef guew gfuysefuyweg fyweg fyueyfugevygfvewfyu vesagyfve", 90) }}
 		</div>
 	{% for letter in letters %}
 			{% if not loop.first %}
 			<a class="newsletter" class="old"  href="/newsletters/{{ letter.link }}">
-					{{ card(letter.obj.title, letter.link, letter.obj.desc) }}
+					{{ card(letter.title, letter.link, letter.desc) }}
             </a>
 			{% endif %}
 	{% endfor %}
