@@ -2,59 +2,23 @@ const router = require('express').Router();
 const fs = require('fs').promises;
 const path = require('path');
 
-router.get('/:target?', (req, res) => {
-	const months = [
-		'-',
-		'January',
-		'February',
-		'March',
-		'April',
-		'May',
-		'June',
-		'July',
-		'August',
-		'September',
-		'October',
-		'November',
-		'December'
-	];
-	return fs.readdir(path.join(__dirname, '../templates/newsletters')).then(letters => {
-		const years = {};
-		letters.sort();
-		letters.forEach(letter => {
-			const [year, month, num] = letter.split('-');
-			if (!years[year]) years[year] = { title: year, months: {} };
-			if (!years[year].months[~~month]) years[year].months[~~month] = { title: months[~~month], issues: [] };
-			years[year].months[~~month].issues.push({
-				title: ['-', 'First', 'Second', 'Special'][~~num],
-				href: letter
-			});
-		});
-		const renderYears = Object.values(years);
-		renderYears.forEach(year => year.months = Object.values(year.months).reverse());
-
-		const target = req.params.target;
-		if (!target) return res.renderFile('newsletters.njk', {
-			years: renderYears.reverse()
-		});
-		if (target === 'random') {
-			const referer = req.headers.referer?.split('/').pop();
-			const randLetter = letters.filter(letter => letter !== referer).random();
-			return res.redirect(`/newsletters/${randLetter}`);
-		}
-		const index = letters.indexOf(target);
-		if (index === -1) return res.notFound('newsletters_404.njk', { years: renderYears.reverse() });
-		const filepath = ['newsletters', letters[index], letters[index] + '.njk'];
-		const adjs = [letters[index - 1], letters[index + 1], letters[index]];
-		fs.readdir(path.join(__dirname, '../templates/newsletters', target)).then(files => {
-			const pages = files.filter(file => file.includes('#'));
-			return res.renderFile(filepath, { adjs, pages, target, targetpage: req.query.page });
-		});
-
-	}).catch(err => {
-		console.log(err);
-		return res.notFound();
-	});
+router.get('/:target?', async (req, res) => {
+	const target = req.params.target;
+	const letters = require('../src/newsletter_desc.json').sort((a, b) => a < b ? 1 : -1);
+	if (!target) return res.renderFile('newsletters.njk', { letters: letters });
+	else if (target === 'random') {
+		const referer = req.headers.referer?.split('/').pop();
+		const randLetter = letters.map(letter => letter.link).filter(letter => letter !== referer).random();
+		return res.redirect(`/newsletters/${randLetter}`);
+	} else {
+		if (!letters.find(letter => letter.link === target)) return res.notFound('newsletters_404.njk', { letters });
+		const index = letters.findIndex(letter => letter.link === target);
+		const adjs = [index - 1, index + 1, index].map(i => letters[i]);
+		const pages = (await fs.readdir(path.join('__dirname', `../templates/newsletters/${target}`)))
+			.filter(file => file.includes('#'));
+		const targetpage = req.query.page;
+		return res.renderFile(`newsletters/${target}/${target}.njk`, { adjs, pages, target, targetpage });
+	}
 });
 
 module.exports = {
