@@ -6,8 +6,8 @@ const dbh = require('../database/handler');
 
 router.get('/:target?', async (req, res) => {
 	const target = req.params.target;
+	const data = require('../src/newsletter_desc.json').sort((a, b) => a < b ? 1 : -1);
 	if (!target) {
-		const data = require('../src/newsletter_desc.json');
 		const letters = data.map(data => {
 			const letter = {
 				title: data.title,

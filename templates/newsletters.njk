@@ -18,7 +18,7 @@
 	<div class="wrapper" >
 	{% block extrainfo %}{% endblock %}
 		<div class= "newsletter" class"scale-up-tl" id="latest" href="/newsletters/{{ link }}" >
-			{{ card(latestnewsletter.title, latestnewsletter.link, "weufg ewu fgewuf gewf guwef gyuae gfyuwef guew gfuysefuyweg fyweg fyueyfugevygfvewfyu vesagyfve", 90) }}
+			{{ card(latestnewsletter.title, latestnewsletter.link, latestnewsletter.desc, 90) }}
 		</div>
 	{% for letter in letters %}
 			{% if not loop.first %}
@@ -111,7 +111,7 @@
 	overscroll-behavior-inline: contain;
 }
 .newsletter{
-	padding: 5%;
+	padding: 3.3%;
 	display: grid;
 	grid-template-rows: min-content;
 	grid-template-columns: 1fr;
@@ -125,8 +125,8 @@
 }
 .newsletter > img{
 	inline-size: 100%;
-	aspect-ratio:5/7;
-	border-radius: 5% 5% 5% 5%;
+	aspect-ratio: 5/7;
+	border-radius: 3.3% 3.3% 3.3% 3.3%;
 	grid-area: one ;
 	filter: drop-shadow(0.3rem 0.3rem 3px rgba(0,0,0,0.5));
 }
@@ -147,6 +147,7 @@
 	opacity: 0;
 }
 .desc > h3 {
+	color: var(--error-red);
 	padding-top: 4%;
 	padding-bottom: 2%
 }
@@ -241,7 +242,7 @@
 
 
 
-{# Tablet Veiw #}
+{# Tablet View #}
 
 @media screen and (max-width: 850px) {
 .wrapper{
