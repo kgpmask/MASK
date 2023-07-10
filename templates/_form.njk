@@ -6,14 +6,14 @@
 
 {% macro field(id, label, value) %}
 	<div class="item field">
-		<input type="text" required id="{{ id }}" {% if value %} value="{{ value }}" {% endif %}>
 		<label>{{ label }}</label>
+		<input type="text" required id="{{ id }}" {% if value %} value="{{ value }}" {% endif %}>
 	</div>
 {% endmacro %}
 
 {% macro radio(id, label, options) %}
 	<div class="item radio" id="{{ id }}">
-		<label style="top: 0;">{{ label }}</label>
+		<label>{{ label }}</label>
 		{% for option in options %}
 			<div class="option">
 				<input type="radio" id="{{ option.id }}" name="{{ id }}" class="option-input" value="{{ option.value }}"/>
@@ -26,7 +26,7 @@
 
 {% macro checkbox(id, label, options) %}
 	<div class="item checkbox" id="{{ id }}">
-		<label style="top: 0;">{{ label }}</label>
+		<label>{{ label }}</label>
 		{% for option in options %}
 			<div class="option">
 				<input type="checkbox" id="{{ option.id }}" name="{{ id }}" class="option-input" value="{{ option.value }}"/>
@@ -47,19 +47,19 @@
 
 {% macro datetime(id, label, value) %}
 	<div class="item datetime">
-		<input type="date" id="{{ id }}" value="{{ value }}">
 		<label>{{ label }}</label>
+		<input type="date" id="{{ id }}" value="{{ value }}">
 	</div>
 {% endmacro %}
 
 {% macro select(id, label, options, onchange) %}
 	<div class="item select">
+		<label style="top: -8px;">{{ label }}</label>
 		<select name="{{ id }}" id="{{ id }}" {% if onchange %} onchange="{{ onchange }}(this);" {% endif %}>
 			{% for option in options %}
 				<option value="{{ option.value }}">{{ option.label }}</option>
 			{% endfor %}
 		</select>
-		<label style="top: -8px;">{{ label }}</label>
 	</div>
 {% endmacro %}
 
@@ -87,7 +87,7 @@
 			top: 0;
 			right: calc(50vw - 220px);
 			padding: 20px;
-			z-index: 1;
+			z-index: 100;
 			color: #fff;
 			font-weight: 600;
 			font-size: 18px;
@@ -117,7 +117,7 @@
 		form {
 			display: flex;
 			flex-direction: column;
-			border: 2px solid rgba(255,255,255,0.1);
+			border: 1px solid var(--off-white);
 			border-radius: 12px;
 			padding: 12px 5px;
 			width: 40%;
@@ -141,23 +141,23 @@
 			cursor: pointer;
 		}
 		.item {
+			display: flex;
+			flex-direction: column;
+			text-align: left;
 			position: relative;
-			margin: 20px 10px;
+			margin: 10px 4vw;
 		}
 		.heading {
 			margin-block-start: 0.83em;
 			margin-block-end: 0.83em;
 		}
 		label {
-			position: absolute;
-			top: 50%;
-			left: 5%;
-			transform: translateY(-50%);
-			color: #fff;
+			color: var(--off-white);
+    		margin-inline-start: 0.3em;
+    		margin-block-end: 0.4em;
 			font-weight: 600;
-			font-size: 18px;
+			font-size: 16px;
 			pointer-events: none;
-			transition: 0.3s;
 		}
 		.datetime > label{
 			top: -7px;
@@ -165,36 +165,21 @@
 			padding: 0 2px;
 			background-color: rgba(0, 0, 0, 0);
 		}
-		input{
+		input,
+		select{
 			background-color: rgba(255,255,255,0.07);
-			font-size: 18px;
 			font-weight: 300;
-			height: 50px;
-			width: 90%;
-			border-radius: 8px;
-			padding: 0 15px 0px 15px;
+			border-radius: 5px;
+			padding: 10px;
 			border: 2px solid var(--light-gray);
 			color: #fff;
 			outline: none;
+			-moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
 		}
-		input:focus{
-			border: 2px solid var(--red);
-		}
-		.field > input:focus ~ label{
-			top: -7px;
-			font-size: 16px;
-			color: var(--red);
-			padding: 0 2px;
-			background-color: rgba(0, 0, 0, 0);
-		}
-		.field > input:valid ~ label{
-			top: -7px;
-			font-size: 16px;
-			padding: 0 2px;
-			background-color: rgba(0, 0, 0, 0);
-		}
-		.datetime > input:focus ~ label{
-			color: var(--red);
+		select {
+			font-weight: 600;
 		}
 		.option {
 			position: relative;
@@ -203,8 +188,8 @@
 			border-radius: 10px;
 			cursor: pointer;
 			transition: 0.3s;
-			padding: 5px 20px;
-			margin: 12px;
+			padding: 5px 10px;
+			margin: 7px;
 		}
 		.option:focus-within,
 		.option:hover {
@@ -212,9 +197,10 @@
 		}
 		.option-input {
 			position: absolute;
-			top: 0;
-			left: 0;
+			width: 100%;
+			height: 100%;
 			opacity: 0;
+			z-index: 1;
 		}
 		.option-design {
 			width: 22px;
@@ -251,25 +237,6 @@
 		.singlecheck {
 			align-self: center;
 		}
-		select {
-			background-color: rgba(255,255,255,0.07);
-   			font-size: 18px;
-			font-weight: 600;
-			height: 50px;
-			width: 95%;
-  			border-radius: 8px;
-  			padding: 0 15px 0px 15px;
-  			border: 2px solid var(--light-gray);
-  			color: #fff;
-  			outline: none;
-		}
-		select:focus{
-  			border: 2px solid var(--red);
-			color: var(--red);
-		}
-		select:focus ~ label{
-  			color: var(--red);
-		}
 		select > option {
 			background-color: var(--darker-gray);
 		}
@@ -284,7 +251,7 @@
 				switch (e.classList[1]) {
 					case 'field':
 					case 'datetime':
-						data[e.firstElementChild.id] = e.firstElementChild.value;
+						data[e.children[1].id] = e.children[1].value;
 						break;
 					case 'radio':
 						data[e.id] = e.querySelector("input:checked")?.value;
@@ -296,7 +263,7 @@
 						data[e.firstElementChild.id] = e.firstElementChild.checked;
 						break;
 					case 'select':
-						data[e.firstElementChild.id] = e.firstElementChild.value;
+						data[e.children[1].id] = e.children[1].value;
 						break;
 				}
 			});
@@ -311,10 +278,7 @@
 			setTimeout(function () {e.classList.add('hidden')}, 2000);
 			if (response.success) {
 				setTimeout(function () {
-					location.reload();
-					if(location) {
-						window.location.href = location;
-					}
+					window.location.href = location ? location : window.location.href;
 				}, 3000);
 			}
 		}

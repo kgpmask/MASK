@@ -61,7 +61,6 @@
 			data.page = ['art', 'instagram', 'youtube', 'event'].includes(data.type) ? '_blank' : '';
 			data.attr = [data.attr];
 			data.id = document.getElementById('idUpdate').innerHTML;
-			console.log(data);
 			var response = (await axios.patch('/gov-portal/edit-post', { data: data })).data;
 			message(response, '/gov-portal/post-management')
 		}
