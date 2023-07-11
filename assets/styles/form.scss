@@ -35,7 +35,7 @@ form {
 	flex-direction: column;
 	border: 1px solid var(--off-white);
 	border-radius: 12px;
-	padding: 12px 5px;
+	padding: 12px 10px;
 	width: 40%;
 	background-color: rgba(255,255,255,0.13);
 	backdrop-filter: blur(5px);
@@ -46,7 +46,7 @@ form * {
 }
 button {
 	align-self: center;
-	margin-top: 19px;
+	margin: 20px;
 	width: 44%;
 	background-color: var(--red);
 	color: white;
@@ -152,7 +152,13 @@ select {
 }
 .singlecheck {
 	align-self: center;
+	flex-direction: row-reverse;
+}
+.singlecheck > .option-text {
+	margin-right: 14px;
+	margin-left: unset;
 }
 select > option {
 	background-color: var(--darker-gray);
+	padding: 10px;;
 }
