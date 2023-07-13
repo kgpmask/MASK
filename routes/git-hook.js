@@ -1,7 +1,6 @@
 const crypto = require('crypto');
 const router = require('express').Router();
-
-const Tools = require('../src/tools');
+const hooks = require('../src/hooks');
 
 router.post('/', async (req, res) => {
 	// Console log git hook requests
@@ -42,7 +41,7 @@ router.post('/', async (req, res) => {
 		return process.exit(0);
 	} catch (err) {
 		console.log(`updateCode failed\n\tReason: ${err}`);
-		await Tools.alertToDiscord(pushBranch === 'dev' ? 'dev' : 'prod', req.body.head_commit, err);
+		await hooks.alertToDiscord(pushBranch === 'dev' ? 'dev' : 'prod', req.body.head_commit, err);
 	}
 });
 
