@@ -97,6 +97,9 @@ select{
 select {
 	font-weight: 600;
 }
+.datetime > input {
+	color-scheme: dark;
+}
 .option {
 	position: relative;
 	display: flex;
