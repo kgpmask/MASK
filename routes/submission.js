@@ -15,7 +15,7 @@ router.post('/', async (req, res) => {
 	// req.body = { email, name, member, link, proof, social }
 	const data = req.body;
 	// discord hook for submission form data
-	await dbh.addSubmission(data).then(submission => hooks.submissionHook(submission));
+	dbh.addSubmission(data).then(async submission => await hooks.submissionHook(submission));
 	return res.status.send;
 });
 
