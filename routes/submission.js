@@ -14,8 +14,10 @@ router.post('/', async (req, res) => {
 	if (PARAMS.mongoless) return res.status(403).send('Not allowed in mongoless');
 	// req.body = { email, name, member, link, proof, social }
 	const data = req.body;
+	// adding submission to db
+	const submission = await dbh.addSubmission(data);
 	// discord hook for submission form data
-	dbh.addSubmission(data).then(async submission => await hooks.submissionHook(submission));
+	await hooks.submissionHook(submission);
 	return res.status.send;
 });
 
