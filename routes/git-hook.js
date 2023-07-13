@@ -41,7 +41,7 @@ router.post('/', async (req, res) => {
 		return process.exit(0);
 	} catch (err) {
 		console.log(`updateCode failed\n\tReason: ${err}`);
-		await hooks.alertToDiscord(pushBranch === 'dev' ? 'dev' : 'prod', req.body.head_commit, err);
+		await hooks.deployErrorHook(pushBranch === 'dev' ? 'dev' : 'prod', req.body.head_commit, err);
 	}
 });
 

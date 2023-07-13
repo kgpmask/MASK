@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-async function alertToDiscord (env, commit, err) {
+async function deployErrorHook (env, commit, err) {
 	// env: prod | dev
 	const webhookLink = process.env.DISCORD_WEBHOOK_LINK;
 	const webhookObject = {
@@ -46,6 +46,10 @@ async function submissionHook (data) {
 					{
 						name: 'Proof',
 						value: `${data.proof ? true : false}`
+					},
+					{
+						name: 'Link',
+						value: `[Submission Link](${data.link})`
 					}
 				]
 			}
@@ -57,7 +61,7 @@ async function submissionHook (data) {
 
 
 module.exports = {
-	alertToDiscord,
+	deployErrorHook,
 	submissionHook
 };
 
