@@ -74,9 +74,5 @@
 			var response = (await axios.post('/submissions', { data: data })).data;
 			message(response, '/');
 		}
-
-		window.onload = () => {
-			if (!axios.defaults.headers.common['X-CSRF-TOKEN']) axios.defaults.headers.common['X-CSRF-TOKEN'] = document.cookie.split('=')[1];
-		}
 	</script>
 {% endblock %}
