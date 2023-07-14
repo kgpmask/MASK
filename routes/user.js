@@ -11,7 +11,7 @@ router.get('/logout', (req, res) => {
 });
 
 router.get('/logged-in', (req, res) => {
-	const redirectRoute = req.cookies.redirect.path ?? '/';
+	const redirectRoute = req.cookies?.redirect?.path ?? '/';
 	if (req.cookies.redirect) res.clearCookie('redirect');
 	return res.redirect(redirectRoute);
 });
