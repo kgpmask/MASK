@@ -4,7 +4,7 @@ const path = require('path');
 
 router.get('/:target?', async (req, res) => {
 	const target = req.params.target;
-	const letters = require('../src/newsletter_desc.json').sort((a, b) => a < b ? 1 : -1);
+	const letters = require('../src/newsletter_desc.json').sort((a, b) => new Date(a) < new Date(b) ? 1 : -1);
 	if (!target) return res.renderFile('newsletters.njk', { letters: letters });
 	else if (target === 'random') {
 		const referer = req.headers.referer?.split('/').pop();
