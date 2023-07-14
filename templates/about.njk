@@ -6,35 +6,50 @@
 
 {% block pagecontent %}
 	<h1>Manga and Anime Society Kharagpur</h1>
-	<div class="text" style="text-align: left;">		
-		<p style="margin: 8px 0px;">
-			Greetings from <b>MANGA & ANIME SOCIETY KHARAGPUR (MASK)</b>. We are a society of enthusiastic otakus with a keen interest in anime, mangas, manhwas and more. 
+	<div class="text" style="text-align: left;">
+		<p>
+			Greetings from <b>MANGA AND ANIME SOCIETY KHARAGPUR (MASK)</b>. We are a society of enthusiastic otakus with a keen interest in anime, mangas, manhwas and more. 
 		</p><br/>
-		<h2 style="margin: 8px 0px; text-align: left;">What We Do Over Here</h2>
-		<p style="margin: 8px 0px 8px 0px;">
+		<h2>What We Do Over Here</h2>
+		<p>
 			Our time in the society consists of organising, recommending and creating quizzes, anime, AMVs, reels, memes, and fan art.
 		</p>
 		<br/>
-		<p style="margin: 8px 0px 8px 0px;">
+		<p>
 			We have divided our work into five teams to make things smoother. The responsibilities of each team is as follows :-
 		</p>
 		<br/>
-		<p style="margin: 8px 0px 8px 0px;">
-			<ul>
-				<div class="team_border"><h4>AMV Team</h4> AMV team showcases their creativity on platforms like youtube and instagram in form AMVs, Reels and Memes for all to enjoy.</div><br/>
-				<div class="team_border"><h4>DNA Team</h4>The Design and Arts team is involved in making fan arts. They also design our merch, *newsletter coverpage newsletter and more.</div><br/>
-				<div class="team_border"><h4>Media and Newsletter Team</h4>Just like the name suggests, the Media and Newsletter team is in charge of handling our social media and responsible for releasing newsletters on a regular basis.</div><br/>
-				<div class="team_border"><h4>Quiz Team</h4>Work of quiz team is to create engaging anime quizzes and puzzles for various events, competition and newsletter.</div><br/>
-				<div class="team_border"><h4>Web Development</h4>WebD team ensures the smooth digital experiences, managing our website and making it easy for everyone to connect.</div><br/>
-			</ul>
+		<p>
+			<div id="teams-container">
+				<div class="team-border">
+					<h4>AMV Team</h4>
+					<p>AMV team showcases their creativity on platforms like youtube and instagram in form AMVs, Reels and Memes for all to enjoy.</p>
+				</div>
+				<div class="team-border">
+					<h4>DNA Team</h4>
+					<p>The Design and Arts team is involved in making fan arts. They also design our merch, *newsletter coverpage newsletter and more.</p>
+				</div>
+				<div class="team-border">
+					<h4>Media and Newsletter Team</h4>
+					<p>Just like the name suggests, the Media and Newsletter team is in charge of handling our social media and responsible for releasing newsletters on a regular basis.</p>
+				</div>
+				<div class="team-border">
+					<h4>Quiz Team</h4>
+					<p>Work of quiz team is to create engaging anime quizzes and puzzles for various events, competition and newsletter.</p>
+				</div>
+				<div class="team-border">
+					<h4>Web Development</h4>
+					<p>WebD team ensures the smooth digital experiences, managing our website and making it easy for everyone to connect.</p>
+				</div>
+			</div>
 		</p>
 		<br/>
-		<p style="margin: 8px 0px 8px 0px;">
+		<p>
 			We also accept fan art and AMVs from outside society and publish them on social media while featuring the creator. If you want to make any AMV/ fanart submissions, you can do it <a href="/submissions">here</a>.
 		</p>
 		<br/>
-		<h2 style="margin: 8px 0px; text-align: left;">History</h2>
-		<p style="margin: 8px 0px;">
+		<h2>History</h2>
+		<p>
 			Being among the newer societies of IIT Kharagpur, MASK was established in 2020 when anime was gaining popularity at an incredible rate due to the lockdown. 
 			Our founding members wanted to create a place to spread anime culture at IIT Kharagpur and make a place for anime fans to come together and share their enthusiasm.<br/>
 		</p>
@@ -43,16 +58,37 @@
 
 {% block customcss %}
 	<style>
+		.text {
+			padding: 30px calc(min(5vw, 60px));
+		}
+
 		p {
+			margin: 8px 0px;
 			text-align: justify;
 		}
 
-		.team_border{
+		#teams-container {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.team-border{
+			margin: 10px;
 			border: 1px;
-			border-style: inset;	
+			border-style: inset;
 			border-color: var(--abyss);
 			padding: 5px 5px 5px 5px;
 			border-radius: 5px;
+			width: calc(max(300px, 20vw));
+			min-height: 8em;
+			height: fit-content;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-around;
+			background-color: var(--shadow-gray);
 		}
 	</style>
 {% endblock %}
