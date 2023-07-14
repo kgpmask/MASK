@@ -24,7 +24,7 @@
 		</title>
 		<meta charset="utf-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1"/>
-		<meta name="description" content="{% block pagedesc %} The MASK website {% endblock %}"/>
+		<meta name="description" content="{{ pagedesc if pagedesc else 'The MASK Website' }}"/>
 		<meta name="keywords" content="Manga, Anime, MASK, Kharagpur, IIT KGP, Otakus"/>
 		<link rel="stylesheet" type="text/css" href="/assets/styles/mask.css"/>
 		<link rel="shortcut icon" href="/assets/favicon.ico"/>
