@@ -17,7 +17,9 @@ router.post('/', async (req, res) => {
 	// adding submission to db
 	const submission = await dbh.addSubmission(data);
 	// discord hook for submission form data
-	await hooks.submissionHook(submission);
+	if (!PARAMS.discordless) {
+		await hooks.submissionHook(submission);
+	}
 	return res.status.send;
 });
 

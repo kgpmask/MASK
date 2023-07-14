@@ -1,8 +1,9 @@
 const axios = require('axios');
+const hooks = !PARAMS.discordless ? JSON.parse(process.env.DISCORD_HOOKS) : undefined;
 
 async function deployErrorHook (env, commit, err) {
 	// env: prod | dev
-	const webhookLink = process.env.DISCORD_WEBHOOK_LINK;
+	const webhookLink = hooks.deploy;
 	const webhookObject = {
 		embeds: [
 			{
@@ -25,7 +26,7 @@ async function deployErrorHook (env, commit, err) {
 }
 
 async function submissionHook (data) {
-	const webhookLink = process.env.DISCORD_WEBHOOK_LINK;
+	const webhookLink = hooks.submission;
 	const webhookObject = {
 		embeds: [
 			{

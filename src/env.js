@@ -9,9 +9,10 @@ const aliases = {
 	q: 'quiz',
 	u: 'userless',
 	t: 'test',
-	j: 'jsonuser'
+	j: 'jsonuser',
+	d: 'discordless'
 };
-const validParams = ['dev', 'local', 'prod', 'mongoless', 'userless', 'quiz', 'test', 'maintenance', 'jsonuser'];
+const validParams = ['dev', 'local', 'prod', 'mongoless', 'userless', 'quiz', 'test', 'maintenance', 'jsonuser', 'discordless'];
 if (!global.PARAMS) {
 	if (process.env['NODE_ENV'] === 'production') process.env.prod = true;
 	const shorts = new Set();
@@ -60,4 +61,13 @@ exports.init = () => {
 	if (!PARAMS.prod) process.env.MONGO_URL = process.env.MONGO_TEST_URL;
 	if (PARAMS.local) process.env.MONGO_URL = 'mongodb://127.0.0.1/mask';
 	if (PARAMS.maintenance) PARAMS.mongoless = PARAMS.userless = true;
+	if (!PARAMS.discordless) {
+		try {
+			const hookFile = fs.readFileSync(path.join(__dirname, 'hook_links.json'), 'utf8');
+			const hookData = JSON.parse(hookFile);
+			process.env.DISCORD_HOOKS = JSON.stringify(hookData);
+		} catch (err) {
+			PARAMS.discordless = true;
+		}
+	}
 };
