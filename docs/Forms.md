@@ -16,14 +16,14 @@ Forms follow the default page template, with a little modification
 
 {% block pagecontent %}
 	{% call forms.form() %}
-		<!-- Form Content -->
+		{# Form Content #}
 	{% endcall %}
 {% endblock %}
 
 {% block customcss %}
 	{{ forms.formCss() }}
 	<style>
-		<!-- Extra Styles -->
+		{# Extra Styles #}
 	</style>
 {% endblock %}
 
@@ -33,10 +33,7 @@ Forms follow the default page template, with a little modification
 		axios.defaults.withCredentials = true;
 		axios.defaults.headers.common['X-CSRF-TOKEN'] = '{{ csrfToken }}';
 
-		window.onload = () => {
-			if (!axios.defaults.headers.common['X-CSRF-TOKEN']) axios.defaults.headers.common['X-CSRF-TOKEN'] = document.cookie.split('=')[1];
-		}
-		<!-- Other Functions  -->
+		{# Other Functions  #}
 	</script>
 {% endblock %}
 ```
