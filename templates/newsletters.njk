@@ -18,7 +18,7 @@
 	<h1 id="heading">Newsletters</h1>
 	{% block extrainfo %}{% endblock %}
 	<div class="wrapper" >
-		<a class= "newsletter" class"scale-up-tl" id="latest" href="/newsletters/{{ link }}" >
+		<a class= "newsletter" class"scale-up-tl" id="latest" href="/newsletters/{{ latestnewsletter.link }}" >
 			{{ card(latestnewsletter.title, latestnewsletter.link, latestnewsletter.desc, 90) }}
 		</a>
 	{% for letter in letters %}
