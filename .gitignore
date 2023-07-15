@@ -2,6 +2,7 @@
 
 # Server secrets
 *credentials.*
+*hook_links.json
 
 # Testing template, test changes here
 /templates/test*.njk

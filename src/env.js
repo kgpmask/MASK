@@ -63,8 +63,7 @@ exports.init = () => {
 	if (PARAMS.maintenance) PARAMS.mongoless = PARAMS.userless = true;
 	if (!PARAMS.discordless) {
 		try {
-			const hookFile = fs.readFileSync(path.join(__dirname, 'hook_links.json'), 'utf8');
-			const hookData = JSON.parse(hookFile);
+			const hookData = require('./hook_links.json');
 			process.env.DISCORD_HOOKS = JSON.stringify(hookData);
 		} catch (err) {
 			PARAMS.discordless = true;

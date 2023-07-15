@@ -1,5 +1,5 @@
 const axios = require('axios');
-const hooks = !PARAMS.discordless ? JSON.parse(process.env.DISCORD_HOOKS) : undefined;
+const hooks = !PARAMS.discordless ? JSON.parse(process.env.DISCORD_HOOKS) : {};
 
 async function deployErrorHook (env, commit, err) {
 	// env: prod | dev
