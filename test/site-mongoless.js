@@ -1,6 +1,6 @@
 const PORT = 42070;
 process.env.PORT = PORT;
-global.PARAMS = { mongoless: true, test: true, userless: true };
+global.PARAMS = { mongoless: true, test: true, userless: true, discordless: true };
 
 const assert = require('assert');
 const axios = require('axios');
@@ -14,7 +14,12 @@ describe('Server (Mongoless mode)', () => {
 		await server.ready();
 	});
 
-	it('should have the right PARAMS object', () => assert.deepEqual(PARAMS, { mongoless: true, test: true, userless: true }));
+	it('should have the right PARAMS object', () => assert.deepEqual(PARAMS, {
+		mongoless: true,
+		test: true,
+		userless: true,
+		discordless: true
+	}));
 
 	pages.forEach(page => {
 		it(`should serve page (${page || '/'})`, () => axios.get(`http://localhost:${PORT}/${page}`))
