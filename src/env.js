@@ -67,6 +67,7 @@ exports.init = () => {
 			process.env.DISCORD_HOOKS = JSON.stringify(hookData);
 		} catch (err) {
 			PARAMS.discordless = true;
+			console.log('Operating in discordless mode.');
 		}
 	}
 };

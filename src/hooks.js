@@ -9,14 +9,8 @@ async function deployErrorHook (env, commit, err) {
 			{
 				title: `Deploy failed in ${env}`,
 				fields: [
-					{
-						name: 'Error',
-						value: `${err}`
-					},
-					{
-						name: 'Commit',
-						value: `\`${commit.id.slice(0, 7)}\` ${commit.message}`
-					}
+					{ name: 'Error', value: `${err}` },
+					{ name: 'Commit', value: `\`${commit.id.slice(0, 7)}\` ${commit.message}` }
 				]
 			}
 		]
@@ -27,31 +21,24 @@ async function deployErrorHook (env, commit, err) {
 
 async function submissionHook (data) {
 	const webhookLink = hooks.submission;
+	const dataTypes = {
+		'dig-art': 'Digital Art',
+		'trd-art': 'Traditional Art',
+		'amv-vid': 'AMV Video',
+		'ani-vid': 'Animation Video',
+		'ins-mus': 'Instrumental Music',
+		'voc-mus': 'Vocal Music'
+	};
 	const webhookObject = {
 		embeds: [
 			{
-				title: `Submission: ${data.type}`,
+				title: `Submission: ${dataTypes[data.type]}`,
 				fields: [
-					{
-						name: 'Email',
-						value: `${data.email}`
-					},
-					{
-						name: 'Name',
-						value: `${data.name}`
-					},
-					{
-						name: 'Member',
-						value: `${data.member}`
-					},
-					{
-						name: 'Proof',
-						value: `${data.proof ? true : false}`
-					},
-					{
-						name: 'Link',
-						value: `[Submission Link](${data.link})`
-					}
+					{ name: 'Email', value: `${data.email}` },
+					{ name: 'Name', value: `${data.name}` },
+					{ name: 'Link', value: `[Submission Link](${data.link})` },
+					{ name: 'Member of KGP', value: `${data.member}`, inline: true },
+					{ name: 'Proof', value: `${data.proof ? true : false}`, inline: true }
 				]
 			}
 		]
