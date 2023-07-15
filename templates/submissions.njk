@@ -71,7 +71,8 @@
 
 		async function submitForm () {
 			const data = getData();
-			var response = (await axios.post('/submissions', { data: data })).data;
+			console.log(data);
+			const response = (await axios.post('/submissions', data)).data;
 			message(response, '/');
 		}
 	</script>

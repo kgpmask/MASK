@@ -1,4 +1,3 @@
-const axios = require('axios');
 const childProcess = require('child_process');
 const util = require('util');
 
@@ -113,30 +112,6 @@ exports.updateCode = async function () {
 	const gitMerge = await shell(`git merge FETCH_HEAD`);
 	const npmInstall = await shell('npm install');
 	return { gitFetch, gitMerge, npmInstall };
-};
-
-exports.alertToDiscord = async function (env, commit, err) {
-	// env: prod | dev
-	const webhookLink = process.env.DISCORD_WEBHOOK_LINK;
-	const webhookObject = {
-		embeds: [
-			{
-				title: `Deploy failed in ${env}`,
-				fields: [
-					{
-						name: 'Error',
-						value: `${err}`
-					},
-					{
-						name: 'Commit',
-						value: `\`${commit.id.slice(0, 7)}\` ${commit.message}`
-					}
-				]
-			}
-		]
-	};
-	await axios.post(webhookLink, webhookObject);
-	return 'Success';
 };
 
 /*************

@@ -1,5 +1,5 @@
 const router = require('express').Router();
-
+const hooks = require('../src/hooks');
 const dbh = require('../database/handler');
 
 router.get('/', (req, res) => {
@@ -12,7 +12,8 @@ router.get('/', (req, res) => {
 
 router.post('/', async (req, res) => {
 	if (PARAMS.mongoless) return res.status(403).send('Not allowed in mongoless');
-	const data = req.body.data;
+	// req.body = { email, name, member, link, proof, social }
+	const data = req.body;
 	if (!data.email) return res.send({ success: false, message: 'No email has been provided. Please check again.' });
 	if (!data.name) return res.send(
 		{ success: false, message: 'No name has been provided. Use "Anonymous" if you do not want to share your name.' }
@@ -22,14 +23,13 @@ router.post('/', async (req, res) => {
 	if (!data.link) return res.send({ success: false, message: 'No link has been provided.' });
 	if (!data.proof) delete data.proof;
 	if (!data.social) delete data.social;
-	try {
-		response = await dbh.addSubmission(data);
-		return res.send({ success: true, message: 'Successfully Added', response: response });
-	} catch (e) {
-		console.log(e);
-		return res.send({ success: false, message: 'Error while adding' });
+	// adding submission to db
+	const submission = await dbh.addSubmission(data);
+	// discord hook for submission form data
+	if (!PARAMS.discordless) {
+		await hooks.submissionHook(submission);
 	}
-	// Add a Discord hook to send a message in case of new submission
+	return res.status(200).send({ success: true, message: 'Your submission has been accepted', response: submission });
 });
 
 module.exports = {
