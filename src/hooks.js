@@ -32,13 +32,13 @@ async function submissionHook (data) {
 	const webhookObject = {
 		embeds: [
 			{
-				title: `Submission: ${dataTypes[data.type]}`,
+				title: `Submission: ${ dataTypes[data.type] }`,
 				fields: [
-					{ name: 'Email', value: `${data.email}` },
-					{ name: 'Name', value: `${data.name}` },
-					{ name: 'Link', value: `[Submission Link](${data.link})` },
-					{ name: 'Member of KGP', value: `${data.member}`, inline: true },
-					{ name: 'Proof', value: `${data.proof ? true : false}`, inline: true }
+					{ name: 'Email', value: `${ data.email }` },
+					{ name: 'Name', value: `${ data.name }` },
+					{ name: 'Link', value: `[Submission Link](${ data.link })` },
+					{ name: 'Member of KGP', value: `${ data.member ? 'Yes' : 'No' }`, inline: true },
+					{ name: 'Proof', value: `${ data.proof ?? 'Not provided' }`, inline: true }
 				]
 			}
 		]

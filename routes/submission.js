@@ -14,7 +14,7 @@ router.post('/', async (req, res) => {
 	if (PARAMS.mongoless) return res.status(403).send('Not allowed in mongoless');
 	// req.body = { email, name, member, link, proof, social }
 	const data = req.body;
-  if (!data.email) return res.send({ success: false, message: 'No email has been provided. Please check again.' });
+	if (!data.email) return res.send({ success: false, message: 'No email has been provided. Please check again.' });
 	if (!data.name) return res.send(
 		{ success: false, message: 'No name has been provided. Use "Anonymous" if you do not want to share your name.' }
 	);
@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
 	if (!PARAMS.discordless) {
 		await hooks.submissionHook(submission);
 	}
-	return res.status(200).send({ success: true, message: 'Successfully Added', response: submission });
+	return res.status(200).send({ success: true, message: 'Your submission has been accepted', response: submission });
 });
 
 module.exports = {
