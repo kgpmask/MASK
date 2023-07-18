@@ -352,12 +352,6 @@
 
 {% block customjs %}
 	<script>
-		$(function() {
-			$("wrapper").mousewheel(function(event, delta) {
-			this.scrollLeft -= (delta * 30);
-			event.preventDefault();
-			});
-		})
 		window.onload = () => {
 			const accs = document.getElementsByClassName('accordion');
 			for (const acc of accs) {
