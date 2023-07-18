@@ -107,6 +107,42 @@ The default newsletter template is:
 
 Take a look at existing articles for the various classes and where they're used.
 
+### Forms
+
+Among templates, there are a separate group of templates which use the `_form.njk` template as a base. These templates have a slightly different pattern and some more features. 
+
+```jinja
+{% extends '_base.njk' %}
+{% import '_form.njk' as forms %}
+
+{% set scripts = ['https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'] %}
+
+{% block pagecontent %}
+	{% call forms.form() %}
+		{# Form Content #}
+	{% endcall %}
+{% endblock %}
+
+{% block customcss %}
+	{{ forms.formCss() }}
+	<style>
+		{# Extra Styles #}
+	</style>
+{% endblock %}
+
+{% block customjs %}
+	{{ forms.formFunction() }}
+	<script>
+		axios.defaults.withCredentials = true;
+		axios.defaults.headers.common['X-CSRF-TOKEN'] = '{{ csrfToken }}';
+
+		{# Other Functions #}
+	</script>
+{% endblock %}
+```
+
+For in-depth info about the same, check out the [forms](https://github.com/kgpmask/MASK/docs/Forms.md) markdown file.
+
 ---
 
 ## Routers

@@ -7,41 +7,97 @@
 {% block pagecontent %}
 	<h1>Manga and Anime Society Kharagpur</h1>
 	<div class="text" style="text-align: left;">
-		<p style="margin: 8px 0px;">
-			こんにちは！ We are the <b>Manga and Anime Society Kharagpur [MASK]</b>. We are a group of manga and anime enthusiasts who work on spreading the culture.
+		<p>
+			Greetings from <b>MANGA AND ANIME SOCIETY KHARAGPUR (MASK)</b>. We are a society of enthusiastic otakus with a keen interest in anime, mangas, manhwas and more, working to make some more
 		</p><br/>
-		<h2 style="margin: 8px 0px; text-align: left;">What We Do Over Here</h2>
-		<p style="margin: 8px 0px 8px 0px;">
-			We, as a society, work on quite a few things, ranging from fan-arts and AMVs to reviews, newsletters and puzzles. We are also slowly expanding our reach to some other domains as well, but you'll have to find out about those later.
+		<h2> History </h2>
+		<p>
+			Being among the newer societies of IIT Kharagpur, MASK was established in 2020 when anime was gaining popularity at an incredible rate due to the lockdown. 
+			Our founding members wanted to create a place to spread anime culture at IIT Kharagpur and make a place for anime fans to come together and share their enthusiasm.
 		</p>
 		<br/>
-		<p style="margin: 8px 0px 8px 0px;">
-			We accept fan-arts and AMVs from others outside our society and are open to publishing and featuring them. In case you want to publish your art under our handle, do submit them through our <a href="/submissions" style="color:rgba(200,200,255,0.47);" target="blank">external submissions form</a> (which you can also find on the main page).
+		<h2> What We Do Over Here </h2>
+		<p>
+			At MASK, we involve ourselves in a variety of things. We regularly release anime-related content such as <a href="/newsletters">newsletters</a>, <a href="/videos">AMVs</a>, <a href="/art">fan arts</a> etc. We also hold <a href="/events">events</a> for fellow anime enthusiasts on and around the campus. Except them, we also have some activites exclusive for the members of the society.
 		</p>
 		<br/>
-		<h2 style="margin: 8px 0px; text-align: left;">Teams</h2>
-		<p style="margin: 8px 0px 8px 0px;">
-			We have the following teams:<br/>
-			<ul>
-				<li><h4>AMV</h4>Video and sound Editing, as well as music making.</li><br/>
-				<li><h4>Design & Art</h4>Hand-drawn art, digital art, and PhotoShop.</li><br/>
-				<li><h4>Media and Newsletter</h4>The team that handles media and writes reviews and content on anime.</li><br/>
-				<li><h4>Quiz</h4>The team responsible for all the anime quizzes conducted within or outside the society.</li><br/>
-				<li><h4>Web Development</h4>The team responsible for website maintenance and other technical stuff.</li><br/>
-			</ul>
+		<p>
+			We also accept fan art and AMVs from outside society and publish them on social media while featuring the creator. If you want to make any AMV/ fanart submissions, you can do it <a href="/submissions">here</a>.
 		</p>
-		<br/><br/>
-		<h2 style="margin: 8px 0px; text-align: left;">History</h2>
-		<p style="margin: 8px 0px;">
-			The society was established in 2020 by a couple of students from IIT Kharagpur who dreamed of having a place to discuss and promote anime and manga. The idea spread and became popular, and after a lot of effort by a lot of students, we've finally reached where we are today.<br/>
+		<br/>
+		<h2> Teams </h2>
+		<p>
+			We have five teams which are responsible for various aspects of our society.
 		</p>
+		<br/>
+		<p>
+			<div id="teams-container">
+				<div class="team-border">
+					<h4>AMV Team</h4>
+					<p>AMV team showcases their creativity on platforms like youtube and instagram in form AMVs, Reels and Memes for all to enjoy.</p>
+				</div>
+				<div class="team-border">
+					<h4>Design and Arts Team</h4>
+					<p>The Design and Arts team is involved in making fan arts. They also design our merch, newsletter coverpages and more.</p>
+				</div>
+				<div class="team-border">
+					<h4>Media and Newsletter Team</h4>
+					<p>Just like the name suggests, the Media and Newsletter team is in charge of handling our social media and responsible for releasing newsletters.</p>
+				</div>
+				<div class="team-border">
+					<h4>Quiz Team</h4>
+					<p>The Quiz team works on making engaging anime quizzes and puzzles for various events, competition and newsletter.</p>
+				</div>
+				<div class="team-border">
+					<h4>Web Development</h4>
+					<p>WebDev team ensures the smooth digital experiences, managing our website and making it easy for everyone to connect.</p>
+				</div>
+			</div>
+		</p>
+		<br/>
 	</div>
 {% endblock %}
 
 {% block customcss %}
 	<style>
+		.text {
+			padding: 30px calc(min(5vw, 60px));
+		}
+
 		p {
+			margin: 8px 0px;
 			text-align: justify;
+		}
+
+		h2 {
+			color: var(--error-red);
+		}
+
+		h4 {
+			color: var(--red);
+		}
+
+		#teams-container {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.team-border{
+			outline: none;
+			margin: 10px;
+			border: 1px;
+			backdrop-filter: blur(5px) brightness(0.5);
+			padding: 8px;
+			border-radius: 10px;
+			width: calc(max(300px, 20vw));
+			min-height: 8em;
+			height: fit-content;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-around;
 		}
 	</style>
 {% endblock %}

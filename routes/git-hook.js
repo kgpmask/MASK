@@ -1,7 +1,6 @@
 const crypto = require('crypto');
 const router = require('express').Router();
-
-const Tools = require('../src/tools');
+const hooks = require('../src/hooks');
 
 router.post('/', async (req, res) => {
 	// Console log git hook requests
@@ -34,7 +33,7 @@ router.post('/', async (req, res) => {
 	try {
 		await new Promise(async (resolve, reject) => {
 			// Keeping timeout this small because I know it won't work
-			setTimeout(() => reject(new Error('60 seconds time out')), 75_000);
+			setTimeout(() => reject(new Error('75 seconds time out')), 75_000);
 			await Tools.updateCode();
 			return resolve('Successfully updated');
 		});
@@ -42,7 +41,7 @@ router.post('/', async (req, res) => {
 		return process.exit(0);
 	} catch (err) {
 		console.log(`updateCode failed\n\tReason: ${err}`);
-		await Tools.alertToDiscord(pushBranch === 'dev' ? 'dev' : 'prod', req.body.head_commit, err);
+		await hooks.deployErrorHook(pushBranch === 'dev' ? 'dev' : 'prod', req.body.head_commit, err);
 	}
 });
 
