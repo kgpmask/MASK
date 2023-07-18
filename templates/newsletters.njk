@@ -349,20 +349,3 @@
 }
 	</style>
 {% endblock %}
-
-{% block customjs %}
-	<script>
-		window.onload = () => {
-			const accs = document.getElementsByClassName('accordion');
-			for (const acc of accs) {
-				acc.addEventListener('click', function () {
-					this.classList.toggle('active-accordion');
-					const panel = this.nextElementSibling;
-					if (panel.style.maxHeight) panel.style.maxHeight = null;
-					else panel.style.maxHeight = panel.scrollHeight + 'px';
-				});
-			}
-			accs[0].click();
-		}
-	</script>
-{% endblock %}
