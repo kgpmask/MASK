@@ -38,9 +38,7 @@
 			<a href="/members/{{ next }}"><button class="year-button">{{ next }}</button></a>
 		{% endif %}
 	</div>
-	<div id="unloaded">
-		Loading! ^-^
-	</div>
+	{{ loadingscreen('loaded') }}
 {% endblock %}
 
 {% block customcss %}
@@ -118,13 +116,4 @@
 			background-color: var(--middle-gray);
 		}
 	</style>
-{% endblock %}
-
-{% block customjs %}
-	<script>
-		window.onload = () => {
-			document.getElementById('loaded').style.display = 'initial';
-			document.getElementById('unloaded').style.display = 'none';
-		}
-	</script>
 {% endblock %}
