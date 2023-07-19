@@ -15,6 +15,27 @@
 	name: 'Polls'
 }] %}
 
+{% macro loadingscreen(targetId) %}
+	<div id="loading" style="text-align: center; font-size: 2em;">
+		Loading >_<
+	</div>
+	<script>
+		let count = 0;
+		let slowNet = false;
+		const loadInterval = setInterval(() => {
+			document.querySelector('#loading').innerHTML = `Loading${[...Array(count++ % 3 + 1)].map(() => '.').join('')} >_< <br> ${ slowNet ? 
+			'<i style="font-size: 50%; color: var(--off-white);"> Taking too much time? Check your internet connection. </i>' : '' }`;
+		}, 860);
+		const slowNetTimeout = setTimeout(() => slowNet = true, 20_000);
+		window.addEventListener('load', () => {
+			if (!document.querySelector('#loading')) return;
+			document.querySelector('#loading').style.display = 'none';
+			clearInterval(loadInterval);
+			clearTimeout(slowNetTimeout);
+			document.querySelector('#{{ targetId }}').style.display = 'block';
+		});
+	</script>
+{% endmacro %}
 
 <!doctype html>
 <html lang="en">

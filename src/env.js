@@ -9,8 +9,7 @@ const aliases = {
 	q: 'quiz',
 	u: 'userless',
 	t: 'test',
-	j: 'jsonuser',
-	d: 'discordless'
+	j: 'jsonuser'
 };
 const validParams = ['dev', 'local', 'prod', 'mongoless', 'userless', 'quiz', 'test', 'maintenance', 'jsonuser', 'discordless'];
 if (!global.PARAMS) {
