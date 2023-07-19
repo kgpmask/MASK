@@ -15,19 +15,22 @@
 {% endmacro %}
 
 {% block pagecontent %}
-	<h1 id="heading">Newsletters</h1>
-	{% block extrainfo %}{% endblock %}
-	<div class="wrapper" >
-		<a class= "newsletter" class"scale-up-tl" id="latest" href="/newsletters/{{ latestnewsletter.link }}" >
-			{{ card(latestnewsletter.title, latestnewsletter.link, latestnewsletter.desc, 90) }}
-		</a>
-	{% for letter in letters %}
-			{% if not loop.first %}
-			<a class="newsletter" class="old"  href="/newsletters/{{ letter.link }}">
-					{{ card(letter.title, letter.link, letter.desc) }}
+	{{ loadingscreen('main') }}
+	<div id='main' style='display: none;'>
+		<h1 id="heading">Newsletters</h1>
+		{% block extrainfo %}{% endblock %}
+		<div class="wrapper" >
+			<a class= "newsletter" class"scale-up-tl" id="latest" href="/newsletters/{{ latestnewsletter.link }}" >
+				{{ card(latestnewsletter.title, latestnewsletter.link, latestnewsletter.desc, 90) }}
 			</a>
-			{% endif %}
-	{% endfor %}
+		{% for letter in letters %}
+				{% if not loop.first %}
+				<a class="newsletter" class="old"  href="/newsletters/{{ letter.link }}">
+						{{ card(letter.title, letter.link, letter.desc) }}
+				</a>
+				{% endif %}
+		{% endfor %}
+		</div>
 	</div>
 {% endblock %}
 
