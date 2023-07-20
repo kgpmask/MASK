@@ -11,7 +11,7 @@
 			<div class="poll">
 				<h3> Choose one of the following (or make your own choice) </h3>
 				<br>
-				<div>Click here to see the <a href="/polls/results/{{ poll._id }}" style="color: var(--dark-red); font-weight: 600;">current poll results</a></div>
+				<div>Click here to see the <a href="/polls/results?id={{ poll._id }}" style="color: var(--dark-red); font-weight: 600;">current poll results</a></div>
 				<br>
 				<div class="choice-container" style="padding:0% 0% 2% 0%;">
 					{% for choice in poll.records %}
