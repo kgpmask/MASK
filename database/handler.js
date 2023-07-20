@@ -168,6 +168,7 @@ async function editPoll (data) {
 	console.log('hehe', poll);
 	poll.title = data.title;
 	poll.endTime = data.endTime;
+	poll.addOption = data.addOption;
 	for (let i = 0; i < poll.records.length; i++) {
 		poll.records[i].value = data.records[i].value;
 	}
