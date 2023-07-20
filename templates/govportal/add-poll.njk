@@ -19,6 +19,10 @@
 					<input type="date" id="date" value="{{ date }}">
 					<label>End Date</label>
 				</div>
+				<div class="item">
+					<input type="checkbox" id="add-option">
+					<label for="add-option">Allow Custom Options</label>
+				</div>
 			</div>
 			<h2>Options</h2>
 			<div class="options">
@@ -29,6 +33,7 @@
 				</div>
 			</div>
 			<button type="button" onclick="addOption()" class="addoption">&#10010; Add Option</button>
+			
 			<button type="button" onclick="addPoll()" style="width: 60%;">Add Poll</button>
 		<form>
 	</div>
@@ -69,6 +74,7 @@
 			const data = {
 				title: document.getElementById('title').value,
 				endTime: document.getElementById('date').value,
+				addOption: document.querySelector('#add-option').checked,
 				records: [...document.getElementsByClassName('option')].map(e => {
 					return e.firstElementChild.value ? {
 						value: e.firstElementChild.value,

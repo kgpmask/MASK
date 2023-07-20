@@ -1,7 +1,7 @@
 {% extends '_base.njk' %}
 
 {% set thispage = 'polls' %}
-{% set pagetitle = 'Poll:' + poll.title %}
+{% set pagetitle = 'Poll: ' + poll.title %}
 
 {% block pagecontent %}
 	<div class="message hidden"></div>
@@ -11,7 +11,7 @@
 			<div class="poll">
 				<h3> Choose one of the following (or make your own choice) </h3>
 				<br>
-				<div>Click here to see the <a href="/polls/results/{{ poll._id }}" style="color: var(--dark-red); font-weight: 600;">current poll results</a></div>
+				<div>Click here to see the <a href="/polls/results?id={{ poll._id }}" style="color: var(--dark-red); font-weight: 600;">current poll results</a></div>
 				<br>
 				<div class="choice-container" style="padding:0% 0% 2% 0%;">
 					{% for choice in poll.records %}
@@ -20,10 +20,12 @@
 							<label for="{{ choice._id }}">{{ choice.value }}</label>
 						</div>
 					{% endfor %}
-					<div class="choice make-choice">
-						<input type="radio" name="poll-value" value="null" id="null">
-						<label for="null"><input type="text" onclick="document.querySelector('#null').checked = true" placeholder="Enter your own choice" required></label>
-					</div>
+					{% if poll.addOption %}
+						<div class="choice make-choice">
+							<input type="radio" name="poll-value" value="null" id="null">
+							<label for="null"><input type="text" onclick="document.querySelector('#null').checked = true" placeholder="Enter your own choice" required></label>
+						</div>
+					{% endif %}
 				</div>
 				<br>
 				<button type="button" onclick="submitVote()"  style="color:white;"> Submit </button>
