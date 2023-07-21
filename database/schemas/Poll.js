@@ -4,6 +4,7 @@ const PollSchema = new mongoose.Schema({
 	_id: { type: String, required: true },
 	title: String,
 	endTime: { type: Date, required: true },
+	addOption: Boolean,
 	records: [
 		{
 			value: { type: String, required: true },

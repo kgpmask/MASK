@@ -117,7 +117,7 @@ router.post('/member-management', async (req, res) => {
 			response = await dbh.addTeam(data.roll, data.team);
 			break;
 		case 'export':
-			console.log(data);
+			// console.log(data);
 			response = await dbh.exportToNextYear();
 			break;
 	}
@@ -173,7 +173,7 @@ router.patch('/edit-poll', async (req, res) => {
 	if (!(now < new Date(data.endTime))) return res.send({ success: false, message: 'Invalid End Date' });
 	try {
 		response = await dbh.editPoll(data);
-		console.log(response);
+		// console.log(response);
 		return res.send({ success: true, message: 'Successfully Updated Poll', response: response });
 	} catch (e) {
 		console.log(e);
