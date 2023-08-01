@@ -5,11 +5,11 @@
 
 {% macro event(_title, _date, _venue, _desc, _link) %}
 	<div class="event-container">
-		<div class='image-container'>
+		<a href="/events/{{ _link }}" title="{{ _title }}"><div class='image-container'>
 			<img src="/assets/events/{{ _link }}.jpg" alt="{{ _title }}">
-		</div>
+		</div></a>
 		<div class="details">
-			<h2> {{ _title }} </h2>
+			<h2> <a href="/events/{{ _link }}" title="{{ _title }}">{{ _title }} </a></h2>
 			<p>
 				<span> Date: </span> {{ _date }} <br>
 				<span> Venue: </span> {{ _venue }}
@@ -26,11 +26,26 @@
 	<div id="events" style="display: none;">
 	<h1>Previous Events</h1>
 		{{ event (
-			'Quad Anime Trivia Quiz',
-			'March 12, 2023',
-			'V3, Vikramshila',
-			'Anime enthusiasts from diverse fandoms recently united for an electrifying quiz event, showcasing their knowledge and competing for exclusive merch and enticing prizes. Relive the excitement of this unforgettable celebration, where fans celebrated their shared love for anime in a thrilling clash of wits and passion.',
-			'qatq'
+			'Suzume no Tojimari Trip',
+			'April 30, 2023',
+			'South City Mall, Kolkata',
+			'How far would you go to watch a movie with the gang? Answer: At least Kolkata.<br> To watch the new Makoto Shinkai movie, Suzume no Tojimari, we went to South City Mall. From toto races, early sunday morning trains, bus rides full of jokes, and a wonderful cinematic experience, this trip was our last big thing for this semester.',
+			'suzume'
+		) }}
+		{{ event (
+			'Intra-Soc Anime Quiz Extravaganza',
+			'April 28, 2023',
+			'Classified',
+			'The Intra-Society Anime Quiz was an EPIC showdown, and the results? Mind-blowing!<br> From jaw-dropping trivia to intense battles of otaku knowledge, we witnessed friendships forged and rivalries born!',
+			'intrasoc'
+		) }}
+		
+		{{ event (
+			'Cosplay 2023 Coverage',
+			'April 28, 2023',
+			'In front of Main Building',
+			'The memories of college life condensed over long years, come to an explosive close, with the graduating batch cosplaying as their favourite characters.',
+			'cosplay23'
 		) }}
 		{{ event (
 			'Anime Seekers’ Quest',
@@ -40,26 +55,13 @@
 			'seekers-quest'
 		) }}
 		{{ event (
-			'Cosplay 2023 Coverage',
-			'April 28, 2023',
-			'In front of Main Building',
-			'The memories of college life condensed over long years, come to an explosive close, with the graduating batch cosplaying as their favourite characters.',
-			'cosplay23'
+			'Quad Anime Trivia Quiz',
+			'March 12, 2023',
+			'V3, Vikramshila',
+			'Anime enthusiasts from diverse fandoms recently united for an electrifying quiz event, showcasing their knowledge and competing for exclusive merch and enticing prizes. Relive the excitement of this unforgettable celebration, where fans celebrated their shared love for anime in a thrilling clash of wits and passion.',
+			'qatq'
 		) }}
-		{{ event (
-			'Intra-Soc Anime Quiz Extravaganza',
-			'April 28, 2023',
-			'Classified',
-			'The Intra-Society Anime Quiz was an EPIC showdown, and the results? Mind-blowing!<br> From jaw-dropping trivia to intense battles of otaku knowledge, we witnessed friendships forged and rivalries born!',
-			'intrasoc'
-		) }}
-		{{ event (
-			'Suzume no Tojimari Trip',
-			'April 30, 2023',
-			'South City Mall, Kolkata',
-			'How far would you go to watch a movie with the gang? Answer: At least Kolkata.<br> To watch the new Makoto Shinkai movie, Suzume no Tojimari, we went to South City Mall. From toto races, early sunday morning trains, bus rides full of jokes, and a wonderful cinematic experience, this trip was our last big thing for this semester.',
-			'suzume'
-		) }}
+
 	</div>
 {% endblock %}
 
@@ -118,8 +120,12 @@
 
 		font-size: 1.04em;
 	}
-
-	.details > h2 {
+    .details > h2 > a
+	{
+		text-decoration: none;
+		color: var(--red);
+	}
+	.details h2 {
 		margin-block-end: 0.8em;
 		text-align: center;
 	}
