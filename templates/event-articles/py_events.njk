@@ -3,7 +3,7 @@
 {% set thispage = 'events' %}
 {% set pagetitle = 'Previous Events' %}
 
-{% macro event(_title, _date, _venue, _desc, _link) %}
+{% macro event(_title, _date, _venue, _author, _desc, _link ) %}
 	<div class="event-container">
 		<a href="/events/{{ _link }}" title="{{ _title }}"><div class='image-container'>
 			<img src="/assets/events/{{ _link }}.jpg" alt="{{ _title }}">
@@ -12,7 +12,9 @@
 			<h2> <a href="/events/{{ _link }}" title="{{ _title }}">{{ _title }} </a></h2>
 			<p>
 				<span> Date: </span> {{ _date }} <br>
-				<span> Venue: </span> {{ _venue }}
+				<span> Venue: </span> {{ _venue }} <br>
+				<span> Author: </span> {{ _author }}
+			</p>
 			</p>
 			<p> {{ _desc | safe }} </p>
 			<br>
@@ -29,13 +31,15 @@
 			'One Piece: Gear 5 Screening',
 			'August 3, 2023',
 			'Netaji Auditorium, Main Building',
-			"<b>Ore wa Monkey D. Luffy! Kaizoku Ou ni, Ore was naru!!!</b><br> With the hype of Luffy's final transformation (Gear 5) breaking the internet and causing fans all over to go crazy over it, how could we not screen it in our institute? This article covers the story of how the screening went.",
+			'Nishkal Prakash',
+			"<b>Ore wa Monkey D. Luffy! Kaizokuō ni ore wa naru!!</b><br> With the hype of Luffy's final transformation (Gear 5) breaking the internet and causing fans all over to go crazy over it, how could we not screen it in our institute? This article covers the story of how the screening went.",
 			'gear-5-screening'
 		) }}
 		{{ event (
 			'Suzume no Tojimari Trip',
 			'April 30, 2023',
 			'South City Mall, Kolkata',
+			'Dio Brando',
 			'How far would you go to watch a movie with the gang? Answer: At least Kolkata.<br> To watch the new Makoto Shinkai movie, Suzume no Tojimari, we went to South City Mall. From toto races, early sunday morning trains, bus rides full of jokes, and a wonderful cinematic experience, this trip was our last big thing for this semester.',
 			'suzume'
 		) }}
@@ -43,6 +47,7 @@
 			'Intra-Soc Anime Quiz Extravaganza',
 			'April 28, 2023',
 			'Classified',
+			'Gargi Raj',
 			'The Intra-Society Anime Quiz was an EPIC showdown, and the results? Mind-blowing!<br> From jaw-dropping trivia to intense battles of otaku knowledge, we witnessed friendships forged and rivalries born!',
 			'intrasoc'
 		) }}
@@ -51,6 +56,7 @@
 			'Cosplay 2023 Coverage',
 			'April 28, 2023',
 			'In front of Main Building',
+			'Nishkal Prakash',
 			'The memories of college life condensed over long years, come to an explosive close, with the graduating batch cosplaying as their favourite characters.',
 			'cosplay23'
 		) }}
@@ -58,6 +64,7 @@
 			'Anime Seekers’ Quest',
 			'April 1, 2023',
 			'2.2 (around the lake)',
+			'Dio Brando',
 			'With nothing but clues, anime knowledge, friendships and wits, search around the campus for the treasure of the fans before the sun goes down. The Anime Seekers’ Quest was our first hands-on event, covering the campus with our clues and with prizes worth the search.',
 			'seekers-quest'
 		) }}
@@ -65,6 +72,7 @@
 			'Quad Anime Trivia Quiz',
 			'March 12, 2023',
 			'V3, Vikramshila',
+			'Ayush Parmar',
 			'Anime enthusiasts from diverse fandoms recently united for an electrifying quiz event, showcasing their knowledge and competing for exclusive merch and enticing prizes. Relive the excitement of this unforgettable celebration, where fans celebrated their shared love for anime in a thrilling clash of wits and passion.',
 			'qatq'
 		) }}
