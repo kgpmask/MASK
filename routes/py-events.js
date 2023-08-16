@@ -24,6 +24,10 @@ router.get('/suzume', (req, res) => {
 	return res.renderFile('event-articles/suzumetrip.njk');
 });
 
+router.get('/gear-5-screening', (req, res) => {
+	return res.renderFile('event-articles/gear-5-screening.njk');
+});
+
 module.exports = {
 	route: '/events',
 	router
