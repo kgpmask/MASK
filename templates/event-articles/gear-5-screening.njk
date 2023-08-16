@@ -10,9 +10,9 @@
 		<span class="heading">Report By:</span> N P <br>
 	</div>
 	
-	<div class="image-container">
-		<img src="/assets/events/gear-5/1.png" alt="Gear 5 Poster">
-		<p> Gear 5 Screening Poster (credits: Maloth Maniteja) </p>
+	<div class="image-container" style="border: 0px;">
+		<img src="/assets/events/gear-5/1.png" alt="Gear 5 Poster" style="object-fit: contain;">
+		<!-- <p> Gear 5 Screening Poster (credits: Maloth Maniteja) </p> -->
 	</div>
 	
 	<h2> Introduction: </h2>
@@ -72,4 +72,13 @@
 		<img src="/assets/events/gear-5/10.jpg" alt="To Be Continued">
 		<!-- <p></p> -->
 	</div>
+{% endblock %}
+
+
+{% block eventCSS %}
+	<style>
+		.image-container > img {
+			object-fit: cover;
+		}
+	</style>
 {% endblock %}
