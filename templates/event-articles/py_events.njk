@@ -32,7 +32,7 @@
 			'August 3, 2023',
 			'Netaji Auditorium, Main Building',
 			'Nishkal Prakash',
-			"<b>Ore wa Monkey D. Luffy! Kaizokuō ni ore wa naru!!</b><br> With the hype of Luffy's final transformation (Gear 5) breaking the internet and causing fans all over to go crazy over it, how could we not screen it in our institute? This article covers the story of how the screening went.",
+			"<b>Ore wa Monkey D. Luffy! Kaizokuō ni naru otoko da!!</b><br> With the hype of Luffy's latest transformation (Gear 5) breaking the internet and causing fans all over to go crazy over it, how could we not screen it in our institute? This article covers the story of how the screening went.",
 			'gear-5-screening'
 		) }}
 		{{ event (
@@ -109,20 +109,23 @@
 		text-align: left;
 	}
 
-	.event-container > .image-container {
+	.image-container {
 		margin: 10px;
 		display: block;
-		width: 40vw;
+		{# width: 40vw; #}
 		max-height: 42vh;
-		display: flex;
-		justify-content: center;
-		align-items: center;
+		{# display: flex; #}
+		{# justify-content: center; #}
+		{# align-items: center; #}
+		text-align: center;
 	}
 
 	.image-container > img {
 		object-fit: contain;
 		max-height: 42vh;
 		max-width: 40vw;
+		border-radius: 10px;
+		border: solid 2px;
 	}
 
 	.event-container > .details {
