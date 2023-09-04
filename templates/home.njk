@@ -6,7 +6,7 @@
 {% set scripts = ['https://www.youtube.com/iframe_api'] %}
 
 {% block pagecontent %}
-	<div id="loading" style="text-align: center; font-size: 2em;"> Loading >_< </div>
+	{# <div id="loading" style="text-align: center; font-size: 2em;"> Loading >_< </div>
 	<script>
 		let count = 0;
 		let slowNet = false;
@@ -22,14 +22,16 @@
 			clearTimeout(slowNetTimeout);
 			document.querySelector('#page-content').style.display = 'block';
 		});
-	</script>
-	<div id="page-content" style="display: none;">
+	</script> #}
+	<div id="page-content">
 		<div class="mask-banner">
 			<img class="mask-banner-image" src="/assets/transparent_logo.png" alt="MASK"/>
 			<span class="mask-banner-text-container"><span class="mask-banner-text">Manga and Anime Society Kharagpur</span></span>
 			<span class="mask-banner-edge">&nbsp;</span>
 		</div>
-		<div class="event-alert" style="margin: 50px 0px;"></div>
+		<div class="event-alert" style="margin: 50px 0px;">
+			<a href="/apply" target="_blank" class="event-redirect"> Apply Now!!! </a>
+		</div>
 		<div class="flex-container">
 			<div class="notices"><div class="noticebox">
 				<div class="notices-header">Updates!</div>
@@ -407,9 +409,9 @@
 {% block customjs %}
 	<script>
 		window.addEventListener('load', () => {
-			const timeBeforeEventEndAlert = new Date('2023-09-03T18:00:00.000+05:30').getTime() - new Date().getTime();
+			const timeBeforeEventEndAlert = new Date('2023-09-07T00:00:00.000+05:30').getTime() - new Date().getTime();
 			if (timeBeforeEventEndAlert > 0) document.querySelector('.event-alert').innerHTML = `
-				<a class="event-redirect" href="https://event.kgpmask.club"> Click here for the event portal!!! </a>
+				<a href="/apply" target="_blank" class="event-redirect"> Apply Now!!! </a>
 			`;
 		});
 	</script>
