@@ -5,7 +5,7 @@ router.get('/about', (req, res) => {
 });
 
 router.get('/apply', (req, res) => {
-	return res.renderFile('applications.njk');
+	return res.redirect('https://forms.gle/Sy7f7Yueyw9m1Ei1A');
 });
 
 router.use('/blog', (req, res) => {
