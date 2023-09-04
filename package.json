@@ -1,6 +1,6 @@
 {
 	"name": "mask",
-	"version": "3.3.5",
+	"version": "3.3.6",
 	"description": "Website for MASK",
 	"main": "./src/mask.js",
 	"scripts": {
