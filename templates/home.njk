@@ -409,7 +409,7 @@
 {% block customjs %}
 	<script>
 		window.addEventListener('load', () => {
-			const timeBeforeEventEndAlert = new Date('2023-09-07T00:00:00.000+05:30').getTime() - new Date().getTime();
+			const timeBeforeEventEndAlert = new Date('2023-09-09T00:00:00.000+05:30').getTime() - new Date().getTime();
 			if (timeBeforeEventEndAlert > 0) document.querySelector('.event-alert').innerHTML = `
 				<a href="/apply" target="_blank" class="event-redirect"> Apply Now!!! </a>
 			`;
