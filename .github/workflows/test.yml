@@ -1,0 +1,45 @@
+name: Node.js CI
+
+on:
+  push:
+    branches: [ main, dev ]
+    paths-ignore:
+        - 'LICENSE'
+        - 'README.md'
+        - 'docs'
+  pull_request:
+    branches: [ main, dev ]
+    paths-ignore:
+        - 'LICENSE'
+        - 'README.md'
+        - 'docs'
+
+jobs:
+  test:
+
+    env:
+      GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+      GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+      MONGO_TEST_URL: ${{ secrets.MONGO_TEST_URL }}
+      MONGO_URL: ${{ secrets.MONGO_URL }}
+      SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm install
+    - run: npm run lint
+    - run: npm run mocha-one test/site.js
+    - run: npm run mocha-one test/site-userless.js
+    - run: npm run mocha-one test/site-mongoless.js
+    - run: npm run mocha-one test/tools.js

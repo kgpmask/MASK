@@ -1,0 +1,79 @@
+{% extends '_base.njk' %}
+{% import '_form.njk' as forms %}
+
+{% set thispage = 'submissions' %}
+{% set pagetitle = 'Submit!' %}
+{% set pagedesc = 'Submit your content here to release it form MASK, be it art work, AMVs or music covers.' %}
+
+{% set scripts = ['https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'] %}
+
+{% block pagecontent %}
+	{% call forms.form('Submit your content here!') %}
+		{{ forms.field('email', 'E-mail Address') }}
+		{{ forms.field('name', 'Your Name (or a Psudonym, if you prefer)') }}
+		{{ forms.radio('member', 'Are you a member of IIT Kharagpur?', [
+			{
+				'id':'yes',
+				'label': 'Yes',
+				'value': 'true'
+			},
+			{
+				'id':'no',
+				'label': 'No',
+				'value': 'false'
+			}]) }}
+		{{ forms.select('type', 'What kind of content are you submitting?', [
+			{
+				'label': 'Art (Digital)',
+				'value': 'dig-art'
+			},
+			{
+				'label': 'Art (Traditional)',
+				'value': 'trd-art'
+			},
+			{
+				'label': 'Video (AMV)',
+				'value': 'amv-vid'
+			},
+			{
+				'label': 'Video (Animation)',
+				'value': 'ani-vid'
+			},
+			{
+				'label': 'Video (Instrumental Music)',
+				'value': 'ins-mus'
+			},
+			{
+				'label': 'Video (Vocal Music)',
+				'value': 'voc-mus'
+			}]) }}
+		{{ forms.field('link', 'Please provide the Drive link of the content you wish to submit.') }}
+		{{ forms.field('proof', 'If possible, please provide any proof of ownership for the same') }}
+		{{ forms.field('social', 'Mention any social media handles you’d like to be taggged in') }}
+		{{ forms.button('submit', 'Submit', 'submitForm') }}
+	{% endcall %}
+{% endblock %}
+
+{% block customcss %}
+	{{ forms.formCss() }}
+	<style>
+		form {
+			width: 70%;
+		}
+	</style>
+{% endblock %}
+
+{% block customjs %}
+	{{ forms.formFunction() }}
+	<script>
+		axios.defaults.withCredentials = true;
+		axios.defaults.headers.common['X-CSRF-TOKEN'] = '{{ csrfToken }}';
+
+		async function submitForm () {
+			const data = getData();
+			console.log(data);
+			const response = (await axios.post('/submissions', data)).data;
+			message(response, '/');
+		}
+	</script>
+{% endblock %}

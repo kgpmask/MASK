@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+if [ -f ./src/credentials.json ]; then
+	npm run test
+else
+	npm run lint
+	npm run mocha-one test/tools.js
+	npm run mocha-one test/site-mongoless.js
+fi

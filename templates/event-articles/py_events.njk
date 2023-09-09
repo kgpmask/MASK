@@ -1,0 +1,179 @@
+{% extends '_base.njk' %}
+
+{% set thispage = 'events' %}
+{% set pagetitle = 'Previous Events' %}
+
+{% macro event(_title, _date, _venue, _author, _desc, _link ) %}
+	<div class="event-container">
+		<a href="/events/{{ _link }}" title="{{ _title }}"><div class='image-container'>
+			<img src="/assets/events/{{ _link }}.jpg" alt="{{ _title }}">
+		</div></a>
+		<div class="details">
+			<h2> <a href="/events/{{ _link }}" title="{{ _title }}">{{ _title }} </a></h2>
+			<p>
+				<span> Date: </span> {{ _date }} <br>
+				<span> Venue: </span> {{ _venue }} <br>
+				<span> Author: </span> {{ _author }}
+			</p>
+			</p>
+			<p> {{ _desc | safe }} </p>
+			<br>
+			<a href="/events/{{ _link }}" title="{{ _title }}"> Read More... </a>
+		</div>
+	</div>
+{% endmacro %}
+
+{% block pagecontent %}
+	{{ loadingscreen('events') }}
+	<div id="events" style="display: none;">
+	<h1>Previous Events</h1>
+		{{ event (
+			'One Piece: Gear 5 Screening',
+			'August 3, 2023',
+			'Netaji Auditorium, Main Building',
+			'Nishkal Prakash',
+			"<b>Ore wa Monkey D. Luffy! Kaizokuō ni naru otoko da!!</b><br> With the hype of Luffy's latest transformation (Gear 5) breaking the internet and causing fans all over to go crazy over it, how could we not screen it in our institute? This article covers the story of how the screening went.",
+			'gear-5-screening'
+		) }}
+		{{ event (
+			'Suzume no Tojimari Trip',
+			'April 30, 2023',
+			'South City Mall, Kolkata',
+			'Dio Brando',
+			'How far would you go to watch a movie with the gang? Answer: At least Kolkata.<br> To watch the new Makoto Shinkai movie, Suzume no Tojimari, we went to South City Mall. From toto races, early sunday morning trains, bus rides full of jokes, and a wonderful cinematic experience, this trip was our last big thing for this semester.',
+			'suzume'
+		) }}
+		{{ event (
+			'Intra-Soc Anime Quiz Extravaganza',
+			'April 28, 2023',
+			'Classified',
+			'Gargi Raj',
+			'The Intra-Society Anime Quiz was an EPIC showdown, and the results? Mind-blowing!<br> From jaw-dropping trivia to intense battles of otaku knowledge, we witnessed friendships forged and rivalries born!',
+			'intrasoc'
+		) }}
+		
+		{{ event (
+			'Cosplay 2023 Coverage',
+			'April 28, 2023',
+			'In front of Main Building',
+			'Nishkal Prakash',
+			'The memories of college life condensed over long years, come to an explosive close, with the graduating batch cosplaying as their favourite characters.',
+			'cosplay23'
+		) }}
+		{{ event (
+			'Anime Seekers’ Quest',
+			'April 1, 2023',
+			'2.2 (around the lake)',
+			'Dio Brando',
+			'With nothing but clues, anime knowledge, friendships and wits, search around the campus for the treasure of the fans before the sun goes down. The Anime Seekers’ Quest was our first hands-on event, covering the campus with our clues and with prizes worth the search.',
+			'seekers-quest'
+		) }}
+		{{ event (
+			'Quad Anime Trivia Quiz',
+			'March 12, 2023',
+			'V3, Vikramshila',
+			'Ayush Parmar',
+			'Anime enthusiasts from diverse fandoms recently united for an electrifying quiz event, showcasing their knowledge and competing for exclusive merch and enticing prizes. Relive the excitement of this unforgettable celebration, where fans celebrated their shared love for anime in a thrilling clash of wits and passion.',
+			'qatq'
+		) }}
+
+	</div>
+{% endblock %}
+
+{% block customjs %}
+	<script>
+		window.onload = () => {
+			[...document.querySelector('#events').children].filter((_, i) => i%2).forEach(eventContainer => {
+				eventContainer.style.setProperty('flex-direction', 'row-reverse');
+			});
+
+			document.querySelector('#loading').style.setProperty('display', 'none');
+			document.querySelector('#events').style.removeProperty('display');
+		}
+	</script>
+{% endblock %}
+
+{% block customcss %}
+<style>
+	.event-container {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+
+		margin: 20px 3vw;
+		border-radius: 20px;
+		padding: 30px calc(10px + 4vw);
+
+		background-color: rgba(255,255,255,.2);
+		color: var(--light-gray);
+		text-align: left;
+	}
+
+	.image-container {
+		margin: 10px;
+		display: block;
+		{# width: 40vw; #}
+		max-height: 42vh;
+		{# display: flex; #}
+		{# justify-content: center; #}
+		{# align-items: center; #}
+		text-align: center;
+	}
+
+	.image-container > img {
+		object-fit: contain;
+		max-height: 42vh;
+		max-width: 40vw;
+		border-radius: 10px;
+		border: solid 2px;
+	}
+
+	.event-container > .details {
+		margin: 10px;
+		width: 50vw;
+
+		{# display: flex;
+		flex-direction: column;
+		justify-content: space-between; #}
+
+		font-size: 1.04em;
+	}
+    .details > h2 > a
+	{
+		text-decoration: none;
+		color: var(--red);
+	}
+	.details h2 {
+		margin-block-end: 0.8em;
+		text-align: center;
+	}
+
+	.details > p {
+		margin-bottom: 15px;
+	}
+
+	.details a {
+		color: var(--off-white);
+		transition: color 0.3s;
+	}
+
+	.details span, .details h2, .details a:hover {
+		color: var(--error-red);
+	}
+
+	@media (max-width: 800px) {
+		.event-container {
+			flex-direction: column !important;
+		}
+
+		.event-container > * {
+			max-height: 100% !important;
+			width: 100% !important;
+			max-width: 100% !important;
+			margin: 10px 0px !important;
+		}
+	}
+</style>
+
+{% endblock %}
+

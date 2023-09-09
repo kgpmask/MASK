@@ -1,0 +1,407 @@
+{% extends '_base.njk' %}
+
+{% set thispage = 'home' %}
+{% set pagedesc = 'The website of Manga and Anime Society Kharagpur. Stay tuned for more updates.' %}
+
+{% set scripts = ['https://www.youtube.com/iframe_api'] %}
+
+{% block pagecontent %}
+	{# <div id="loading" style="text-align: center; font-size: 2em;"> Loading >_< </div>
+	<script>
+		let count = 0;
+		let slowNet = false;
+		const loadInterval = setInterval(() => {
+			document.querySelector('#loading').innerHTML = `Loading${[...Array(count++ % 3 + 1)].map(() => '.').join('')} >_< <br> ${ slowNet ? 
+			'<i style="font-size: 50%; color: var(--off-white);"> Taking too much time? Check your internet connection. </i>' : '' }`;
+		}, 860);
+		const slowNetTimeout = setTimeout(() => slowNet = true, 20_000);
+		window.addEventListener('load', () => {
+			if (!document.querySelector('#loading')) return;
+			document.querySelector('#loading').style.display = 'none';
+			clearInterval(loadInterval);
+			clearTimeout(slowNetTimeout);
+			document.querySelector('#page-content').style.display = 'block';
+		});
+	</script> #}
+	<div id="page-content">
+		<div class="mask-banner">
+			<img class="mask-banner-image" src="/assets/transparent_logo.png" alt="MASK"/>
+			<span class="mask-banner-text-container"><span class="mask-banner-text">Manga and Anime Society Kharagpur</span></span>
+			<span class="mask-banner-edge">&nbsp;</span>
+		</div>
+		<div class="event-alert" style="margin: 50px 0px;">
+			{# <a href="/apply" target="_blank" class="event-redirect"> Apply Now!!! </a> #}
+		</div>
+		<div class="flex-container">
+			<div class="notices"><div class="noticebox">
+				<div class="notices-header">Updates!</div>
+				<div class="notices-list">
+					{% for post in posts %}
+						<a href="{{ '/assets/art/' if post.type == 'art' }}{{ post.link }}" target="{{ post.page }}" class="notice-link" title="{{ post.date }}"><div class="notice-post">{{ post.name | safe }}{{ ('<sup>NEW</sup>' | safe) if post.recent }}</div></a>{% if not loop.last %}<hr class="notice-break"/>{% endif %}
+					{% endfor %}
+				</div>
+			</div></div>
+			<div class="about-stuff">
+				<h1>Welcome to the MASK website!</h1>
+				<div class="text" style="font-size:1.1em;">
+					Welcome to the official website of the Manga and Anime Society Kharagpur. We are a community that is dedicated to anime and related content. We aim to spread our passion and love for anime, manga, and related media. We create content ranging from AMVs and reels to artwork and sketches, and hold crowd events like anime quizzes. We wish to reach to the skies and beyond, as we aim to diversify and increase the scope of our interaction and indulgence in the coming years.
+				</div>
+			</div>
+		</div>
+		<hr class="flex-break"/>
+		<div class="flex-container" id="bottom-container">
+			<div class="top-container" style="justify-content: center;">
+				<div class="with-controls">
+					<div class="imgshow-container">
+						<div class="imgshow">
+							{% for img in art %}
+								<div id="img-{{ loop.index }}" class="to-frost"><div class="full-image" style="background-image: url(/assets/art/{{ img.link }});"></div></div>
+							{% endfor %}
+						</div>
+						<div class="slide-buttons">
+							<div class="prevbtn" id="img-prev">&#10094;</div>
+							<div class="nextbtn" id="img-next">&#10095;</div>
+						</div>
+					</div>
+					<span class="slider" id="slider-img">
+						{% for img in art %}
+							<a id="imgref-{{ loop.index }}"></a>
+						{% endfor %}
+					</span>
+					<script>
+						const imgSliders = document.querySelectorAll('#slider-img > a'), imgSlides = document.querySelectorAll(".imgshow > div"), imgSlideshow = document.querySelector(".imgshow");
+						let imageTimer;
+						let scrolledOutImg = true;
+						const IMAGE_TIME = 5000;
+						const imgAmt = {{ art | length }};
+						function imageSlide (prev, clicked) {
+							const currentIndex = [...imgSliders].findIndex(dot => dot.classList.contains('active-image-link'));
+							let nextIndex = currentIndex + (prev ? -1 : 1);
+							nextIndex = (nextIndex + imgAmt) % imgAmt;
+							imgSlideshow.scroll(nextIndex * imgSlideshow.clientWidth, 0);
+							clearTimeout(imageTimer);
+							if (!clicked) imageTimer = setTimeout(imageSlide, IMAGE_TIME);
+						}
+						imgSliders.forEach(a => a.addEventListener('click', () => {
+							clearTimeout(imageTimer);
+							const target = a.id.substr(7) - 1;
+							imgSlideshow.scroll(target * imgSlideshow.clientWidth, 0);
+							imageTimer = setTimeout(imageSlide, IMAGE_TIME);
+						}));
+						const pauseImages = () => {
+							clearTimeout(imageTimer);
+						}, resumeImages = () => {
+							clearTimeout(imageTimer);
+							imageTimer = setTimeout(imageSlide, IMAGE_TIME);
+						};
+						document.getElementById('img-prev').addEventListener('mouseenter', pauseImages);
+						document.getElementById('img-prev').addEventListener('mouseleave', resumeImages);
+						document.getElementById('img-prev').addEventListener('click', () => {
+							imageSlide(true, true);
+						});
+						document.getElementById('img-next').addEventListener('mouseenter', pauseImages);
+						document.getElementById('img-next').addEventListener('mouseleave', resumeImages);
+						document.getElementById('img-next').addEventListener('click', () => {
+							imageSlide(false, true);
+						});
+						const imageObserver = new IntersectionObserver(imgSlides => {
+							imgSlides.forEach(slide => {
+								if (slide.isIntersecting && slide.intersectionRatio > 0.2) return imgSliders[slide.target.id.substr(4) - 1].classList.add('active-image-link');
+								else imgSliders[slide.target.id.substr(4) - 1].classList.remove('active-image-link');
+							});
+						}, { threshold: [0.4] });
+						imgSlides.forEach(slide => imageObserver.observe(slide));
+						/*new IntersectionObserver(([imgShow]) => {
+							if (imgShow.isIntersecting && imgShow.intersectionRatio > 0.2) {
+								if (scrolledOutImg) {
+									scrolledOutImg = false;
+									resumeImages();
+								}
+							} else {
+								pauseImages();
+								scrolledOutImg = true;
+							}
+						}, { threshold: [0.45] }).observe(document.querySelector('.imgshow'));*/
+						resumeImages();
+					</script>
+					<style>
+						.with-controls {
+							width: 100%;
+							max-width: 700px;
+							padding-bottom: 15px;
+							margin-bottom: 30px;
+						}
+						.imgshow-container, .vidshow-container {
+							overflow: hidden;
+							height: 500px;
+							max-height: 50vh;
+							width: 100%;
+							border: 2px solid var(--gray);
+							border-radius: 10px;
+							display: block;
+							margin-bottom: 10px;
+							position: relative;
+						}
+						.imgshow, .vidshow {
+							display: flex;
+							overflow-x: auto;
+							scroll-snap-type: x mandatory;
+							scroll-behavior: smooth;
+							-webkit-overflow-scrolling: touch;
+							height: 100%;
+							width: 100%;
+							-ms-overflow-style: none;
+							scrollbar-width: none;
+						}
+						.imgshow::-webkit-scrollbar {
+							display: none;
+						}
+						.imgshow > div, .vidshow > div {
+							scroll-snap-align: start;
+							flex-shrink: 0;
+							width: 100%;
+							height: 100%;
+							margin-right: 50px;
+							border-radius: 10px;
+							transform-origin: center center;
+							transform: scale(1);
+							transition: transform 0.8s;
+							position: relative;
+							display: flex;
+							justify-content: center;
+							align-items: center;
+							font-size: 100px;
+							overflow: hidden;
+						}
+						.to-frost::before {
+							content: "";
+							position: absolute;
+							top: -100px;
+							left: -100px;
+							right: -100px;
+							bottom: -100px;
+							background-repeat: no-repeat;
+							background-attachment: fixed;
+							background-size: cover;
+							background-position: top;
+							filter: blur(10px);
+							z-index: -1;
+						}
+						{% for img in art %}
+							#img-{{ loop.index }}::before {
+								background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(/assets/art/{{ img.link }});
+							}
+						{% endfor %}
+						.full-image {
+							background-position: center;
+							background-size: contain;
+							background-repeat: no-repeat;
+							height: 90%;
+							width: 90%;
+						}
+						.slider {
+							margin: 20px 0px;
+						}
+						.slider > a {
+							display: inline-flex;
+							height: 1rem;
+							width: 1rem;
+							border-radius: 50%;
+							margin-left: 0.4rem;
+							background-color: var(--ghost-gray);
+							content: "";
+							z-index: 1;
+							cursor: pointer;
+						}
+						.active-image-link, .active-video-link {
+							background-color: var(--off-white) !important;
+						}
+						.slide-buttons {
+							display: flex;
+							justify-content: space-between;
+							align-items: center;
+							width: 70vw;
+							height: 20%;
+							z-index: 2;
+							float: left;
+							width: 100%;
+							position: absolute;
+							top: 40%;
+							pointer-events: none;
+						}
+						.slide-buttons > div {
+							color: var(--off-white);
+							padding: 10px;
+							font-weight: bold;
+							font-size: 2em;
+							cursor: pointer;
+							background-color: rgba(0, 0, 0, 0.3);
+							width: 30px;
+							height: 30px;
+							border-radius: 5px;
+							line-height: 70%;
+							pointer-events: auto;
+						}
+						.prevbtn:hover, .nextbtn:hover {
+							color: var(--white);
+							background-color: rgba(0, 0, 0, 0.7);
+						}
+						@supports (scroll-snap-type) {
+							.slider > a {
+								display: none;
+							}
+						}
+					</style>
+				</div>
+				<div class="submit-stuff"><a href="/submissions"><button class="submit-button">Submit your content!</button></a></div>
+			</div>
+			<div class="with-controls" id="vid-main">
+				<div class="vidshow-container">
+					<div class="vidshow">
+						{% for vid in vids %}
+							<div id="vid-{{ loop.index }}"><div id="vidframe-{{ loop.index }}"><iframe width="100%" height="100%" src="{{ vid.link }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div></div>
+						{% endfor %}
+					</div>
+					<script>
+						const inputVids = [{% for vid in vids %}'{{ vid.link }}'{{ ',' if not loop.last }}{% endfor %}].map(vid => vid.split('?v=')[1]);
+						let players = [];
+					</script>
+					<div class="slide-buttons">
+						<div class="prevbtn" id="vid-prev">&#10094;</div>
+						<div class="nextbtn" id="vid-next">&#10095;</div>
+					</div>
+				</div>
+				<div class="slider" id="slider-vid">
+					{% for vid in vids %}
+						<a id="vidref-{{ loop.index }}"></a>
+					{% endfor %}
+				</div>
+				<script>
+					const vidSliders = document.querySelectorAll('#slider-vid > a'), vidSlides = document.querySelectorAll(".vidshow > div"), vidSlideshow = document.querySelector(".vidshow");
+					let videoTimer, scrolledOutVid = true, playedVid = false;
+					const VIDEO_TIME = 7000;
+					const vidAmt = {{ vids | length }};
+					function videoSlide (prev, auto) {
+						if (playedVid) playedVid.pauseVideo();
+						const currentIndex = [...vidSliders].findIndex(dot => dot.classList.contains('active-video-link'));
+						let nextIndex = currentIndex + (prev ? -1 : 1);
+						nextIndex = (nextIndex + vidAmt) % vidAmt;
+						vidSlideshow.scroll(nextIndex * vidSlideshow.clientWidth, 0);
+						clearTimeout(videoTimer);
+						if (auto) videoTimer = setTimeout(videoSlide, VIDEO_TIME, false, auto);
+					}
+					vidSliders.forEach(a => a.addEventListener('click', () => {
+						clearTimeout(videoTimer);
+						const target = a.id.substr(7) - 1;
+						vidSlideshow.scroll(target * vidSlideshow.clientWidth, 0);
+					}));
+					document.getElementById('vid-prev').addEventListener('click', () => {
+						clearTimeout(videoTimer);
+						videoSlide(true);
+					});
+					document.getElementById('vid-next').addEventListener('click', () => {
+						clearTimeout(videoTimer);
+						videoSlide(false);
+					});
+					const videoObserver = new IntersectionObserver(vidSlides => {
+						vidSlides.forEach(slide => {
+							try {
+								if (slide.isIntersecting && slide.intersectionRatio > 0.2) return vidSliders[slide.target.id.substr(4) - 1].classList.add('active-video-link');
+								else vidSliders[slide.target.id.substr(4) - 1].classList.remove('active-video-link');
+							} catch (e) {
+								console.log(e, slide);
+							}
+						});
+					}, { threshold: [0.4] });
+					/*new IntersectionObserver(([vidShow]) => {
+						if (playedVid) return;
+						if (vidShow.isIntersecting && vidShow.intersectionRatio > 0.2) {
+							if (scrolledOutVid) {
+								scrolledOutVid = false;
+								clearTimeout(videoTimer);
+								videoSlide(false, true);
+							}
+						} else {
+							clearTimeout(videoTimer);
+							scrolledOutVid = true;
+						}
+					}, { threshold: [0.45] }).observe(document.querySelector('.vidshow'));*/
+					vidSlides.forEach(slide => videoObserver.observe(slide));
+					videoSlide(false, true);
+				</script>
+				<script>
+					function onYouTubeIframeAPIReady() {
+						players = inputVids.map((vid, j) => {
+							return new YT.Player(`vidframe-${j + 1}`, {
+								height: '100%',
+								width: '100%',
+								videoId: vid,
+								playerVars: {
+									'playsinline': 1
+								},
+								events: {
+									'onStateChange': function (event) {
+										if (event.data === YT.PlayerState.PLAYING) {
+											playedVid = players[j];
+											clearTimeout(videoTimer);
+										}
+									}
+								}
+							});
+						});
+					}
+				</script>
+				<style>
+					#vid-main {
+						width: 100%;
+						max-width: 800px;
+						margin: auto;
+					}
+					.vidshow-container {
+						max-height: 60vh;
+						max-width: 90%;
+						margin: auto;
+					}
+					.vidshow::-webkit-scrollbar {
+						display: none;
+					}
+					.active-video-link {
+						background-color: var(--off-white) !important;
+					}
+					#vid-prev, #vid-next {
+						background-color: rgba(0, 0, 0, 0.7);
+						color: var(--white);
+					}
+					#vid-prev:hover, #vid-next:hover {
+						background-color: red;
+					}
+				</style>
+			</div>
+		</div>
+		<div style="display:flex;justify-content:space-around">
+			<a class="faded" style="margin-right:20px" href="/privacy">Privacy Policy</a>
+			<a class="faded" style="margin-left:20px" href="/terms">Terms of Use</a>
+		</div>
+		<br/><br/>
+	</div>
+	
+{% endblock %}
+
+{% block customcss %}
+	<link rel="stylesheet" type="text/css" href="/assets/styles/home.css"/>
+	<style>
+		@keyframes glow {
+			0%, 100% { background-color: var(--red); color: black; }
+			50% { background-color: var(--abyss); color: var(--error-red); }
+		}
+
+		.event-redirect {
+			border: solid 3px var(--light-gray);
+			border-radius: 10px;
+			padding: 20px;
+			font-size: 1.5em;
+			text-decoration: none;
+			animation: glow 2s ease infinite
+		}
+	</style>
+{% endblock %}

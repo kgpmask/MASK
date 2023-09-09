@@ -1,0 +1,102 @@
+{% extends "govportal/govportal.njk" %}
+{% import '_form.njk' as forms %}
+
+{% set thispage = 'govportal'  %}
+{% set pagetitle = 'Governor Portal | Edit Post' %}
+{% set actionname = 'Edit Post' %}
+
+{% set scripts = ['https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'] %}
+
+{% block actioncontent %}
+	{% call forms.form() %}
+		<div id="idUpdate" style="display:none;">{{_id}}</div>
+		{{ forms.select('type', 'Post Type', [
+			{
+				'label': 'Youtube',
+				'value': 'youtube'
+			},
+			{
+				'label': 'Instagram',
+				'value': 'instagram'
+			},
+			{
+				'label': 'Art',
+				'value': 'art'
+			},
+			{
+				'label': 'Newsletter',
+				'value': 'letter'
+			},
+			{
+				'label': 'Event',
+				'value': 'event'
+			}], 'check') }}
+		{{ forms.field('name', 'Name', name) }}
+		{{ forms.field('link', 'Link', link) }}
+		{{ forms.field('attr', 'Author', attr) }}
+		{{ forms.datetime('date', 'Date', date) }}
+		{{ forms.singlecheck('hype', 'Hype', 1) }}
+		{{ forms.button('post', 'Post', 'updatePost') }}
+	{% endcall %}
+{% endblock %}
+
+{% block customjs %}
+	{{ forms.formFunction() }}
+	<script>
+		axios.defaults.withCredentials = true;
+		axios.defaults.headers.common['X-CSRF-TOKEN'] = '{{ csrfToken }}';
+
+		function check (select) {
+			if (['letter', 'event'].includes(select.options[select.selectedIndex].value)) {
+				document.getElementById('attr').value = '';
+				document.getElementById('attr').disabled = true;
+			}
+			else {
+				document.getElementById('attr').disabled = false;
+			}
+		}
+
+		async function updatePost () {
+			const data = getData()
+			data.page = ['art', 'instagram', 'youtube', 'event'].includes(data.type) ? '_blank' : '';
+			data.attr = [data.attr];
+			data.id = document.getElementById('idUpdate').innerHTML;
+			var response = (await axios.patch('/gov-portal/edit-post', { data: data })).data;
+			message(response, '/gov-portal/post-management')
+		}
+		window.onload = () => {
+			document.querySelector('select').value = '{{ type }}';
+			check(document.querySelector('select'));
+		}
+	</script>
+{% endblock %}
+
+{% block customcss %}
+	{{ super() }}
+	{{ forms.formCss() }}
+	<style>
+		form {
+			width: 40%;
+		}
+		input:disabled ~ label{
+			color: var(--light-gray);
+		}
+		@media (max-width: 1600px) {
+			form {
+				width: 50%;
+			}
+		}
+
+		@media (max-width: 1300px) {
+			form {
+				width: 65%;
+			}
+		}
+
+		@media (max-width: 1000px) {
+			form {
+				width: 75%;
+			}
+		}
+	</style>
+{% endblock %}

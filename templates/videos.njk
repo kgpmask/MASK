@@ -1,0 +1,40 @@
+{% extends '_base.njk' %}
+
+{% set thispage = 'videos' %}
+{% set pagetitle = 'Videos' %}
+{% set pagedesc = "Experience the thrill of captivating AMVs created by our talented team at Manga and Anime Society Kharagpur [MASK]. Immerse yourself in a world of dynamic video editing, mesmerizing soundtracks, and breathtaking visuals." %}
+
+{% block pagecontent %}
+	<div class="text">Check out our video content here or on <a href="https://www.youtube.com/@maskiitkgp" class="link" target="_blank">YouTube</a>!</div>
+	<div class="youtube-videos">
+		{% for vid in vids %}
+			<div class="youtube-vid" id="vid-{{ loop.index }}"><iframe width="100%" height="100%" src="{{ vid.embed }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+		{% endfor %}
+	</div>
+{% endblock %}
+
+{% block customcss %}
+	<style>
+		.link {
+			color: var(--off-white);
+		}
+		.youtube-videos {
+			display: inline-flex;
+			width: 100%;
+			flex-wrap: wrap;
+			justify-content: space-around;
+		}
+		.youtube-vid {
+			height: 300px;
+			width: 532px;
+			margin: 40px;
+			padding: 10px;
+			border: 2px solid var(--off-white);
+			border-radius: 10px;
+			background-color: var(--medium-gray);
+		}
+		iframe {
+			border-radius: 5px;
+		}
+	</style>
+{% endblock %}

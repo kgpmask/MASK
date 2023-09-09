@@ -1,0 +1,127 @@
+{% macro heading(h, label) %}
+	<div class="heading">
+		<{{ h }}>{{ label }}</{{ h }}>
+	</div>
+{% endmacro %}
+
+{% macro field(id, label, value) %}
+	<div class="item field">
+		<label>{{ label }}</label>
+		<input type="text" required id="{{ id }}" {% if value %} value="{{ value }}" {% endif %}>
+	</div>
+{% endmacro %}
+
+{% macro radio(id, label, options) %}
+	<div class="item radio" id="{{ id }}">
+		<label>{{ label }}</label>
+		{% for option in options %}
+			<div class="option">
+				<input type="radio" id="{{ option.id }}" name="{{ id }}" class="option-input" value="{{ option.value }}"/>
+				<div class="option-design"></div>
+				<div class="option-text" id="option" for="{{ option.id }}">{{ option.label }}</div>
+			</div>
+		{% endfor %}
+	</div>
+{% endmacro %}
+
+{% macro checkbox(id, label, options) %}
+	<div class="item checkbox" id="{{ id }}">
+		<label>{{ label }}</label>
+		{% for option in options %}
+			<div class="option">
+				<input type="checkbox" id="{{ option.id }}" name="{{ id }}" class="option-input" value="{{ option.value }}"/>
+				<div class="option-design"></div>
+				<div class="option-text" for="{{ option.id }}">{{ option.label }}</div>
+			</div>
+		{% endfor %}
+	</div>
+{% endmacro %}
+	
+{% macro singlecheck(id, label, checked) %}
+	<div class="item singlecheck option">
+		<input type="checkbox" id="{{ id }}" name="{{ id }}" class="option-input" {% if checked %} checked {% endif %}/>
+		<div class="option-design" style="border-radius: 2px;"></div>
+		<div class="option-text" for="{{ id }}">{{ label }}</div>
+	</div>
+{% endmacro %}
+
+{% macro datetime(id, label, value) %}
+	<div class="item datetime">
+		<label>{{ label }}</label>
+		<input type="date" id="{{ id }}" value="{{ value }}">
+	</div>
+{% endmacro %}
+
+{% macro select(id, label, options, onchange) %}
+	<div class="item select">
+		<label style="top: -8px;">{{ label }}</label>
+		<select name="{{ id }}" id="{{ id }}" {% if onchange %} onchange="{{ onchange }}(this);" {% endif %}>
+			{% for option in options %}
+				<option value="{{ option.value }}">{{ option.label }}</option>
+			{% endfor %}
+		</select>
+	</div>
+{% endmacro %}
+
+{% macro form(formheading) %}
+	<div class="message hidden"></div>
+	{% if formheading %}
+		<h1 class="heading"> {{ formheading }} </h1>
+	{% endif %}
+	<div class="form-container">
+		<form>
+			{{ caller() }}
+		</form>
+	</div>
+	<div style="height: 30px;"></div>
+{% endmacro %}
+
+{% macro button(id, label, onclick) %}
+	<button id="{{ id }}" {% if onclick %} type="button" onclick="{{ onclick }}()" {% else %} type="submit" {% endif %}>{{ label }}</button>
+{% endmacro %}
+
+{% macro formCss() %}
+	<link rel="stylesheet" type="text/css" href="/assets/styles/form.css"/>
+{% endmacro %}
+
+{% macro formFunction() %}
+	<script>
+		function getData() {
+			const data = {};
+			[...document.getElementsByClassName('item')].map(e => {
+				switch (e.classList[1]) {
+					case 'field':
+					case 'datetime':
+						data[e.children[1].id] = e.children[1].value;
+						break;
+					case 'radio':
+						data[e.id] = e.querySelector("input:checked")?.value;
+						break;
+					case 'checkbox':
+						data[e.id] = [...e.querySelectorAll("input:checked")].map(v => v.value);
+						break;
+					case 'singlecheck':
+						data[e.firstElementChild.id] = e.firstElementChild.checked;
+						break;
+					case 'select':
+						data[e.children[1].id] = e.children[1].value;
+						break;
+				}
+			});
+			return data;
+		}
+		function message(response, location='') {
+			console.log(response);
+			const e = document.getElementsByClassName('message')[0];
+			e.innerHTML = response.message;
+			e.classList.add(response.success ? 'success' : 'error');
+			e.classList.remove('hidden');
+			setTimeout(function () {e.classList.add('hidden')}, 2000);
+			if (response.success) {
+				setTimeout(function () {
+					window.location.href = location ? location : window.location.href;
+				}, 3000);
+			}
+		}
+	</script>
+{% endmacro %}

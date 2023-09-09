@@ -1,0 +1,86 @@
+{
+	"2020" : {
+		"a": {
+			"name": "AMV",
+			"icon": "amv"
+		},
+		"c": {
+			"name": "Creative",
+			"icon": "design"
+		},
+		"q": {
+			"name": "Quiz",
+			"icon": "newsletter"
+		},
+		"w": {
+			"name": "WebDev",
+			"icon": "webdev"
+		}
+	},
+	"2021" : {
+		"a": {
+			"name": "AMV",
+			"icon": "amv"
+		},
+		"d": {
+			"name": "Design & Arts",
+			"icon": "design"
+		},
+		"m": {
+			"name": "Music",
+			"icon": "music"
+		},
+		"q": {
+			"name": "Quiz",
+			"icon": "newsletter"
+		},
+		"w": {
+			"name": "WebDev",
+			"icon": "webdev"
+		}
+	},
+	"2022" : {
+		"a": {
+			"name": "AMV & Music",
+			"icon": "amv"
+		},
+		"d": {
+			"name": "Design & Arts",
+			"icon": "design"
+		},
+		"n": {
+			"name": "Media & Newsletter",
+			"icon": "newsletter"
+		},
+		"q": {
+			"name": "Quiz",
+			"icon": "quiz"
+		},
+		"w": {
+			"name": "WebDev",
+			"icon": "webdev"
+		}
+	},
+	"2023" : {
+		"a": {
+			"name": "AMV & Music",
+			"icon": "amv"
+		},
+		"d": {
+			"name": "Design & Arts",
+			"icon": "design"
+		},
+		"n": {
+			"name": "Media & Newsletter",
+			"icon": "newsletter"
+		},
+		"q": {
+			"name": "Quiz",
+			"icon": "quiz"
+		},
+		"w": {
+			"name": "WebDev",
+			"icon": "webdev"
+		}
+	}
+}

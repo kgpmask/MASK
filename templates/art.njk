@@ -1,0 +1,107 @@
+{% extends '_base.njk' %}
+
+{% set thispage = 'art' %}
+{% set pagetitle = 'Art' %}
+{% set pagedesc = 'View some amazing artwork created by our DNA team. From traditional to digital to even unconvential, we have it all.' %}
+
+{% block pagecontent %}
+<div class="text">Check out our content on here or on <a href="https://www.instagram.com/maskiitkgp" class="link"
+		target="_blank">Instagram</a>!</div>
+<section id="photos">
+	{% for img in art %}
+	<div class="img-container">
+		<img id="img-{{ loop.index }}" src="/assets/art/{{ img.link }}" style="height: calc(var(--col-width)*{{ img.metadata.height }}/{{ img.metadata.width }});" loading="lazy"/>
+		<div class="overlay">
+			<h1>{{ img.name | replace('Art - ', '') }}</h1>
+			<h3>{{ img.attr | join(', ') }}</h3>
+		</div>
+	</div>
+	{% endfor %}
+</section>
+{% endblock %}
+
+{% block customcss %}
+<style>
+	:root {
+		--col-width: calc((100vw - 256px)/3);
+	}
+
+	.link {
+		color: var(--off-white);
+	}
+
+	#photos {
+		padding: 2em 8em;
+		-moz-column-count: 3;
+		-webkit-column-count: 3;
+		column-count: 3;
+		column-gap: 0px;
+	}
+
+	#photos .img-container {
+		position: relative;
+		width: 100%;
+	}
+
+	#photos .img-container .overlay {
+		transition: .5s ease;
+		position: absolute;
+		width: 100%;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		text-align: center;
+		opacity: 0;
+	}
+
+	#photos .img-container:hover .overlay {
+		opacity: 1;
+	}
+
+	#photos .img-container:hover {
+		transition: 1s ease;
+		background-color: var(--abyss);
+	}
+
+	#photos .img-container img {
+		transition: .5s ease;
+		display: block;
+		width: 100%;
+		height: auto;
+		opacity: 1;
+		transform: scale(0.94);
+		z-index: 1;
+		position: relative;
+	}
+
+	#photos .img-container:hover img {
+		opacity: 0.3;
+		transform: scale(1);
+	}
+
+	@media (max-width: 768px) {
+		#photos {
+			-moz-column-count: 2;
+			-webkit-column-count: 2;
+			column-count: 2;
+		}
+
+		:root {
+			--col-width: calc((100vw - 256px)/2);
+		}
+	}
+
+	@media (max-width: 480px) {
+		#photos {
+			padding: 2em;
+			-moz-column-count: 1;
+			-webkit-column-count: 1;
+			column-count: 1;
+		}
+
+		:root {
+			--col-width: calc((100vw - 64px));
+		}
+	}
+</style>
+{% endblock %}

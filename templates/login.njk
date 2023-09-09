@@ -1,0 +1,11 @@
+{% extends '_base.njk' %}
+
+{% set thispage = 'login' %}
+{% set pagetitle = 'Login' %}
+{% set pagedesc = 'Login to Manga and Anime Society Kharagpur’s site to explore more.' %}
+
+{% set scripts = ['https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'] %}
+
+{% block pagecontent %}
+	<a id = "google-anchor" class="undecorated-link" href="/login/federated/google"><img src="/assets/icons/google_sign_in.png" height="46"/></a>
+{% endblock %}

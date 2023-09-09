@@ -1,0 +1,66 @@
+#wordsearch {
+	cursor: default;
+	overflow-y: auto;
+}
+#wordsearch-table {
+	margin: 0px auto 20px;
+	text-align: center;
+	background-color: var(--white);
+	border-radius: 5px;
+	border: 1px solid var(--dark-gray)
+}
+.wordsearchCellH {
+	background-color: var(--light-gray);
+}
+.wordsearchCellS {
+	background-color: var(--light-pink);
+}
+.wordsearch-cell {
+	width: 30px;
+	max-width: 3vw;
+	height: 25px;
+	max-height: 3vw;
+	border-radius: 2px;
+	font-size: 0.8em;
+}
+#wordsearch-words {
+	width: 100%;
+	columns: 80px 2;
+	margin-bottom: 1.3em;
+	-webkit-column-break-inside: avoid;
+	page-break-inside: avoid;
+	break-inside: avoid;
+}
+.wordsearch-word-col {
+	line-height: 90%;
+}
+.wordsearch-word {
+	margin: 10px auto;
+}
+.found-word {
+	color: var(--error-red);
+	text-decoration: line-through;
+}
+.wordsearch-complete {
+	animation: fadeIn 3s;
+	margin: 30% auto 0;
+	font-size: 2.5em;
+	font-weight: bold;
+	color: var(--dark-red);
+	width: 55%;
+}
+#table-complete {
+	margin: 0px auto 20px;
+	text-align: center;
+	background-color: var(--white);
+	border-radius: 5px;
+	opacity: 0.1;
+	animation: fadeOut 1.5s;
+}
+
+@media (max-width: 500px) {
+	.wordsearch-cell {
+		font-size: 0.6em;
+		height: 3vw;
+	}
+}

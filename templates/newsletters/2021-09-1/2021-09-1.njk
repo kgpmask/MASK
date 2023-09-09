@@ -1,0 +1,135 @@
+{% extends '_newsletter.njk' %}
+
+{% set pagetitle = 'September - Issue 1' %}
+{% set pagedesc = 'Embark on a thrilling isekai odyssey with the September Issue of the MASK newsletter! Explore immersive worlds through captivating reviews, and unlock hidden realms with curious crosswords!' %}
+{# {% set pages = ['01','02','03','04','05','06','wordsearch','crossword'] %} #}
+
+{% set pageid = target %}
+
+{% set pdf = '2021-09-1/issue.pdf' %}
+
+{% block prescript %}
+	<script>
+		'use strict';
+		const crossMatrix = [['-', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '-', '-', '-'],[' ', '-', '-', ' ', '-', '-', '-', '-', '-', '-', '-', ' ', '-', '-', '-'],[' ', '-', '-', ' ', '-', '-', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '-'],[' ', ' ', ' ', ' ', ' ', '-', ' ', '-', '-', '-', '-', ' ', '-', '-', '-'],[' ', '-', '-', ' ', '-', '-', ' ', '-', '-', '-', '-', ' ', '-', '-', '-'],[' ', '-', '-', ' ', '-', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '-', '-'],[' ', '-', '-', ' ', '-', '-', ' ', '-', '-', ' ', '-', ' ', '-', '-', '-'],['-', '-', '-', ' ', '-', '-', ' ', '-', '-', ' ', '-', ' ', '-', '-', '-'],['-', '-', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '-'],['-', '-', ' ', '-', '-', '-', ' ', '-', '-', ' ', '-', '-', '-', '-', '-'],[' ', ' ', ' ', ' ', ' ', ' ', '-', '-', '-', ' ', '-', '-', '-', '-', ' '],[' ', '-', ' ', '-', ' ', '-', '-', '-', ' ', ' ', ' ', ' ', ' ', '-', ' '],[' ', ' ', ' ', ' ', ' ', ' ', '-', '-', '-', '-', ' ', '-', '-', '-', ' '],[' ', '-', '-', '-', ' ', '-', '-', '-', '-', '-', ' ', '-', '-', '-', ' '],[' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']];
+		const wordMatrix = `Q W E R T B E N I M A R U O R A N G A D
+		X R U P A L B I S E D G P F O H U E H B
+		W A K D I D A G W Q R N A I F A K L I E
+		D C M I N N P O A S A A B Z I X Z D K M
+		D L A A J U A B L B T I M M E L D R T V
+		P A H B A Z R T R E I O T I R L U O A E
+		A Y M L E I T A I Z N R I N R R R I S L
+		B M H O U H H S U S F A U Q S I Q B E D
+		Y A K J L S L J O U R A Q V Y G S O Z O
+		O N R Z H O A U Z A S U P H I A Y H R R
+		H X F I M S E E A A H A R M I R O P F A
+		A C O N G I R M I L I M N A V A H I X P
+		D N A H R Q T A T N P N K H Z A A K L G
+		L G U Y C R I M S O N S P H A K U R O U`.replace(/\t/g, '').split("\n").map(line => line.split(" "));
+		const letterSpaces = [];
+		(() => {
+			const maxDimension = Math.max(crossMatrix.length, crossMatrix[0].length);
+			const root = document.querySelector(':root');
+			root.style.setProperty('--crossword-cell-size', (40 * 10 / maxDimension - 4) + 'px');
+			root.style.setProperty('--crossword-font-size', (10 / maxDimension) ** (1 / 2) + 'em');
+			crossMatrix.forEach((row, i) => {
+				row.forEach((char, j) => {
+					if (char === ' ') letterSpaces.push([i, j]);
+				});
+			});
+			root.style.setProperty('--wordsearch-padding', (100 * wordMatrix.length / wordMatrix[0].length) + '%');
+			root.style.setProperty('--wordsearch-cell-height', (100 / wordMatrix.length) + '%');
+			root.style.setProperty('--wordsearch-cell-width', (100 / wordMatrix[0].length) + '%');
+		})();
+		const tempWords = `ALBIS\nBENIMARU\nCLAYMAN\nDIABLO\nFUZE\nGABIRU\nGAZEL\nGELD\nGOBTA\nGUY CRIMSON\nHAKUROU\nMILIM NAVA\nPHOBIO\nRAMIRIS\nRANGA\nSHION\nSHIZU\nSOUEI\nSUPHIA\nVELDORA`.split("\n").map(word => word.replace(/\t/g, '')), words = tempWords.map(word => word.replace(/[ ]/g, '').toUpperCase());
+	</script>
+{% endblock %}
+
+{% block cluejs %}
+	<script>
+		function startClues() {
+			new IntersectionObserver(([crossword]) => {
+				if (crossword.isIntersecting && crossword.intersectionRatio > 0.8) {
+					crosswordVis = true;
+				} else {
+					crosswordVis = false;
+				}
+			}, { threshold: [0.99] }).observe(document.getElementById('crossword-table'));
+			const clues = [];
+			clues.push(`1. Bonus novel The Vampire Princess of the ____ _____ (4, 7)
+			5. Area Guardian _______’_ Actor (8)
+			6. Middle name of the sister among the twin Floor Guardians (5)
+			7. Nazarick’s ‘highly attractive’ torturer Neuronist ________ (8)
+			9. Mercenary who escapes Shalltear to become a warrior (5, 7)
+			10. Wielder of Frost Pain (6)
+			13. General of the Goblin Army (5)
+			15. Leader of the Blue Roses (6)
+			16. Spell that buffs someone to be able to resist weakening conditions (6, 9)`.replace(/\t/g, '').split('\n').map(line => line.split(/\. (.*)/)));
+			clues.push(`2. Floor Guardian with a taste for blood (9)
+			3. Deputy Leader of the Pleiades (4, 5)
+			4. Overseer of the Guardians (6)
+			5. Strongest Wizard of the Empire (8)
+			8. Neighbor of Nazarick, the Re-Estize _______ (7)
+			9. Strongest scripture among the Six Scriptures (5)
+			10. Asura ability _____ Flare (5)
+			11. Cooldown of the spell ‘The Goal of All Life is Death’ is 100 _____ (5)
+			12. Species of the guards to the entrance of Nazarick before Ainz Ooal Gown (5)
+			14. Trap Floor Guardian (4)`.replace(/\t/g, '').split('\n').map(line => line.split(/\. (.*)/)));
+			document.getElementById('crossword-left').innerHTML = `<h3>Across</h3><br/><table class="cross-words">${clues[0].map(clue => `<tr><td>${clue[0]}</td><td>${clue[1]}</td></tr>`).join('')}</table>`;
+			document.getElementById('crossword-right').innerHTML = `<h3>Down</h3><br/><table class="cross-words">${clues[1].map(clue => `<tr><td>${clue[0]}</td><td>${clue[1]}</td></tr>`).join('')}</table>`;
+		}
+	</script>
+	<script>
+		window.onload = () => {
+			startWord();
+			startCross();
+			startClues();
+		}
+	</script>
+{% endblock %}
+
+{% block lettercss %}
+	<style>
+		:root {
+			--black-blue   : #121920;
+			--dark-blue    : #112f3f;
+			--teal         : #006280;
+			--dirty-green  : #4d5843;
+			--dirty-yellow : #a98135;
+		}
+		.page {
+			color: var(--dark-blue);
+		}
+		#cover-page {
+			background-image: url(/assets/releases/2021-09-1/cover.webp);
+			background-position: center;
+			background-size: contain;
+			background-repeat: no-repeat;
+			background-color: rgba(0, 0, 0, 0) !important;
+		}
+		.article-full, .article-half, #crossword-left, #crossword-right {
+			scrollbar-color: var(--teal) var(--off-white) !important;
+		}
+		.article-full > h2, .article-half > h2, .article-header {
+			text-shadow: 0 0 2px var(--teal) !important;
+		}
+		{# .article-end {
+			background-color: var(--dirty-green);
+		} #}
+		.wordsearchCellS {
+			background-color: var(--dirty-yellow) !important;
+		}
+		.found-word {
+			color: var(--teal) !important;
+		}
+		.wordsearch-complete, .crossword-complete {
+			color: var(--teal) !important;
+		}
+		.spoiler:before {
+			color: var(--teal);
+			background: var(--dirty-yellow);
+		}
+	</style>
+	<link rel="stylesheet" type="text/css" href="/assets/styles/wordsearch.css"/>
+	<link rel="stylesheet" type="text/css" href="/assets/styles/crossword.css"/>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends '_base.njk' %}
+
+{% set thispage = 'applications' %}
+{% set pagetitle = 'Apply to MASK!' %}
+
+{% block pagecontent %}
+	<!--h1 id="formpre" style="text-align: center;">Submit your content here!</h1-->
+	<iframe src="https://docs.google.com/forms/d/1C3Kh9mfIQ1w14J4AJ80sJteu5yYpPpdUOHhM2y7-XFM/viewform?embedded=true&lang=en" id="g-form"></iframe>
+{% endblock %}
+
+{% block customcss %}
+	<style>
+		a[href] {
+			color: var(--white) !important;
+		}
+
+		.navbar-full{
+			font-family: Ubuntu,Roboto,Arial,Open Sans,sans-serif;
+		}
+
+		body {
+			background-color: var(--dark-gray) !important;
+			text-align: left;
+		}
+		/*Form as a whole*/
+
+
+		iframe {
+			width:100%;
+			height: 2320px;
+			border: 0px;
+		}
+	</style>
+{% endblock %}
+
+{% block customjs %}
+<script>
+	let width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+	let height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+	window.onload = () => {
+		const Form = document.getElementById('g-form');
+		Form.style.width = '100%';
+		Form.style.height = 2520 + Math.floor(2.25 * (600 - width) * ~~(width < 600)) + 'px';
+	}
+</script>
+{% endblock %}

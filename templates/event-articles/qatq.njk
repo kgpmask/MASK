@@ -1,0 +1,54 @@
+{% extends '_event.njk' %}
+
+{% set pagetitle = 'Quad Anime Trivia Quiz' %}
+{% set pagedesc = 'Anime enthusiasts from diverse fandoms recently united for an electrifying quiz event, showcasing their knowledge and competing for exclusive merch and enticing prizes. Relive the excitement of this unforgettable celebration, where fans celebrated their shared love for anime in a thrilling clash of wits and passion.' %}
+
+{% block eventContent %}
+	<div class="event-info">
+		<span class="heading">Date:</span> March 12, 2023 <br>
+		<span class="heading">Location:</span> V4, Vikramshila <br>
+		<span class="heading">Author:</span> Ayush Parmar <br>
+	</div>
+	<p>
+		After the end of meticulous mid-semester exams for the seniors and the first semester of their college lives for the freshmen, our society decided to start things off in the spring semester with a quiz event in March bringing fans from four different fandoms together- namely the power-packed One Punch Man, the heroic My Hero Academia, the epic Naruto, and the thrilling Attack on Titan.
+	</p>
+	<p>
+		Participants eagerly engaged their minds, furiously tapping on their devices in pursuit of the ultimate reward: coveted merch t-shirts adorned with the
+		emblems of their favorite anime, accompanied by a treasure trove of enticing goodies. In a comical twist of fate, the first prize winners
+		turned out to be students from different academic years.
+	</p>
+	<br>
+	<div class="image-container">
+		<div class="slideshow-container">
+			{{ slide('qatq', '4.jpg') }}
+			{{ slide('qatq', '1.jpg') }}
+			{{ slide('qatq', '2.jpg') }}
+			{{ slide('qatq', '3.jpg') }}
+		</div>
+		<p> Here are some images from the event </p>
+	</div>
+	<br>
+	<p>
+		Despite the last-minute venue changes and technical challenges, the organizers embraced their inner anime heroes, overcoming obstacles with unwavering enthusiasm.
+		The event buzzed with a vibrant atmosphere as participants showcased their knowledge of beloved anime worlds. This experience has taught us valuable lessons,
+		and we are committed to improving future events for everyone's enjoyment. Together, let's continue to celebrate the magic of anime and look forward
+		to the next chapter of our shared journey.
+	</p>
+{% endblock %}
+
+{% block eventCSS %}
+	<style>
+		.images {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			justify-content: center;
+		}
+
+		.images > img {
+			margin: 5px;
+			max-height: calc(min(40vw, 40vh));
+			max-width: calc(min(60vw, 60vh));
+		}
+	</style>
+{% endblock %}
