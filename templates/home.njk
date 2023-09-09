@@ -30,7 +30,7 @@
 			<span class="mask-banner-edge">&nbsp;</span>
 		</div>
 		<div class="event-alert" style="margin: 50px 0px;">
-			<a href="/apply" target="_blank" class="event-redirect"> Apply Now!!! </a>
+			{# <a href="/apply" target="_blank" class="event-redirect"> Apply Now!!! </a> #}
 		</div>
 		<div class="flex-container">
 			<div class="notices"><div class="noticebox">
@@ -404,15 +404,4 @@
 			animation: glow 2s ease infinite
 		}
 	</style>
-{% endblock %}
-
-{% block customjs %}
-	<script>
-		window.addEventListener('load', () => {
-			const timeBeforeEventEndAlert = new Date('2023-09-09T00:00:00.000+05:30').getTime() - new Date().getTime();
-			if (timeBeforeEventEndAlert > 0) document.querySelector('.event-alert').innerHTML = `
-				<a href="/apply" target="_blank" class="event-redirect"> Apply Now!!! </a>
-			`;
-		});
-	</script>
 {% endblock %}

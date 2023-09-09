@@ -4,9 +4,9 @@ router.get('/about', (req, res) => {
 	return res.renderFile('about.njk');
 });
 
-router.get('/apply', (req, res) => {
-	return res.redirect('https://forms.gle/Sy7f7Yueyw9m1Ei1A');
-});
+// router.get('/apply', (req, res) => {
+// 	return res.redirect('https://forms.gle/Sy7f7Yueyw9m1Ei1A');
+// });
 
 router.use('/blog', (req, res) => {
 	const url = req.url.replace(/^.*?\/blog/, '');
