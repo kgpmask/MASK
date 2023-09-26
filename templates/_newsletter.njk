@@ -406,7 +406,7 @@
 	<script>
 		function descSort(arr) {
 			return arr.sort(function(a, b) {
-				return a < b ? 1 : -1;
+				return a[0] < b[0] ? 1 : -1;
 			});
 		}
 		function findCurrentPage () {
