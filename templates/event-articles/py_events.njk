@@ -1,7 +1,7 @@
 {% extends '_base.njk' %}
 
 {% set thispage = 'events' %}
-{% set pagetitle = 'Previous Events' %}
+{% set pagetitle = 'Events' %}
 
 {% macro event(_title, _date, _venue, _author, _desc, _link ) %}
 	<div class="event-container">
@@ -26,7 +26,7 @@
 {% block pagecontent %}
 	{{ loadingscreen('events') }}
 	<div id="events" style="display: none;">
-	<h1>Previous Events</h1>
+	<h1>Events</h1>
 		{{ event (
 			'One Piece: Gear 5 Screening',
 			'August 3, 2023',
