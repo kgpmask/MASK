@@ -5,6 +5,7 @@ const sample = require('../src/samples/members');
 
 router.get('/:yearName?', async (req, res) => {
 	const yearName = ~~(req.params.yearName?.slice(0, 4) ?? Object.keys(require('../src/teams.json')).sort().pop());
+	console.log(yearName);
 	const membersData = PARAMS.mongoless ? sample : await dbh.getMembersbyYear(yearName);
 	const status = {
 		'Governors': [],
@@ -25,7 +26,7 @@ router.get('/:yearName?', async (req, res) => {
 		}
 	});
 	const membersObj = Object.entries(status);
-	const membersTitle = 'Our Members';
+	const membersTitle = `Members: ${yearName}-${yearName % 100 + 1}`;
 	return res.renderFile('members.njk', {
 		membersObj,
 		membersTitle,
