@@ -7,7 +7,7 @@
 
 {% block pagecontent %}
 	<div id="loaded" style="display:none">
-		<h1><u>{{ membersTitle }}</u></h1>
+		<h1>{{ membersTitle }}</h1>
 		{% for status, members in membersObj %}
 			{% if members | length %}
 				<div class="status">
