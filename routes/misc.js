@@ -33,6 +33,10 @@ router.get('/terms', (req, res) => {
 	res.renderFile('terms.njk');
 });
 
+router.get('/test-api', (req, res) => {
+	return Math.random() < 0.5 ? res.status(400).end() : res.status(200).send(Math.random() >= 0.5 ? 'Heads' : 'Tails');
+});
+
 module.exports = {
 	route: '/',
 	router

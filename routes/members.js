@@ -25,7 +25,7 @@ router.get('/:yearName?', async (req, res) => {
 		}
 	});
 	const membersObj = Object.entries(status);
-	const membersTitle = 'Our Members';
+	const membersTitle = `Members: ${yearName}-${yearName % 100 + 1}`;
 	return res.renderFile('members.njk', {
 		membersObj,
 		membersTitle,
