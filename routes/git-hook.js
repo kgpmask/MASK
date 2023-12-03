@@ -38,10 +38,11 @@ router.post('/', async (req, res) => {
 			return resolve('Successfully updated');
 		});
 		console.log('Code updated. Restarting.');
-		return process.exit(0);
 	} catch (err) {
 		console.log(`updateCode failed\n\tReason: ${err}`);
 		await hooks.deployErrorHook(pushBranch === 'dev' ? 'dev' : 'prod', req.body.head_commit, err);
+	} finally {
+		return process.exit(0);
 	}
 });
 
