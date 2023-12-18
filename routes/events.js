@@ -28,7 +28,7 @@ router.get('/gear-5-screening', (req, res) => {
 	return res.renderFile('event-articles/gear-5-screening.njk');
 });
 
-router.get('/ocaq-2023', (req, res) => {
+router.get('/ocaq23', (req, res) => {
 	return res.renderFile('event-articles/ocaq-2023.njk');
 });
 
