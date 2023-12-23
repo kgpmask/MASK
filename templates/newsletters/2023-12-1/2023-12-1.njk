@@ -1,0 +1,68 @@
+{% extends '_newsletter.njk' %}
+
+{% set pagetitle = 'December 2023 Issue' %}
+{% set pagedesc = '...' %}
+
+{# {% set pagecount = 6 %} #}
+
+{% block lettercss %}
+	<style>
+		:root {
+			--black-blue   : #121920;
+			--dark-blue    : #112f3f;
+			--teal         : #006280;
+			--dirty-green  : #4d5843;
+			--dirty-yellow : #a98135;
+		}
+		.page {
+			color: var(--dark-blue);
+		}
+		#cover-page {
+			background-image: url(/assets/releases/2023-12-1/cover.webp);
+			background-position: center;
+			background-size: contain;
+			background-repeat: no-repeat;
+			background-color: rgba(0, 0, 0, 0) !important;
+		}
+		.article-full, .article-half, #crossword-left, #crossword-right {
+			scrollbar-color: var(--teal) var(--off-white) !important;
+		}
+		.article-full > h2, .article-half > h2, .article-header {
+			text-shadow: 0 0 2px var(--teal) !important;
+		}
+		{# .article-end {
+			background-color: var(--dirty-green);
+		} #}
+		.wordsearchCellS {
+			background-color: var(--dirty-yellow) !important;
+		}
+		.found-word {
+			color: var(--teal) !important;
+		}
+		.wordsearch-complete {
+			color: var(--teal) !important;
+		}
+		.spoiler:before {
+			color: var(--teal);
+			background: var(--dirty-yellow);
+		}
+		.quote {
+			color: var(--teal);
+			{# font-size: 120%; #}
+			font-style: italic;
+			text-align: center;
+		}
+		li {
+			margin: 7px 0px;
+		}
+
+		#crossword-left, #crossword-right {
+			min-height: 75px !important;
+			height: calc(90vh - 480px) !important;
+		}
+
+	</style>
+	<link rel="stylesheet" type="text/css" href="/assets/styles/wordsearch.css"/>
+	<link rel="stylesheet" type="text/css" href="/assets/styles/crossword.css"/>
+{% endblock %}
+
