@@ -1,0 +1,169 @@
+{% extends "govportal/govportal.njk" %}
+
+{% set thispage = 'newsletter' %}
+{% set pagetitle = 'Governor Portal | Newsletter Management' %}
+{% set actionname = 'Newsletter Management' %}
+
+{% set scripts = ['https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'] %}
+
+{% block actioncontent %}
+    <div class="message hidden"></div>
+    <h4><i> Showing all newsletters... </i></h4>
+    {% for letter in letters %}
+        <div class="container">
+            <div class="card1">
+                {% for key, value in letter %}
+                    {% if key != '_id' and key != '__v' and key != 'metadata' %}
+                        <b> {{ key | capitalize }}: </b>
+                            {% if key != 'link' %}
+                                {{ value }}
+                            {% else %}
+                                <a href="{{ letter.link }}">{{ value }}</a>
+                            {% endif %}<br>
+                    {% endif %}
+                {% endfor %}
+                <b>View Count: </b>{{ letter.viewCount }}<br>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
+
+{% block customcss %}
+{{ super() }}
+<style>
+    #add-item {
+        display: block;
+        width: fit-content;
+        margin: 20px auto;
+        border: 3px solid var(--off-white);
+        border-radius: 5px;
+        padding: 10px;
+        background-color: var(--dark-gray);
+        transition: color 0.3s, border-color 0.3s, background-color 0.3s;
+    }
+
+    #add-item:hover {
+        color: var(--error-red);
+        border-color: var(--white);
+        background-color: var(--darker-gray);
+    }
+
+    .container {
+        margin: 3rem auto;
+        display: flex;
+        flex-direction: row;
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        padding: 20px 5px;
+        width: 80%;
+        background-color: rgba(255, 255, 255, 0.13);
+        backdrop-filter: blur(5px);
+        align-self: center;
+    }
+
+    .card1 {
+        flex: 80%;
+        width: 40%;
+        padding-left: 5px;
+        word-wrap: break-word;
+        text-align: left;
+    }
+
+    table {
+        word-wrap: break-word;
+    }
+
+    table,
+    th,
+    td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+
+    th,
+    td {
+        padding: 5px;
+        text-align: left;
+        word-wrap: break-word;
+        overflow-wrap: anywhere;
+    }
+
+    th {
+        width: 30%;
+    }
+
+    .message {
+        position: absolute;
+        top: 0;
+        right: calc(50vw - 220px);
+        padding: 20px;
+        z-index: 1;
+        color: #fff;
+        font-weight: 600;
+        font-size: 18px;
+        width: 400px;
+        transform-origin: top;
+        transition: transform 0.3s ease;
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;
+    }
+
+    .error {
+        background-color: rgba(255, 51, 51, 0.85);
+    }
+
+    .success {
+        background-color: rgba(75, 189, 67, 0.85);
+    }
+
+    .hidden {
+        transform: scaleY(0);
+    }
+
+    @media (max-width: 600px) {
+        .container {
+            margin-left: 3rem;
+        }
+    }
+
+    @media (max-width: 500px) {
+        .container {
+            flex-direction: column;
+        }
+
+        .card1 {
+            width: 95%;
+        }
+
+        .container {
+            margin-left: 2rem;
+        }
+    }
+
+    @media (max-width:300px) {
+        .container {
+            margin-left: 1.5rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block customjs %}
+<script>
+    axios.defaults.withCredentials = true;
+    axios.defaults.headers.common['X-CSRF-TOKEN'] = '{{ csrfToken }}';
+
+    async function postData(data, endpoint) {
+        // console.log(data);
+        const res = (await axios.post(endpoint, { data })).data;
+        const e = document.getElementsByClassName('message')[0];
+        e.innerHTML = res.message;
+        e.classList.add(res.success ? 'success' : 'error');
+        e.classList.remove('hidden');
+        setTimeout(function () { e.classList.add('hidden') }, 2000);
+        if (res.success) {
+            setTimeout(function () { location.reload() }, 3000);
+        }
+    }
+</script>
+{% endblock %}

@@ -73,6 +73,25 @@ router.get('/member-management', async (req, res) => {
 	});
 });
 
+router.get('/newsletter-management', async (req, res) => {
+	try {
+		const newsletters = await dbh.getPosts('letter');
+		const viewCounts = await NewsletterCount.find();
+
+		const newslettersWithViewCounts = newsletters.map(newsletter => {
+			const viewCountObj = viewCounts.find(count => count._id === newsletter.link);
+			const viewCount = viewCountObj ? viewCountObj.count : 0;
+			return { ...newsletter.toObject(), viewCount };
+		});
+
+		res.render('newsletter-management', { letters: newslettersWithViewCounts });
+	} catch (error) {
+		console.error(error);
+		res.status(500).send('Internal Server Error');
+	}
+});
+
+
 router.post('/add-post', async (req, res) => {
 	const data = req.body.data;
 	if (!data.name || !data.link || !data.attr[0] && ['youtube', 'instagram'].includes(data.type)) {
