@@ -76,10 +76,10 @@ router.get('/member-management', async (req, res) => {
 router.get('/newsletter-management', async (req, res) => {
 	try {
 		const newsletters = await dbh.getPosts('letter');
-		const viewCounts = await NewsletterCount.find();
+		const viewCounts = await dbh.getNewsletterCount();
 
 		const newslettersWithViewCounts = newsletters.map(newsletter => {
-			const viewCountObj = viewCounts.find(count => count._id === newsletter.link);
+			const viewCountObj = viewCounts.find(count => count._id === newsletter.link.split('/')[2]);
 			const viewCount = viewCountObj ? viewCountObj.count : 0;
 			return { ...newsletter.toObject(), viewCount };
 		});
