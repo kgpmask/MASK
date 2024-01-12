@@ -149,23 +149,3 @@
 	}
 </style>
 {% endblock %}
-
-{% block customjs %}
-<script>
-	axios.defaults.withCredentials = true;
-	axios.defaults.headers.common['X-CSRF-TOKEN'] = '{{ csrfToken }}';
-
-	async function postData(data, endpoint) {
-		// console.log(data);
-		const res = (await axios.post(endpoint, { data })).data;
-		const e = document.getElementsByClassName('message')[0];
-		e.innerHTML = res.message;
-		e.classList.add(res.success ? 'success' : 'error');
-		e.classList.remove('hidden');
-		setTimeout(function () { e.classList.add('hidden') }, 2000);
-		if (res.success) {
-			setTimeout(function () { location.reload() }, 3000);
-		}
-	}
-</script>
-{% endblock %}
