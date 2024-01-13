@@ -84,7 +84,7 @@ router.get('/newsletter-management', async (req, res) => {
 			return { ...newsletter.toObject(), viewCount };
 		});
 
-		res.render('newsletter-management', { letters: newslettersWithViewCounts });
+		res.renderFile('/govportal/newsletter-management.njk', { letters: newslettersWithViewCounts });
 	} catch (error) {
 		console.error(error);
 		res.status(500).send('Internal Server Error');

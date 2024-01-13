@@ -13,17 +13,9 @@
 {% for letter in letters %}
 <div class="container">
 	<div class="card1">
-		{% for key, value in letter %}
-			{% if key != '_id' and key != '__v' and key != 'metadata' %}
-				{% if key == 'link' %}
-					<b> {{ key | capitalize }}: </b><a href="{{ letter.link }}">{{ value }}</a><br>
-				{% elif key == 'date' %}
-					<b> {{ key | capitalize }}: </b>{{ value | date('ddd MMM DD YYYY') }}<br>
-				{% elif key not in ['type', 'hype'] %}
-					<b> {{ key | capitalize }}: </b>{{ value }}<br>
-				{% endif %}
-			{% endif %}
-		{% endfor %}
+		<b>Name: </b>{{ letter.name }}<br>
+		<b>Link: </b><a href="kgpmask.club/{{ letter.link }}">{{ letter.link }}</a><br>
+		<b>Date: </b>{{ letter.date.$date | date('ddd MMM DD YYYY') }}<br>
 		<b>View Count: </b>{{ letter.viewCount }}<br>
 	</div>
 </div>
