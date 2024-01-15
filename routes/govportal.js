@@ -87,7 +87,7 @@ router.get('/newsletter-management', async (req, res) => {
 
 		res.renderFile('/govportal/newsletter-management.njk', { letters: newslettersWithViewCounts });
 	} catch (error) {
-		throw (error);
+		throw error;
 	}
 });
 
