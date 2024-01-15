@@ -34,7 +34,7 @@ router.post('/newsletter-management', async (req, res) => {
 	const { newsletterId } = req.body;
 
 	try {
-		dbh.updateNewsletterCount(newsletterId);
+		await dbh.updateNewsletterCount(newsletterId);
 		return res.status(200).json({ success: true, message: 'View count updated successfully' });
 	} catch (error) {
 		console.error('Error updating view count:', error);

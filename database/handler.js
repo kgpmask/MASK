@@ -7,7 +7,6 @@ const Poll = require('./schemas/Poll');
 const Post = require('./schemas/Post');
 const Submission = require('./schemas/Submission');
 const NewsletterCount = require('./schemas/NewsletterCount');
-const newsletter = require('../routes/newsletter');
 
 // Handle newly registered user or normal login
 async function createNewUser (profile) {
@@ -353,7 +352,7 @@ async function updateNewsletterCount (target) {
 	const newsletterCount = await NewsletterCount.findById(target) || new NewsletterCount({
 		_id: target,
 		count: 0
-	})
+	});
 	newsletterCount.count = newsletterCount.count + 1;
 	return await newsletterCount.save();
 }
