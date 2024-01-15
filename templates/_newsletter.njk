@@ -695,43 +695,18 @@
 			});}
 		</script>
 		<script>
-			async function getViewCountFromLocalStorage(target) {
-				const viewCountKey = `viewCount_${target}`;
-				return parseInt(localStorage.getItem(viewCountKey)) || 0;
-			}
-
-			async function updateViewCountInLocalStorage(target, count) {
-				const viewCountKey = `viewCount_${target}`;
-				return localStorage.setItem(viewCountKey, count.toString());
-			}
-
-			window.onload = async function () {
-				const url = new URL(window.location.href);
-				const pathSegments = url.pathname.split('/');
-				const targetNewsletter = pathSegments[pathSegments.length - 1].split('?')[0];
-
-				const hasViewed = localStorage.getItem(`viewed_${targetNewsletter}`);
-
-				if (!hasViewed) {
-					const currentViewCount = await getViewCountFromLocalStorage(targetNewsletter);
-
-					const updatedViewCount = currentViewCount + 1;
-					await updateViewCountInLocalStorage(targetNewsletter, updatedViewCount);
-
-					localStorage.setItem(`viewed_${targetNewsletter}`, 'true');
-
-					try {
-						const response = await axios.post('/newsletter-count', {
-							newsletterId: targetNewsletter,
-							viewCount: updatedViewCount
-						});
-
-						console.log('POST request successful', response.data);
-					} catch (error) {
-						console.error('Error making POST request', error);
-					}
+			window.addEventListener('load', async () => {
+				const target = window.location.href.split('/').pop().split('?').shift();
+				console.log(target);
+				if(localStorage.getItem(`viewed-${target}`)) return;
+				try {
+					console.log('SUCCESS!!!');
+					axios.post('newsletter-management', { newsletterId: target });
+				} catch (e) {
+					console.log(e);
 				}
-			};
+			});
+				
 		</script>
 	{% endblock %}
 	{% block cluejs %}{% endblock %}

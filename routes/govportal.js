@@ -81,16 +81,15 @@ router.get('/newsletter-management', async (req, res) => {
 		const newslettersWithViewCounts = newsletters.map(newsletter => {
 			const viewCountObj = viewCounts.find(count => count._id === newsletter.link);
 			const viewCount = viewCountObj ? viewCountObj.count : 0;
-			return { ...newsletter.toObject(), viewCount };
+			return { ...newsletter, viewCount };
 		});
+		newslettersWithViewCounts.sort((a, b) => -(a.link > b.link));
 
 		res.renderFile('/govportal/newsletter-management.njk', { letters: newslettersWithViewCounts });
 	} catch (error) {
-		console.error(error);
-		res.status(500).send('Internal Server Error');
+		throw (error);
 	}
 });
-
 
 router.post('/add-post', async (req, res) => {
 	const data = req.body.data;
