@@ -699,9 +699,10 @@
 				const target = window.location.href.split('/').pop().split('?').shift();
 				console.log(target);
 				if(localStorage.getItem(`viewed-${target}`)) return;
+				localStorage.setItem(`viewed-${target}`, true);
 				try {
+					await axios.post('update-count', { newsletterId: target });
 					console.log('SUCCESS!!!');
-					axios.post('newsletter-management', { newsletterId: target });
 				} catch (e) {
 					console.log(e);
 				}

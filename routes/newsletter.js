@@ -30,7 +30,7 @@ router.get('/:target?', async (req, res) => {
 	}
 });
 
-router.post('/newsletter-management', async (req, res) => {
+router.post('/update-count', async (req, res) => {
 	const { newsletterId } = req.body;
 
 	try {
