@@ -73,6 +73,24 @@ router.get('/member-management', async (req, res) => {
 	});
 });
 
+router.get('/newsletter-management', async (req, res) => {
+	try {
+		const newsletters = require('../src/newsletter_desc.json');
+		const viewCounts = await dbh.getNewsletterCount();
+
+		const newslettersWithViewCounts = newsletters.map(newsletter => {
+			const viewCountObj = viewCounts.find(count => count._id === newsletter.link);
+			const viewCount = viewCountObj ? viewCountObj.count : 0;
+			return { ...newsletter, viewCount };
+		});
+		newslettersWithViewCounts.sort((a, b) => -(a.link > b.link));
+
+		res.renderFile('/govportal/newsletter-management.njk', { letters: newslettersWithViewCounts });
+	} catch (error) {
+		throw error;
+	}
+});
+
 router.post('/add-post', async (req, res) => {
 	const data = req.body.data;
 	if (!data.name || !data.link || !data.attr[0] && ['youtube', 'instagram'].includes(data.type)) {
