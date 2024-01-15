@@ -31,8 +31,8 @@ router.get('/:target?', async (req, res) => {
 });
 
 router.post('/update-count', async (req, res) => {
+	if (PARAMS.mongoless) return res.status(400).json({ success: false, message: 'mongoless does not allow this function.' });
 	const { newsletterId } = req.body;
-
 	try {
 		await dbh.updateNewsletterCount(newsletterId);
 		return res.status(200).json({ success: true, message: 'View count updated successfully' });
