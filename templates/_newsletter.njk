@@ -697,7 +697,7 @@
 		<script>
 			window.addEventListener('load', async () => {
 				const target = window.location.href.split('/').pop().split('?').shift();
-				console.log(target);
+				// console.log(target);
 				if(localStorage.getItem(`viewed-${target}`)) return;
 				localStorage.setItem(`viewed-${target}`, true);
 				try {
