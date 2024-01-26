@@ -6,6 +6,7 @@ const Newsletter = require('./schemas/Newsletter');
 const Poll = require('./schemas/Poll');
 const Post = require('./schemas/Post');
 const Submission = require('./schemas/Submission');
+const NewsletterCount = require('./schemas/NewsletterCount');
 
 // Handle newly registered user or normal login
 async function createNewUser (profile) {
@@ -347,6 +348,20 @@ async function addSubmission (ctx) {
 	return submission.save();
 }
 
+async function updateNewsletterCount (target) {
+	const newsletterCount = await NewsletterCount.findById(target) || new NewsletterCount({
+		_id: target,
+		count: 0
+	});
+	newsletterCount.count = newsletterCount.count + 1;
+	return await newsletterCount.save();
+}
+
+async function getNewsletterCount () {
+	const newsletterCounts = await NewsletterCount.find();
+	return newsletterCounts;
+}
+
 
 module.exports = {
 	createNewUser,
@@ -379,5 +394,7 @@ module.exports = {
 	getCurrentMembers,
 	exportToNextYear,
 	addTeam,
-	addSubmission
+	addSubmission,
+	updateNewsletterCount,
+	getNewsletterCount
 };

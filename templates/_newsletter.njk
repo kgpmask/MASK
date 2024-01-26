@@ -694,6 +694,21 @@
 				}
 			});}
 		</script>
+		<script>
+			window.addEventListener('load', async () => {
+				const target = window.location.href.split('/').pop().split('?').shift();
+				// console.log(target);
+				if(localStorage.getItem(`viewed-${target}`)) return;
+				localStorage.setItem(`viewed-${target}`, true);
+				try {
+					await axios.post('update-count', { newsletterId: target });
+					console.log('SUCCESS!!!');
+				} catch (e) {
+					console.log(e);
+				}
+			});
+				
+		</script>
 	{% endblock %}
 	{% block cluejs %}{% endblock %}
 {% endblock %}
