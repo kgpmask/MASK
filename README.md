@@ -227,7 +227,8 @@ Ensure that pull requests pass tests (`npm test` for both lint and mocha tests).
 - <a href="https://github.com/ItsAnkan" target="_blank">Ankan Saha</a>  
 - <a href="https://github.com/Symbiot01" target="_blank">Sahil Patel</a>  
 - <a href="https://github.com/KarmaAkaB" target="_blank">Soumil Maiti</a>  
-- <a href="https://github.com/DishantB0411" target="_blank">Dishant Bothra</a>  
+- <a href="https://github.com/DishantB0411" target="_blank">Dishant Bothra</a>
+- <a href="https://github.com/destryptor" target="_blank">Sharanya Chakraborty</a>
 
 ### Former Contributors
 
