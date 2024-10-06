@@ -31,13 +31,14 @@ async function submissionHook (data) {
 	};
 
 	const timestamp = new Date(data.date).toLocaleString('en-GB', {
-		year: 'numeric',
-		month: '2-digit',
-		day: '2-digit',
-		hour: '2-digit',
-		minute: '2-digit',
-		second: '2-digit'
+		timeZone: 'IST'
 	});
+
+	const submissionLink = data.link;
+
+	if (!submissionLink.startsWith('http://') && !submissionLink.startsWith('https://')) {
+		data.link = 'https://' + submissionLink;
+	}
 
 	const webhookObject = {
 		embeds: [
@@ -46,10 +47,10 @@ async function submissionHook (data) {
 				fields: [
 					{ name: 'Email', value: `${data.email}` },
 					{ name: 'Name', value: `${data.name}` },
+					{ name: 'Is a KGPian', value: `${data.member ? 'Yes' : 'No'}`, inline: true },
 					{ name: 'Link', value: `[Submission Link](${data.link})` },
-					{ name: 'Member of KGP', value: `${data.member ? 'Yes' : 'No'}`, inline: true },
 					{ name: 'Proof', value: `${data.proof ?? 'Not provided'}`, inline: true },
-					{ name: 'Social Media Handle', value: `${data.social ?? 'Not provided'}`, inline: true },
+					{ name: 'Social Media Handle', value: `${data.social ?? 'Not provided'}` },
 					{ name: 'Timestamp', value: `${timestamp}` }
 				]
 			}
