@@ -399,5 +399,6 @@ module.exports = {
 	addTeam,
 	addSubmission,
 	updateNewsletterCount,
-	getNewsletterCount
+	getNewsletterCount,
+	getSubmissions
 };
