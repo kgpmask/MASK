@@ -214,6 +214,17 @@ router.get('/submission-management', async (req, res) => {
 	return res.renderFile('govportal/submissions-management.njk', { submissions });
 });
 
+router.post('/submission-management', async (req, res) => {
+	const data = req.body.data;
+	let response;
+	try {
+		response = await dbh.deleteSubmission(data);
+		return res.send({ success: true, message: 'Successfully deleted post', response: response });
+	} catch (e) {
+		return res.send({ success: false, message: 'Something Went Wrong' });
+	}
+});
+
 module.exports = {
 	route: '/gov-portal',
 	router
