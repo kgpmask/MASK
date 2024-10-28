@@ -367,7 +367,7 @@ async function getSubmissions () {
 }
 
 async function deleteSubmission (link) {
-	const sub = await Submission.findOneAndDelete({link: link});
+	const sub = await Submission.findOneAndDelete({ link: link });
 	return sub;
 }
 
