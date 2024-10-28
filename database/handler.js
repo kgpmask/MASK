@@ -366,6 +366,11 @@ async function getSubmissions () {
 	return await Submission.find().lean();
 }
 
+async function deleteSubmission (link) {
+	const sub = await Submission.findOneAndDelete({link: link});
+	return sub;
+}
+
 module.exports = {
 	createNewUser,
 	getUser,
@@ -400,5 +405,6 @@ module.exports = {
 	addSubmission,
 	updateNewsletterCount,
 	getNewsletterCount,
-	getSubmissions
+	getSubmissions,
+	deleteSubmission
 };
