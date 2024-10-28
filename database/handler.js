@@ -362,6 +362,9 @@ async function getNewsletterCount () {
 	return newsletterCounts;
 }
 
+async function getSubmissions () {
+	return await Submission.find().lean();
+}
 
 module.exports = {
 	createNewUser,
