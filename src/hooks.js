@@ -29,24 +29,37 @@ async function submissionHook (data) {
 		'ins-mus': 'Instrumental Music',
 		'voc-mus': 'Vocal Music'
 	};
+
+	const timestamp = new Date(data.date).toLocaleString('en-GB', {
+		timeZone: 'IST'
+	});
+
+	const submissionLink = data.link;
+
+	if (!submissionLink.startsWith('http://') && !submissionLink.startsWith('https://')) {
+		data.link = 'https://' + submissionLink;
+	}
+
 	const webhookObject = {
 		embeds: [
 			{
-				title: `Submission: ${ dataTypes[data.type] }`,
+				title: `Submission: ${dataTypes[data.type]}`,
 				fields: [
-					{ name: 'Email', value: `${ data.email }` },
-					{ name: 'Name', value: `${ data.name }` },
-					{ name: 'Link', value: `[Submission Link](${ data.link })` },
-					{ name: 'Member of KGP', value: `${ data.member ? 'Yes' : 'No' }`, inline: true },
-					{ name: 'Proof', value: `${ data.proof ?? 'Not provided' }`, inline: true }
+					{ name: 'Email', value: `${data.email}` },
+					{ name: 'Name', value: `${data.name}` },
+					{ name: 'Is a KGPian', value: `${data.member ? 'Yes' : 'No'}`, inline: true },
+					{ name: 'Link', value: `[Submission Link](${data.link})` },
+					{ name: 'Proof', value: `${data.proof ?? 'Not provided'}`, inline: true },
+					{ name: 'Social Media Handle', value: `${data.social ?? 'Not provided'}` },
+					{ name: 'Timestamp', value: `${timestamp}` }
 				]
 			}
 		]
 	};
+
 	await axios.post(webhookLink, webhookObject);
 	return 'Success';
 }
-
 
 module.exports = {
 	deployErrorHook,
