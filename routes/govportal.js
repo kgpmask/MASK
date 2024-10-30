@@ -8,9 +8,9 @@ router.use((req, res, next) => {
 	});
 
 	if (!req.loggedIn) return res.loginRedirect(req, res);
-	// if (!req.user.permissions.find(perm => perm === 'governor')) return res.status(403).renderFile('404.njk', {
-	// 	message: 'Access denied. You do not have the required permission.'
-	// });
+	if (!req.user.permissions.find(perm => perm === 'governor')) return res.status(403).renderFile('404.njk', {
+		message: 'Access denied. You do not have the required permission.'
+	});
 
 	next();
 });
