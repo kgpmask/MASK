@@ -1,5 +1,6 @@
 const User = require('./schemas/User');
 const Quiz = require('./schemas/Quiz');
+const skribbl = require('./schemas/skribbl');
 const { LiveQuiz, LiveResult } = require('./schemas/LiveQuiz');
 const Member = require('./schemas/Member');
 const Newsletter = require('./schemas/Newsletter');
@@ -362,6 +363,35 @@ async function getNewsletterCount () {
 	return newsletterCounts;
 }
 
+async function getAnimeSkribbl () {
+	const animeList = await skribbl.find({});
+	return animeList;
+}
+
+async function addAnimeSkribbl (data) {
+	const anime = new skribbl(data);
+	await anime.save();
+	return anime.toObject();
+}
+
+async function updateAnimeSkribbl (data) {
+	const updatedAnime = await skribbl
+		.findByIdAndUpdate
+		(
+			data.id,
+			{
+				name: data.name
+			},
+			{
+				new: true
+			}
+		);
+	return updatedAnime;
+}
+async function deleteAnimeSkribbl (id) {
+	const animeDeleted = skribbl.findOneAndDelete({ '_id': id });
+	return animeDeleted;
+}
 
 module.exports = {
 	createNewUser,
@@ -396,5 +426,10 @@ module.exports = {
 	addTeam,
 	addSubmission,
 	updateNewsletterCount,
-	getNewsletterCount
+	getNewsletterCount, 
+	getAnimeSkribbl,
+	addAnimeSkribbl,
+	updateAnimeSkribbl,
+	deleteAnimeSkribbl
 };
+
