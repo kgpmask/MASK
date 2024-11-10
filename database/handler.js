@@ -1,5 +1,6 @@
 const User = require('./schemas/User');
 const Quiz = require('./schemas/Quiz');
+const skribbl = require('./schemas/skribbl');
 const { LiveQuiz, LiveResult } = require('./schemas/LiveQuiz');
 const Member = require('./schemas/Member');
 const Newsletter = require('./schemas/Newsletter');
@@ -23,7 +24,7 @@ async function createNewUser (profile) {
 
 // Get User
 async function getUser (id) {
-	return User.findById(id);
+	return User.findById(id).lean();
 }
 
 function getAllUsers (id) {
@@ -32,7 +33,7 @@ function getAllUsers (id) {
 
 // Add new record to database
 async function updateUserQuizRecord (stats) { // {userId, quizId, time, score}
-	const user = await Quiz.UserInfo.findOne({ userId: stats.userId });
+	const user = await Quiz.UserInfo.findOne({ userId: stats.userId }).lean();
 	const userName = (await getUser(stats.userId)).name;
 	const record = user || new Quiz.UserInfo({ userId: stats.userId, userName, points: 0, quizData: [] });
 	if (!record.quizData) record.quizData = [];
@@ -52,7 +53,7 @@ async function updateUserQuizRecord (stats) { // {userId, quizId, time, score}
 
 // User statistics
 async function getUserStats (userId) {
-	const user = await Quiz.UserInfo.findOne({ userId });
+	const user = await Quiz.UserInfo.findOne({ userId }).lean();
 	if (user) return user;
 	else return updateUserQuizRecord({ userId });
 }
@@ -70,7 +71,7 @@ async function getLiveQuiz (query) {
 }
 
 async function getLiveResult (userId, quizId, currentQ) {
-	const res = await LiveResult.findOne({ userId, quizId, question: currentQ });
+	const res = await LiveResult.findOne({ userId, quizId, question: currentQ }).lean();
 	if (res) return res.toObject();
 }
 
@@ -97,7 +98,7 @@ async function addLiveResult (userId, quizId, currentQ, points, answer, timeLeft
 
 // Fetch newsletter solutions
 async function getNewsletter (date) {
-	const newsletter = await Newsletter.findById(date);
+	const newsletter = await Newsletter.findById(date).lean();
 	if (!Object.keys(newsletter ?? {})?.some(e => e)) throw new Error('No newsletters on this date');
 	return newsletter;
 }
@@ -105,10 +106,10 @@ async function getNewsletter (date) {
 // Fetching posts based on type (art/video/newsletter)
 function getPosts (postType) {
 	// TODO: Make this accept a number of posts as a cap filter
-	return Post.find(postType ? { type: postType } : {}).sort({ date: -1 });
+	return Post.find(postType ? { type: postType } : {}).sort({ date: -1 }).lean();
 }
 async function getPost (id) {
-	return Post.findById(id);
+	return Post.findById(id).lean();
 }
 async function deletePost (link) {
 	const postDeleted = Post.findOneAndDelete({ 'link': link });
@@ -246,7 +247,7 @@ async function getCurrentMembers () {
 	const teamsData = require('../src/teams.json');
 	const years = Object.keys(teamsData);
 	const year = Number(years[years.length - 1]);
-	const data = await Member.find({ 'records.year': year }).sort('name');
+	const data = await Member.find({ 'records.year': year }).sort('name').lean();
 	data.forEach(member => {
 		const rec = member.records.find(rec => rec.year === year);
 		let pos;
@@ -296,7 +297,7 @@ async function addTeam (rollNumber, teamToAdd) {
 
 // export current year's data to the next year
 async function exportToNextYear () {
-	const members = await Member.find().exec();
+	const members = await Member.find().lean().exec();
 	let newRecord;
 	const teamsData = require('../src/teams.json');
 	const years = Object.keys(teamsData);
@@ -358,8 +359,159 @@ async function updateNewsletterCount (target) {
 }
 
 async function getNewsletterCount () {
-	const newsletterCounts = await NewsletterCount.find();
+	const newsletterCounts = await NewsletterCount.find().lean();
 	return newsletterCounts;
+}
+
+async function getAnimeSkribbl () {
+	try {
+		const animeList = await Skribbl.find({})
+			.sort({ addedAt: -1 }) // Sort by newest first
+			.lean();
+
+		if (!animeList) {
+			throw new Error('No anime entries found');
+		}
+
+		return animeList;
+	} catch (error) {
+		console.error('Database error in getAnimeSkribbl:', error);
+		throw error;
+	}
+}
+
+async function addAnimeSkribbl (data) {
+	try {
+		// Validate required fields
+		if (!data.name) {
+			throw new Error('Anime name is required');
+		}
+
+		// Create ID if not provided
+		if (!data._id) {
+			data._id = `${new Date().toISOString().slice(0, 10)}-${Math.random().toString(36).substr(2, 9)}`;
+		}
+
+		// Check for duplicate names
+		const existingAnime = await Skribbl.findOne({
+			name: { $regex: new RegExp(`^${data.name}$`, 'i') }
+		});
+
+		if (existingAnime) {
+			throw new Error('This anime already exists in the database');
+		}
+
+		const anime = new Skribbl({
+			_id: data._id,
+			name: data.name.trim(),
+			addedAt: new Date()
+		});
+
+		await anime.save();
+		return anime.toObject();
+	} catch (error) {
+		console.error('Database error in addAnimeSkribbl:', error);
+		throw error;
+	}
+}
+
+
+async function updateAnimeSkribbl (data) {
+	try {
+		if (!data.id || !data.name) {
+			throw new Error('Both ID and name are required for update');
+		}
+
+		const duplicate = await Skribbl.findOne({
+			_id: { $ne: data.id },
+			name: { $regex: new RegExp(`^${data.name}$`, 'i') }
+		});
+		if (duplicate) {
+			throw new Error('This anime name already exists');
+		}
+		const updatedAnime = await Skribbl.findByIdAndUpdate(
+			data.id,
+			{
+				name: data.name.trim(),
+				$currentDate: { updatedAt: true }
+			},
+			{
+				new: true,
+				runValidators: true
+			}
+		);
+		if (!updatedAnime) {
+			throw new Error('Anime not found');
+		}
+		return updatedAnime.toObject();
+	} catch (error) {
+		console.error('Database error in updateAnimeSkribbl:', error);
+		throw error;
+	}
+}
+
+async function deleteAnimeSkribbl (id) {
+	try {
+		if (!id) {
+			throw new Error('Anime ID is required for deletion');
+		}
+
+		const deletedAnime = await skribbl.findByIdAndDelete(id);
+
+		if (!deletedAnime) {
+			throw new Error('Anime not found');
+		}
+
+		return deletedAnime.toObject();
+	} catch (error) {
+		console.error('Database error in deleteAnimeSkribbl:', error);
+		throw error;
+	}
+}
+
+async function bulkAddAnimeSkribbl (animeList) {
+	try {
+		if (!Array.isArray(animeList) || animeList.length === 0) {
+			throw new Error('Valid anime list array is required');
+		}
+
+		const processedList = animeList.map(anime => ({
+			_id: `${new Date().toISOString().slice(0, 10)}-${Math.random().toString(36).substr(2, 9)}`,
+			name: anime.name.trim(),
+			addedAt: new Date()
+		}));
+
+		const result = await Skribbl.insertMany(processedList, {
+			ordered: false,
+			runValidators: true
+		});
+
+		return result;
+	} catch (error) {
+		console.error('Database error in bulkAddAnimeSkribbl:', error);
+		throw error;
+	}
+}
+
+async function searchAnimeSkribbl (query) {
+	try {
+		if (typeof query !== 'string' || !query.trim()) {
+			throw new Error('Valid search query is required');
+		}
+
+		const results = await skribbl.find({
+			name: {
+				$regex: new RegExp(query, 'i')
+			}
+		})
+			.limit(limit || 10) // Limiting results to a default of 10, can be parameterized
+			.lean();
+
+		return results;
+	} catch (error) {
+		console.error('Database error in searchAnimeSkribbl:', error);
+		throw error;
+	}
 }
 
 
@@ -396,5 +548,11 @@ module.exports = {
 	addTeam,
 	addSubmission,
 	updateNewsletterCount,
-	getNewsletterCount
+	getNewsletterCount,
+	getAnimeSkribbl,
+	addAnimeSkribbl,
+	updateAnimeSkribbl,
+	deleteAnimeSkribbl,
+	bulkAddAnimeSkribbl,
+	searchAnimeSkribbl
 };
