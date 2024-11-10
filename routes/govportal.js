@@ -211,7 +211,15 @@ router.patch('/delete-option', async (req, res) => {
 
 router.get('/submission-management', async (req, res) => {
 	const submissions = await dbh.getSubmissions();
-	return res.renderFile('govportal/submissions-management.njk', { submissions });
+	const submissionsFormatted = [];
+	for (let i = 0; i < submissions.length; i++) {
+		const groupIndex = Math.floor(i / 20);
+		if (groupIndex >= submissionsFormatted.length) {
+			submissionsFormatted.push([]);
+		}
+		submissionsFormatted[groupIndex].push(submissions[i]);
+	}
+	return res.renderFile('govportal/submissions-management.njk', { submissionsFormatted: submissionsFormatted });
 });
 
 router.post('/submission-management', async (req, res) => {
