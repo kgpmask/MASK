@@ -22,18 +22,42 @@
 		The atmosphere was electric.<br/>
 	</p>
 	<div class="image-container">
-		<div class="slideshow-container">
-			{{ slide('cosplay23', 'ash_pika.jpg') }}
-			{# {{ slide('cosplay23', 'goku.jpg') }} #}
-			{{ slide('cosplay23', 'kitagawa.jpg') }}
-			{{ slide('cosplay23', 'levi.jpg') }}
-			{{ slide('cosplay23', 'luffy1.jpg') }}
-			{{ slide('cosplay23', 'luffy2.jpg') }}
-			{{ slide('cosplay23', 'luffy3.jpg') }}
-			{{ slide('cosplay23', 'naruto.jpg') }}
-			{{ slide('cosplay23', 'taki_mitsuha.jpg') }}
-			{{ slide('cosplay23', 'tanjiro.jpg') }}
-			{{ slide('cosplay23', 'yor_forger.jpg') }}
+		<div class="swiper-container">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide">
+					<img src="/assets/events/cosplay23/ash_pika.jpg" alt="Cosplay 2023 - Ash & Pikachu">
+				</div>
+				<div class="swiper-slide">
+					<img src="/assets/events/cosplay23/kitagawa.jpg" alt="Cosplay 2023 - Kitagawa">
+				</div>
+				<div class="swiper-slide">
+					<img src="/assets/events/cosplay23/levi.jpg" alt="Cosplay 2023 - Levi">
+				</div>
+				<div class="swiper-slide">
+					<img src="/assets/events/cosplay23/luffy1.jpg" alt="Cosplay 2023 - Luffy 1">
+				</div>
+				<div class="swiper-slide">
+					<img src="/assets/events/cosplay23/luffy2.jpg" alt="Cosplay 2023 - Luffy 2">
+				</div>
+				<div class="swiper-slide">
+					<img src="/assets/events/cosplay23/luffy3.jpg" alt="Cosplay 2023 - Luffy 3">
+				</div>
+				<div class="swiper-slide">
+					<img src="/assets/events/cosplay23/naruto.jpg" alt="Cosplay 2023 - Naruto">
+				</div>
+				<div class="swiper-slide">
+					<img src="/assets/events/cosplay23/taki_mitsuha.jpg" alt="Cosplay 2023 - Taki & Mitsuha">
+				</div>
+				<div class="swiper-slide">
+					<img src="/assets/events/cosplay23/tanjiro.jpg" alt="Cosplay 2023 - Tanjiro">
+				</div>
+				<div class="swiper-slide">
+					<img src="/assets/events/cosplay23/yor_forger.jpg" alt="Cosplay 2023 - Yor Forger">
+				</div>
+			</div>
+			<div class="swiper-pagination"></div>
+			<div class="swiper-button-next"></div>
+			<div class="swiper-button-prev"></div>
 		</div>
 		<p> Here are some cosplayers from that fabulous evening. </p>
 	</div>
@@ -42,7 +66,7 @@
 		The cosplayers themselves were the highlight of the event. Cosplayers could be spotted, and attendees were glad to have their pictures taken with their favourite characters. Fans were excited to meet their favourite characters in person. The overall atmosphere of the event was very positive. Everyone was having a great time, and there was a lot of excitement in the air. The event was a great way for anime, manga, and video game fans to come together and celebrate their love of their hobbies.
 	</p>
 	<p>
-		MASK was on the scene to interview characters from anime and manga by using a special device that allowed them to travel to the world of the characters. Once they arrived in the world of the characters, they interviewed them and learn more about their lives and their stories. The team was able to interview various characters, including Luffy, Tanjiro, Ash & Pikachu, another Luffy, Naruto, Levi, yet another Luffy and many others. The interviews were a great way for fans of anime and manga to learn more about their favourite characters and to get a glimpse into their lives.
+		MASK was on the scene to interview characters from anime and manga by using a special device that allowed them to travel to the world of the characters. Once they arrived in the world of the characters, they interviewed them and learned more about their lives and their stories. The team was able to interview various characters, including Luffy, Tanjiro, Ash & Pikachu, another Luffy, Naruto, Levi, yet another Luffy and many others. The interviews were a great way for fans of anime and manga to learn more about their favourite characters and to get a glimpse into their lives.
 	</p>
 	<p>
 		Here are the questions that MASK asked the characters: <br>
@@ -65,3 +89,111 @@
 
 {% endblock %}
 
+{% block eventCSS %}
+	<style>
+		.highlight {
+			margin: 10px;
+			font-style: italic;
+			color: var(--off-white);
+		}
+
+		.image-container {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+			margin: 20px auto;
+			width: 100%;
+			max-width: 900px;
+			overflow: hidden;
+			text-align: center;
+		}
+
+		.swiper-container {
+			width: 80vw;
+			height: 70vh;
+			max-width: 900px;
+			border-radius: 10px;
+			overflow: hidden;
+			position: relative;
+		}
+
+		.swiper-slide img {
+			height: 100%;
+			width: auto;
+			object-fit: contain;
+			display: block;
+			margin: auto;
+		}
+
+		.swiper-button-next,
+		.swiper-button-prev {
+			color: red;
+			width: 40px;
+			height: 40px;
+			border-radius: 0; 
+			top: 50%;
+			transform: translateY(-50%);
+			transition: background-color 0.3s ease;
+		}
+		.swiper-button-next {
+			right: 15px;
+		}
+		.swiper-button-prev {
+			left: 15px;
+		}
+		.swiper-button-next:hover,
+		.swiper-button-prev:hover {
+			background-color: rgba(255, 0, 0, 0.7); 
+		}
+
+		@media (max-width: 768px) {
+			.swiper-container {
+				width: 90vw;
+				height: 50vh;
+			}
+			.swiper-button-next,
+			.swiper-button-prev {
+				width: 30px;
+				height: 30px;
+				top: 45%;
+				z-index:10;
+			}
+
+			.swiper-button-next {
+				margin-right: 15px;
+			}
+			.swiper-button-prev {
+				margin-left : 15px;
+			}
+		}
+	</style>
+{% endblock %}
+
+{% block eventJS %}
+	<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+	<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			const swiper = new Swiper('.swiper-container', {
+				loop: true,
+				centeredSlides: true,
+				navigation: {
+					nextEl: '.swiper-button-next',
+					prevEl: '.swiper-button-prev',
+				},
+				pagination: {
+					el: '.swiper-pagination',
+					clickable: true,
+				},
+				autoplay: {
+					delay: 3000,
+				},
+				effect: 'slide',
+				speed: 800,
+				slidesPerView: 1,
+			});
+		});
+	</script>
+{% endblock %}
