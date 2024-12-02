@@ -33,14 +33,16 @@
 		"axios": "^1.4.0",
 		"connect-mongo": "^5.0.0",
 		"cookie-parser": "^1.4.6",
-		"csurf": "^1.11.0",
-		"express": "^5.0.0-beta.1",
+		"csurf": "^1.2.2",
+		"express": "^4.21.1",
 		"express-session": "^1.17.3",
 		"mongodb": "^5.6.0",
 		"mongoose": "^7.3.1",
 		"nunjucks": "^3.2.4",
 		"passport": "^0.6.0",
 		"passport-google-oauth20": "^2.0.0",
+		"path-to-regexp": "^8.2.0",
+		"router": "^2.0.0",
 		"sass": "^1.63.6"
 	},
 	"devDependencies": {
@@ -48,6 +50,6 @@
 		"eslint": "^8.32.0",
 		"husky": "^8.0.1",
 		"mocha": "^10.2.0",
-		"nodemon": "^2.0.19"
+		"nodemon": "^3.1.7"
 	}
 }

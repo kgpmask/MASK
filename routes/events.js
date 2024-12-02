@@ -32,6 +32,10 @@ router.get('/ocaq-2023', (req, res) => {
 	return res.renderFile('event-articles/ocaq-2023.njk');
 });
 
+router.get('/ocaq-2024', (req, res) => {
+	return res.renderFile('event-articles/ocaq-2024.njk');
+});
+
 module.exports = {
 	route: '/events',
 	router
