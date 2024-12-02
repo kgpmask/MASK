@@ -8,22 +8,13 @@
 
 {% block actioncontent %}
 	<div class="message hidden"></div>
-	{% for submission in submissions %}
-		<div class="container">
-			<div class="card1">
-				{% for key, value in submission %}
-				{% if key != '_id' and key != '__v' and key != 'metadata' %}
-					<b> {{ key | capitalize }}: </b> {% if key != 'date' %} {{ value }} {% else %}  {{ value | string | truncate(15, true, "") }} {% endif %}<br>
-				{% endif %}
-				{% endfor %}
-			</div>
-
-			<div class="card2">
-				<button class="deleteP" onclick="deleteSubmission('{{submission.link}}')">Delete</button>
-			</div>
-		</div>
-	{% endfor %}
-
+	<div id="card-container">
+	</div>
+	<div id="button_container" class="container">
+		{% for num in submissionsFormatted.keys() %}
+			<button onclick="displayItems({{ num }})">{{ num+1 }}</button>
+		{% endfor %}
+	</div>
 {% endblock %}
 
 {% block customcss %}
@@ -176,6 +167,28 @@
 	<script>
 		axios.defaults.withCredentials = true;
 		axios.defaults.headers.common['X-CSRF-TOKEN'] = '{{ csrfToken }}';
+		let submissionsData = {{ submissionsFormatted | dump | safe }};
+		function displayItems(num) {
+			let holder = document.getElementById("card-container");
+			holder.innerHTML = ""
+			for(let submission of submissionsData[num]) {
+				let main_cont = document.createElement("div");
+				main_cont.className = "container";
+				let card1 = document.createElement("div");
+				card1.className = "card1";
+				for (let key in submission) {
+					if(key != "link") {
+						card1.innerHTML += `<b> ${key}: </b> ${submission[key]} | `;
+					}
+					else {
+						card1.innerHTML += `<b> ${key}: </b> <a href="${submission[key]}">${submission[key]} <a> | `;
+					}
+				}
+				main_cont.appendChild(card1);
+				main_cont.innerHTML += `<div class="card2"><button class="deleteP" onclick="deleteSubmission('${submission.link}')">Delete</button></div>`
+				holder.appendChild(main_cont);
+			}
+		}
 
 		async function postSubmission (data) {
 			var res = (await axios.post('/gov-portal/submission-management', { data: data })).data;
