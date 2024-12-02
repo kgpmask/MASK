@@ -15,33 +15,33 @@
 			I mean, it's kinda boring how we just sit in Vikramshila with our computers, attempting a quiz in a room full of people, without really discussing with our friends.<br>
 			Wouldn't it be better if you did something, I don't know, which I can enjoy with my friends or something?
 		</p><br>
-		&emsp;- Nobody. This narration is fictional. The next part, not so much.
+		&emsp;- Nobody. This narration is fixtional. The next part, not so much.</span>
 	</div>
 	<p>
-	With this line of thought, we decided that it was time we let go of our online link and proceed with a completely offline event for teams. The <b>Anime Seekers' Quest</b> was a treasure hunt planned shortly after the <a href="/events/qatq" title="Quad Anime Trivia Quiz">Quad Anime Trivia Quiz</a>. Teams of up to 3 people spent 2 hours, using the clues provided and their anime knowledge (and Google... yes, we allowed it.) around 2.2 covering various locations in a quest to claim their prizes from a treasure curated just for the anime fans.
+	With this line of thought, we decided that it was time we let go of our online link and proceed with a completely offline event for teams. The <b>Anime Seekers' Quest</b> was a treasure hunt planned shortly after the <a href="/events/qatq" title="Quad Anime Trivia Quiz">Quad Anime Trivia Quiz</a>. Teams of upto 3 people spent 2 hours, using the clues provided and their anime knowledge (and Google... yes, we allowed it. ) around 2.2 covering various locations in a quest to claim their prizes from a treasure curated just for the anime fans.
 	</p>
 	<div class="image-container">
-		<div class="swiper-container">
-			<div class="swiper-wrapper">
-				<div class="swiper-slide">
-					<img src="/assets/events/seekers-quest/1.jpg" alt="Anime Seekers’ Quest Image 1">
-				</div>
-				<div class="swiper-slide">
-					<img src="/assets/events/seekers-quest/2.jpg" alt="Anime Seekers’ Quest Image 2">
-				</div>
-				<div class="swiper-slide">
-					<img src="/assets/events/seekers-quest/3.jpg" alt="Anime Seekers’ Quest Image 3">
-				</div>
-				<div class="swiper-slide">
-					<img src="/assets/events/seekers-quest/4.jpg" alt="Anime Seekers’ Quest Image 4">
-				</div>
-			</div>
-			<div class="swiper-pagination"></div>
-			<div class="swiper-button-next"></div>
-			<div class="swiper-button-prev"></div>
-		</div>
-		<p>Gallery of the winning teams</p>
-	</div>
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="/assets/events/seekers-quest/1.jpg" alt="Anime Event Image 1">
+                </div>
+                <div class="swiper-slide">
+                    <img src="/assets/events/seekers-quest/2.jpg" alt="Anime Event Image 2">
+                </div>
+                <div class="swiper-slide">
+                    <img src="/assets/events/seekers-quest/3.jpg" alt="Anime Event Image 3">
+                </div>
+                <div class="swiper-slide">
+                    <img src="/assets/events/seekers-quest/4.jpg" alt="Anime Event Image 4">
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+        </div>
+        <p>Gallery of the winning teams</p>
+    </div>
 	<p>
 	With everything going on in the campus, we had a wonderful response from the participants. As the sun went down, the event ended as a beautiful success. We would like to congratulate those who won the event:
 	<ol style="padding: 5px calc(min(7vw, 60px));">
@@ -52,7 +52,7 @@
 	</ol>
 	<div class="image-container">
 		<img src="/assets/events/seekers-quest/5.jpg">
-		<p>The team behind the event. Yo Team!</p>
+		<p> The team behind the event. Yo Team!</p>
 	</div>
 	</p>
 {% endblock %}
@@ -64,112 +64,5 @@
 			font-style: italic;
 			color: var(--off-white);
 		}
-
-		.image-container {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			flex-direction: column;
-			margin: 20px auto;
-			width: 100%;
-			max-width: 900px;
-			overflow: hidden;
-			text-align: center;
-		}
-
-		.swiper-container {
-			width: 80vw;
-			height: 70vh;
-			max-width: 900px;
-			border-radius: 10px;
-			overflow: hidden;
-			position: relative;
-		}
-
-		.swiper-slide img {
-			height: 100%;
-			width: auto;
-			object-fit: contain;
-			display: block;
-			margin: auto;
-		}
-
-		.swiper-button-next,
-		.swiper-button-prev {
-			color: red;
-			width: 40px;
-			height: 40px;
-			border-radius: 0; 
-			top: 50%;
-			transform: translateY(-50%);
-			transition: background-color 0.3s ease;
-		}
-		.swiper-button-next {
-			right: 15px;
-		}
-		.swiper-button-prev {
-			left: 15px;
-		}
-		.swiper-button-next:hover,
-		.swiper-button-prev:hover {
-			background-color: rgba(255, 0, 0, 0.7); 
-		}
-
-		@media (max-width: 768px) {
-			.swiper-container {
-				width: 90vw;
-				height: 50vh;
-			}
-			.swiper-button-next,
-			.swiper-button-prev {
-				width: 30px;
-				height: 30px;
-				top: 45%;
-				z-index:10;
-			}
-			.swiper-button-next {
-				margin-right:20px;
-			}
-			.swiper-button-prev {
-				margin-left:20px;
-			}
-			.swiper-slide img {
-				height: 85%;
-				width: auto;
-				object-fit: contain;
-				display: block;
-				margin: auto;
-				align-items:center;
-			}
-		}
 	</style>
-{% endblock %}
-
-{% block eventJS %}
-	<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-	<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-
-	<script>
-		document.addEventListener('DOMContentLoaded', function () {
-			const swiper = new Swiper('.swiper-container', {
-				loop: true,
-				centeredSlides: true,
-				navigation: {
-					nextEl: '.swiper-button-next',
-					prevEl: '.swiper-button-prev',
-				},
-				pagination: {
-					el: '.swiper-pagination',
-					clickable: true,
-				},
-				autoplay: {
-					delay: 3000,
-				},
-				effect: 'slide',
-				speed: 800,
-				slidesPerView: 1,
-				spaceBetween: 10,
-			});
-		});
-	</script>
 {% endblock %}
