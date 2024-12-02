@@ -363,7 +363,7 @@ async function getNewsletterCount () {
 }
 
 async function getSubmissions () {
-	return await Submission.find().lean();
+	return await Submission.find().select({ '_id': 0, '__v': 0 });
 }
 
 async function deleteSubmission (link) {
