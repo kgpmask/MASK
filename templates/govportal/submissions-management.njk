@@ -8,6 +8,7 @@
 
 {% block actioncontent %}
 	<div class="message hidden"></div>
+<<<<<<< HEAD
 	<div id="card-container">
 	</div>
 	<div id="button_container" class="container">
@@ -15,6 +16,24 @@
 			<button onclick="displayItems({{ num }})">{{ num+1 }}</button>
 		{% endfor %}
 	</div>
+=======
+	{% for submission in submissions %}
+		<div class="container">
+			<div class="card1">
+				{% for key, value in submission %}
+				{% if key != '_id' and key != '__v' and key != 'metadata' %}
+					<b> {{ key | capitalize }}: </b> {% if key != 'date' %} {{ value }} {% else %}  {{ value | string | truncate(15, true, "") }} {% endif %}<br>
+				{% endif %}
+				{% endfor %}
+			</div>
+
+			<div class="card2">
+				<button class="deleteP" onclick="deleteSubmission('{{submission.link}}')">Delete</button>
+			</div>
+		</div>
+	{% endfor %}
+
+>>>>>>> 4bd3f172737a69b816aea877884cb943dfedaba0
 {% endblock %}
 
 {% block customcss %}
