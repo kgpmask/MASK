@@ -1,5 +1,10 @@
 const router = require('express').Router();
 
+router.get('/treasure-hunt', (req, res) => {
+	return res.renderFile('event-articles/treasure-hunt.njk');
+});
+
+
 router.get('/', (req, res) => {
 	return res.renderFile('event-articles/py_events.njk');
 });
@@ -32,9 +37,6 @@ router.get('/ocaq-2023', (req, res) => {
 	return res.renderFile('event-articles/ocaq-2023.njk');
 });
 
-router.get('/treasure-hunt', (req, res) => {
-	return res.renderFile('event-articles/treasure-hunt.njk');
-});
 
 module.exports = {
 	route: '/events',
