@@ -209,6 +209,32 @@ router.patch('/delete-option', async (req, res) => {
 	}
 });
 
+router.get('/submission-management', async (req, res) => {
+	const submissions = (await dbh.getSubmissions()).map(el => {
+		return { ...el._doc, date: Date(el._doc.date) };
+	});
+	const submissionsFormatted = [];
+	for (let i = 0; i < submissions.length; i++) {
+		const groupIndex = Math.floor(i / 20);
+		if (groupIndex >= submissionsFormatted.length) {
+			submissionsFormatted.push([]);
+		}
+		submissionsFormatted[groupIndex].push(submissions[i]);
+	}
+	return res.renderFile('govportal/submissions-management.njk', { submissionsFormatted: submissionsFormatted });
+});
+
+router.post('/submission-management', async (req, res) => {
+	const data = req.body.data;
+	let response;
+	try {
+		response = await dbh.deleteSubmission(data);
+		return res.send({ success: true, message: 'Successfully deleted post', response: response });
+	} catch (e) {
+		return res.send({ success: false, message: 'Something Went Wrong' });
+	}
+});
+
 module.exports = {
 	route: '/gov-portal',
 	router

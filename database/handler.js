@@ -362,6 +362,14 @@ async function getNewsletterCount () {
 	return newsletterCounts;
 }
 
+async function getSubmissions () {
+	return await Submission.find().select({ '_id': 0, '__v': 0 });
+}
+
+async function deleteSubmission (link) {
+	const sub = await Submission.findOneAndDelete({ link: link });
+	return sub;
+}
 
 module.exports = {
 	createNewUser,
@@ -396,5 +404,7 @@ module.exports = {
 	addTeam,
 	addSubmission,
 	updateNewsletterCount,
-	getNewsletterCount
+	getNewsletterCount,
+	getSubmissions,
+	deleteSubmission
 };
