@@ -19,3 +19,5 @@ const skribblSchema = new mongoose.Schema({
 });
 
 const Skribbl = mongoose.model('Skribbl', skribblSchema);
+
+module.exports = Skribbl;

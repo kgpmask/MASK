@@ -6,21 +6,10 @@ const {
 	deleteAnimeSkribbl
 } = require('../database/handler');
 const mongoose = require('mongoose');
+const Skribbl = require('../database/schemas/Skribbl');
 
-// Define schema for Anime
-
-schema = {
-	_id: {
-		type: mongoose.Schema.Types.ObjectId,
-		required: true
-	},
-	name: {
-		type: String,
-		required: true,
-		match: /^[a-zA-Z0-9\s'":]+$/
-	}
-};
-const Anime = mongoose.model('Anime', schema);
+Skribbl = require('../database/schemas/Skribbl');
+const Anime = mongoose.model('Anime', Skribbl);
 
 // get anime list
 

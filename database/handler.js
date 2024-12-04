@@ -1,6 +1,6 @@
 const User = require('./schemas/User');
 const Quiz = require('./schemas/Quiz');
-const skribbl = require('./schemas/skribbl');
+const skribbl = require('./schemas/Skribbl');
 const { LiveQuiz, LiveResult } = require('./schemas/LiveQuiz');
 const Member = require('./schemas/Member');
 const Newsletter = require('./schemas/Newsletter');
