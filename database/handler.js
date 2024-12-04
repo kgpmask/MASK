@@ -364,7 +364,6 @@ async function getNewsletterCount () {
 }
 
 async function getAnimeSkribbl () {
-
 	try {
 		const animeList = await Skribbl.find({})
 			.sort({ addedAt: -1 }) // Sort by newest first
@@ -515,35 +514,6 @@ async function searchAnimeSkribbl (query) {
 	}
 }
 
-async function getAnimeSkribbl () {
-
-	const animeList = await skribbl.find({});
-	return animeList;
-}
-
-async function addAnimeSkribbl (data) {
-	const anime = new skribbl(data);
-	await anime.save();
-	return anime.toObject();
-}
-
-async function updateAnimeSkribbl (data) {
-	const updatedAnime = await skribbl
-		.findByIdAndUpdate(
-			data.id,
-			{
-				name: data.name
-			},
-			{
-				new: true
-			}
-		);
-	return updatedAnime;
-}
-async function deleteAnimeSkribbl (id) {
-	const animeDeleted = skribbl.findOneAndDelete({ '_id': id });
-	return animeDeleted;
-}
 
 module.exports = {
 	createNewUser,
@@ -584,11 +554,5 @@ module.exports = {
 	updateAnimeSkribbl,
 	deleteAnimeSkribbl,
 	bulkAddAnimeSkribbl,
-	searchAnimeSkribbl,
-	getNewsletterCount,
-	getAnimeSkribbl,
-	addAnimeSkribbl,
-	updateAnimeSkribbl,
-	deleteAnimeSkribbl
+	searchAnimeSkribbl
 };
-
