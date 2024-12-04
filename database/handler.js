@@ -1,6 +1,5 @@
 const User = require('./schemas/User');
 const Quiz = require('./schemas/Quiz');
-const skribbl = require('./schemas/skribbl');
 const { LiveQuiz, LiveResult } = require('./schemas/LiveQuiz');
 const Member = require('./schemas/Member');
 const Newsletter = require('./schemas/Newsletter');
@@ -363,158 +362,6 @@ async function getNewsletterCount () {
 	return newsletterCounts;
 }
 
-async function getAnimeSkribbl () {
-	try {
-		const animeList = await Skribbl.find({})
-			.sort({ addedAt: -1 }) // Sort by newest first
-			.lean();
-
-		if (!animeList) {
-			throw new Error('No anime entries found');
-		}
-
-		return animeList;
-	} catch (error) {
-		console.error('Database error in getAnimeSkribbl:', error);
-		throw error;
-	}
-}
-
-async function addAnimeSkribbl (data) {
-	try {
-		// Validate required fields
-		if (!data.name) {
-			throw new Error('Anime name is required');
-		}
-
-		// Create ID if not provided
-		if (!data._id) {
-			data._id = `${new Date().toISOString().slice(0, 10)}-${Math.random().toString(36).substr(2, 9)}`;
-		}
-
-		// Check for duplicate names
-		const existingAnime = await Skribbl.findOne({
-			name: { $regex: new RegExp(`^${data.name}$`, 'i') }
-		});
-
-		if (existingAnime) {
-			throw new Error('This anime already exists in the database');
-		}
-
-		const anime = new Skribbl({
-			_id: data._id,
-			name: data.name.trim(),
-			addedAt: new Date()
-		});
-
-		await anime.save();
-		return anime.toObject();
-	} catch (error) {
-		console.error('Database error in addAnimeSkribbl:', error);
-		throw error;
-	}
-}
-
-
-async function updateAnimeSkribbl (data) {
-	try {
-		if (!data.id || !data.name) {
-			throw new Error('Both ID and name are required for update');
-		}
-
-		const duplicate = await Skribbl.findOne({
-			_id: { $ne: data.id },
-			name: { $regex: new RegExp(`^${data.name}$`, 'i') }
-		});
-		if (duplicate) {
-			throw new Error('This anime name already exists');
-		}
-		const updatedAnime = await Skribbl.findByIdAndUpdate(
-			data.id,
-			{
-				name: data.name.trim(),
-				$currentDate: { updatedAt: true }
-			},
-			{
-				new: true,
-				runValidators: true
-			}
-		);
-		if (!updatedAnime) {
-			throw new Error('Anime not found');
-		}
-		return updatedAnime.toObject();
-	} catch (error) {
-		console.error('Database error in updateAnimeSkribbl:', error);
-		throw error;
-	}
-}
-
-async function deleteAnimeSkribbl (id) {
-	try {
-		if (!id) {
-			throw new Error('Anime ID is required for deletion');
-		}
-
-		const deletedAnime = await skribbl.findByIdAndDelete(id);
-
-		if (!deletedAnime) {
-			throw new Error('Anime not found');
-		}
-
-		return deletedAnime.toObject();
-	} catch (error) {
-		console.error('Database error in deleteAnimeSkribbl:', error);
-		throw error;
-	}
-}
-
-async function bulkAddAnimeSkribbl (animeList) {
-	try {
-		if (!Array.isArray(animeList) || animeList.length === 0) {
-			throw new Error('Valid anime list array is required');
-		}
-
-		const processedList = animeList.map(anime => ({
-			_id: `${new Date().toISOString().slice(0, 10)}-${Math.random().toString(36).substr(2, 9)}`,
-			name: anime.name.trim(),
-			addedAt: new Date()
-		}));
-
-		const result = await Skribbl.insertMany(processedList, {
-			ordered: false,
-			runValidators: true
-		});
-
-		return result;
-	} catch (error) {
-		console.error('Database error in bulkAddAnimeSkribbl:', error);
-		throw error;
-	}
-}
-
-async function searchAnimeSkribbl (query) {
-	try {
-		if (typeof query !== 'string' || !query.trim()) {
-			throw new Error('Valid search query is required');
-		}
-
-		const results = await skribbl.find({
-			name: {
-				$regex: new RegExp(query, 'i')
-			}
-		})
-			.limit(limit || 10) // Limiting results to a default of 10, can be parameterized
-			.lean();
-
-		return results;
-	} catch (error) {
-		console.error('Database error in searchAnimeSkribbl:', error);
-		throw error;
-	}
-}
-
-
 module.exports = {
 	createNewUser,
 	getUser,
@@ -548,11 +395,5 @@ module.exports = {
 	addTeam,
 	addSubmission,
 	updateNewsletterCount,
-	getNewsletterCount,
-	getAnimeSkribbl,
-	addAnimeSkribbl,
-	updateAnimeSkribbl,
-	deleteAnimeSkribbl,
-	bulkAddAnimeSkribbl,
-	searchAnimeSkribbl
+	getNewsletterCount
 };
