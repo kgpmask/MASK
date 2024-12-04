@@ -7,8 +7,6 @@ const {
 } = require('../database/handler');
 const mongoose = require('mongoose');
 const Skribbl = require('../database/schemas/Skribbl');
-
-Skribbl = require('../database/schemas/Skribbl');
 const Anime = mongoose.model('Anime', Skribbl);
 
 // get anime list
