@@ -1,5 +1,10 @@
 const router = require('express').Router();
 
+router.get('/treasure-hunt', (req, res) => {
+	return res.renderFile('event-articles/treasure-hunt.njk');
+});
+
+
 router.get('/', (req, res) => {
 	return res.renderFile('event-articles/py_events.njk');
 });

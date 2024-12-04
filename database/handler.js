@@ -23,7 +23,7 @@ async function createNewUser (profile) {
 
 // Get User
 async function getUser (id) {
-	return User.findById(id);
+	return User.findById(id).lean();
 }
 
 function getAllUsers (id) {
@@ -32,7 +32,7 @@ function getAllUsers (id) {
 
 // Add new record to database
 async function updateUserQuizRecord (stats) { // {userId, quizId, time, score}
-	const user = await Quiz.UserInfo.findOne({ userId: stats.userId });
+	const user = await Quiz.UserInfo.findOne({ userId: stats.userId }).lean();
 	const userName = (await getUser(stats.userId)).name;
 	const record = user || new Quiz.UserInfo({ userId: stats.userId, userName, points: 0, quizData: [] });
 	if (!record.quizData) record.quizData = [];
@@ -52,7 +52,7 @@ async function updateUserQuizRecord (stats) { // {userId, quizId, time, score}
 
 // User statistics
 async function getUserStats (userId) {
-	const user = await Quiz.UserInfo.findOne({ userId });
+	const user = await Quiz.UserInfo.findOne({ userId }).lean();
 	if (user) return user;
 	else return updateUserQuizRecord({ userId });
 }
@@ -70,7 +70,7 @@ async function getLiveQuiz (query) {
 }
 
 async function getLiveResult (userId, quizId, currentQ) {
-	const res = await LiveResult.findOne({ userId, quizId, question: currentQ });
+	const res = await LiveResult.findOne({ userId, quizId, question: currentQ }).lean();
 	if (res) return res.toObject();
 }
 
@@ -97,7 +97,7 @@ async function addLiveResult (userId, quizId, currentQ, points, answer, timeLeft
 
 // Fetch newsletter solutions
 async function getNewsletter (date) {
-	const newsletter = await Newsletter.findById(date);
+	const newsletter = await Newsletter.findById(date).lean();
 	if (!Object.keys(newsletter ?? {})?.some(e => e)) throw new Error('No newsletters on this date');
 	return newsletter;
 }
@@ -105,10 +105,10 @@ async function getNewsletter (date) {
 // Fetching posts based on type (art/video/newsletter)
 function getPosts (postType) {
 	// TODO: Make this accept a number of posts as a cap filter
-	return Post.find(postType ? { type: postType } : {}).sort({ date: -1 });
+	return Post.find(postType ? { type: postType } : {}).sort({ date: -1 }).lean();
 }
 async function getPost (id) {
-	return Post.findById(id);
+	return Post.findById(id).lean();
 }
 async function deletePost (link) {
 	const postDeleted = Post.findOneAndDelete({ 'link': link });
@@ -246,7 +246,7 @@ async function getCurrentMembers () {
 	const teamsData = require('../src/teams.json');
 	const years = Object.keys(teamsData);
 	const year = Number(years[years.length - 1]);
-	const data = await Member.find({ 'records.year': year }).sort('name');
+	const data = await Member.find({ 'records.year': year }).sort('name').lean();
 	data.forEach(member => {
 		const rec = member.records.find(rec => rec.year === year);
 		let pos;
@@ -296,7 +296,7 @@ async function addTeam (rollNumber, teamToAdd) {
 
 // export current year's data to the next year
 async function exportToNextYear () {
-	const members = await Member.find().exec();
+	const members = await Member.find().lean().exec();
 	let newRecord;
 	const teamsData = require('../src/teams.json');
 	const years = Object.keys(teamsData);
@@ -358,10 +358,9 @@ async function updateNewsletterCount (target) {
 }
 
 async function getNewsletterCount () {
-	const newsletterCounts = await NewsletterCount.find();
+	const newsletterCounts = await NewsletterCount.find().lean();
 	return newsletterCounts;
 }
-
 
 module.exports = {
 	createNewUser,
