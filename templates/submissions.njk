@@ -69,79 +69,11 @@
 		axios.defaults.withCredentials = true;
 		axios.defaults.headers.common['X-CSRF-TOKEN'] = '{{ csrfToken }}';
 
-        function validateEmail(email) {
-            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-            return emailRegex.test(email);
-        }
-
-        function validateName(name) {
-            const nameRegex = /^[a-zA-Z\s]{3,25}$/;
-            return name.trim() !== '' && nameRegex.test(name);
-        }
-
-        function validateMemberStatus(member) {
-            return member === 'true' || member === 'false'; 
-        }
-
-        function validateContentType(type) {
-            return type !== "";
-        }
-
-        function validateDriveLink(link) {
-            const driveLinkRegex = /^(https:\/\/)?(www\.)?(drive\.google\.com\/[^\s]+)$/;
-            return driveLinkRegex.test(link);
-        }
-
-        function validateProof(proof) {
-            if (!proof) return true; 
-            const urlRegex = /^(https?:\/\/)?([\w\-]+\.)+[\w\-]+(\/[\w\-./?%&=]*)?$/;
-            return urlRegex.test(proof);
-        }
-
-        function validateSocial(social) {
-            if (!social) return true;
-            const socialRegex = /^(@[a-zA-Z0-9_]{1,15}|https?:\/\/[\w\-]+\.[\w\-]+(\/[\w\-./?%&=]*)?)$/;
-            return socialRegex.test(social);
-        }
-
-        function validateForm(data) {
-            if (!validateEmail(data.email)) {
-                message({ success: false, message: "Please enter a valid email address." });
-                return false;
-            }
-            if (!validateName(data.name)) {
-                message({ success: false, message: "Name must be non-empty and contain only letters and spaces." });
-                return false;
-            }
-            if (!validateMemberStatus(data.member)) {
-                message({ success: false, message: "Please select whether you are a member of IIT Kharagpur." });
-                return false;
-            }
-            if (!validateContentType(data.type)) {
-                message({ success: false, message: "Please select the type of content you are submitting." });
-                return false;
-            }
-            if (!validateDriveLink(data.link)) {
-                message({ success: false, message: "Please enter a valid Google Drive link." });
-                return false;
-            }
-            if (!validateProof(data.proof)) {
-                message({ success: false, message: "If provided, proof must be a valid URL." });
-                return false;
-            }
-            if (!validateSocial(data.social)) {
-                message({ success: false, message: "If provided, social handle must be a valid @username or URL." });
-                return false;
-            }
-            return true; 
-        }
-
-        async function submitForm () {
-            const data = getData();
-            if (!validateForm(data)) return; 
-            console.log(data);
-            const response = (await axios.post('/submissions', data)).data;
-            message(response, '/');
-        }
+		async function submitForm () {
+			const data = getData();
+			console.log(data);
+			const response = (await axios.post('/submissions', data)).data;
+			message(response, '/');
+		}
 	</script>
-{% endblock %} 
+{% endblock %}
