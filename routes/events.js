@@ -4,7 +4,6 @@ router.get('/treasure-hunt', (req, res) => {
 	return res.renderFile('event-articles/treasure-hunt.njk');
 });
 
-
 router.get('/', (req, res) => {
 	return res.renderFile('event-articles/py_events.njk');
 });
@@ -35,6 +34,10 @@ router.get('/gear-5-screening', (req, res) => {
 
 router.get('/ocaq-2023', (req, res) => {
 	return res.renderFile('event-articles/ocaq-2023.njk');
+});
+
+router.get('/ocaq-2024', (req, res) => {
+	return res.renderFile('event-articles/ocaq-2024.njk');
 });
 
 router.get('/bidoof-art', (req, res) => {
