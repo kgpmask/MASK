@@ -1,0 +1,53 @@
+{
+	"name": "mask",
+	"version": "3.4.7",
+	"description": "Website for MASK",
+	"main": "./src/mask.js",
+	"scripts": {
+		"dev": "nodemon src/mask.js dev",
+		"dm": "nodemon src/mask.js dm",
+		"docker": "bash ./docker/docker.sh",
+		"du": "nodemon src/mask.js du",
+		"lint": "eslint . --config .eslintrc.json --ext .js",
+		"prepare": "husky install",
+		"start": "node src/mask.js",
+		"mocha": "cross-env NODE_ENV=test mocha test/**.js --parallel --exit",
+		"mocha-one": "cross-env NODE_ENV=test mocha --exit",
+		"test": "npm run lint && npm run mocha && echo \"Passing all tests.\" && exit 0",
+		"update-branch": "git fetch $(git rev-parse --symbolic-full-name --abbrev-ref @{upstream} | sed 's!/! !') && git merge FETCH_HEAD"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/kgpmask/MASK.git"
+	},
+	"keywords": [
+		"MASK"
+	],
+	"author": "PartMan7",
+	"license": "MPL-2.0",
+	"bugs": {
+		"url": "https://github.com/kgpmask/MASK/issues"
+	},
+	"homepage": "https://github.com/kgpmask/MASK#readme",
+	"dependencies": {
+		"axios": "^1.4.0",
+		"connect-mongo": "^5.0.0",
+		"cookie-parser": "^1.4.6",
+		"csurf": "^1.11.0",
+		"express": "^5.0.0-beta.1",
+		"express-session": "^1.17.3",
+		"mongodb": "^5.6.0",
+		"mongoose": "^7.3.1",
+		"nunjucks": "^3.2.4",
+		"passport": "^0.6.0",
+		"passport-google-oauth20": "^2.0.0",
+		"sass": "^1.63.6"
+	},
+	"devDependencies": {
+		"cross-env": "^7.0.3",
+		"eslint": "^8.32.0",
+		"husky": "^8.0.1",
+		"mocha": "^10.2.0",
+		"nodemon": "^2.0.19"
+	}
+}
