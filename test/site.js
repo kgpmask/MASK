@@ -27,7 +27,7 @@ describe('Server', () => {
 			return assert(query?.name === 'MASK Society');
 		}).timeout(10_000);
 	});
-
+	console.log(PARAMS);
 	it('should have the right PARAMS object', () => assert.deepEqual(PARAMS, { test: true, discordless: true }));
 
 	pages.forEach(page => {

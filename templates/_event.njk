@@ -18,34 +18,31 @@
 {% endblock %}
 
 {% block customjs %}
-	<script>
-		let nextSlideTime = 2_000;
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
-		function nextSlide (slideshowContainer) {
-			const scrollPosition = document.documentElement.scrollTop ;
-			let activeSlide;
-			do {
-				activeSlide = slideshowContainer.firstChild;
-				slideshowContainer.removeChild(activeSlide);
-				slideshowContainer.append(activeSlide);
-			} while (activeSlide.nodeName !== 'DIV');
-			document.documentElement.scrollTop = scrollPosition;
-			nextSlideTime = 2_000;
-		};
-
-		window.addEventListener('load', () => {
-			const slideshowContainer = document.querySelector('.slideshow-container');
-			if (!slideshowContainer) return;
-			setInterval(() => {
-				nextSlideTime -= 25;
-				if (nextSlideTime < 0) nextSlide(slideshowContainer);
-			}, 25);
-			{# function checkForSlideChange () {
-				setTimeout(checkForSlideChange, 25);
-			};
-			checkForSlideChange(); #}
-		});
-	</script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const swiper = new Swiper('.swiper-container', {
+                loop: true,
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                autoplay: {
+                    delay: 3000,
+                },
+                effect: 'slide',
+                speed: 800,
+                slidesPerView: 1,
+                spaceBetween: 10,
+            });
+        });
+    </script>
 	{# <script>
 		window.addEventListener('load', () => {
 			[...document.querySelectorAll('.image-container')].forEach(imageContainer => {
@@ -160,6 +157,114 @@
 			left: 50%;
 			transform: translate(-50%, -50%);
 		}
+
+		.swiper-slide {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .swiper-slide img {
+            height: 100%;
+            width: auto; 
+            object-fit: cover;
+        }
+
+		.swiper-container {
+            width: 80vw;
+            height: 70vh;
+            max-width: 900px; 
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+		.image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin: 20px auto;
+            width: 100%;
+            max-width: 900px;
+            overflow: hidden;
+            text-align: center; 
+        }
+
+		.swiper-button-next,
+        .swiper-button-prev {
+            color: black;
+            top: 50%;
+            z-index: 10; 
+            padding : 7px 7px 7px 7px;
+            width: 10px; 
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 10px; 
+			border-radius: 10%;
+        }
+
+		.swiper-button-next {
+            right: 10px; 
+            height: 100px;
+        }
+
+        .swiper-button-prev {
+            left: 10px; 
+        }
+
+        .swiper-button-next::after,
+        .swiper-button-prev::after {
+            font-size: 20px; 
+            font-weight: bold;
+			color: var(--error-red);
+        }
+
+		.swiper-button-next:hover,
+		.swiper-button-prev:hover {
+			background-color: #272727; 
+			transform : scale(1.09);
+		}
+
+		@media (max-width: 768px) {
+			.swiper-container {
+				width: 90vw;
+				height: 50vh;
+			}
+			.swiper-button-next,
+			.swiper-button-prev {
+				width: 10px;
+				height: 10px;
+				top: 45%;
+				z-index:10;
+			}
+			.swiper-button-next {
+				margin-right:20px;
+                height:20px
+                width:20px;
+			}
+			.swiper-button-prev {
+				margin-left:20px;
+			}
+			.swiper-slide img {
+				height: 85%;
+				width: auto;
+				object-fit: contain;
+				display: block;
+				margin: auto;
+				align-items:center;
+			}
+        }
+        .swiper-pagination .swiper-pagination-bullet {
+            background-color: var(--error-red); 
+        }
 	</style>
 	{% block eventCSS %}
 	{% endblock %}
