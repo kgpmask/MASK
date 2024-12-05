@@ -48,6 +48,10 @@ router.get('/bidoof-art', (req, res) => {
 	return res.renderFile('event-articles/bidoof-art.njk');
 });
 
+router.get('/intrasoc-2024', (req, res) => {
+	return res.renderFile('event-articles/intrasoc-2024.njk');
+});
+
 module.exports = {
 	route: '/events',
 	router
