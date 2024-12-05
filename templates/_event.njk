@@ -200,7 +200,7 @@
             color: black;
             top: 50%;
             z-index: 10; 
-            padding : 5px 5px;
+            padding : 7px 7px 7px 7px;
             width: 10px; 
             height: 30px;
             display: flex;
@@ -208,6 +208,7 @@
             align-items: center;
             cursor: pointer;
             font-size: 10px; 
+			border-radius: 10%;
         }
 
 		.swiper-button-next {
@@ -223,12 +224,13 @@
         .swiper-button-prev::after {
             font-size: 20px; 
             font-weight: bold;
-			color: red;
+			color: var(--error-red);
         }
 
 		.swiper-button-next:hover,
 		.swiper-button-prev:hover {
-			background-color: black; 
+			background-color: #272727; 
+			transform : scale(1.09);
 		}
 
 		@media (max-width: 768px) {
@@ -259,6 +261,9 @@
 				margin: auto;
 				align-items:center;
 			}
+        }
+        .swiper-pagination .swiper-pagination-bullet {
+            background-color: var(--error-red); 
         }
 	</style>
 	{% block eventCSS %}
