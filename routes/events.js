@@ -37,7 +37,7 @@ router.get('/bidoof-art', (req, res) => {
 });
 
 router.get('/intrasoc-2024', (req, res) => {
-	return res.renderFile('event-article/intrasoc-2024');
+	return res.renderFile('event-articles/intrasoc-2024.njk');
 })
 
 module.exports = {
