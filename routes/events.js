@@ -1,5 +1,9 @@
 const router = require('express').Router();
 
+router.get('/treasure-hunt', (req, res) => {
+	return res.renderFile('event-articles/treasure-hunt.njk');
+});
+
 router.get('/', (req, res) => {
 	return res.renderFile('event-articles/py_events.njk');
 });
@@ -28,8 +32,24 @@ router.get('/gear-5-screening', (req, res) => {
 	return res.renderFile('event-articles/gear-5-screening.njk');
 });
 
+router.get('/your-name-screening', (req, res) => {
+	return res.renderFile('event-articles/your-name-screening.njk');
+});
+
 router.get('/ocaq-2023', (req, res) => {
 	return res.renderFile('event-articles/ocaq-2023.njk');
+});
+
+router.get('/ocaq-2024', (req, res) => {
+	return res.renderFile('event-articles/ocaq-2024.njk');
+});
+
+router.get('/bidoof-art', (req, res) => {
+	return res.renderFile('event-articles/bidoof-art.njk');
+});
+
+router.get('/intrasoc-2024', (req, res) => {
+	return res.renderFile('event-articles/intrasoc-2024.njk');
 });
 
 module.exports = {
