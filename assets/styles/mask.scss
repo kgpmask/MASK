@@ -23,6 +23,10 @@
 	padding: 0px;
 }
 
+html {
+	background: black;
+}
+
 body {
 	background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url('/assets/background.jpg');
 	background-size: cover;
